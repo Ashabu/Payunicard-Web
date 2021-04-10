@@ -10,7 +10,7 @@ const  NavBar = () => {
             </div>
             <div style={{display: 'flex', alignItems:'center'}}>
                 <Button class="unicard-btn-white">რეგისტრაცია</Button>
-                <Button class="unicard-btn">შესვლა</Button>
+                <Button class="unicard-btn"  >შესვლა</Button>
                 <Button class="lang-btn"><img src="../../../Assets/Images/LandingImg/flag_ka.svg" alt="lang-logo" /></Button>
             </div>
         </div>

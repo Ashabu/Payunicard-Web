@@ -87,7 +87,7 @@ module.exports = (env, argv) => {
         module: {
             rules: [
                 {
-                    test: /\.css|scss$/,
+                    test: /\.s[ac]ss$/i,
                     use: [
                         isProd ? MiniCssExtractPlugin.loader : 'style-loader',
                         'css-loader',

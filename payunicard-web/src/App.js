@@ -1,7 +1,7 @@
-import './App.css';
+import './App.scss';
 import React from 'react';
+import Layout from './Containers/Layout/Layout';
 
-import NavBar from "./Components/Navigation/Navbar/NavBar"
 
 
 
@@ -9,8 +9,10 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar/>
+      <Layout>
       <span>hello world</span>
+      </Layout>
+      
     </div>
   );
 }

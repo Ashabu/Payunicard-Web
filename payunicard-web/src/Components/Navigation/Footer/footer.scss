@@ -1,0 +1,208 @@
+footer {
+    height: 630px;
+    background-color:#EBEBEB;
+    padding: 49px 205px 76px 217px;
+
+    .first-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 45px;
+
+        span {
+            height: auto;
+            color: #191c1f;
+            font-family: 'FiraGO REGULAR';
+            font-size: 40px;
+            font-weight: 300;
+            line-height: 50px;
+        }
+
+        .partner-logos {
+            height: 83px;
+            display: flex;
+            align-items: center;
+        
+            .partner-logo {
+                padding-left: 18px;
+
+            }
+            
+        }
+    }
+
+    .second-container {
+        display: flex;
+        
+        .about-us {
+            margin-right: 221px;
+            
+            span {
+                display: inline-block;
+                margin-bottom: 31px;
+                font-size: 24px;
+                font-weight: 500;
+                line-height: 29px;
+                white-space: nowrap;
+                font-feature-settings: 'case' on;
+            }
+
+            ul {
+                li {
+                    font-family: 'FiraGO-Regular';
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 16px;
+                    line-height: 28px;
+                    color: #6B6B6B;
+                }
+            }
+        }
+
+        .appstore-logos {
+            :first-child {
+                margin-right: 28px;
+            }
+        }
+
+    }
+
+
+    .third-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .contact {
+            display: flex;
+            align-items: center;
+            span {
+                display: inline-block;
+                margin-right: 24px;
+            }
+        }
+        .social-btns {
+            height: 90px;
+            font-size: 0;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+
+            
+        
+            a {
+                text-decoration:none;
+
+                    margin-left: 34px;
+            }
+        
+            .btn {
+                display: inline-block;
+                background-color: #fff;
+                width: 50px;
+                height: 50px;
+                line-height: 90px;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+                border-radius: 28%;
+                box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.22);
+                opacity: 0.99;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+        
+                .fa {
+                    font-size: 25px;
+                    -webkit-transform: scale(0.8);
+                    transform: scale(0.8);
+                    /* vertical-align: middle; */
+                }
+            }
+
+            .btn:before {
+                content: "";
+                width: 120%;
+                height: 120%;
+                position: absolute;
+                -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
+                top: 90%;
+                left: -110%;
+            }
+        
+        }
+        
+        .social-btns .btn,
+        .social-btns .btn:before,
+        .social-btns .btn .fa {
+            -webkit-transition: all 0.35s;
+            transition: all 0.35s;
+            -webkit-transition-timing-function: cubic-bezier(0.31, -0.105, 0.43, 1.59);
+            transition-timing-function: cubic-bezier(0.31, -0.105, 0.43, 1.59);
+        }
+            
+        .facebook:before {
+            background-color: #3b5998;
+        }
+        
+        .facebook .fa {
+            color: #3b5998;
+        }
+        
+        .linkedin:before {
+            background-color: #0e76a8;
+        }
+        
+        .linkedin .fa {
+            color: #0e76a8;
+        }
+        
+        .google:before {
+            background-color: #dc4a38;
+        }
+        
+        .google .fa {
+            color: #dc4a38;
+        }
+        
+        .dribbble:before {
+            background-color: #f26798;
+        }
+        
+        .dribbble .fa {
+            color: #f26798;
+        }
+        
+        .skype:before {
+            background-color: #00aff0;
+        }
+        
+        .skype .fa {
+            color: #00aff0;
+        }
+        
+        .social-btns .btn:focus:before,
+        .social-btns .btn:hover:before {
+            top: -10%;
+            left: -10%;
+        }
+        
+        .social-btns .btn:focus .fa,
+        .social-btns .btn:hover .fa {
+            color: #fff;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+    }
+
+}
+
+
+
+
+
+
+

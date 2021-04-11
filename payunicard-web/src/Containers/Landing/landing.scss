@@ -1,0 +1,14 @@
+.Landing-wrap {
+    padding: 115px 143px 127px 143px;
+
+    .La-first-container{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+            .mobile-carousel {
+                display: flex;
+                align-items: center;
+            }
+    }
+}

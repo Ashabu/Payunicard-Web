@@ -1,6 +1,6 @@
 import './App.scss';
 import React from 'react';
-import Layout from './Containers/Layout/Layout';
+import Landing from './Containers/Landing/Landing';
 
 
 
@@ -9,9 +9,7 @@ function App() {
 
   return (
     <div className="App">
-      <Layout>
-      <span>hello world</span>
-      </Layout>
+      <Landing/>
       
     </div>
   );

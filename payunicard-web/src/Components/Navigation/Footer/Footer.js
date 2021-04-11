@@ -7,7 +7,7 @@ const Footer = () => {
             <footer>
                 <div className="footer-wrap">
                     <div className="first-container">
-                        <span><b>სასარგებლო</b> არასაბანკო  ფინანსური ოპერააციები</span>
+                        <span><b>სასარგებლო</b> არასაბანკო  <br/> ფინანსური ოპერააციები</span>
                         <div className="partner-logos">
                             <div className="partner-logo">
                                 <img src='../../../Assets/Images/LandingImg/visa-logo.svg' alt="visa" />

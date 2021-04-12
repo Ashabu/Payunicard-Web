@@ -60,6 +60,7 @@ class Landing extends Component {
                 currency: '₾'
             },
         ],
+        priceAnnual: true,
         carousel:{
             visaPos: 0,
             mcPos: 180,
@@ -128,6 +129,37 @@ class Landing extends Component {
       }
 
     render() {
+
+        let Card = this.state.packages;
+        if(!this.state.priceAnnual) {
+            Card = Card.filter(plan=> plan.paketTypeId !== 2).map(card =>(
+                <PlanCard
+                    key= {card.paketTypeId} 
+                    title = {card.paketCode}
+                    price = {card.priceAnnual}
+                    currency = {card.currency}
+                    payDuration = "Year"
+                    planTypeId = {card.paketTypeId}
+                    content = {card.content}/>
+                ))    
+        } else {
+            Card = (Card.map(card =>( 
+                <PlanCard
+                    key= {card.paketTypeId} 
+                    title = {card.paketCode}
+                    price = {card.priceAnnual}
+                    currency = {card.currency}
+                    payDuration = "Year"
+                    planTypeId = {card.paketTypeId}
+                    content = {card.content}/>
+                )));
+        }
+        
+        const onPayMethod = () => {
+            let priceAnnual = this.state.priceAnnual;
+            priceAnnual = !priceAnnual;
+            this.setState({priceAnnual: priceAnnual})
+        }
         
 
         return (
@@ -158,33 +190,29 @@ class Landing extends Component {
                             
                         </div>
                         <div className = 'La-third-container'>
+                        <div className='PlanCards'>
+                        <div className='PlanCards-Header'>
+                            <p>აირჩიეთ ტარიფი</p>
+                            <div className='PayDuration' onClick={onPayMethod}>
+                                <div className={!this.state.priceAnnual?'PayOption Active' : 'PayOption'}>
+                                    <span>კვარტალი</span>
+                                </div>
+                                <div className={this.state.priceAnnual?'PayOption Active' : 'PayOption'}>
+                                    <span>წელიწადი</span>
+                                </div>
+                            </div>
+                            <span>დაზოგე 16%-მდე წლიურად გადახდისას</span>
+                        </div>
+                        <div className='PlanCards-Body'>   
+                            {Card}
+                        </div>  
+                    </div>
                             
                         </div>
 
                     </div>
-                    <div className='PlanCards'>
-                        <div className='PayDuration'>
-                            <div className='PayOption'>
-                                <span>კვარტალი</span>
-                            </div>
-                            <div className = 'PayOption Active'>
-                                <span>წელიწადი</span>
-                            </div>
-
-                        </div>
-                        {this.state.packages.map(plan =>( 
-                            <PlanCard
-                                key= {plan.paketTypeId} 
-                                title = {plan.paketCode}
-                                price = {plan.priceAnnual}
-                                currency = {plan.currency}
-                                payDuration = "Year"
-                                planTypeId = {plan.paketTypeId}
-                                content = {plan.content}/>
-                        ))}    
-                    </div>
+                    
                 </Layout>
-                
             </div>
         );
     }

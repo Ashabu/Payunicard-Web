@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './landing.scss'
 import Layout from '../Layout/Layout';
+import PlanCard from '../../Components/PlanCard/PlanCard'
 
 class Landing extends Component {
 
@@ -11,44 +12,52 @@ class Landing extends Component {
                 isActive: true,
                 paketCode: "UNIcard Plus",
                 paketDescription: "პრემიალური ტარიფი",
+                content:["პრემიალური ტარიფი - გადახდები განსაკუთრებული კლიენტებისთვის","ყველაზე მაღალი განაღდების/შესყიდვის ლიმიტები","3 უფასო სავალუტო ანგარიში","უფასო ინტერნეტ ბანკი და სმს მომსახურება","2 უფასო UNIcard Visa/Mastercard ბარათი ადგილზე უფასო მიტანით თბილისში","უნიქულები საჩუქრად ანგარიშის პირველად შევსებისას","უნიქულების დაგროვება საუკეთესო ტარიფით","უფასო განაღდება VTB ბანკის ბანკომატებში"],
                 paketTypeId: 1,
                 prePayment: 1,
                 priceAnnual: 30,
                 priceMonthly: 0,
-                priceQuarterly: 9
+                priceQuarterly: 9,
+                currency: '₾'
             },
             {
                 createDate: "2020-12-15T00:00:00",
                 isActive: true,
                 paketCode: "UNIcard Plus",
                 paketDescription: "პრემიალური ტარიფი",
+                content:["პრემიალური ტარიფი - გადახდები განსაკუთრებული კლიენტებისთვის","ყველაზე მაღალი განაღდების/შესყიდვის ლიმიტები","3 უფასო სავალუტო ანგარიში","უფასო ინტერნეტ ბანკი და სმს მომსახურება","2 უფასო UNIcard Visa/Mastercard ბარათი ადგილზე უფასო მიტანით თბილისში","უნიქულები საჩუქრად ანგარიშის პირველად შევსებისას","უნიქულების დაგროვება საუკეთესო ტარიფით","უფასო განაღდება VTB ბანკის ბანკომატებში"],
                 paketTypeId: 2,
                 prePayment: 1,
                 priceAnnual: 30,
                 priceMonthly: 0,
-                priceQuarterly: 9
+                priceQuarterly: 9,
+                currency: '₾'
             },
             {
                 createDate: "2020-12-15T00:00:00",
                 isActive: true,
                 paketCode: "UNIcard Plus",
                 paketDescription: "პრემიალური ტარიფი",
+                content:["პრემიალური ტარიფი - გადახდები განსაკუთრებული კლიენტებისთვის","ყველაზე მაღალი განაღდების/შესყიდვის ლიმიტები","3 უფასო სავალუტო ანგარიში","უფასო ინტერნეტ ბანკი და სმს მომსახურება","2 უფასო UNIcard Visa/Mastercard ბარათი ადგილზე უფასო მიტანით თბილისში","უნიქულები საჩუქრად ანგარიშის პირველად შევსებისას","უნიქულების დაგროვება საუკეთესო ტარიფით","უფასო განაღდება VTB ბანკის ბანკომატებში"],
                 paketTypeId: 3,
                 prePayment: 1,
                 priceAnnual: 30,
                 priceMonthly: 0,
-                priceQuarterly: 9
+                priceQuarterly: 9,
+                currency: '₾'
             },
             {
                 createDate: "2020-12-15T00:00:00",
                 isActive: true,
                 paketCode: "UNIcard Plus",
                 paketDescription: "პრემიალური ტარიფი",
+                content:["პრემიალური ტარიფი - გადახდები განსაკუთრებული კლიენტებისთვის","ყველაზე მაღალი განაღდების/შესყიდვის ლიმიტები","3 უფასო სავალუტო ანგარიში","უფასო ინტერნეტ ბანკი და სმს მომსახურება","2 უფასო UNIcard Visa/Mastercard ბარათი ადგილზე უფასო მიტანით თბილისში","უნიქულები საჩუქრად ანგარიშის პირველად შევსებისას","უნიქულების დაგროვება საუკეთესო ტარიფით","უფასო განაღდება VTB ბანკის ბანკომატებში"],
                 paketTypeId: 4,
                 prePayment: 1,
                 priceAnnual: 30,
                 priceMonthly: 0,
-                priceQuarterly: 9
+                priceQuarterly: 9,
+                currency: '₾'
             },
         ],
         carousel:{
@@ -112,8 +121,7 @@ class Landing extends Component {
                 ob.startPos = 240;
                 break;
                 default:
-                
-                break
+                break;
         }
 
 
@@ -153,6 +161,27 @@ class Landing extends Component {
                             
                         </div>
 
+                    </div>
+                    <div className='PlanCards'>
+                        <div className='PayDuration'>
+                            <div className='PayOption'>
+                                <span>კვარტალი</span>
+                            </div>
+                            <div className = 'PayOption Active'>
+                                <span>წელიწადი</span>
+                            </div>
+
+                        </div>
+                        {this.state.packages.map(plan =>( 
+                            <PlanCard
+                                key= {plan.paketTypeId} 
+                                title = {plan.paketCode}
+                                price = {plan.priceAnnual}
+                                currency = {plan.currency}
+                                payDuration = "Year"
+                                planTypeId = {plan.paketTypeId}
+                                content = {plan.content}/>
+                        ))}    
                     </div>
                 </Layout>
                 

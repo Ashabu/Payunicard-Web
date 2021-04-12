@@ -11,4 +11,27 @@
                 align-items: center;
             }
     }
+    
+}
+.PlanCards {
+    display: flex;
+    justify-content: center;
+
+    .PayDuration {
+        width: 210px;
+        height: 54px;
+        border: 1pz solid #EDEDED;
+
+        .PayOption {
+            width: 50%;
+            background-color: #EDEDED;
+
+            &.Active {
+                background-color: #FFFFFF   
+            }
+
+        }
+    }
+
+
 }

@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 
 const Button = (props) => {
 
-    let  button = ( <button className={props.class} onClick={props.clicked}>{props.children}</button>)
+    let  button = ( <button className={props.buttonClass} onClick={props.clicked}>{props.children}</button>)
     if(props.loading) {
         button = (<div className="btn-wrap">
                       <button className={props.class + " disabled"} onClick={props.clicked}>{props.children}</button>
@@ -19,8 +19,8 @@ const Button = (props) => {
     );
 };
 
-Button.prototype = {
-    children: PropTypes.string,
+Button.propTypes = {
+    // children: PropTypes.string,
     clicked: PropTypes.func,
     loading: PropTypes.bool,
 }

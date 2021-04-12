@@ -1,0 +1,81 @@
+.PlanCard {
+    width: 257px;
+    height: 425px;
+    background: #FFFFFF;
+    border: 1px solid #A5A5A4;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 32px 23px;
+    border-radius: 7px;
+    margin: 0 26px;
+
+    &.Wallet {
+        border: 1px solid #A5A5A4; 
+        .PlanButton {
+        background-color: #A5A5A4;        
+        }
+    }
+
+    &.Upera {
+        border: 1px solid #94dd34;
+        .PlanButton {
+        background-color: #94dd34;
+        }
+    }
+
+    &.UniPlus {
+        border: 1px solid #F9BD15;
+        .PlanButton {
+        background-color: #F9BD15;
+        }
+        
+    }
+    &.UniUltra {
+        border: 1px solid #F49121;
+        .PlanButton {
+            background-color: #F49121;
+        }
+
+    }    
+    .PlanHeader {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+
+        .PlanTitle {
+
+        }
+
+    }
+    
+
+    .PlanDetails {
+        display: flex;
+        align-items: center;
+        font-size: 34px;
+
+
+        .PlanPayDetails {
+            display: flex;
+            flex-direction: column;
+            font-size: 10px;
+        }
+
+    }
+
+    .PlanDescription {
+        display: flex;
+        flex-direction: column;
+        font-size: 11px;
+    }
+
+    .PlanButton {
+        width: 119px;
+        height: 33px;
+        color: #FFFFFF;
+        border-radius: 7px;
+        border: none;
+
+        }
+}

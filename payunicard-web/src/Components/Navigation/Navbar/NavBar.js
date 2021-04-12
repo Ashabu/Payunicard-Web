@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../../CostumComponents/Button/Button'
+import Button from '../../UI/Button/Button'
 import "./navbar.scss"
 
 const  NavBar = () => {
@@ -9,9 +9,9 @@ const  NavBar = () => {
                 <img  src="../../../Assets/Images/LandingImg/Unilogo_eng.svg"  alt="unicard-logo"/>
             </div>
             <div style={{display: 'flex', alignItems:'center'}}>
-                <Button class="unicard-btn-white">რეგისტრაცია</Button>
-                <Button class="unicard-btn"  >შესვლა</Button>
-                <Button class="lang-btn"><img src="../../../Assets/Images/LandingImg/flag_ka.svg" alt="lang-logo" /></Button>
+                <Button buttonClass="unicard-btn-white">რეგისტრაცია</Button>
+                <Button buttonClass="unicard-btn"  ></Button>
+                <Button buttonClass="lang-btn"><img src="../../../Assets/Images/LandingImg/flag_ka.svg" alt="lang-logo" /></Button>
             </div>
         </div>
     )

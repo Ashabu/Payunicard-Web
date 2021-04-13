@@ -1,0 +1,16 @@
+.RegWrap {
+    min-height: 870px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .RegLeft {
+        max-width: 470px;
+        margin-right: 115px;
+    }
+    .passwords {
+        display: flex;
+        justify-content: space-between;
+    }
+
+}

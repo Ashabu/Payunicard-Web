@@ -1,7 +1,8 @@
 import './App.scss';
 import React from 'react';
-// import Landing from './Containers/Landing/Landing';
-import Login from './Containers/Login/Login';
+import { BrowserRouter } from 'react-router-dom';
+import Routing from './Routing/Routing';
+
 
 
 
@@ -9,10 +10,11 @@ import Login from './Containers/Login/Login';
 function App() {
 
   return (
-    <div className="App">
-      {/* <Landing/> */}
-      <Login/>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routing/>
+      </div>
+    </BrowserRouter>
   );
 }
 

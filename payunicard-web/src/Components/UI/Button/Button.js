@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React  from 'react';
 import "./button.scss"
 import PropTypes from "prop-types"
 const Button = (props) => {
     // const buttonRef = useRef();
     // const clickEvent = (event) => {
-    // debugger
     //     if (event.isComposing || event.keyCode === 13) {
     //       buttonRef.click();
     //     }

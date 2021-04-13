@@ -3,9 +3,7 @@ import './input.scss'
 
 function Input(props) {
     return (
-        <div>
-            <input className='Input' {...props} />
-        </div>
+            <input {...props} />
     );
 }
 

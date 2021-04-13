@@ -3,6 +3,7 @@ import './login.scss';
 import Input from '../../Components/UI/Input/Input';
 import Button from '../../Components/UI/Button/Button';
 import Layout from '../Layout/Layout';
+import Route from 'react-router'
 import User from '../../Services/API/UserServices';
 
 class Login extends Component {
@@ -15,6 +16,7 @@ class Login extends Component {
 
     render() {
         return (
+            
             <Layout>
                 <div className = 'LoginWrap'>
                     <div className='Login-leftSide'>
@@ -22,12 +24,12 @@ class Login extends Component {
                             <span>მოგესალმებით</span>
                         </div>
                         <div className = 'Login-inputs'>
-                            <Input type = 'text' placeholder = 'User Name' 
-                                onInput = {(e)=> this.setState({userName: e.target.vaue})}
+                            < Input className = 'Input Input-bg' type = 'text' placeholder = 'User Name' 
+                                onInput = {(e)=> this.setState({userName: e.target.value})}
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = 'User Name'}/>
-                            <Input type = 'text' placeholder ='Password' 
-                                onInput = {(e)=> this.setState({password: e.target.vaue})}
+                            < Input className = 'Input Input-bg' type = 'text' placeholder ='Password' 
+                                onInput = {(e)=> this.setState({password: e.target.value})}
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = 'Password'}/>    
                         </div>

@@ -36,3 +36,27 @@ ul {
     background: #94dd34;
     color: #FFFFFF;
 }
+
+
+.Input {
+    
+    height: 54px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    background: #f6f6f4;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    padding-left: 15px;
+    font-family: FiraGO BOOK;
+    font-weight: normal;
+    color: #130d1e;
+}
+
+.Input-sm {
+    width: calc(50% - 8px);
+}
+
+.Input-bg {
+    width: 470px;
+}

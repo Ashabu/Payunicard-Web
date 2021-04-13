@@ -3,10 +3,12 @@ import Presentation from '../../Services/API/PresentationServices'
 import './landing.scss'
 import Layout from '../Layout/Layout';
 import PlanCard from '../../Components/PlanCard/PlanCard'
+import SelectOption from './../../Components/UI/Select/Select';
 
 class Landing extends Component {
 
     state = {
+        selected: {},
         packages: [
             {
                 createDate: "2020-12-15T00:00:00",
@@ -167,6 +169,7 @@ class Landing extends Component {
         return (
             <div>
                 <Layout>
+                    
                     <div className = 'Landing-wrap'>
                         <div className = 'La-first-container'>
                             <div className = 'right-content'>
@@ -189,7 +192,16 @@ class Landing extends Component {
                             </div>
                         </div>
                         <div className = 'La-second-container'>
-                            
+                            <SelectOption 
+                                data={this.state.packages} 
+                                selected = {this.state.selected.paketCode} 
+                                render = {(element, setVisible) => (
+                                <div  
+                                    key={element.paketTypeId}
+                                    onClick={() => { this.setState({selected: element}); setVisible(false) }} >
+                                        {element.paketCode}  
+                                </div>
+                            )} />
                         </div>
                         <div className = 'La-third-container'>
                         <div className='PlanCards'>

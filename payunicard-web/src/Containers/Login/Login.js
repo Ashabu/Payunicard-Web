@@ -3,6 +3,7 @@ import './login.scss';
 import Input from '../../Components/UI/Input/Input';
 import Button from '../../Components/UI/Button/Button';
 import Layout from '../Layout/Layout';
+import Validation from '../../Components/UI/InputValidation/Validation';
 import Route from 'react-router'
 import User from '../../Services/API/UserServices';
 
@@ -13,6 +14,10 @@ class Login extends Component {
         password: ""
     }
 
+    login = () => {
+        alert();
+        Validation.validate();
+    }
 
     render() {
         return (
@@ -43,7 +48,7 @@ class Login extends Component {
                             <span>დაგავიწყდა პაროლი?</span>
                         </div>
                         <div className = 'LoginFooter'>
-                            <Button buttonClass = 'button-sm gray'> რეგისტრაცია</Button>
+                            <Button clicked = {this.login} buttonClass = 'button-sm gray'> რეგისტრაცია</Button>
                             <Button buttonClass = 'button-sm green'>შესვლა</Button>
                         </div>
                     </div>

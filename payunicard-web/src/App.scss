@@ -14,3 +14,25 @@ ul {
 .disabled {
     opacity: 0.3;
 }
+
+.button-sm {
+    width: 220px;
+    height: 45px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    font-family: 'FiraGO MEDIUM';
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+}
+.gray {
+    background: #efefef;
+    color: #130D1E;
+}
+.green {
+    background: #94dd34;
+    color: #FFFFFF;
+}

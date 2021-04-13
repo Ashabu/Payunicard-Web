@@ -1,6 +1,7 @@
 import './App.scss';
 import React from 'react';
-import Landing from './Containers/Landing/Landing';
+// import Landing from './Containers/Landing/Landing';
+import Login from './Containers/Login/Login';
 
 
 
@@ -9,8 +10,8 @@ function App() {
 
   return (
     <div className="App">
-      <Landing/>
-      
+      {/* <Landing/> */}
+      <Login/>
     </div>
   );
 }

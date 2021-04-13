@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Presentation from '../../Services/API/PresentationServices'
 import './landing.scss'
 import Layout from '../Layout/Layout';
 import PlanCard from '../../Components/PlanCard/PlanCard'
@@ -75,6 +76,16 @@ class Landing extends Component {
         window.addEventListener('resize', () => {
             this.onReportWindowSize();
           }); 
+          this.testCall()
+
+
+    }
+
+     testCall = async () => {
+        // eslint-disable-next-line no-undef
+        Presentation.getPackageTypes().then(res => {
+            console.log(res)
+        })
     }
 
     onReportWindowSize =() => {
@@ -124,9 +135,14 @@ class Landing extends Component {
                 default:
                 break;
         }
+    }
 
+    onPayMethod = () => {
+        let priceAnnual = this.state.priceAnnual;
+        priceAnnual = !priceAnnual;
+        this.setState({priceAnnual: priceAnnual})
+    }
 
-      }
 
     render() {
 
@@ -135,30 +151,16 @@ class Landing extends Component {
             Card = Card.filter(plan=> plan.paketTypeId !== 2).map(card =>(
                 <PlanCard
                     key= {card.paketTypeId} 
-                    title = {card.paketCode}
-                    price = {card.priceAnnual}
-                    currency = {card.currency}
                     payDuration = "Year"
-                    planTypeId = {card.paketTypeId}
-                    content = {card.content}/>
+                    card = {card}/>
                 ))    
         } else {
             Card = (Card.map(card =>( 
                 <PlanCard
                     key= {card.paketTypeId} 
-                    title = {card.paketCode}
-                    price = {card.priceAnnual}
-                    currency = {card.currency}
                     payDuration = "Year"
-                    planTypeId = {card.paketTypeId}
-                    content = {card.content}/>
+                    card = {card} />
                 )));
-        }
-        
-        const onPayMethod = () => {
-            let priceAnnual = this.state.priceAnnual;
-            priceAnnual = !priceAnnual;
-            this.setState({priceAnnual: priceAnnual})
         }
         
 
@@ -193,7 +195,7 @@ class Landing extends Component {
                         <div className='PlanCards'>
                         <div className='PlanCards-Header'>
                             <p>აირჩიეთ ტარიფი</p>
-                            <div className='PayDuration' onClick={onPayMethod}>
+                            <div className='PayDuration' onClick={this.onPayMethod}>
                                 <div className={!this.state.priceAnnual?'PayOption Active' : 'PayOption'}>
                                     <span>კვარტალი</span>
                                 </div>

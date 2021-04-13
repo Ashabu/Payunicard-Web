@@ -4,41 +4,45 @@ import PropTypes from "prop-types";
 import Button from '../UI/Button/Button'
 
 const PlanCard = (props) => {
-
     const getPlanColor =(planType) => {
+        
         switch (planType) {
             case 1:
-                return  'PlanCard Wallet'
+                return {class: 'PlanCard Wallet', imgUrl: '../../Assets/Images/LandingImg/mark-wallet.svg'}
             case 2:
-                return  'PlanCard Upera'
+                return {class: 'PlanCard Upera', imgUrl: '../../Assets/Images/LandingImg/mark-upera.svg'}
             case 3:
-                return 'PlanCard UniPlus'
+                return {class: 'PlanCard UniPlus', imgUrl: '../../Assets/Images/LandingImg/mark-plus.svg'}
             case 4:
-                return  'PlanCard UniUltra'
+                return {class: 'PlanCard UniUltra', imgUrl: '../../Assets/Images/LandingImg/mark-ultra.svg'}
             default:
-                return'PlanCard Wallet'
+                return {class: 'PlanCard Wallet', imgUrl: '../../Assets/Images/LandingImg/mark-wallet.svg'}
         }
         
     }
+        const {paketTypeId, title, priceAnnual, currency, content } = props.card;
+        console.log(props.card
+            )
+
 
     return (
-        <div className = {getPlanColor(props.planTypeId)}>
+        <div className = {getPlanColor(paketTypeId).class}>
             <div className = 'PlanHeader'>  
                 <div className = 'PlanTitle'>
-                    <span>{props.title}</span>
+                    <span>{title}</span>
                 </div>
                 <div className = 'PlanDetails'>
-                    <span>{props.price}</span>
+                    <span>{priceAnnual}</span>
                     <div className = 'PlanPayDetails'>
-                        <span>{props.currency}</span>
+                        <span>{currency}</span>
                         <span>{props.payDuration}</span>
                     </div>
                 </div>
             </div>      
                 <div className ='PlanDescription'>
-                    {props.content.map((content, index) => (
+                    {content.map((content, index) => (
                         <span key={index}>
-                            <img src='' alt='checkmark'/>
+                            <img src={getPlanColor(paketTypeId).imgUrl} alt='checkmark'/>
                             <span>{content}</span>
                         </span>
                     ))}
@@ -52,6 +56,7 @@ const PlanCard = (props) => {
 };
 
 PlanCard.propTypes= {
+
 
 }
 export default PlanCard;

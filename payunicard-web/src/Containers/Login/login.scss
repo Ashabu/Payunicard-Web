@@ -1,0 +1,44 @@
+.LoginWrap {
+    min-height: 870px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .LoginHeader {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 40px;
+        font-family: 'FiraGO REGULAR';
+        font-weight: normal;
+        font-size: 32px;
+        line-height: 36px;
+        text-align: center;
+        color: #130d1e;
+        -moz-font-feature-settings: "case";
+        -webkit-font-feature-settings: "case";
+        font-feature-settings: "case" on;
+    }
+    .Login-leftSide {
+        max-width: 470px;
+        margin-right: 115px;
+
+        .LoginOptions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 25px 0 60px 0;
+            cursor: pointer;
+            font-family: 'FIRAGO REGULAR';
+            font-weight: normal;
+            font-size: 14px;
+            text-align: left;
+            color: #130d1e;
+        }
+        
+    }
+
+    .LoginFooter {
+        display: flex;
+        justify-content: space-between;
+    }
+}

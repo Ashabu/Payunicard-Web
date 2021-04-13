@@ -10,10 +10,25 @@ ul {
         list-style-type: none;
     }
 }
+a {
+    text-decoration: none;
+}
 
 .disabled {
     opacity: 0.3;
 }
+.unicard-btn {
+    width: 200px;
+    height: 54px;
+    border-radius: 7px;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
 
 .button-sm {
     width: 220px;
@@ -26,7 +41,9 @@ ul {
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .gray {
     background: #efefef;
@@ -35,6 +52,11 @@ ul {
 .green {
     background: #94dd34;
     color: #FFFFFF;
+}
+
+.white {
+    background: #FFFFFF;
+    color: #130D1E;
 }
 
 

@@ -12,8 +12,8 @@ const  NavBar = () => {
                 </Link>    
             </div>
             <div style={{display: 'flex', alignItems:'center'}}>
-                <Link to = '/register' className="unicard-btn-white">რეგისტრაცია</Link>
-                <Link to = '/login' className="unicard-btn"  >შესვლა</Link>
+                <Link to = '/register' className="unicard-btn white">რეგისტრაცია</Link>
+                <Link to = '/login' className="unicard-btn green"  >შესვლა</Link>
                 <Button buttonClass="lang-btn"><img src="../../../Assets/Images/LandingImg/flag_ka.svg" alt="lang-logo" /></Button>
             </div>
         </div>

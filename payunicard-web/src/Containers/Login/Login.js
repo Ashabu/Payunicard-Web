@@ -4,8 +4,8 @@ import Input from '../../Components/UI/Input/Input';
 import Button from '../../Components/UI/Button/Button';
 import Layout from '../Layout/Layout';
 import Validation from '../../Components/UI/InputValidation/Validation';
-import Route from 'react-router'
-import User from '../../Services/API/UserServices';
+// import Route from 'react-router'
+// import User from '../../Services/API/UserServices';
 
 class Login extends Component {
 

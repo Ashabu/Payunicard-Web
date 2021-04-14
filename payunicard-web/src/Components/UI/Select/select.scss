@@ -1,6 +1,27 @@
-.abc {
-    width: 200px;
-    height: 54px;
+.Selected {
+    width: 100px;
+    height: 30px;
     border: 2px solid blue;
+    background: aliceblue;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
 
+}
+
+.SelectList {
+    width: 438px;
+    height: 282px;
+    margin-top: 15px;
+    font-size: 16px;
+    border: 1px solid gainsboro;
+    position: absolute;
+    z-index: 1;
+    border-radius: 10px;
+    background: #fff;
+    border: 1px solid #edf0f3;
+    overflow: scroll;
+    overflow-x: unset;
+    padding: 0 15px;
 }

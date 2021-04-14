@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import './userRegistration.scss';
-import  Input from '../../Components/UI/Input/Input';
+import Codes from '../../Services/Data/CountryCodes';
+import Input from '../../Components/UI/Input/Input';
+import Select from '../../Components/UI/Select/Select';
+import Selectlist from '../../Components/HOC/SelectList/SelectLIst';
 import Layout from '../Layout/Layout'
 
 class UserRegistration extends Component {
 
     state = {
+        selected:{},
         mobileNumber: null,
         username: '',
         surname: '',
@@ -14,13 +18,15 @@ class UserRegistration extends Component {
         personalNumber: '',
         password: '',
         repPassword: '',
-        repPasswordError: 'პაროლები არ ემთხვევა',
+        repPasswordError: '',
+        
 
     }
     render() {
         let  repPasswordError = null;
         const onRepeatePasswordCheck = () => {
         if(this.state.password !== '' &&  this.state.repPassword !== '' &&( this.state.repPassword !== this.state.password)) {
+            this.setState({repPasswordError: 'პაროლები არ ემთხვევა'})
              repPasswordError =  (<span>{this.state.repPasswordError}</span>)
         }
         }
@@ -31,8 +37,19 @@ class UserRegistration extends Component {
                 <div className = 'RegWrap'>
                     <div className = 'RegLeft'>
                         <div className = 'mobileNumber'>
-                            < Input className = 'Input Input-bg' type = 'select'  
-                               />
+                            <Select 
+                                data={Codes.countryCodes} 
+                                placeholder = 'Please Select'
+                                selected = {this.state.selected.dial_code} 
+                                render = {(element, setVisible) => (
+                                <Selectlist  
+                                    listClass = 'selectLIst' 
+                                    key={element.name} 
+                                    clicked={() => {this.setState({selected: element}); setVisible(false) }} >
+                                       {element.dial_code} {element.name} 
+                                </Selectlist>
+                            )} />
+                           
                             < Input className = 'Input Input-bg' type = 'text' placeholder ='მობილურის ნომერი' 
                                 onInput = {(e)=> this.setState({mobileNumber: e.target.value})}
                                 onFocus = {(e) => e.target.placeholder = ""}
@@ -59,11 +76,11 @@ class UserRegistration extends Component {
                             onFocus = {(e) => e.target.placeholder = ""}
                             onBlur = {(e) => e.target.placeholder = 'პირადი ნომერი'}/>
                         <div className = 'passwords'>   
-                            < Input className = 'Input Input-sm' type = 'text' placeholder ='პაროლი' 
+                            < Input className = 'Input' type = 'text' placeholder ='პაროლი' 
                                 onInput = {(e)=> this.setState({password: e.target.value})}
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = 'პაროლი'}/>
-                            < Input className = 'Input Input-sm' type = 'text' placeholder ='გაიმეორეთ პაროლი' 
+                            < Input className = 'Input'  type = 'text' placeholder ='გაიმეორეთ პაროლი' 
                                 onInput = {(e)=> this.setState({repPassword: e.target.value})}
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = 'გაიმეორეთ პაროლი'}

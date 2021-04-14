@@ -4,13 +4,30 @@
     align-items: center;
     justify-content: center;
 
+    .mobileNumber {
+        display: flex;
+        justify-content: space-between;
+        input:nth-child(1) {
+            width: calc(470px - 140px);
+        }
+    }
+
     .RegLeft {
         max-width: 470px;
         margin-right: 115px;
     }
     .passwords {
+        width: 100%;
         display: flex;
         justify-content: space-between;
+        div:nth-child(1) {
+            width: 100%;
+            margin-right: 5px;
+        }
+        div:nth-child(2) {
+            width: 100%;
+            margin-left: 5px;
+        }
     }
 
 }

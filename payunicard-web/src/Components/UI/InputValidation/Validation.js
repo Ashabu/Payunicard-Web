@@ -1,5 +1,10 @@
+/* eslint-disable no-useless-escape */
 class Validation {
-    asdasd = {
+    validations = {
+        phoneNumber: "^[0-9]{9,16}$",
+        email: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
+        regPassword: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!=+\/\\#$%^&*~`}{\]\\[|()_+-])[A-Za-z\d#?!$()>`}{\]\\[|=+\/\\<%^&_,*-]{8,18}$/gm
+        
 
     }
     inputs = [];

@@ -3,7 +3,9 @@ import Presentation from '../../Services/API/PresentationServices'
 import './landing.scss'
 import Layout from '../Layout/Layout';
 import PlanCard from '../../Components/PlanCard/PlanCard'
-import SelectOption from './../../Components/UI/Select/Select';
+
+
+
 
 class Landing extends Component {
 
@@ -73,12 +75,14 @@ class Landing extends Component {
             startPos: 360,
         },
     }
-
+    
     componentDidMount(){
         window.addEventListener('resize', () => {
             this.onReportWindowSize();
           }); 
           this.testCall()
+          console.log(this.state.selected)
+
 
 
     }
@@ -147,7 +151,6 @@ class Landing extends Component {
 
 
     render() {
-
         let Card = this.state.packages;
         if(!this.state.priceAnnual) {
             Card = Card.filter(plan=> plan.paketTypeId !== 2).map(card =>(
@@ -192,16 +195,7 @@ class Landing extends Component {
                             </div>
                         </div>
                         <div className = 'La-second-container'>
-                            <SelectOption 
-                                data={this.state.packages} 
-                                selected = {this.state.selected.paketCode} 
-                                render = {(element, setVisible) => (
-                                <div  
-                                    key={element.paketTypeId}
-                                    onClick={() => { this.setState({selected: element}); setVisible(false) }} >
-                                        {element.paketCode}  
-                                </div>
-                            )} />
+                            
                         </div>
                         <div className = 'La-third-container'>
                         <div className='PlanCards'>

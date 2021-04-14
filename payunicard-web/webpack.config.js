@@ -30,7 +30,8 @@ function getPlugins(config, isProd, analyze) {
         new HtmlWebpackPlugin({
             template: './public/index.html',
             baseUrl: config.base_URL,
-            webURL: config.web_URL,
+            apiUrl: config.api_URL,
+            tokenURL: config.token_URL,
             hash: false,
             minify: false
         }),

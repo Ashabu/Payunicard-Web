@@ -11,60 +11,7 @@ class Landing extends Component {
 
     state = {
         selected: {},
-        packages: [
-            {
-                createDate: "2020-12-15T00:00:00",
-                isActive: true,
-                paketCode: "UNIcard Plus",
-                paketDescription: "პრემიალური ტარიფი",
-                content:["პრემიალური ტარიფი - გადახდები განსაკუთრებული კლიენტებისთვის","ყველაზე მაღალი განაღდების/შესყიდვის ლიმიტები","3 უფასო სავალუტო ანგარიში","უფასო ინტერნეტ ბანკი და სმს მომსახურება","2 უფასო UNIcard Visa/Mastercard ბარათი ადგილზე უფასო მიტანით თბილისში","უნიქულები საჩუქრად ანგარიშის პირველად შევსებისას","უნიქულების დაგროვება საუკეთესო ტარიფით","უფასო განაღდება VTB ბანკის ბანკომატებში"],
-                paketTypeId: 1,
-                prePayment: 1,
-                priceAnnual: 30,
-                priceMonthly: 0,
-                priceQuarterly: 9,
-                currency: '₾'
-            },
-            {
-                createDate: "2020-12-15T00:00:00",
-                isActive: true,
-                paketCode: "UNIcard Plus",
-                paketDescription: "პრემიალური ტარიფი",
-                content:["პრემიალური ტარიფი - გადახდები განსაკუთრებული კლიენტებისთვის","ყველაზე მაღალი განაღდების/შესყიდვის ლიმიტები","3 უფასო სავალუტო ანგარიში","უფასო ინტერნეტ ბანკი და სმს მომსახურება","2 უფასო UNIcard Visa/Mastercard ბარათი ადგილზე უფასო მიტანით თბილისში","უნიქულები საჩუქრად ანგარიშის პირველად შევსებისას","უნიქულების დაგროვება საუკეთესო ტარიფით","უფასო განაღდება VTB ბანკის ბანკომატებში"],
-                paketTypeId: 2,
-                prePayment: 1,
-                priceAnnual: 30,
-                priceMonthly: 0,
-                priceQuarterly: 9,
-                currency: '₾'
-            },
-            {
-                createDate: "2020-12-15T00:00:00",
-                isActive: true,
-                paketCode: "UNIcard Plus",
-                paketDescription: "პრემიალური ტარიფი",
-                content:["პრემიალური ტარიფი - გადახდები განსაკუთრებული კლიენტებისთვის","ყველაზე მაღალი განაღდების/შესყიდვის ლიმიტები","3 უფასო სავალუტო ანგარიში","უფასო ინტერნეტ ბანკი და სმს მომსახურება","2 უფასო UNIcard Visa/Mastercard ბარათი ადგილზე უფასო მიტანით თბილისში","უნიქულები საჩუქრად ანგარიშის პირველად შევსებისას","უნიქულების დაგროვება საუკეთესო ტარიფით","უფასო განაღდება VTB ბანკის ბანკომატებში"],
-                paketTypeId: 3,
-                prePayment: 1,
-                priceAnnual: 30,
-                priceMonthly: 0,
-                priceQuarterly: 9,
-                currency: '₾'
-            },
-            {
-                createDate: "2020-12-15T00:00:00",
-                isActive: true,
-                paketCode: "UNIcard Plus",
-                paketDescription: "პრემიალური ტარიფი",
-                content:["პრემიალური ტარიფი - გადახდები განსაკუთრებული კლიენტებისთვის","ყველაზე მაღალი განაღდების/შესყიდვის ლიმიტები","3 უფასო სავალუტო ანგარიში","უფასო ინტერნეტ ბანკი და სმს მომსახურება","2 უფასო UNIcard Visa/Mastercard ბარათი ადგილზე უფასო მიტანით თბილისში","უნიქულები საჩუქრად ანგარიშის პირველად შევსებისას","უნიქულების დაგროვება საუკეთესო ტარიფით","უფასო განაღდება VTB ბანკის ბანკომატებში"],
-                paketTypeId: 4,
-                prePayment: 1,
-                priceAnnual: 30,
-                priceMonthly: 0,
-                priceQuarterly: 9,
-                currency: '₾'
-            },
-        ],
+        packages: [],
         priceAnnual: true,
         carousel:{
             visaPos: 0,
@@ -83,6 +30,8 @@ class Landing extends Component {
           this.testCall()
           console.log(this.state.selected)
 
+          
+
 
 
     }
@@ -90,9 +39,18 @@ class Landing extends Component {
      testCall = async () => {
         // eslint-disable-next-line no-undef
         Presentation.getPackageTypes().then(res => {
-            console.log(res)
+            let response = res.data.data.packages.map(p => {
+                p.content = ["პრემიალური ტარიფი - გადახდები განსაკუთრებული კლიენტებისთვის","ყველაზე მაღალი განაღდების/შესყიდვის ლიმიტები","3 უფასო სავალუტო ანგარიში","უფასო ინტერნეტ ბანკი და სმს მომსახურება","2 უფასო UNIcard Visa/Mastercard ბარათი ადგილზე უფასო მიტანით თბილისში ","უნიქულები საჩუქრად ანგარიშის პირველად შევსებისას","უნიქულების დაგროვება საუკეთესო ტარიფით","უფასო განაღდება VTB ბანკის ბანკომატებში"];
+                p.currency = "₾"
+                return p;
+            })
+            this.setState({packages: response})
         })
+
+        
     }
+
+
 
     onReportWindowSize =() => {
         let pageWidth = window.innerWidth;
@@ -151,7 +109,9 @@ class Landing extends Component {
 
 
     render() {
+
         let Card = this.state.packages;
+        console.log(Card)
         if(!this.state.priceAnnual) {
             Card = Card.filter(plan=> plan.paketTypeId !== 2).map(card =>(
                 <PlanCard

@@ -38,6 +38,7 @@ class UserRegistration extends Component {
                     <div className = 'RegLeft'>
                         <div className = 'mobileNumber'>
                             <Select 
+                            search
                                 data={Codes.countryCodes} 
                                 placeholder = 'Please Select'
                                 selected = {this.state.selected.dial_code} 

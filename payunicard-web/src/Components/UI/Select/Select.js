@@ -2,11 +2,18 @@ import React, { useState } from 'react';
 import Input from '../Input/Input';
 import './select.scss';
 
+var isFocused = false; 
 
  const Select = (props) => {
     
-    const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState(false); 
     const [search, setSearch] = useState('');
+    const [blurTmout, setBlurTmout] = useState(null);
+
+    const handleOnBlur = () => {
+        if(blurTmout) clearTimeout(blurTmout);
+        setBlurTmout(setTimeout(()=>{ if(isFocused) return; setVisible(false)}, 200));
+    }
 
 
     let  selectData = [];
@@ -21,8 +28,14 @@ import './select.scss';
     let searchInput = null;
 
     if(props.search) {
-        searchInput = (<Input value = {search} placeholder = 'Search' onChange ={(e)=> setSearch(e.target.value)}/>)
+        searchInput = (
+            <Input value = {search} placeholder = 'Search' 
+                onChange ={(e)=> setSearch(e.target.value)} 
+                onFocus ={()=> { isFocused = true; }} 
+                onBlur={() => { isFocused = false; handleOnBlur(); }} />
+        )
     }
+
     if(visible) {
         selectList = (
             <div className='SelectList'>
@@ -34,7 +47,7 @@ import './select.scss';
   
     return (
         <div >
-            <div className = 'Selected' onClick = {() => setVisible(!visible)} onBlur = {() => setVisible(false)}>
+            <div className = 'Selected' onClick = {() => setVisible(!visible)} onBlur = {handleOnBlur} tabIndex = '0'>
                 {props.selected ? props.selected : props.placeholder}
             </div>
             {selectList}

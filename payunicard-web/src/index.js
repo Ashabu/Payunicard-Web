@@ -6,7 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import axios from "axios";
 
 
+const _AuthToken = `Bearer ${localStorage.getItem('token')}`;
 
+
+axios.defaults.headers['Authorization'] = _AuthToken;
 axios.interceptors.request.use(requestConfig => {
   
   return requestConfig;

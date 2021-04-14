@@ -7,9 +7,74 @@
         align-items: center;
         justify-content: space-between;
 
+            .right-content {
+                .uni-wallet {
+                    font-family: 'FiraGO MEDIUM';
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 48px;
+                    line-height: 58px;
+                    font-feature-settings: 'case' on;
+                    color: #130D1E;
+                }
+                .visa-partner {
+                    font-family: 'FiraGO REGULAR';
+                    margin:29px 0;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 19px;
+                    line-height: 23px;
+                    color: #6B6B6B;
+                }
+                .appstore-logos {
+                    img:nth-child(1) {
+                       margin-right: 26px;                         
+                    }
+                }
+                
+            }
             .mobile-carousel {
                 display: flex;
                 align-items: center;
+
+                .visa-mc {
+                    position: relative;
+                    top: 85px;
+                }
+                
+                .slider-cards {
+                    width: 270px;
+                    height: 120px;
+                    position: absolute;
+                    top: 250px;
+                    left: 112px;
+                    overflow: hidden;
+                  }
+                  
+                  #slideImg {
+                    position: relative;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                  }
+                  
+                  #slideImg img {
+                    width: 160px;
+                    position: absolute;
+                    top: 10px;
+                  }
+                  #slideImg #img1{
+                    left: 0;
+                  }
+                  #slideImg #img2 {
+                    left: 180px;
+                  }
+                  #slideImg #img3 {
+                    left: 360px;
+                  }
+                  #slideImg #img4 {
+                    left: 540px;
+                  }
             }
     }
 

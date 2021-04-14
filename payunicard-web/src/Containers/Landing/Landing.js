@@ -36,12 +36,12 @@ class Landing extends Component {
 
     }
 
-     testCall = async () => {
+     testCall = async ()   => {
         // eslint-disable-next-line no-undef
         Presentation.getPackageTypes().then(res => {
-            let response = res.data.data.packages.map(p => {
-                p.content = ["პრემიალური ტარიფი - გადახდები განსაკუთრებული კლიენტებისთვის","ყველაზე მაღალი განაღდების/შესყიდვის ლიმიტები","3 უფასო სავალუტო ანგარიში","უფასო ინტერნეტ ბანკი და სმს მომსახურება","2 უფასო UNIcard Visa/Mastercard ბარათი ადგილზე უფასო მიტანით თბილისში ","უნიქულები საჩუქრად ანგარიშის პირველად შევსებისას","უნიქულების დაგროვება საუკეთესო ტარიფით","უფასო განაღდება VTB ბანკის ბანკომატებში"];
-                p.currency = "₾"
+            let response = res.data.data.packages.map(p   => {
+                p.content = ['პრემიალური ტარიფი - გადახდები განსაკუთრებული კლიენტებისთვის','ყველაზე მაღალი განაღდების/შესყიდვის ლიმიტები','3 უფასო სავალუტო ანგარიში','უფასო ინტერნეტ ბანკი და სმს მომსახურება','2 უფასო UNIcard Visa/Mastercard ბარათი ადგილზე უფასო მიტანით თბილისში ','უნიქულები საჩუქრად ანგარიშის პირველად შევსებისას','უნიქულების დაგროვება საუკეთესო ტარიფით','უფასო განაღდება VTB ბანკის ბანკომატებში'];
+                p.currency = '₾'
                 return p;
             })
             this.setState({packages: response})
@@ -51,8 +51,45 @@ class Landing extends Component {
     }
 
 
+    
+    CardsCarousel = () => {
+        let ob = this.state.carousel;
+        let fVisa = document.getElementById("img1");
+        let fMc = document.getElementById("img2");
+        let sVisa = document.getElementById("img3");
+        let sMc = document.getElementById("img4");
+  
+        ob.visaPos -= 1;
+        ob.mcPos -= 1;
+        ob.visaNextPos -= 1;
+        ob.mcNextPos -= 1;
+  
+        fVisa.style.left = ob.visaPos + "px";
+        if(Math.floor(ob.visaPos) <= ob.lastPos){
+            ob.visaPos = ob.startPos;
+        }
+        fMc.style.left = ob.mcPos + "px";
+        if(Math.floor(ob.mcPos) <= ob.lastPos) {
+            ob.mcPos = ob.startPos
+        }
+        sVisa.style.left = ob.visaNextPos + "px";
+        if(Math.floor(ob.visaNextPos) <= ob.lastPos) {
+            ob.visaNextPos = ob.startPos;
+        }
+        sMc.style.left = ob.mcNextPos + "px";
+        if(Math.floor(ob.mcNextPos) <= ob.lastPos) {
+            ob.mcNextPos = ob.startPos;
+        }    
+        requestAnimationFrame(this.CardsCarousel);
+        
+          },
+  
+          startCarouselAnimation = () => {
+              setTimeout(() => { this.CardsCarousel(); }, 1000);
+          },
 
-    onReportWindowSize =() => {
+
+    onReportWindowSize = () => {
         let pageWidth = window.innerWidth;
         let ob = this.state.carousel;
         switch (pageWidth) {
@@ -108,22 +145,24 @@ class Landing extends Component {
     }
 
 
+
+
     render() {
 
         let Card = this.state.packages;
         console.log(Card)
         if(!this.state.priceAnnual) {
-            Card = Card.filter(plan=> plan.paketTypeId !== 2).map(card =>(
+            Card = Card.filter(plan => plan.paketTypeId !==  2).map(card =>(
                 <PlanCard
-                    key= {card.paketTypeId} 
-                    payDuration = "Year"
+                    key =  {card.paketTypeId} 
+                    payDuration = 'Year'
                     card = {card}/>
                 ))    
         } else {
-            Card = (Card.map(card =>( 
+            Card = (Card.map(card => ( 
                 <PlanCard
-                    key= {card.paketTypeId} 
-                    payDuration = "Year"
+                    key = {card.paketTypeId} 
+                    payDuration = 'Year'
                     card = {card} />
                 )));
         }
@@ -140,17 +179,25 @@ class Landing extends Component {
                                     <span>ჩემი ყოველდღიური <br/> ლოიალური საფულე</span>
                                 </div>
                                 <div className = 'visa-partner'>
-                                    <span><img src='../../Assets/Images/LandingImg/visa-logo-small.svg' alt='visa-logo' /> - პიპრველი სტრატეგიული პარტნიორი CISSEE რეგიონში</span>
+                                    <span><img src = '../../Assets/Images/LandingImg/visa-logo-small.svg' alt = 'visa-logo' /> - პირველი სტრატეგიული პარტნიორი CISSEE რეგიონში</span>
                                 </div>
-                                <div className = "appstore-logos">
-                                    <img src='../../../Assets/Images/LandingImg/GooglePlay.png'  alt='google-play' />
-                                    <img src='../../../Assets/Images/LandingImg/AppStore.png'  alt='app-store' />
+                                <div className = 'appstore-logos'>
+                                    <img src = '../../../Assets/Images/LandingImg/GooglePlay.png'  alt = 'google-play' />
+                                    <img src = '../../../Assets/Images/LandingImg/AppStore.png'  alt = 'app-store' />
                                 </div>
                             </div>
                             <div className = 'mobile-carousel'>
-                                <img src='../../Assets/Images/LandingImg/iphone-landing-geo.png' alt='phone-img' />
+                                <img src = '../../Assets/Images/LandingImg/iphone-landing-geo.png' alt = 'phone-img' />
+                                <div class = 'slider-cards'>
+                                <span id = 'slideImg'>
+                                    <img id = 'img1' src = '/images/pngImages/Visa-Card.png' alt = 'visa-card'/>
+                                    <img id = 'img2' src = '/images/pngImages/Master-Card.png'alt = 'master-card'/>
+                                    <img id = 'img3' src = '/images/pngImages/Visa-Card.png' alt = 'visa-card'/>
+                                    <img id = 'img4' src = '/images/pngImages/Master-Card.png' alt = 'master-card'/>
+                                </span>
+                            </div>
                                 <div className = 'visa-mc'>
-                                    <img src='../../Assets/Images/LandingImg/visa-mc.svg'  alt='visa-mc-logo'/>
+                                    <img src = '../../Assets/Images/LandingImg/visa-mc.svg'  alt = 'visa-mc-logo'/>
                                 </div>
                             </div>
                         </div>
@@ -158,20 +205,20 @@ class Landing extends Component {
                             
                         </div>
                         <div className = 'La-third-container'>
-                        <div className='PlanCards'>
-                        <div className='PlanCards-Header'>
+                        <div className = 'PlanCards'>
+                        <div className = 'PlanCards-Header'>
                             <p>აირჩიეთ ტარიფი</p>
-                            <div className='PayDuration' onClick={this.onPayMethod}>
-                                <div className={!this.state.priceAnnual?'PayOption Active' : 'PayOption'}>
+                            <div className = 'PayDuration' onClick = {this.onPayMethod}>
+                                <div className = {!this.state.priceAnnual?'PayOption Active' : 'PayOption'}>
                                     <span>კვარტალი</span>
                                 </div>
-                                <div className={this.state.priceAnnual?'PayOption Active' : 'PayOption'}>
+                                <div className = {this.state.priceAnnual?'PayOption Active' : 'PayOption'}>
                                     <span>წელიწადი</span>
                                 </div>
                             </div>
                             <span>დაზოგე 16%-მდე წლიურად გადახდისას</span>
                         </div>
-                        <div className='PlanCards-Body'>   
+                        <div className = 'PlanCards-Body'>   
                             {Card}
                         </div>  
                     </div>

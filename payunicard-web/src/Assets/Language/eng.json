@@ -1,5 +1,8 @@
 {
-    "auth": {
+    "products" : {
+        
+    },
+    "auth" : {
         "signUp" : "Sign Up",
         "signIn" : "Sign In",
         "password" : "Password",

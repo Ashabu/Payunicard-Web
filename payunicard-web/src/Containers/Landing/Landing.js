@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import Presentation from '../../Services/API/PresentationServices';
 import Language from '../../Services/SetLang';
 import './landing.scss';
+import '../../Components/HOC/ClickableBulltes';
 import Layout from '../Layout/Layout';
 import PlanCard from '../../Components/PlanCard/PlanCard';
-import LaData from '../Landing/LaData';
+import UIdata from '../../Components//UI/UIdata';
 import SliderInfo from '../../Components/SliderInfo/SliderInfo';
-import Button from '../../Components/UI/Button/Button';
+import ClickableBulltes from '../../Components/HOC/ClickableBulltes';
 
 
 
@@ -18,6 +19,16 @@ class Landing extends Component {
         selected: {},
         packages: [],
         lang: [],
+        uniServices: UIdata.UniServices,
+        // display: {
+        //     title: '',
+        //     content: [],
+        //     icon: '',
+        //     phoneImg: '',
+        //     computerImg: '',
+        //     indx: 0
+        //   },
+        curIndex : 0,
         priceAnnual: true,
         carousel: {
             visaPos: 0,
@@ -34,16 +45,30 @@ class Landing extends Component {
             this.onReportWindowSize();
         });
 
+        this.startCarouselAnimation();
+
+        setTimeout(() => { 
+            this.handleUniServicesSwitch();
+        }, 500); 
+
         this.testCall()
     }
-
+    componentDidUpdate() {
+        console.log(this.props)
+    }
     shouldComponentUpdate(nextProps, nextState) {
         if(this.state.carousel.visaPos !== nextState.carousel.visaPos) {
             return false;
         }
-        if(this.state.packages !== []) {
+        if(nextState.packages !== []) {
             return true;
         }
+
+        if(this.state.curIndex !== nextState.curIndex) {
+            debugger
+            return false;
+        }
+        
         
       }
 
@@ -51,7 +76,7 @@ class Landing extends Component {
         // eslint-disable-next-line no-undef
         Presentation.getPackageTypes().then(res => {
             let response = res.data.data.packages.map(p   => {
-                p.content = LaData.content[0];
+                p.content = UIdata.content[0];
                 p.currency = '₾';
                 return p;
             })
@@ -65,29 +90,29 @@ class Landing extends Component {
     
     CardsCarousel = () => {
         let carousel = {...this.state.carousel}
-        let fVisa = document.getElementById("img1");
-        let fMc = document.getElementById("img2");
-        let sVisa = document.getElementById("img3");
-        let sMc = document.getElementById("img4");
+        let fVisa = document.getElementById('img1');
+        let fMc = document.getElementById('img2');
+        let sVisa = document.getElementById('img3');
+        let sMc = document.getElementById('img4');
   
         carousel.visaPos -= 1;
         carousel.mcPos -= 1;
         carousel.visaNextPos -= 1;
         carousel.mcNextPos -= 1;
   
-        fVisa.style.left = carousel.visaPos + "px";
+        fVisa.style.left = carousel.visaPos + 'px';
         if(Math.floor(carousel.visaPos) <= carousel.lastPos){
             carousel.visaPos = carousel.startPos;
         }
-        fMc.style.left = carousel.mcPos + "px";
+        fMc.style.left = carousel.mcPos + 'px';
         if(Math.floor(carousel.mcPos) <= carousel.lastPos) {
             carousel.mcPos = carousel.startPos
         }
-        sVisa.style.left = carousel.visaNextPos + "px";
+        sVisa.style.left = carousel.visaNextPos + 'px';
         if(Math.floor(carousel.visaNextPos) <= carousel.lastPos) {
             carousel.visaNextPos = carousel.startPos;
         }
-        sMc.style.left = carousel.mcNextPos + "px";
+        sMc.style.left = carousel.mcNextPos + 'px';
         if(Math.floor(carousel.mcNextPos) <= carousel.lastPos) {
             carousel.mcNextPos = carousel.startPos;
         }    
@@ -154,6 +179,75 @@ class Landing extends Component {
 
     }
 
+    
+        handleBulletActive =() => {
+            let serviceObj = [...this.state.uniServices]
+            for(let i = 0; i < serviceObj.length; i++){
+                serviceObj[i].active = false;
+                this.setState({uniServices: serviceObj})
+            }
+        }
+
+
+
+        handleUniServicesSwitch = (i = 0) => {
+            let serviceObj = [...this.state.uniServices];
+            // let display = {...this.state.display}
+            let fn = () => {
+            this.handleBulletActive();
+            serviceObj[i].active = true;
+            // display.title = serviceObj[i].title;
+            // display.content = serviceObj[i];
+            // display.icon = serviceObj[i].icon;
+            serviceObj.computerImg = `url(${serviceObj[i].computerImg})`;
+            serviceObj.computerImg  = `url(${serviceObj[i].phoneImg})`;
+            this.setState({uniServices: serviceObj,  curIndex: i})
+            // this.$refs.titleFade.classList.add('text-fade');
+            // this.$refs.contentFade.classList.add('text-fade');
+            // this.$refs.iPhone.classList.add('img-fade');
+            // this.$refs.macbook.classList.add('img-fade');
+            // if(this.fadeTimeInterval) clearInterval(this.fadeTimeInterval)
+            // this.fadeTimeInterval = setInterval( ()=> {
+            //   this.$refs.titleFade.classList.remove('text-fade');
+            //   this.$refs.contentFade.classList.remove('text-fade');
+            //   this.$refs.iPhone.classList.remove('img-fade');
+            //   this.$refs.macbook.classList.remove('img-fade');
+            // }, 3800)
+            }
+            fn();
+            if(this.ChangeInterval) clearInterval(this.ChangeInterval)
+            this.ChangeInterval = setInterval( () =>{
+              i === 5?  i = 0 :  i++;
+              fn();
+            },4000)
+          }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
 
     onPayMethod = () => {
         let priceAnnual = this.state.priceAnnual;
@@ -169,9 +263,9 @@ class Landing extends Component {
         if(!this.state.priceAnnual) {
             Card = Card.filter(plan => plan.paketTypeId !==  2).map(card =>(
                 <PlanCard
-                    key =  {Card.paketTypeId} 
+                    key =  {card.paketTypeId} 
                     payDuration = 'Year'
-                    card = {Card}/>
+                    card = {card}/>
                 ))    
         } else {
             Card = (Card.map(card => ( 
@@ -217,12 +311,23 @@ class Landing extends Component {
                             </div>
                         </div>
                         <div className = 'La-second-container'>
-                            {/* <SliderInfo 
-                                imgUrl = {LaData.UniServices[0].icon}
-                                title = {LaData.UniServices[0].title}
-                                content = {LaData.UniServices[0].content} /> */}
-                            
-                        </div>
+                            <div className = 'Mackbook'>
+                                <div className = 'for-mac' style={{backgroundImage: this.state.uniServices.computerImg}}></div>
+                                <div className = 'for-phn' style={{backgroundImage: this.state.uniServices.computerImg}} ></div>
+                                <img src = '../../Assets/Images/LandingImg/MacbookPro.png' alt = 'macBook'/>
+                                <img src = '../../Assets/Images/LandingImg/iPhone.png' alt = 'iPhone' />
+                            </div>
+                            <div className = 'uni-service-wrap'>   
+                                <SliderInfo 
+                                    imgUrl = {this.state.uniServices[this.state.curIndex].icon}
+                                    title = {this.state.uniServices[this.state.curIndex].title}
+                                    content = {this.state.uniServices[this.state.curIndex].content} />
+                                <div className = 'js-cont-center'>{this.state.uniServices.map((item, index) => (
+                                    <ClickableBulltes key = {index} bullets = {item.active? 'bullets active' : 'bullets'} clicked = {() =>this.handleUniServicesSwitch(index)}/>
+                                    ))}
+                                </div>
+                            </div>             
+                        </div>    
                         <div className = 'La-third-container'>
                         <div className = 'PlanCards'>
                         <div className = 'PlanCards-Header'>

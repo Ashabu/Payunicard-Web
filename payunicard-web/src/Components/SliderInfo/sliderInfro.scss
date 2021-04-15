@@ -1,0 +1,59 @@
+.SliderInfo {
+    display: flex;
+
+    .service-icon {
+        margin-right: 22px;
+
+        img {
+            width: 80px;
+            height: 80px;
+            margin-top: 20px;
+        }
+    }    
+
+    .service-content {
+        display: flex;
+        flex-flow: column;
+
+   
+        .title-text {
+            font-family: 'FIRAGO REGULAR';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 40px;
+            line-height: 48px;
+            color: #130D1E;
+            margin-bottom: 19px;
+            -moz-font-feature-settings: "case";
+            -webkit-font-feature-settings: "case";
+            font-feature-settings: "case" on;
+        }
+
+        .content-text {
+            display: inline-flex;
+            flex-flow: column;
+            font-family: 'FIRAGO REGULAR';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 30px;
+            color: #6B6B6B;
+
+            span {
+                position: relative;
+
+                span {
+                    display: inline-block;
+                    margin-left: 20px;    
+                }
+            }
+
+            img {
+                position: absolute;
+                top: 10px;
+                left: 0;
+
+            }
+        }
+    }
+}    

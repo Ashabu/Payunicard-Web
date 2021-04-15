@@ -36,6 +36,7 @@
             .mobile-carousel {
                 display: flex;
                 align-items: center;
+                position: relative;
 
                 .visa-mc {
                     position: relative;
@@ -56,25 +57,24 @@
                     width: 100%;
                     display: flex;
                     flex-direction: row;
+                    img {
+                        width: 160px;
+                        position: absolute;
+                      }
+                      #img1{
+                        left: 0;
+                      }
+                      #img2 {
+                        left: 180px;
+                      }
+                      #img3 {
+                        left: 360px;
+                      }
+                      #img4 {
+                        left: 540px;
+                      }
                   }
                   
-                  #slideImg img {
-                    width: 160px;
-                    position: absolute;
-                    top: 10px;
-                  }
-                  #slideImg #img1{
-                    left: 0;
-                  }
-                  #slideImg #img2 {
-                    left: 180px;
-                  }
-                  #slideImg #img3 {
-                    left: 360px;
-                  }
-                  #slideImg #img4 {
-                    left: 540px;
-                  }
             }
     }
 

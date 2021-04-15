@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Presentation from '../../Services/API/PresentationServices'
 import './landing.scss'
 import Layout from '../Layout/Layout';
-import PlanCard from '../../Components/PlanCard/PlanCard'
-
+import PlanCard from '../../Components/PlanCard/PlanCard';
+import LaData from '../Landing/LaData';
+import SliderInfo from '../../Components/SliderInfo/SliderInfo';
 
 
 
@@ -13,7 +14,7 @@ class Landing extends Component {
         selected: {},
         packages: [],
         priceAnnual: true,
-        carousel:{
+        carousel: {
             visaPos: 0,
             mcPos: 180,
             visaNextPos: 360,
@@ -26,9 +27,12 @@ class Landing extends Component {
     componentDidMount(){
         window.addEventListener('resize', () => {
             this.onReportWindowSize();
-          }); 
-          this.testCall()
-          console.log(this.state.selected)
+        });
+        
+        this.startCarouselAnimation();
+
+
+        this.testCall()
 
           
 
@@ -36,11 +40,20 @@ class Landing extends Component {
 
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if(this.state.carousel.visaPos !== nextState.carousel.visaPos) {
+            return false;
+        }
+        if(this.state.packages !== []) {
+            return true;
+        }
+      }
+
      testCall = async ()   => {
         // eslint-disable-next-line no-undef
         Presentation.getPackageTypes().then(res => {
             let response = res.data.data.packages.map(p   => {
-                p.content = ['პრემიალური ტარიფი - გადახდები განსაკუთრებული კლიენტებისთვის','ყველაზე მაღალი განაღდების/შესყიდვის ლიმიტები','3 უფასო სავალუტო ანგარიში','უფასო ინტერნეტ ბანკი და სმს მომსახურება','2 უფასო UNIcard Visa/Mastercard ბარათი ადგილზე უფასო მიტანით თბილისში ','უნიქულები საჩუქრად ანგარიშის პირველად შევსებისას','უნიქულების დაგროვება საუკეთესო ტარიფით','უფასო განაღდება VTB ბანკის ბანკომატებში'];
+                p.content = LaData.content[0];
                 p.currency = '₾'
                 return p;
             })
@@ -50,93 +63,98 @@ class Landing extends Component {
         
     }
 
-
     
     CardsCarousel = () => {
-        let ob = this.state.carousel;
+        let carousel = {...this.state.carousel}
         let fVisa = document.getElementById("img1");
         let fMc = document.getElementById("img2");
         let sVisa = document.getElementById("img3");
         let sMc = document.getElementById("img4");
   
-        ob.visaPos -= 1;
-        ob.mcPos -= 1;
-        ob.visaNextPos -= 1;
-        ob.mcNextPos -= 1;
+        carousel.visaPos -= 1;
+        carousel.mcPos -= 1;
+        carousel.visaNextPos -= 1;
+        carousel.mcNextPos -= 1;
   
-        fVisa.style.left = ob.visaPos + "px";
-        if(Math.floor(ob.visaPos) <= ob.lastPos){
-            ob.visaPos = ob.startPos;
+        fVisa.style.left = carousel.visaPos + "px";
+        if(Math.floor(carousel.visaPos) <= carousel.lastPos){
+            carousel.visaPos = carousel.startPos;
         }
-        fMc.style.left = ob.mcPos + "px";
-        if(Math.floor(ob.mcPos) <= ob.lastPos) {
-            ob.mcPos = ob.startPos
+        fMc.style.left = carousel.mcPos + "px";
+        if(Math.floor(carousel.mcPos) <= carousel.lastPos) {
+            carousel.mcPos = carousel.startPos
         }
-        sVisa.style.left = ob.visaNextPos + "px";
-        if(Math.floor(ob.visaNextPos) <= ob.lastPos) {
-            ob.visaNextPos = ob.startPos;
+        sVisa.style.left = carousel.visaNextPos + "px";
+        if(Math.floor(carousel.visaNextPos) <= carousel.lastPos) {
+            carousel.visaNextPos = carousel.startPos;
         }
-        sMc.style.left = ob.mcNextPos + "px";
-        if(Math.floor(ob.mcNextPos) <= ob.lastPos) {
-            ob.mcNextPos = ob.startPos;
+        sMc.style.left = carousel.mcNextPos + "px";
+        if(Math.floor(carousel.mcNextPos) <= carousel.lastPos) {
+            carousel.mcNextPos = carousel.startPos;
         }    
+
+        this.setState({carousel: carousel})
+
         requestAnimationFrame(this.CardsCarousel);
         
-          },
+    }
   
-          startCarouselAnimation = () => {
-              setTimeout(() => { this.CardsCarousel(); }, 1000);
-          },
+    startCarouselAnimation = () => {
+        setTimeout(() => { this.CardsCarousel(); }, 1000);
+    }
 
 
     onReportWindowSize = () => {
         let pageWidth = window.innerWidth;
-        let ob = this.state.carousel;
+        let carousel = {...this.state.carousel};
         switch (pageWidth) {
             case pageWidth > 1580:
-                ob.visaPos = 0;
-                ob.mcPos = 180;
-                ob.visaNextPos = 360;
-                ob.mcNextPos = 540;
-                ob.lastPos = -360;
-                ob.startPos = 360;
+                carousel.visaPos = 0;
+                carousel.mcPos = 180;
+                carousel.visaNextPos = 360;
+                carousel.mcNextPos = 540;
+                carousel.lastPos = -360;
+                carousel.startPos = 360;
                 break;
             case pageWidth <= 1580 && pageWidth > 1280:
-                ob.visaPos = 0;
-                ob.mcPos = 150;
-                ob.visaNextPos = 300;
-                ob.mcNextPos = 450;
-                ob.lastPos = -300;
-                ob.startPos = 300;
+                carousel.visaPos = 0;
+                carousel.mcPos = 150;
+                carousel.visaNextPos = 300;
+                carousel.mcNextPos = 450;
+                carousel.lastPos = -300;
+                carousel.startPos = 300;
                 break;
             case pageWidth <= 1280 && pageWidth > 1024:
-                ob.visaPos = 0;
-                ob.mcPos = 120;
-                ob.visaNextPos = 240;
-                ob.mcNextPos = 360;
-                ob.lastPos = -240;
-                ob.startPos = 240;
+                carousel.visaPos = 0;
+                carousel.mcPos = 120;
+                carousel.visaNextPos = 240;
+                carousel.mcNextPos = 360;
+                carousel.lastPos = -240;
+                carousel.startPos = 240;
                 break;
             case pageWidth <= 1024 && pageWidth > 800:
-                ob.visaPos = 0;
-                ob.mcPos = 74;
-                ob.visaNextPos = 148;
-                ob.mcNextPos = 222;
-                ob.lastPos = -148;
-                ob.startPos = 148;
+                carousel.visaPos = 0;
+                carousel.mcPos = 74;
+                carousel.visaNextPos = 148;
+                carousel.mcNextPos = 222;
+                carousel.lastPos = -148;
+                carousel.startPos = 148;
                 break;
             case pageWidth <= 800:
-                ob.visaPos = 0;
-                ob.mcPos = 120;
-                ob.visaNextPos = 240;
-                ob.mcNextPos = 360;
-                ob.lastPos = -240;
-                ob.startPos = 240;
+                carousel.visaPos = 0;
+                carousel.mcPos = 120;
+                carousel.visaNextPos = 240;
+                carousel.mcNextPos = 360;
+                carousel.lastPos = -240;
+                carousel.startPos = 240;
                 break;
                 default:
                 break;
         }
+        this.setState({carousel: carousel});
+
     }
+
 
     onPayMethod = () => {
         let priceAnnual = this.state.priceAnnual;
@@ -150,13 +168,12 @@ class Landing extends Component {
     render() {
 
         let Card = this.state.packages;
-        console.log(Card)
         if(!this.state.priceAnnual) {
             Card = Card.filter(plan => plan.paketTypeId !==  2).map(card =>(
                 <PlanCard
-                    key =  {card.paketTypeId} 
+                    key =  {Card.paketTypeId} 
                     payDuration = 'Year'
-                    card = {card}/>
+                    card = {Card}/>
                 ))    
         } else {
             Card = (Card.map(card => ( 
@@ -188,12 +205,12 @@ class Landing extends Component {
                             </div>
                             <div className = 'mobile-carousel'>
                                 <img src = '../../Assets/Images/LandingImg/iphone-landing-geo.png' alt = 'phone-img' />
-                                <div class = 'slider-cards'>
+                                <div className = 'slider-cards'>
                                 <span id = 'slideImg'>
-                                    <img id = 'img1' src = '/images/pngImages/Visa-Card.png' alt = 'visa-card'/>
-                                    <img id = 'img2' src = '/images/pngImages/Master-Card.png'alt = 'master-card'/>
-                                    <img id = 'img3' src = '/images/pngImages/Visa-Card.png' alt = 'visa-card'/>
-                                    <img id = 'img4' src = '/images/pngImages/Master-Card.png' alt = 'master-card'/>
+                                    <img id = 'img1' src = '../../Assets/Images/LandingImg/Visa-Card.png' alt = 'visa-card'/>
+                                    <img id = 'img2' src = '../../Assets/Images/LandingImg/Master-Card.png'alt = 'master-card'/>
+                                    <img id = 'img3' src = '../../Assets/Images/LandingImg/Visa-Card.png' alt = 'visa-card'/>
+                                    <img id = 'img4' src = '../../Assets/Images/LandingImg/Master-Card.png' alt = 'master-card'/>
                                 </span>
                             </div>
                                 <div className = 'visa-mc'>
@@ -202,6 +219,10 @@ class Landing extends Component {
                             </div>
                         </div>
                         <div className = 'La-second-container'>
+                            <SliderInfo 
+                                imgUrl = {LaData.UniServices[0].icon}
+                                title = {LaData.UniServices[0].title}
+                                content = {LaData.UniServices[0].content} />
                             
                         </div>
                         <div className = 'La-third-container'>

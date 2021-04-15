@@ -21,7 +21,6 @@ const PlanCard = (props) => {
         
     }
         const {paketTypeId, title, priceAnnual, currency, content } = props.card;
-        console.log(props.card)
 
 
     return (

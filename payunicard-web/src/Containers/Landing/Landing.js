@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { Component } from 'react';
 import Presentation from '../../Services/API/PresentationServices';
 import Language from '../../Services/SetLang';
@@ -6,14 +7,17 @@ import Layout from '../Layout/Layout';
 import PlanCard from '../../Components/PlanCard/PlanCard';
 import LaData from '../Landing/LaData';
 import SliderInfo from '../../Components/SliderInfo/SliderInfo';
+import Button from '../../Components/UI/Button/Button';
 
 
 
 class Landing extends Component {
 
     state = {
+        isInit : false,
         selected: {},
         packages: [],
+        lang: [],
         priceAnnual: true,
         carousel: {
             visaPos: 0,
@@ -29,16 +33,8 @@ class Landing extends Component {
         window.addEventListener('resize', () => {
             this.onReportWindowSize();
         });
-        
-        this.startCarouselAnimation();
-
 
         this.testCall()
-
-          
-
-
-
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -48,24 +44,23 @@ class Landing extends Component {
         if(this.state.packages !== []) {
             return true;
         }
+        
       }
 
      testCall = async ()   => {
         // eslint-disable-next-line no-undef
-        // Presentation.getPackageTypes().then(res => {
-        //     let response = res.data.data.packages.map(p   => {
-        //         p.content = LaData.content[0];
-        //         p.currency = '₾'
-        //         return p;
-        //     })
-        //     this.setState({packages: response})
-        // })
-        Language.setLang().then(res => {
-            console.log(res.data.auth)
+        Presentation.getPackageTypes().then(res => {
+            let response = res.data.data.packages.map(p   => {
+                p.content = LaData.content[0];
+                p.currency = '₾';
+                return p;
+            })
+            this.setState({packages: response});
         })
-
         
     }
+
+    
 
     
     CardsCarousel = () => {
@@ -170,7 +165,6 @@ class Landing extends Component {
 
 
     render() {
-
         let Card = this.state.packages;
         if(!this.state.priceAnnual) {
             Card = Card.filter(plan => plan.paketTypeId !==  2).map(card =>(
@@ -223,10 +217,10 @@ class Landing extends Component {
                             </div>
                         </div>
                         <div className = 'La-second-container'>
-                            <SliderInfo 
+                            {/* <SliderInfo 
                                 imgUrl = {LaData.UniServices[0].icon}
                                 title = {LaData.UniServices[0].title}
-                                content = {LaData.UniServices[0].content} />
+                                content = {LaData.UniServices[0].content} /> */}
                             
                         </div>
                         <div className = 'La-third-container'>

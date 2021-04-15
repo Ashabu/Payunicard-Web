@@ -1,0 +1,26 @@
+{
+    "auth": {
+        "signUp" : "Sign Up",
+        "signIn" : "Sign In",
+        "password" : "Password",
+        "repeatePasswprd" : "Repeate Password",
+        "changePassword" : "Change Password",
+        "forgotPasswprd" : "Forgot Password?",
+        "username": "User Name"
+    },
+
+    "user" : {
+        "name" : "Name",
+        "surname" : "Surname",
+        "personalNumber" : "Personal Number",
+        "email" : "E-mail",
+        "phoneNumber" : "Phone Number"
+
+    },
+
+    "location" : {
+        "country" : "Country",
+        "city" : "City",
+        "address": "Address"
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "auth": {
+        "signUp" : "რეგისტრაცია",
+        "signIn" : "შესვლა",
+        "password" : "პაროლი",
+        "repeatePasswprd" : "გაიმეორე პაროლი",
+        "changePassword" : "პაროლის ცვლილება",
+        "forgotPasswprd" : "დაგავიწყდა პაროლი?",
+        "username": "მომხმარებლის სახელი"
+    },
+
+    "user" : {
+        "name" : "სახელი",
+        "surname" : "გვარი",
+        "personalNumber" : "პირადი ნომერი",
+        "email" : "ელ-ფოსტა",
+        "phoneNumber" : "ტელეფონის ნომერი"
+
+    },
+
+    "location" : {
+        "country" : "ქვეყანა",
+        "city" : "ქალაქი",
+        "address": "მისამართი"
+    }
+}

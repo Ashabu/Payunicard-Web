@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Presentation from '../../Services/API/PresentationServices'
-import './landing.scss'
+import Presentation from '../../Services/API/PresentationServices';
+import Language from '../../Services/SetLang';
+import './landing.scss';
 import Layout from '../Layout/Layout';
 import PlanCard from '../../Components/PlanCard/PlanCard';
 import LaData from '../Landing/LaData';
@@ -51,13 +52,16 @@ class Landing extends Component {
 
      testCall = async ()   => {
         // eslint-disable-next-line no-undef
-        Presentation.getPackageTypes().then(res => {
-            let response = res.data.data.packages.map(p   => {
-                p.content = LaData.content[0];
-                p.currency = '₾'
-                return p;
-            })
-            this.setState({packages: response})
+        // Presentation.getPackageTypes().then(res => {
+        //     let response = res.data.data.packages.map(p   => {
+        //         p.content = LaData.content[0];
+        //         p.currency = '₾'
+        //         return p;
+        //     })
+        //     this.setState({packages: response})
+        // })
+        Language.setLang().then(res => {
+            console.log(res.data.auth)
         })
 
         

@@ -3,7 +3,7 @@ import './login.scss';
 import Input from '../../Components/UI/Input/Input';
 import Button from '../../Components/UI/Button/Button';
 import Layout from '../Layout/Layout';
-//import Validation from '../../Components/UI/InputValidation/Validation';
+import Validation from '../../Components/UI/InputValidation/Validation';
 // import Route from 'react-router'
 import User from '../../Services/API/UserServices';
 
@@ -28,9 +28,10 @@ class Login extends Component {
 
 
         // alert();
-        // Validation.validate();
+        
 
     render() {
+        Validation.validate();
         return (
             
             <Layout>
@@ -43,11 +44,13 @@ class Login extends Component {
                             < Input className = 'Input Input-bg' type = 'text' placeholder = 'User Name' 
                                 onInput = {(e)=> this.setState({userName: e.target.value})}
                                 onFocus = {(e) => e.target.placeholder = ""}
-                                onBlur = {(e) => e.target.placeholder = 'User Name'}/>
+                                onBlur = {(e) => e.target.placeholder = 'User Name'}
+                                rule = {"email"}/>
                             < Input className = 'Input Input-bg' type = 'text' placeholder ='Password' 
                                 onInput = {(e)=> this.setState({password: e.target.value})}
                                 onFocus = {(e) => e.target.placeholder = ""}
-                                onBlur = {(e) => e.target.placeholder = 'Password'}/>    
+                                onBlur = {(e) => e.target.placeholder = 'Password'}
+                                rule = {'required'}/>    
                         </div>
                         <div className = 'LoginOptions'>
                             <label>

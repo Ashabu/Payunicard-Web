@@ -41,36 +41,22 @@ class Landing extends Component {
     }
     
     componentDidMount(){
-        window.addEventListener('resize', () => {
-            this.onReportWindowSize();
-        });
+        window.addEventListener('resize', this.onReportWindowSize);
 
         this.startCarouselAnimation();
 
-        setTimeout(() => { 
-            this.handleUniServicesSwitch();
-        }, 500); 
+        this.serviceTmout = setTimeout(this.handleUniServicesSwitch, 500); 
 
         this.testCall()
     }
-    componentDidUpdate() {
-        console.log(this.props)
-    }
-    shouldComponentUpdate(nextProps, nextState) {
-        if(this.state.carousel.visaPos !== nextState.carousel.visaPos) {
-            return false;
-        }
-        if(nextState.packages !== []) {
-            return true;
-        }
 
-        if(this.state.curIndex !== nextState.curIndex) {
-            debugger
-            return false;
-        }
-        
-        
-      }
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.onReportWindowSize);
+        clearTimeout(this.startTmout)
+        clearTimeout(this.serviceTmout)
+        clearInterval(this.ChangeInterval)
+    }
+  
 
      testCall = async ()   => {
         // eslint-disable-next-line no-undef
@@ -124,7 +110,7 @@ class Landing extends Component {
     }
   
     startCarouselAnimation = () => {
-        setTimeout(() => { this.CardsCarousel(); }, 1000);
+      this.startTmout =   setTimeout(() => { this.CardsCarousel(); }, 1000);
     }
 
 

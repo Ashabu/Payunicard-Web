@@ -1,15 +1,18 @@
-import React, { useEffect }from 'react';
+import React, { useEffect, useRef }from 'react';
 import './input.scss'
 import Validation from '../InputValidation/Validation'
 
 function Input(props) {
+    const validateRef = useRef();
     useEffect(()=>{
-        Validation.Set = Input;
+        Validation.Set = validateRef;
+        return () => Validation.removeValidateMe(validateRef)
     }, [])
 
     return (
-        <div>
-            <input {...props} />
+        <div ref= {validateRef}>
+            <input {...props}  />
+            <span style={{color: 'red'}}></span>
         </div>    
     );
 }

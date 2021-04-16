@@ -6,6 +6,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@font-face {
+  font-family: 'FiraGO BOLD';
+  src: url('/src/Assets/Fonts/FiraGO-Bold.ttf');
+}
+@font-face {
+  font-family: 'FiraGO MEDIUM';
+  src: url('/src/Assets/Fonts/FiraGO-Medium.ttf');
+}
+@font-face {
+  font-family: 'FiraGO REGULAR';
+  src: url('/src/Assets/Fonts/FiraGO-Regular.ttf');
+}
+@font-face {
+  font-family: 'FiraGO BOOK';
+  src: url('/src/Assets/Fonts/FiraGO-Book.ttf');
+}
+
+
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

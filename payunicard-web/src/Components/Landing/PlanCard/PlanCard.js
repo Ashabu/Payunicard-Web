@@ -1,7 +1,8 @@
 import React from 'react';
 import './planCard.scss';
 import PropTypes from "prop-types";
-import Button from '../../UI/Button/Button'
+import Button from '../../UI/Button/Button';
+import Lang from '../../../Services/SetLang';
 
 const PlanCard = (props) => {
     const getPlanColor =(planType) => {
@@ -20,14 +21,14 @@ const PlanCard = (props) => {
         }
         
     }
-        const {paketTypeId, title, priceAnnual, currency, content } = props.card;
+        const {paketTypeId, paketCode, priceAnnual, currency, content } = props.card;
 
 
     return (
         <div className = {getPlanColor(paketTypeId).class}>
             <div className = 'PlanHeader'>  
                 <div className = 'PlanTitle'>
-                    <span>{title}</span>
+                    <span>{paketCode}</span>
                 </div>
                 <div className = 'PlanDetails'>
                     <span>{priceAnnual}</span>
@@ -46,7 +47,7 @@ const PlanCard = (props) => {
                     ))}
                 </div>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
-                    <Button buttonClass='PlanButton'>გაიგე მეტი</Button>
+                    <Button buttonClass='PlanButton'>{Lang.tr('ui.learnMore')}</Button>
                 </div>
                     
         </div>
@@ -55,7 +56,7 @@ const PlanCard = (props) => {
 
 PlanCard.propTypes= {
     paketTypeId: PropTypes.number,
-    title: PropTypes.string,
+    paketCode: PropTypes.string,
     currency: PropTypes.string,
     payDuration: PropTypes.string,
     content: PropTypes.array,

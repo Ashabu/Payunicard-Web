@@ -49,28 +49,7 @@
             
     }
     .La-second-container {
-        .uni-service-wrap {
-            display: flex;
-            flex-flow: column;
-            justify-content: space-between;
-            width: 556px;
-            height: 397px;
-            
-            .bullets {
-                display: inline-block;
-                width: 15px;
-                height: 15px;
-                border: 1px solid #C4C4C4;
-                border-radius: 50%;
-                margin: 0 15px;
-                cursor: pointer;
-
-                 &.active {
-                    background: #94dd34;
-                    border: none;
-                }
-            }
-        }   
+        
     }    
     .La-third-container{
         background-color: #FAFAFA;
@@ -91,7 +70,7 @@
 @media (max-width: 800px) {
     .Landing-wrap{
         width: 100%;
-        
+
         .La-first-container{
             flex-flow: column-reverse;
             padding: unset;

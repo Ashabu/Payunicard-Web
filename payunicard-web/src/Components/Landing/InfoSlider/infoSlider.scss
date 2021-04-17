@@ -1,0 +1,29 @@
+.infoSlider {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 143px;
+
+    
+    .uni-service-wrap {
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+        width: 556px;
+        height: 397px;
+        
+        .bullets {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border: 1px solid #C4C4C4;
+            border-radius: 50%;
+            margin: 0 15px;
+            cursor: pointer;
+
+             &.active {
+                background: #94dd34;
+                border: none;
+            }
+        }
+    }   
+}

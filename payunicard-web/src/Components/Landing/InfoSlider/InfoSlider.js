@@ -5,8 +5,9 @@ import SliderInfo from '../../SliderInfo/SliderInfo';
 import ClickableBulltes from '../../HOC/ClickableBulltes';
 import UIdata from '../../UI/UIdata';
 
-class InfoSlider extends Component {
 
+class InfoSlider extends Component {
+    
     state =  {
         uniServices: UIdata.UniServices,
         curIndex : 0,
@@ -15,7 +16,12 @@ class InfoSlider extends Component {
 
     componentDidMount() {
         this.serviceTmout = setTimeout(this.handleUniServicesSwitch, 500); 
+            
+         
+        
     }
+
+    
 
     componentWillUnmount() {
         clearTimeout(this.serviceTmout);
@@ -30,7 +36,7 @@ class InfoSlider extends Component {
             this.setState({uniServices: serviceObj})
         }
     }
-
+    
 
 
     handleUniServicesSwitch = (i = 0) => {
@@ -69,7 +75,7 @@ class InfoSlider extends Component {
 
     render() {
         return (
-            <div>
+            <div className = 'infoSlider'>
                 <div className = 'Mackbook'>
                         <div className = 'for-mac' style={{backgroundImage: this.state.uniServices.computerImg}}></div>
                         <div className = 'for-phn' style={{backgroundImage: this.state.uniServices.computerImg}} ></div>

@@ -3,6 +3,7 @@ import './sliderInfro.scss'
 import PropTypes from 'prop-types';
 
 const SliderInfo = props => {
+    console.log(props)
     return (
         <div className = 'SliderInfo' >
             <div className = 'service-icon'>

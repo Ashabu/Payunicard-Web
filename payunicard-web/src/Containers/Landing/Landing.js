@@ -9,6 +9,7 @@ import Carousel from '../../Components/Landing/Carousel/Carousel';
 import InfoSlider from '../../Components/Landing/InfoSlider/InfoSlider';
 import PlanCards from '../../Components/Landing/PlanCards/PlanCards';
 
+console.log(Lang.langKey)
 
 
 class Landing extends Component {
@@ -17,6 +18,7 @@ class Landing extends Component {
         isInit : false,
         packages: [],
         priceAnnual: true,
+        langKey : Lang.langKey
     }
     
     componentDidMount(){
@@ -35,6 +37,23 @@ class Landing extends Component {
         // eslint-disable-next-line no-undef
         Presentation.getPackageTypes().then(res => {
             let response = res.data.data.packages.map(p   => {
+                switch (p.paketTypeId) {
+                    case 2:
+                        p.content = Lang.tr('landing.uperaDescription');
+                        debugger
+                        
+                        break;
+                    case 3:
+                        p.content = Lang.tr('landing.uniPlusDescription');
+                        break;    
+                    case 4:
+                        p.content = Lang.tr('landing.uniUltraDescription');
+                        break;
+                
+                    default:
+                        p.content = Lang.tr('landing.walletDescrtiption');
+                        break;
+                }
                 p.content = UIdata.content[0];
                 p.currency = '₾';
                 return p;
@@ -44,14 +63,7 @@ class Landing extends Component {
         
     }
 
-    // shouldComponentUpdate(nextProps, nextState){
-    //     if(this.state.packages !== nextState.packages) {
-    //         return true
-    //     } else {
-    //         return false
-    //     }
-    // }
-
+   
 
     onPayMethod = () => {
         let priceAnnual = this.state.priceAnnual;
@@ -59,8 +71,7 @@ class Landing extends Component {
         this.setState({priceAnnual: priceAnnual})
     }
 
-
-
+   
 
     render() {
 

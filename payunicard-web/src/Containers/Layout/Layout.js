@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Navbar from '../../Components/Navigation/Navbar/NavBar';
 import Footer from '../../Components/Navigation/Footer/Footer';
 import './layout.scss';
-import {Lang} from '../../Constants/index';
 
 
 
@@ -10,11 +9,11 @@ import {Lang} from '../../Constants/index';
 class Layout extends Component {
     render() {
         return (
-            <div>
+            <Fragment>
              <Navbar/>
              {this.props.children}
              <Footer/>
-            </div>
+            </Fragment>
         );
     }
 }

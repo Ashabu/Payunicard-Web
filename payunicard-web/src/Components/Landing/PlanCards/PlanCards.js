@@ -9,7 +9,6 @@ const PlanCards = (props) => {
     let Card = props.plan;
 
     
-    console.log(props.priceAnnual)
         if(!props.priceAnnual) {
             
             Card = Card.filter(plan => plan.paketTypeId !==  2).map(card =>(

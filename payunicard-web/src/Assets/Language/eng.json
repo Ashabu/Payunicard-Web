@@ -2,6 +2,13 @@
     "products" : {
         
     },
+
+    "landing" : {
+        "loyalWallet": "My Everyday Loyal UNIWallet ",
+        "strategicPartner" : "The First Strategic Partner In CISSEE Region"
+
+    },
+
     "auth" : {
         "signUp" : "Sign Up",
         "signIn" : "Sign In",

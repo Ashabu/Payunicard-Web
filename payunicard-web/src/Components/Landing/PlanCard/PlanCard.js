@@ -1,7 +1,7 @@
 import React from 'react';
 import './planCard.scss';
 import PropTypes from "prop-types";
-import Button from '../UI/Button/Button'
+import Button from '../../UI/Button/Button'
 
 const PlanCard = (props) => {
     const getPlanColor =(planType) => {
@@ -54,7 +54,11 @@ const PlanCard = (props) => {
 };
 
 PlanCard.propTypes= {
-
+    paketTypeId: PropTypes.number,
+    title: PropTypes.string,
+    currency: PropTypes.string,
+    payDuration: PropTypes.string,
+    content: PropTypes.array,
 
 }
 export default PlanCard;

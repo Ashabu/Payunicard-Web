@@ -1,4 +1,4 @@
-import {Lang} from './Lang';
+import {Langs} from './Lang';
 
 
-export  {Lang}
+export  {Langs}

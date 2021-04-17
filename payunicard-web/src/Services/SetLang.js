@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import axios from 'axios';
-import {Lang as Langs} from '../Constants/index'
+import {Langs } from '../Constants/index'
 
 class Lang  {
     constructor(){
@@ -26,8 +26,7 @@ getLang = (key, callback) => {
          }
          this.langKey = key;
 
-         if(callback)
-         callback();
+         if(callback) callback();
      })
 
 }
@@ -36,6 +35,7 @@ getLang = (key, callback) => {
 tr =  (key) => {
     try {
         if(!key) return null;
+
         let parts = key.split('.');
         let value = this.translate;
 

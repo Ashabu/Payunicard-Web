@@ -1,0 +1,67 @@
+.PlanCards {
+    padding: 102px 0 143px 0;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+
+
+    .PayDuration {
+        width: 210px;
+        height: 54px;
+        display: flex;
+        justify-content: center;
+        background: #F6F6F6;
+        border: 1px solid #EDEDED;
+        margin-bottom: 14px;
+
+        .PayOption {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            width: 50%;
+            height: 100%;
+            background-color: #EDEDED;
+
+            &.Active {
+                background-color: #FFFFFF;
+                border-radius: 7px;   
+            }
+        }
+    }
+
+    .PlanCards-Header {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        span:nth-child(3) {
+            display: inline-block;
+            margin-bottom: 60px;
+        }       
+           p {
+                font-family: 'FIRAGO MEDIUM';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 36px;
+                line-height: 43px;
+                margin: 0 0 28px 0;
+                -moz-font-feature-settings: "case";
+                -webkit-font-feature-settings: "case";
+                font-feature-settings: "case" on;
+                text-transform: uppercase;
+                color: #130D1E;
+                width: 100%;
+                text-align: center;
+            }
+        
+    }
+    .PlanCards-Body {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+} 

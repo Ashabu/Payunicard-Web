@@ -7,14 +7,17 @@
         align-items: center;
         justify-content: space-between;
 
-            .right-content {
+            .left-content {
                 .uni-wallet {
+                    width: 601px;
+                    height: 116px;
                     font-family: 'FiraGO MEDIUM';
                     font-style: normal;
                     font-weight: 500;
                     font-size: 48px;
                     line-height: 58px;
                     font-feature-settings: 'case' on;
+                    text-transform: uppercase;
                     color: #130D1E;
                 }
                 .visa-partner {
@@ -33,49 +36,17 @@
                 }
                 
             }
-            .mobile-carousel {
+
+            .right-content {
                 display: flex;
                 align-items: center;
-                position: relative;
 
                 .visa-mc {
                     position: relative;
-                    top: 85px;
+                    top: 55px;
                 }
-                
-                .slider-cards {
-                    width: 270px;
-                    height: 120px;
-                    position: absolute;
-                    top: 250px;
-                    left: 112px;
-                    overflow: hidden;
-                  }
-                  
-                  #slideImg {
-                    position: relative;
-                    width: 100%;
-                    display: flex;
-                    flex-direction: row;
-                    img {
-                        width: 160px;
-                        position: absolute;
-                      }
-                      #img1{
-                        left: 0;
-                      }
-                      #img2 {
-                        left: 180px;
-                      }
-                      #img3 {
-                        left: 360px;
-                      }
-                      #img4 {
-                        left: 540px;
-                      }
-                  }
-                  
             }
+            
     }
     .La-second-container {
         .uni-service-wrap {
@@ -104,73 +75,7 @@
     .La-third-container{
         background-color: #FAFAFA;
 
-        .PlanCards {
-            padding: 102px 0 143px 0;
-            display: flex;
-            flex-flow: column;
-            justify-content: center;
-            align-items: center;
-
-
-            .PayDuration {
-                width: 210px;
-                height: 54px;
-                display: flex;
-                justify-content: center;
-                background: #F6F6F6;
-                border: 1px solid #EDEDED;
-                margin-bottom: 14px;
-
-                .PayOption {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-
-                    width: 50%;
-                    height: 100%;
-                    background-color: #EDEDED;
-
-                    &.Active {
-                        background-color: #FFFFFF;
-                        border-radius: 7px;   
-                    }
-                }
-            }
-
-            .PlanCards-Header {
-                display: flex;
-                flex-flow: column;
-                justify-content: center;
-                align-items: center;
-                cursor: pointer;
-
-                span:nth-child(3) {
-                    display: inline-block;
-                    margin-bottom: 60px;
-                }       
-                   p {
-                        font-family: 'FIRAGO MEDIUM';
-                        font-style: normal;
-                        font-weight: 500;
-                        font-size: 36px;
-                        line-height: 43px;
-                        margin: 0 0 28px 0;
-                        -moz-font-feature-settings: "case";
-                        -webkit-font-feature-settings: "case";
-                        font-feature-settings: "case" on;
-                        text-transform: uppercase;
-                        color: #130D1E;
-                        width: 100%;
-                        text-align: center;
-                    }
-                
-            }
-            .PlanCards-Body {
-                width: 100%;
-                display: flex;
-                justify-content: center;
-            }
-        }    
+           
     }
 }    
 
@@ -179,6 +84,26 @@
         .PlanCards-Body {
             flex-wrap: wrap;
             width: 80%;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .Landing-wrap{
+        width: 100%;
+        
+        .La-first-container{
+            flex-flow: column-reverse;
+            padding: unset;
+            justify-content: center;
+
+            .right-content {
+                flex-flow: column-reverse;
+
+                .visa-mc {
+                    position: unset;
+                }
+            }
         }
     }
 }

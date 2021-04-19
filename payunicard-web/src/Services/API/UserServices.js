@@ -27,11 +27,10 @@ class User {
         
     }
 
-    // CheckUser = async (data) => {
-    //     console.log('data',data)
-    //     return ;
+    CheckUser = async (data) => {
+        return await axios.post(`${globalConfig.api_URL}/User/CheckUser`, data);
 
-    // }
+    }
 }
 
 export default new User();

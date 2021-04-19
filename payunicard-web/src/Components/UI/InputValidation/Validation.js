@@ -22,24 +22,27 @@ class Validation {
             let errorSpan = el.current.childNodes[1];
             debugger
             console.log(el.current.childNodes)
-            const rule = inp.getAttribute('rule')?.split(',') || [];
+            const rules = inp.getAttribute('rule')?.split(',') || [];
+            
+            rules.forEach(rule =>{
+                if(rule === 'email') {
+                    if(!this.validateEmail(inp.value)) {
+                       errorSpan.innerHTML = this.errorMessages['email']
+                    } else {
+                     errorSpan.innerHTML ='';
+                     inp.setAttribute('style', 'border: 1px solid green')
+                    }
+                 } else if(rule === 'required') {
+                     if(!this.validateRequired(inp.value)) {
+                        errorSpan.innerHTML = this.errorMessages['required']
+                     } else {
+                      errorSpan.innerHTML ='';
+                      inp.setAttribute('style', 'border: 1px solid green')
+                     }
+                  }
+            })
 
-
-            if(rule === 'email') {
-               if(!this.validateEmail(inp.value)) {
-                  errorSpan.innerHTML = this.errorMessages['email']
-               } else {
-                errorSpan.innerHTML ='';
-                inp.setAttribute('style', 'border: 1px solid green')
-               }
-            } else if(rule === 'required') {
-                if(!this.validateRequired(inp.value)) {
-                   errorSpan.innerHTML = this.errorMessages['required']
-                } else {
-                 errorSpan.innerHTML ='';
-                 inp.setAttribute('style', 'border: 1px solid green')
-                }
-             }
+            
 
         })
     }

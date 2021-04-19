@@ -23,10 +23,8 @@ class Login extends Component {
        User.GetAccessToken().then(res => {
            let token=res.data.access_token;
            localStorage.setItem('token',token);
-          
-        User.GetUserDetails().then(res => {
-            console.log('aqane', res)
-        })
+           this.props.history.push('/Dashboard')
+
 
        })
     }
@@ -43,11 +41,12 @@ class Login extends Component {
         let cData = new FormData();
         cData.append('UserName' , this.state.userName);
 
-            await axios.post(`${globalConfig.api_URL}/User/CheckUser`, cData).then(res => {
+           User.CheckUser(cData).then(res => {
             
             console.log('check user =>', res)
         })
     }     
+
 
     render() {
         // Validation.validate();

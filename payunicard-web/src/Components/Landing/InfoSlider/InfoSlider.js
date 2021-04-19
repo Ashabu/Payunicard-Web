@@ -16,9 +16,6 @@ class InfoSlider extends Component {
 
     componentDidMount() {
         this.serviceTmout = setTimeout(this.handleUniServicesSwitch, 500); 
-            
-         
-        
     }
 
     

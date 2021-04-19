@@ -23,9 +23,15 @@ class User {
 
     GetUserDetails = async () => {
         console.log(globalConfig)
-        return await axios.get(`${globalConfig.api_URL}/User/GetUserDetails`)
+        return await axios.get(`${globalConfig.api_URL}/User/GetUserDetails`);
         
     }
+
+    // CheckUser = async (data) => {
+    //     console.log('data',data)
+    //     return ;
+
+    // }
 }
 
 export default new User();

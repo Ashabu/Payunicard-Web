@@ -44,14 +44,16 @@ a {
 
 
 .unicard-btn {
-    width: 200px;
+    width: 187px;
     height: 54px;
-    border-radius: 7px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
     border: none;
-    outline: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: #130D1e;
+    font-family: 'FIRAGO MEDIUM';
+    font-size: 14px;
+    line-height: 50px;
+    text-align: center;
 }
 
 .button-sm {

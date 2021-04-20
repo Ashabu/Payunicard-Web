@@ -20,21 +20,23 @@ class Validation {
         this.inputs.forEach(el =>{
             let inp = el.current.childNodes[0];
             let errorSpan = el.current.childNodes[1];
-            debugger
+            
             console.log(el.current.childNodes)
             const rules = inp.getAttribute('rule')?.split(',') || [];
             
             rules.forEach(rule =>{
                 if(rule === 'email') {
                     if(!this.validateEmail(inp.value)) {
-                       errorSpan.innerHTML = this.errorMessages['email']
+                       errorSpan.innerHTML = this.errorMessages['email'];
+                       return
                     } else {
                      errorSpan.innerHTML ='';
                      inp.setAttribute('style', 'border: 1px solid green')
                     }
                  } else if(rule === 'required') {
                      if(!this.validateRequired(inp.value)) {
-                        errorSpan.innerHTML = this.errorMessages['required']
+                        errorSpan.innerHTML = this.errorMessages['required'];
+                        return
                      } else {
                       errorSpan.innerHTML ='';
                       inp.setAttribute('style', 'border: 1px solid green')

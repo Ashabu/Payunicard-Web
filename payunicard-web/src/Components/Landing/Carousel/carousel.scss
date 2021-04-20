@@ -67,10 +67,10 @@
   .mobile-carousel {
 
     img {
-    width: 320px;
-  }
+      width: 320px;
+    }
 
-  .slider-cards {
+    .slider-cards {
       width: 170px;
       top: 145px;
       left: 70px;
@@ -80,11 +80,19 @@
       width: 109px;
       position: absolute;
       top: 16px;
-
-      
     }
 
+  }
 
 }
+
+@media (max-width: 800px) {
+  .mobile-carousel {
+    margin-top: 36px;
+    width: 100%;
+    justify-content: center;
+  }
+
 }
+
 

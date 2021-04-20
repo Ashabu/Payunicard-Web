@@ -2,12 +2,15 @@
     
 
     .La-first-container{
-        padding: 115px 143px 127px 143px;
+        width: 100%;
+        max-width: 1600px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding: 0 125px;
 
             .left-content {
+
                 .uni-wallet {
                     width: 601px;
                     height: 116px;
@@ -49,6 +52,7 @@
             
     }
     .La-second-container {
+       
         
     }    
     .La-third-container{
@@ -58,6 +62,8 @@
     }
 }    
 
+     
+
 @media (max-width: 1150px) {
     .PlanCards {
         .PlanCards-Body {
@@ -66,15 +72,38 @@
         }
     }
 }
+@media (max-width: 1280px) {
+    .Landing-wrap {
+        .La-first-container {
+                .left-content {
+                    .uni-wallet {
+                        font-size: 26px;
+                        line-height: 31px;
+                    }
+
+                    .appstore-logos {
+                        img {
+                            width: 130px;
+                            height: 40px;
+                        }
+                    }
+                } 
+        }
+    }
+}  
+
 
 @media (max-width: 800px) {
     .Landing-wrap{
         width: 100%;
+        display: flex;
+        justify-content: center;
 
         .La-first-container{
             flex-flow: column-reverse;
-            padding: unset;
+            padding: 0 25px;
             justify-content: center;
+            box-sizing: border-box;
 
             .right-content {
                 flex-flow: column-reverse;
@@ -83,6 +112,69 @@
                     position: unset;
                 }
             }
+
+            .left-content {
+                display: flex;
+                flex-flow: column;
+                align-items: center;
+                width: 100%;
+
+                .uni-wallet {
+                    width: 100%;
+                    height: auto;
+                    text-align: center;
+                    margin-top: 25px;
+                    
+                }
+
+                .visa-partner {
+                    font-size: 16px;
+                }
+            }
         }
     }
 }
+
+
+@media (max-width: 600px) {
+    .Landing-wrap {
+        .La-first-container { 
+            .left-content {
+                .visa-partner {
+                    font-size: 12px;
+                    margin-top: unset;
+
+                    span {
+                        img {
+                            width: 23px;
+                        }
+                    }
+                }
+            }
+        }
+    }                
+}
+
+@media (max-width: 375px) {
+    .Landing-wrap {
+        .La-first-container { 
+            .left-content {
+
+                .uni-wallet {
+                    font-size: 20px;
+                }
+                .visa-partner {
+                    font-size: 12px;
+                    margin-top: unset;
+
+                    span {
+                        img {
+                            width: 23px;
+                        }
+                    }
+                }
+            }
+        }
+    }                
+}
+

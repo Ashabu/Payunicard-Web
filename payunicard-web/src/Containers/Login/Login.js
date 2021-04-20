@@ -20,7 +20,9 @@ class Login extends Component {
     }
 
     login = () => {
-       User.GetAccessToken().then(res => {
+        Validation.validate();
+        debugger
+        User.GetAccessToken().then(res => {
            let token=res.data.access_token;
            localStorage.setItem('token',token);
            this.props.history.push('/Dashboard')

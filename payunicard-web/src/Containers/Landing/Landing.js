@@ -40,8 +40,6 @@ class Landing extends Component {
                 switch (p.paketTypeId) {
                     case 2:
                         p.content = Lang.tr('landing.uperaDescription');
-                        debugger
-                        
                         break;
                     case 3:
                         p.content = Lang.tr('landing.uniPlusDescription');
@@ -76,7 +74,6 @@ class Landing extends Component {
     render() {
 
         return (
-            <div>
                 <Layout>
                     <div className = 'Landing-wrap'>
                         <div className = 'La-first-container'>
@@ -111,7 +108,6 @@ class Landing extends Component {
                         </div>
                     </div>
                 </Layout>
-            </div>
         );
     }
 }

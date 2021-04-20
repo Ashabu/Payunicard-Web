@@ -33,10 +33,11 @@ const  NavBar = () => {
                 </Link>    
             </div>
             <div style={{display: 'flex', alignItems:'center'}}>
-                <Link to = '/register' className = 'unicard-btn white'>{Lang.tr('auth.signUp')}</Link>
-                <Link to = '/login' className = 'unicard-btn green'>{Lang.tr('auth.signIn')}</Link>
-                <Button clicked={onChangeLang}
-                buttonClass = 'lang-btn'><img src = {`../../../Assets/Images/LandingImg/flag_${currentLang[1][1]}.svg`} alt = 'lang-logo' /></Button>
+                <div className = 'auth-links'>
+                    <Link to = '/register' className = 'unicard-btn white'>{Lang.tr('auth.signUp')}</Link>
+                    <Link to = '/login' className = 'unicard-btn green'>{Lang.tr('auth.signIn')}</Link>
+                </div>    
+                <img className = 'lang-btn' src = {`../../../Assets/Images/LandingImg/flag_${currentLang[1][1]}.svg`} onClick = {onChangeLang} alt = 'lang-logo' />
             </div>
         </div>
     )

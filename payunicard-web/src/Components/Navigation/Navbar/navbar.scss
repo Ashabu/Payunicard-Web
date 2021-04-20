@@ -3,7 +3,6 @@
     height: 98px;
     background-color: #FFFFFF;
     border-bottom: 1px solid #EBEBEB;
-    padding: 0 86px 0 36px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,16 +19,35 @@
                 }
         }
     }
-    
+
+.auth-links {
+    display: flex;
+    align-items: center;
+}    
 
 .lang-btn {
     height: 38px;
+    width: 38px;
+    margin-left: 50px;
     background: none;
     border: none;
     outline: none;
     cursor: pointer;
-    img {
-        width: 100%;
-        height: 100%;
+}
+
+
+@media (max-width: 800px) {
+    .auth-links {
+        display: none;
     }
+}
+
+@media (max-width: 700px) {
+    .unilogo {
+        img {
+            width: 80px;
+            height: 43px;
+        }    
+    }
+    
 }

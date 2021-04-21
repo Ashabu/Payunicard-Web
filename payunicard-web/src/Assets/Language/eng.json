@@ -3,6 +3,23 @@
         "learnMore" : "Learn More"
     },
 
+    "footer" : {
+        "individuals" : "Individuals",
+        "generalInfo" : "General Information",
+        "tariffs" : "Tariffs",
+        "comparePlan" : "Compare Plan",
+        "transfers" : "Transfers",
+        "paymentCards" : "Payment Cards",
+        "eWallet": "E-Wallet",
+        "utilityBills" : "Utility Bills",
+        "bonusCards" : "Unicard Bonus Cards",
+        "aboutUs" : "About Us",
+        "termsOfUse" : "Terms of Use",
+        "faq" : "FAQ (Frequently Asked Quuestions)",
+        "webTermsOfUse" : "Website Terms of Use" 
+    },
+
+
     "landing" : {
         "loyalWallet": "My Everyday Loyal UNIWallet ",
         "strategicPartner" : "The First Strategic Partner In CISSEE Region",

@@ -11,8 +11,8 @@ class Layout extends Component {
         return (
             <Fragment>
              <Navbar/>
-             {/* {this.props.children}
-             <Footer/> */}
+             {this.props.children}
+             <Footer/>
             </Fragment>
         );
     }

@@ -96,7 +96,7 @@ footer {
                     font-family: 'FiraGO MEDIUM';
                     font-size: 20px;
                     text-align: left;
-                    color: #191c1f;
+                    color: #6B6B6B;                    ;
                     margin-bottom: 25px;
                     font-weight: 500;
                     -moz-font-feature-settings: "case";
@@ -237,7 +237,16 @@ footer {
 @media (max-width: 1124px) {
     footer {
         .footer-center {
-            padding: 0px;
+            padding: 0 20px;
+            .first-container {
+                .footer-head {
+                    .head-content {
+                        span {
+                            font-size: 30px;
+                        }
+                    }
+                }
+            }
 
             .second-container {
                 .appstore-logos {
@@ -253,27 +262,131 @@ footer {
         padding: 0 20px;
 
         .footer-center {
-            padding: 0 55px;
+            padding: 75px 35px;
 
             .first-container {
                 flex-direction: column;
                 justify-content: center;
-                height: 250px !important;
+                height: auto;
 
+                .footer-head {
+                    .head-content {
+                        margin-bottom: 48px;
+                    }
+                }
                 .partners {
                     position: unset;
+                    margin-bottom: 48px;
+
+                    .partner-logos {
+                        .wall {
+                            height: 56px;
+                        }
+                    }
+
                 }
             }
             .second-container {
+                width: auto;
+                .left-content {
+                    margin-bottom: 35px;
+                }
                 flex-flow: column;
                 .appstore-logos {
                     position: unset;
-                    img {
-                        width: 186px;
-                        height: 57px;
+                    margin: 67px 0 90px 0;
+
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 525px) {
+    footer {
+        padding: unset;
+
+        .footer-center {
+            padding: 75px 25px;
+
+            .first-container {
+                .partners {
+                    .partner-logos { 
+                        img {
+                            &:first-child {
+                                width: 87px;
+                                height: 27px;
+                                margin-right: 12px;
+                            }
+                            &:nth-child(3) {
+                                height: 41px;
+                            }
+                            &:last-child {
+                                width: 55px;
+                                height: 34px;
+                                margin-left: 14px;
+                            }
+                        }
+                    } 
+                } 
+                .footer-head {
+                    .head-content {
+                        span {
+                            font-size: 26px;
+                        }
                     }
                 }
             }
         }
     }
+}
+
+@media (max-width: 400px) {
+    footer {
+        padding: unset;
+
+        .footer-center {
+            padding: 75px 25px;
+
+            .first-container {
+                .partners {
+                    .partner-logos { 
+                        img {
+                            &:first-child {
+                                width: 87px;
+                                height: 27px;
+                                margin-right: 12px;
+                            }
+                            &:nth-child(3) {
+                                height: 41px;
+                            }
+                            &:last-child {
+                                width: 55px;
+                                height: 34px;
+                                margin-left: 14px;
+                            }
+                        }
+                    } 
+                } 
+                .footer-head {
+                    .head-content {
+                        span {
+                            font-size: 20px;
+                        }
+                    }
+                }
+            }
+            .second-container {
+                
+                .appstore-logos {
+                   img {
+                       width: 141px;
+
+                   }
+
+                }
+            }
+        }
+    }
+
 }

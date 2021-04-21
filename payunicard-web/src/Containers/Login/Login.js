@@ -40,8 +40,9 @@ class Login extends Component {
     
         
     handleCheckUser = async () => {
-        let cData = new FormData();
-        cData.append('UserName' , this.state.userName);
+        let cData = {
+            UserName: this.state.userName
+        }
 
            User.CheckUser(cData).then(res => {
             

@@ -1,16 +1,14 @@
 footer {
-    width: 100%;
+    width: auto;
     position: relative;
     background: #ececec;
+    padding: 0 217px;
 
     .footer-center {
         display: flex;
         height: auto;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 0 217px;
-
+        
         .first-container {
             height: 180px;
             width: 100%;
@@ -130,6 +128,125 @@ footer {
             }
         }
     }
+
+    .third-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100px;
+
+        .contact {
+            display: flex;
+            align-items: center;
+            .social-btns .btn, .social-btns .btn:before,
+            .social-btns .btn .fa {
+                -webkit-transition: all 0.35s;
+                transition: all 0.35s;
+                -webkit-transition-timing-function: cubic-bezier(0.31, -0.105, 0.43, 1.59);
+                transition-timing-function: cubic-bezier(0.31, -0.105, 0.43, 1.59);
+            }
+
+            .social-btns .btn:before {
+                top: 90%;
+                left: -110%;
+            }
+        
+            .social-btns .btn .fa {
+                -webkit-transform: scale(0.8);
+                transform: scale(0.8);
+            }
+        
+            .social-btns .btn.facebook:before {
+                background-color: #3b5998;
+            }
+        
+            .social-btns .btn.facebook .fa {
+                color: #3b5998;
+            }
+        
+            .social-btns .btn.linkedin:before {
+                background-color: #0e76a8;
+            }
+        
+            .social-btns .btn.linkedin .fa {
+                color: #0e76a8;
+            }
+        
+            .social-btns .btn.google:before {
+                background-color: #dc4a38;
+            }
+        
+            .social-btns .btn.google .fa {
+                color: #dc4a38;
+            }
+        
+            .social-btns .btn.dribbble:before {
+                background-color: #f26798;
+            }
+        
+            .social-btns .btn.dribbble .fa {
+                color: #f26798;
+            }
+        
+            .social-btns .btn.skype:before {
+                background-color: #00aff0;
+            }
+        
+            .social-btns .btn.skype .fa {
+                color: #00aff0;
+            }
+        
+            .social-btns .btn:focus:before,
+            .social-btns .btn:hover:before {
+                top: -10%;
+                left: -10%;
+            }
+
+    
+
+            .social-btns {
+                 margin: auto;
+                 display: flex;
+
+                 .btn {
+                     display: inline-block;
+                     background-color: #fff;
+                     width: 50px;
+                     height: 50px;
+                     line-height: 90px;
+                     text-align: center;
+                     position: relative;
+                     overflow: hidden;
+                     border-radius: 28%;
+                     box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.22);
+                     opacity: 0.99;
+                     display: flex;
+                     align-items: center;
+                     justify-content: center;
+
+                     &::before {
+                             content: "";
+                             width: 120%;
+                             height: 120%;
+                             position: absolute;
+                             -webkit-transform: rotate(45deg);
+                             transform: rotate(45deg)
+                     }
+                 
+                     .fa {
+                         font-size: 25px;
+                     }
+                 
+                     &:focus .fa , &:hover .fa {
+                         color: #fff;
+                         -webkit-transform: scale(1);
+                         transform: scale(1);
+
+                     }
+                 }
+            }               
+        }
+    }
 }
 
 
@@ -165,9 +282,8 @@ footer {
 
 @media (max-width: 1580px) {
     footer {
+        padding: 0 130px;
         .footer-center {
-            padding: 0 130px;
-
             .second-container {
                 .appstore-logos {
                 right: 135px;
@@ -236,8 +352,9 @@ footer {
 
 @media (max-width: 1124px) {
     footer {
+        padding: 0 25px;
         .footer-center {
-            padding: 0 20px;
+            
             .first-container {
                 .footer-head {
                     .head-content {
@@ -259,10 +376,9 @@ footer {
 
 @media (max-width: 800px) {
     footer {
-        padding: 0 20px;
+        padding: 75 55px;
 
         .footer-center {
-            padding: 75px 35px;
 
             .first-container {
                 flex-direction: column;
@@ -294,6 +410,7 @@ footer {
                 flex-flow: column;
                 .appstore-logos {
                     position: unset;
+                    justify-content: center;
                     margin: 67px 0 90px 0;
 
                 }
@@ -304,11 +421,12 @@ footer {
 
 @media (max-width: 525px) {
     footer {
-        padding: unset;
+        width: auto;
+        padding: 75px 25px;
 
         .footer-center {
-            padding: 75px 25px;
-
+            padding: unset;
+            align-items: unset;
             .first-container {
                 .partners {
                     .partner-logos { 
@@ -343,10 +461,8 @@ footer {
 
 @media (max-width: 400px) {
     footer {
-        padding: unset;
 
         .footer-center {
-            padding: 75px 25px;
 
             .first-container {
                 .partners {

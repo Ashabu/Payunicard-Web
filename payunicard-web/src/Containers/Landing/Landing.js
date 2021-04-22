@@ -75,7 +75,7 @@ class Landing extends Component {
 
         return (
                 <Layout>
-                    {/* <div className = 'Landing-wrap'>
+                    <div className = 'Landing-wrap'>
                         <div className = 'La-first-container'>
                             <div className = 'left-content'>
                                 <div className = 'uni-wallet'>
@@ -106,7 +106,7 @@ class Landing extends Component {
                                 priceAnnual = { this.state.priceAnnual }
                             />
                         </div>
-                    </div> */}
+                    </div>
                 </Layout>
         );
     }

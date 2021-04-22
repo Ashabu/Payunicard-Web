@@ -52,7 +52,9 @@ const Footer = () => {
                             <img src = '../../../Assets/Images/LandingImg/AppStore.png'  alt='app-store' />
                         </div>
                     </div>
-                    {/* <div className='third-container'>
+                    
+                </div>  
+                <div className='third-container'>
                         <span>©2020 შპს „ფეი უნიქარდი”</span>
                         <div className='contact'>
                             <span>კონტაქტი</span>
@@ -61,8 +63,7 @@ const Footer = () => {
                                 <a className='btn linkedin' href='https://www.linkedin.com/company/payunicard' target='_blank'  rel='noreferrer'><i className='fa fa-linkedin'></i></a>
                             </div>
                         </div>
-                    </div> */}
-                </div>    
+                    </div>  
             </footer>
     );
 };

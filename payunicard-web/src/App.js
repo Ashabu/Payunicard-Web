@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 import Routing from './Routing/Routing';
 import Language from './Services/SetLang';
+import LangContext from './Contexsts/lang-context';
 
 
 
@@ -11,7 +12,8 @@ import Language from './Services/SetLang';
 class App extends Component {
   
   state = {
-    isLoaded: false
+    isLoaded: false,
+    activeLang: Language.langKey
   }
 
   setInit = () => {
@@ -34,10 +36,11 @@ class App extends Component {
   render() {
     if(!this.state.isLoaded) return null
     return (
-        
+        <LangContext.Provider value={{lang: this.state.activeLang}}>
           <div className= "App">
             <Routing/>
           </div>
+        </LangContext.Provider>  
     );
   }
 }

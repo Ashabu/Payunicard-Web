@@ -1,77 +1,81 @@
 {
-    "ui" : {
-        "learnMore" : "Learn More"
+    "ui": {
+        "learnMore": "Learn More"
     },
-
-    "footer" : {
-        "individuals" : "Individuals",
-        "generalInfo" : "General Information",
-        "tariffs" : "Tariffs",
-        "comparePlan" : "Compare Plan",
-        "transfers" : "Transfers",
-        "paymentCards" : "Payment Cards",
+    "footer": {
+        "individuals": "Individuals",
+        "generalInfo": "General Information",
+        "tariffs": "Tariffs",
+        "comparePlan": "Compare Plan",
+        "transfers": "Transfers",
+        "paymentCards": "Payment Cards",
         "eWallet": "E-Wallet",
-        "utilityBills" : "Utility Bills",
-        "bonusCards" : "Unicard Bonus Cards",
-        "aboutUs" : "About Us",
-        "termsOfUse" : "Terms of Use",
-        "faq" : "FAQ (Frequently Asked Quuestions)",
-        "webTermsOfUse" : "Website Terms of Use" 
+        "utilityBills": "Utility Bills",
+        "bonusCards": "Unicard Bonus Cards",
+        "aboutUs": "About Us",
+        "termsOfUse": "Terms of Use",
+        "faq": "FAQ (Frequently Asked Quuestions)",
+        "webTermsOfUse": "Website Terms of Use"
     },
-
-
-    "landing" : {
+    "landing": {
         "loyalWallet": "My Everyday Loyal UNIWallet ",
-        "strategicPartner" : "The First Strategic Partner In CISSEE Region",
+        "strategicPartner": "The First Strategic Partner In CISSEE Region",
         "walletTitle": "Free lifetime UNIwallet Plan",
-        "walletDescrtiption": ["Free kickoff plan - best option for users with limited access to banking servicesAffordable and confidential financial services online","E-wallet account for receiving & transferring funds, online payment of utility bills","Free account & online banking", "Utility payments without verification"],
+        "walletDescrtiption": [
+            "Free kickoff plan - best option for users with limited access to banking servicesAffordable and confidential financial services online",
+            "E-wallet account for receiving & transferring funds, online payment of utility bills",
+            "Free account & online banking",
+            "Utility payments without verification"
+        ],
         "uperaTitle": "Best UNIwallet Plan for Juniors and Family online Spendings",
-        "uperaDescription:" : ["Special plan for minors & online expenses","Alternative bank card for free","Account & card without age restriction","Open & verify the account, order UNIcard Visa/Mastercard cards online","Payment of utilities with UNIpoints – top rate 10 points – 1 GEL", "Card protected from high-risk transactions"],
+        "uperaDescription:": [
+            "Special plan for minors & online expenses",
+            "Alternative bank card for free",
+            "Account & card without age restriction",
+            "Open & verify the account, order UNIcard Visa/Mastercard cards online",
+            "Payment of utilities with UNIpoints – top rate 10 points – 1 GEL",
+            "Card protected from high-risk transactions"
+        ],
         "uniPlusTitle": "Premium UNIwallet Plan",
-        "uniPlusDescription:" : ["Exclusive plan – for daily beneficial payments","Card customized for entertainment business","2 free currency accounts", "Free online banking & SMS service","Free UNIcard Visa/Mastercard card delivered in Tbilisi","Free UNIpoints upon first account top up","Collect UNIpoints without limits"],
+        "uniPlusDescription:": [
+            "Exclusive plan – for daily beneficial payments",
+            "Card customized for entertainment business",
+            "2 free currency accounts",
+            "Free online banking & SMS service",
+            "Free UNIcard Visa/Mastercard card delivered in Tbilisi",
+            "Free UNIpoints upon first account top up",
+            "Collect UNIpoints without limits"
+        ],
         "uniUltraTitle": "Most Powerful UNIwallet Plan",
-        "uniUltraDescription:" : ["Premium plan - payments for special clients","Highest withdrawal/spending limits","3 free currency accounts","Free online banking & SMS service","Free UNIcard Visa/Mastercard card delivered in Tbilisi","Free UNIpoints upon first account top up{Collect UNIpoints at the best rate","Free withdrawal from VTB bank ATMs"],
-        "myUniWallet" : "My Uniwallet",
-        "myUniWalletDescription" : ["All In One App","UNIcard Integrated E-Wallet","Funds  Managed Confidentially","Simple & Affordable  Product for Everyone"],
-        "myProducts": "My Products",
-        "myProductsDescription": ["International Prepaid Cards - UNIcard co-brand Visa/Mastercard","Preferred Currency Priority","Flexible Tariff Plans","Card & Account Opened Online","Card Delivery Countrywide"],
-        "myBills": "My Bills",
-        "myBillsDescription" : ["Online Payments","Utility Payments with UNIpoints","Payment Templates"],
-        "myTransactions": "My Transactions",
-        "myTransactionsDescription" : ["Free Transfer to Own Accounts","Free Transfer to other’s UNIwallet","Transfer to Bank","Transfer Templates","Exchange"],
-        "myTransfer": "My Transfers",
-        "myTransferDescription" : ["Get Transfers Directly to Visa/Mastercard Cards","UNIpoints Collected on Purchase Transaction"],
-        "myLoiality": "My Loiality",
-        "myLoialityDescription" : ["Collect UNIpoints Worldwide & Online","Utility Payments with UNIpoints","UNIpoints & Special Offers at Partner Companies","Cashback","Discounts"]
-
-
-        
-
-
+        "uniUltraDescription:": [
+            "Premium plan - payments for special clients",
+            "Highest withdrawal/spending limits",
+            "3 free currency accounts",
+            "Free online banking & SMS service",
+            "Free UNIcard Visa/Mastercard card delivered in Tbilisi",
+            "Free UNIpoints upon first account top up{Collect UNIpoints at the best rate",
+            "Free withdrawal from VTB bank ATMs"
+        ]
     },
-
-    "auth" : {
-        "signUp" : "Sign Up",
-        "signIn" : "Sign In",
-        "password" : "Password",
-        "repeatePasswprd" : "Repeate Password",
-        "changePassword" : "Change Password",
-        "forgotPasswprd" : "Forgot Password?",
+    "auth": {
+        "signUp": "Sign Up",
+        "signIn": "Sign In",
+        "password": "Password",
+        "repeatePasswprd": "Repeate Password",
+        "changePassword": "Change Password",
+        "forgotPasswprd": "Forgot Password?",
         "username": "User Name"
     },
-
-    "user" : {
-        "name" : "Name",
-        "surname" : "Surname",
-        "personalNumber" : "Personal Number",
-        "email" : "E-mail",
-        "phoneNumber" : "Phone Number"
-
+    "user": {
+        "name": "Name",
+        "surname": "Surname",
+        "personalNumber": "Personal Number",
+        "email": "E-mail",
+        "phoneNumber": "Phone Number"
     },
-
-    "location" : {
-        "country" : "Country",
-        "city" : "City",
+    "location": {
+        "country": "Country",
+        "city": "City",
         "address": "Address"
     }
 }

@@ -4,33 +4,39 @@ import './carousel.scss';
 
 class Carousel extends Component {
 
-    state = {
-        carousel: {
-            visaPos: 0,
-            mcPos: 180,
-            visaNextPos: 360,
-            mcNextPos: 540,
-            lastPos: -360,
-            startPos: 360,
-        },
+    constructor(props) {
+        super(props) 
+        this.carouselConfig = {
+            carousel: {
+                visaPos: props.visaPos || 0,
+                mcPos: props.visaPos || 180,
+                visaNextPos: props.visaPos || 360,
+                mcNextPos: props.visaPos || 540,
+                lastPos: props.visaPos || -360,
+                startPos: props.visaPos || 360,
+            }
+        }
+
+        
+        
+
     }
 
-
-    componentDidMount(){
+    componentDidMount() {
         window.addEventListener('resize', this.onReportWindowSize);
         this.startCarouselAnimation();
-
     }
-
+   
     componentWillUnmount() {
         window.removeEventListener('resize', this.onReportWindowSize);
         clearTimeout(this.startTmout);
     }
 
     
+    
 
     CardsCarousel = () => {
-        let carousel = {...this.state.carousel}
+        let carousel = {...this.carouselConfig.carousel}
         let fVisa = document.getElementById('img1');
         let fMc = document.getElementById('img2');
         let sVisa = document.getElementById('img3');
@@ -58,7 +64,7 @@ class Carousel extends Component {
             carousel.mcNextPos = carousel.startPos;
         }    
 
-        this.setState({carousel: carousel})
+        this.carouselConfig.carousel = carousel;
 
         requestAnimationFrame(this.CardsCarousel);
         
@@ -72,7 +78,7 @@ class Carousel extends Component {
     onReportWindowSize = () => {
         let pageWidth = window.innerWidth;
         console.log(pageWidth)
-        let carousel = {...this.state.carousel};
+        let carousel = {...this.carouselConfig.carousel};
         switch (pageWidth) {
             case pageWidth > 1580:
                 carousel.visaPos = 0;
@@ -118,7 +124,7 @@ class Carousel extends Component {
                 break;
         }
         
-        this.setState({carousel: carousel});
+        this.carouselConfig.carousel = carousel;
 
     }
 

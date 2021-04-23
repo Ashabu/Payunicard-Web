@@ -9,8 +9,9 @@ import Carousel from '../../Components/Landing/Carousel/Carousel';
 import InfoSlider from '../../Components/Landing/InfoSlider/InfoSlider';
 import PlanCards from '../../Components/Landing/PlanCards/PlanCards';
 import Button from '../../Components/UI/Button/Button';
+import LangContext from '../../Contexsts/lang-context';
 
-console.log(Lang.langKey)
+
 
 class Landing extends Component {
 
@@ -18,12 +19,18 @@ class Landing extends Component {
         isInit : false,
         packages: [],
         priceAnnual: true,
-        langKey : Lang.langKey
+        langKey : Lang.langKey,
+        curIndex: 0,
+        serviceObj: UIdata.UniServices
     }
     
     componentDidMount(){
         this.serviceTmout = setTimeout(this.handleUniServicesSwitch, 500); 
         this.testCall()
+
+        this.langSubscribe = Lang.subscribe(_ => {
+            this.setState({langKey: _})
+        })
     }
 
     componentWillUnmount() {
@@ -61,7 +68,19 @@ class Landing extends Component {
         
     }
 
-   
+   updateSlider = (index) => {
+       this.setState(prevState => {
+           let state = {...prevState};
+           let activeIndex = state.serviceObj.findIndex(element =>element.active === true);
+           
+           if(activeIndex >= 0) state.serviceObj[activeIndex].active = false;
+           state.serviceObj[index].active = true;
+           state.computerImg = `url(${state.serviceObj[index].computerImg[this.state.langKey]})`;
+           state.phoneImg = `url(${state.serviceObj[index].phoneImg[this.state.langKey]})`;
+           state.curIndex = index;
+           return state;
+       })
+   }
 
     onPayMethod = () => {
         let priceAnnual = this.state.priceAnnual;
@@ -72,8 +91,9 @@ class Landing extends Component {
    
 
     render() {
-
+        console.log(this.state.langKey)
         return (
+            <LangContext.Consumer>
                 <Layout>
                     <div className = 'Landing-wrap'>
                         <div className = 'La-first-container'>
@@ -97,7 +117,11 @@ class Landing extends Component {
                             </div>
                         </div>
                         <div className = 'La-second-container'>
-                            <InfoSlider />   
+                            <InfoSlider 
+                                lang = {this.state.langKey}
+                                sliderConfig = {this.state.serviceObj} 
+                                curIndex = {this.state.curIndex} 
+                                onSlideChange = {(index) => this.updateSlider(index)}/>   
                         </div>    
                         
                         <div className = 'La-fourth-container'>
@@ -125,6 +149,7 @@ class Landing extends Component {
                         </div>
                     </div>
                 </Layout>
+                </LangContext.Consumer>
         );
     }
 }

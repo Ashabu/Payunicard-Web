@@ -8,9 +8,9 @@ import UIdata from '../../Components//UI/UIdata';
 import Carousel from '../../Components/Landing/Carousel/Carousel';
 import InfoSlider from '../../Components/Landing/InfoSlider/InfoSlider';
 import PlanCards from '../../Components/Landing/PlanCards/PlanCards';
+import Button from '../../Components/UI/Button/Button';
 
 console.log(Lang.langKey)
-
 
 class Landing extends Component {
 
@@ -99,12 +99,29 @@ class Landing extends Component {
                         <div className = 'La-second-container'>
                             <InfoSlider />   
                         </div>    
+                        
+                        <div className = 'La-fourth-container'>
+                            <div className = 'visa-mc-text'>
+                                <span>უნიქარდთან ერთობლივი <br/> <b>Visa/Mastercard</b> ბარათები</span>
+                                <span>ბარათი, რომელსაც არ სჭირდება საბანკო ანგარიში! <br/> გადაიხადე  და  დააგროვე უნიქულები ყველგან, <br/> სადაც <b>Visa/Mastercard დაგხვდება! </b> </span>
+                            </div>
+                            <div className = 'visa-mc-images'>
+                                <img src = '../../Assets/Images/LandingImg/Visa-Card.png '  alt = 'card' />
+                                <img src = '../../Assets/Images/LandingImg/Master-Card.png'  alt = 'card' />
+                            </div>
+
+                        </div>
                         <div className = 'La-third-container'>
                             <PlanCards 
                                 plan = { this.state.packages }
                                 onPayMethod = { this.onPayMethod }
                                 priceAnnual = { this.state.priceAnnual }
                             />
+                        </div>
+                        <div className = 'La-last-container'>
+                            <span>კონფიდენციალობის მაღალი სტანდარტი, <br/> უკონტაქტო გადახდები, უსაფრთხო გადარიცხვები</span>
+                            <span>გახსენი ანგარიში ონლაინ!</span>
+                            <Button>დაიწყე</Button>
                         </div>
                     </div>
                 </Layout>

@@ -64,7 +64,7 @@ const Footer = () => {
                                     <span className = 'btn fa'><img src = '../../../Assets/Images/fb-icon.png' alt = 'fb-icon'/></span>
                                 </a>
                                 <a href = 'https://www.linkedin.com/company/payunicard' target = '_blank' rel="noreferrer">
-                                    <span className = 'btn'><img src = '../../../Assets/Images/in-icon.png' alt = 'in-icon' /></span>
+                                    <span className = 'btn in'><img src = '../../../Assets/Images/in-icon.png' alt = 'in-icon' /></span>
                                 </a>
                                 {/* <a className='btn facebook' href='https://www.facebook.com/payunicard' target='_blank' rel='noreferrer'><i className='fa fa-facebook'></i></a>
                                 <a className='btn linkedin' href='https://www.linkedin.com/company/payunicard' target='_blank'  rel='noreferrer'><i className='fa fa-linkedin'></i></a> */}

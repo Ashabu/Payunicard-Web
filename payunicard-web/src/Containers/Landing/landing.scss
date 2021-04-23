@@ -2,12 +2,10 @@
     
 
     .La-first-container{
-        width: 100%;
-        max-width: 1600px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 125px;
+        padding: 115px 125px 318px 125px;
 
             .left-content {
 
@@ -60,9 +58,87 @@
 
            
     }
-}    
 
-     
+    .La-fourth-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 280px 143px 168px 143px;
+
+        .visa-mc-images {
+            img {
+                &:nth-child(2) {
+                    margin-left: 30px;
+                }
+            }
+        }
+        .visa-mc-text {
+            display: flex;
+            flex-flow: column;
+            span {
+                &:first-child {
+                    font-family: 'FIRAGO REGULAR';
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 37px;
+                    line-height: 48px;
+                    -moz-font-feature-settings: "case";
+                    -webkit-font-feature-settings: "case";
+                    font-feature-settings: "case" on;
+                    text-transform: uppercase;
+                    color: #130D1E;
+                }
+
+                &:nth-child(2) {
+                    font-family: 'FIRAGO REGULAR';
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 20px;
+                    line-height: 24px;
+                    color: #6B6B6B;
+                }
+                }
+            }
+        }
+
+    .La-last-container {
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            padding: 127px 0;
+
+            span {
+                display: block;
+
+                &:first-child {
+                    font-family: 'FIRAGO MEDIUM';
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 30px;
+                    line-height: 36px;
+                    text-align: center;
+                    -moz-font-feature-settings: "case";
+                    -webkit-font-feature-settings: "case";
+                    font-feature-settings: "case" on;
+                    text-transform: uppercase;
+                    color: #130D1E;
+                }
+
+                &:nth-child(2) {
+                    font-family: 'FIRAGO MEDIUM';
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 30px;
+                    line-height: 36px;
+                    text-align: center;
+                    color: #AFADB4;
+                    margin: 52px 0 49px 0;
+                }
+            }
+    }
+
+}     
 
 @media (max-width: 1150px) {
     .PlanCards {

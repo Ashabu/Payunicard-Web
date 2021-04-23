@@ -1,5 +1,7 @@
 import React from 'react';
 import './footer.scss'
+import { Link } from 'react-router-dom';
+import Lang from '../../../Services/SetLang';
 
 const Footer = () => {
     return (
@@ -26,25 +28,24 @@ const Footer = () => {
                     </div>
                     <div className = 'second-container'>
                         <div className = 'left-content'>
-                            <span>ფიზიკური პირები</span>
+                            <span>{Lang.tr('footer.individuals')}</span>
                             <ul>
-                                <li>ტარიფები</li>
-                                <li>ტარიფების შედარება</li>
-                                <li>გადარიცხვები</li>
-                                <li>საგადახდო ბარათები</li>
-                                <li>ელექტრონული საფულე</li>
-                                <li>კომუნალური გადახდები</li>
-                                <li>უნიქარდ დაგროვების ბარათები</li>
+                                <li><Link to = '' >{Lang.tr('footer.tariffs')}</Link></li>
+                                <li><Link to = '' >{Lang.tr('footer.comparePlan')}</Link></li>
+                                <li><Link to = '' >{Lang.tr('footer.transfers')}</Link></li>
+                                <li><Link to = '' >{Lang.tr('footer.paymentCards')}</Link></li>
+                                <li><Link to = '' >{Lang.tr('footer.eWallet')}</Link></li>
+                                <li><Link to = '' >{Lang.tr('footer.utilityBills')}</Link></li>
+                                <li><Link to = '' >{Lang.tr('footer.bonusCards')}</Link></li>
                             </ul>
                         </div>
                         <div className='right-content'>
-                            <span>ინფორმაცია</span>
+                            <span>{Lang.tr('footer.generalInfo')}</span>
                             <ul>
-                                <li>ჩვენს შესახებ</li>
-                                <li>სიახლეები</li>
-                                <li>მომსახურების პირობები</li>
-                                <li>ხშირად დასმული კითხვები</li>
-                                <li>ვებგვერდით სარგებლობის პირობები</li>
+                                <li><Link to = '' >{Lang.tr('footer.aboutUs')}</Link></li>
+                                <li><Link to = '' >{Lang.tr('footer.termsOfUse')}</Link></li>
+                                <li><Link to = '' >{Lang.tr('footer.faq')}</Link></li>
+                                <li><Link to = '' >{Lang.tr('footer.webTermsOfUse')}</Link></li>
                             </ul>
                         </div>
                         <div className='appstore-logos'>
@@ -59,8 +60,14 @@ const Footer = () => {
                         <div className='contact'>
                             <span>კონტაქტი</span>
                             <div className='social-btns' >
-                                <a className='btn facebook' href='https://www.facebook.com/payunicard' target='_blank' rel='noreferrer'><i className='fa fa-facebook'></i></a>
-                                <a className='btn linkedin' href='https://www.linkedin.com/company/payunicard' target='_blank'  rel='noreferrer'><i className='fa fa-linkedin'></i></a>
+                                <a href = 'https://www.facebook.com/payunicard' target = '_blank' rel="noreferrer">
+                                    <span className = 'btn fa'><img src = '../../../Assets/Images/fb-icon.png' alt = 'fb-icon'/></span>
+                                </a>
+                                <a href = 'https://www.linkedin.com/company/payunicard' target = '_blank' rel="noreferrer">
+                                    <span className = 'btn'><img src = '../../../Assets/Images/in-icon.png' alt = 'in-icon' /></span>
+                                </a>
+                                {/* <a className='btn facebook' href='https://www.facebook.com/payunicard' target='_blank' rel='noreferrer'><i className='fa fa-facebook'></i></a>
+                                <a className='btn linkedin' href='https://www.linkedin.com/company/payunicard' target='_blank'  rel='noreferrer'><i className='fa fa-linkedin'></i></a> */}
                             </div>
                         </div>
                     </div>  

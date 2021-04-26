@@ -3,7 +3,88 @@
     justify-content: space-between;
     padding: 0 143px;
 
-    
+
+    .text-fade {
+        animation: fadein 4s;
+        -moz-animation: fadein 4s; /* Firefox */
+        -webkit-animation: fadein 4s; /* Safari and Chrome */
+        -o-animation: fadein 4s; /* Opera */
+      }
+      
+      .img-fade {
+          animation: fadein 3.5s;
+          -moz-animation: fadein 3.5s; /* Firefox */
+          -webkit-animation: fadein 3.5s; /* Safari and Chrome */
+          -o-animation: fadein 3.5s; /* Opera */
+      }
+      
+      
+      @keyframes fadein {
+        from {
+            opacity:0.7;
+        }
+        to {
+            opacity:1;
+        }
+      }
+      @-moz-keyframes fadein { /* Firefox */
+        from {
+            opacity:0.7;
+        }
+        to {
+            opacity:1;
+        }
+      }
+      @-webkit-keyframes fadein { /* Safari and Chrome */
+        from {
+            opacity:0.7;
+        }
+        to {
+            opacity:1;
+        }
+      }
+      @-o-keyframes fadein { /* Opera */
+        from {
+            opacity:0.7;
+        }
+        to {
+            opacity: 1;
+        }
+      }
+      
+
+
+    .Mackbook {
+        position: relative;
+
+        img {
+            &:last-child {
+                position: absolute;
+                top: 200px;
+                right: -20px;
+            }
+        }
+        .for-mac {
+            position: absolute;
+            width: 680px;
+            height: 435px;
+            left: 90px;
+            top: 20px;
+            background-repeat: no-repeat;
+        }
+
+        .for-phone {
+            position: absolute;
+            background: #130D1e;
+            width: 160px;
+            height: 342px;
+            top: 217px;
+            z-index: 9;
+            right: 11px;
+            border-radius: 17px;
+            background-repeat: no-repeat;
+        }
+    }
     .uni-service-wrap {
         display: flex;
         flex-flow: column;
@@ -26,4 +107,59 @@
             }
         }
     }   
+}
+
+@media (max-width: 1580px) {
+    .infoSlider {
+
+        .uni-services-wrap{
+            width: 480px;
+            height: 260px;
+          }
+
+    }  
+
+
+
+      .infoSlider.uni-services-wrap .service-icon img {
+        width: 60px;
+        height: 60px;
+      }
+    
+      .infoSlider.uni-services-wrap .service-text .service-content .title-text  {
+        font-size: 28px;
+        line-height: 42px;
+      }
+      .infoSlider.uni-services-wrap .service-text .service-content .content-text {
+        font-size: 15px;
+        line-height: 25px;
+      }
+      .infoSlider.uni-services-wrap .service-text .service-content .content-text img {
+        top: 7px;
+      }
+      .third-content-wrap .macbook,  .macbook img{
+      width: 740px;
+    }
+    
+    .third-content-wrap .macbook img:last-child{
+      width: 170px;
+      top: 255px;
+      right: -35px;
+    }
+    .third-content-wrap .macbook .for-mac {
+      width: 582px;
+      height: 375px;
+      left: 85px;
+      top: 20px;
+      background-size: 582px;
+    }
+    .third-content-wrap .macbook .for-phn {
+      width: 120px;
+      background-size: 120px;
+      height: 259px;
+      top: 268px;
+      z-index: 9;
+      right: -10px;
+      border-radius: 13px;
+    }
 }

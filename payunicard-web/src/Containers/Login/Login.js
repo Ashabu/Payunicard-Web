@@ -11,8 +11,12 @@ import Lang from '../../Services/SetLang';
 import User from '../../Services/API/UserServices';
 import Modal from '../../Components/UI/Modal/Modal';
 
+import GlobalContext from '../../Contexsts/GlobalContext';
+
 class Login extends Component {
 
+    static contextType = GlobalContext;
+        
     state = {
         userName: "",
         password: "",
@@ -54,7 +58,7 @@ class Login extends Component {
     render() {
         // Validation.validate();
         return (
-            
+            <GlobalContext.Consumer>{(context) =>
             <Layout>
                 <Modal show = {this.state.forgotPassword} headerText = 'დაგავიწყდათ პაროლი?' onCloseModal = {this.handleModalClose}>
                     <Input className = 'Input Input-bg' type = 'text' placeholder = {Lang.tr('auth.username')} 
@@ -98,7 +102,8 @@ class Login extends Component {
                         <img src = '../../Assets/Images/LandingImg/login_img.svg' alt = 'login-img' />
                     </div>      
                 </div>
-            </Layout>
+            </Layout>}
+            </GlobalContext.Consumer>
         );
     }
 }

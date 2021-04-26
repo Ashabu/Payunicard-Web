@@ -1,7 +1,86 @@
 // eslint-disable-next-line import/no-anonymous-default-export
 export default { 
-    content : [
-            ['პრემიალური ტარიფი - გადახდები განსაკუთრებული კლიენტებისთვის','ყველაზე მაღალი განაღდების/შესყიდვის ლიმიტები','3 უფასო სავალუტო ანგარიში','უფასო ინტერნეტ ბანკი და სმს მომსახურება','2 უფასო UNIcard Visa/Mastercard ბარათი ადგილზე უფასო მიტანით თბილისში ','უნიქულები საჩუქრად ანგარიშის პირველად შევსებისას','უნიქულების დაგროვება საუკეთესო ტარიფით','უფასო განაღდება VTB ბანკის ბანკომატებში']
+    PlanInfo : [
+        {
+          walletContent: {
+            eng: [
+              "Free kickoff plan - best option for users with limited access to banking services",
+              "Affordable and confidential financial services online",
+              "E-wallet account for receiving & transferring funds, online payment of utility bills",
+              "Free account & online banking",
+              "Utility payments without verification"
+          ],
+            geo:[
+              "სასტარტო უფასო ტარიფი - საუკეთესოა საბანკო სერვისებზე შეზღუდული წვდომის მომხმარებლისთვის",
+              "ხელმისაწვდომი და კონფიდენციალური ფინანსური სერვისები ონლაინ",
+              "ელექტრონული საფულის ანგარიშით თანხის მიღება, გადარიცხვა,კომუნალური გადასახადების ონლაინ გადახდა",
+              "უფასო ანგარიში და ონლაინ ბანკი",
+              "კომუნალურების გადახდა ვერიფიკაციის გარეშე"
+          ],
+          },
+          uperaContent: {
+            eng:[
+              "Special plan for minors & online expenses",
+              "Alternative bank card for free",
+              "Account & card without age restriction",
+              "Open & verify the account, order UNIcard Visa/Mastercard cards online",
+              "Payment of utilities with UNIpoints – top rate 10 points – 1 GEL",
+              "Card protected from high-risk transactions"
+          ],
+            geo:[
+              "შეღავათიანი ტარიფი ოჯახის უმცროსი წევრებისა და ონლაინ ხარჯებისთვის",
+              "საბანკოს ალტერნატიული საგადახდო ბარათი უფასოდ",
+              "ანგარიში და ბარათი ასაკობრივი შეზღუდვების გარეშე",
+              "ანგარიშის გახსნა, ვერიფიკაცია და UNIcard Visa/Mastercard ბარათის შეკვეთა ონლაინ",
+              "უნიქულებით კომუნალურების გადახდა - საუკეთესო კურსი 10 ქულა - 1 ლარი",
+              "მაღალი რისკის ჯგუფის ტრანზაქციებისაგან დაცული ბარათი"
+          ],
+          },
+          uniplusContent: {
+            eng:[
+            "Exclusive plan – for daily beneficial payments",
+            "Card customized for entertainment business",
+            "2 free currency accounts",
+            "Free online banking & SMS service",
+            "Free UNIcard Visa/Mastercard card delivered in Tbilisi",
+            "Free UNIpoints upon first account top up",
+            "Collect UNIpoints without limits"
+          ],
+            geo:[
+              "სპეციალური ტარიფი - ყოველდღიური სარგებლიანი გადახდებისათვის",
+              "გასართობ ბიზნესზე მორგებული ბარათი",
+              "2 უფასო სავალუტო ანგარიში",
+              "უფასო ინტერნეტ ბანკი და სმს მომსახურება",
+              "უფასო UNIcard Visa/Mastercard ბარათი ადგილზე  უფასო მიტანით თბილისში",
+              "უნიქულები საჩუქრად ანგარიშის პირველად შევსებისას",
+              "უნიქულების დაგროვება შეზღუდვების გარეშე"
+          ],
+          },
+          uniUltraContent: {
+            eng:[
+              "Premium plan - payments for special clients",
+              "Highest withdrawal/spending limits",
+              "3 free currency accounts",
+              "Free online banking & SMS service",
+              "Free UNIcard Visa/Mastercard card delivered in Tbilisi",
+              "Free UNIpoints upon first account top up",
+              "Collect UNIpoints at the best rate",
+              "Free withdrawal from VTB bank ATMs"
+          ],
+            geo:[
+              "პრემიალური ტარიფი - გადახდები განსაკუთრებული კლიენტებისთვის",
+              "ყველაზე მაღალი განაღდების/შესყიდვის ლიმიტები",
+              "3 უფასო სავალუტო ანგარიში",
+              "უფასო ინტერნეტ ბანკი და სმს მომსახურება",
+              "2 უფასო UNIcard Visa/Mastercard ბარათი ადგილზე უფასო მიტანით თბილისში",
+              "უნიქულები საჩუქრად ანგარიშის პირველად შევსებისას",
+              "უნიქულების დაგროვება საუკეთესო ტარიფით",
+              "უფასო განაღდება VTB ბანკის ბანკომატებში"
+          ]
+          },
+
+        }
+           
     ],
 
     UniServices : [
@@ -10,14 +89,12 @@ export default {
             {
               geo: "ჩემი  უნისაფულე",
               eng: "My Uniwallet",
-            }
-          ,
+            },
           content:
              {
                geo:  ["ყველაფერი ერთ აპლიკაციაში", "უნიქარდთან ერთობლივი ელექტრონული საფულე", "ფინანსების კონფიდენციალური მართვა", "მარტივი და ყველასთვის ხელმისაწვდომი პროდუქტი"],
                eng: ["All In One App","UNIcard Integrated E-Wallet","Funds  Managed Confidentially","Simple & Affordable  Product for Everyone"],
-             }
-            ,
+             },
           icon:'../../Assets/Images/LandingImg/myWallet.svg',
          computerImg: { 
               geo: '../../Assets/Images/LandingImg/UniWallet-la.ka.png', 
@@ -100,8 +177,7 @@ export default {
             {
               geo: "ჩემი გზავნილები",
               eng: "My Transfers",
-            }
-          ,
+            },
           content:
              {
                geo: ["ფულადი გზავნილების მიღება UNIcard Visa/Mastercard ბარათებზე", "უნიქულების დაგროვება UNIcard Visa/Mastercard ბარათებით გადახდისას"],

@@ -9,7 +9,6 @@ import Carousel from '../../Components/Landing/Carousel/Carousel';
 import InfoSlider from '../../Components/Landing/InfoSlider/InfoSlider';
 import PlanCards from '../../Components/Landing/PlanCards/PlanCards';
 import Button from '../../Components/UI/Button/Button';
-import LangContext from '../../Contexsts/lang-context';
 
 
 
@@ -28,9 +27,9 @@ class Landing extends Component {
         this.serviceTmout = setTimeout(this.handleUniServicesSwitch, 500); 
         this.testCall()
 
-        this.langSubscribe = Lang.subscribe(_ => {
-            this.setState({langKey: _})
-        })
+        // this.langSubscribe = Lang.subscribe(_ => {
+        //     this.setState({langKey: _})
+        // })
     }
 
     componentWillUnmount() {
@@ -42,24 +41,25 @@ class Landing extends Component {
 
      testCall = async ()   => {
         // eslint-disable-next-line no-undef
+        
         Presentation.getPackageTypes().then(res => {
             let response = res.data.data.packages.map(p   => {
+                let PlanInfo = UIdata.PlanInfo[0]
                 switch (p.paketTypeId) {
                     case 2:
-                        p.content = Lang.tr('landing.uperaDescription');
+                        p.content = PlanInfo.uperaContent;
                         break;
                     case 3:
-                        p.content = Lang.tr('landing.uniPlusDescription');
+                        p.content = PlanInfo.uniplusContent;
                         break;    
                     case 4:
-                        p.content = Lang.tr('landing.uniUltraDescription');
+                        p.content = PlanInfo.uniUltraContent;
                         break;
                 
                     default:
-                        p.content = Lang.tr('landing.walletDescrtiption');
+                        p.content = PlanInfo.walletContent;
                         break;
                 }
-                p.content = UIdata.content[0];
                 p.currency = '₾';
                 return p;
             })
@@ -91,10 +91,8 @@ class Landing extends Component {
    
 
     render() {
-        console.log(this.state.langKey)
         return (
-            <LangContext.Consumer>
-                <Layout>
+                 <Layout>
                     <div className = 'Landing-wrap'>
                         <div className = 'La-first-container'>
                             <div className = 'left-content'>
@@ -118,7 +116,6 @@ class Landing extends Component {
                         </div>
                         <div className = 'La-second-container'>
                             <InfoSlider 
-                                lang = {this.state.langKey}
                                 sliderConfig = {this.state.serviceObj} 
                                 curIndex = {this.state.curIndex} 
                                 onSlideChange = {(index) => this.updateSlider(index)}/>   
@@ -149,7 +146,6 @@ class Landing extends Component {
                         </div>
                     </div>
                 </Layout>
-                </LangContext.Consumer>
         );
     }
 }

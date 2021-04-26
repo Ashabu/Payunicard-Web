@@ -1,84 +1,107 @@
-    
-
-    .PlanCard {
-        width: 257px;
-        height: 425px;
-        background: #FFFFFF;
-        border: 1px solid #A5A5A4;
-        box-sizing: border-box;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        padding: 32px 23px;
-        border-radius: 7px;
-        margin: 0 26px;
-
-        &.Wallet {
-            border: 1px solid #A5A5A4; 
-            .PlanButton {
-            background-color: #A5A5A4;        
-            }
-        }
-
-        &.Upera {
-            border: 1px solid #94dd34;
-            .PlanButton {
-            background-color: #94dd34;
-            }
-        }
-
-        &.UniPlus {
-            border: 1px solid #F9BD15;
-            .PlanButton {
-            background-color: #F9BD15;
-            }
-
-        }
-        &.UniUltra {
-            border: 1px solid #F49121;
-            .PlanButton {
-                background-color: #F49121;
-            }
-
-        }    
-        .PlanHeader {
-            display: flex;
-            flex-flow: column;
-            align-items: center;
-            justify-content: center;
-
-         
-            .PlanTitle {
-
-            }
-
-        }
-
-
-        .PlanDetails {
-            display: flex;
-            align-items: center;
-            font-size: 34px;
-        
-            .PlanPayDetails {
-                display: flex;
-                flex-direction: column;
-                font-size: 10px;
-            }
-
-        }
-
-        .PlanDescription {
-            display: flex;
-            flex-direction: column;
-            font-size: 11px;
-        }
-
+.PlanCard {
+    width: 257px;
+    height: 425px;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    background: #FFFFFF;
+    border: 1px solid #A5A5A4;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 32px 23px;
+    border-radius: 7px;
+    margin: 0 26px;
+    &.Wallet {
+        border: 1px solid #A5A5A4; 
         .PlanButton {
-            width: 119px;
-            height: 33px;
-            color: #FFFFFF;
-            border-radius: 7px;
-            border: none;
-
+        background-color: #A5A5A4;        
         }
     }
+    &.Upera {
+        border: 1px solid #94dd34;
+        .PlanButton {
+        background-color: #94dd34;
+        }
+    }
+    &.UniPlus {
+        border: 1px solid #F9BD15;
+        .PlanButton {
+        background-color: #F9BD15;
+        }
+    }
+    &.UniUltra {
+        border: 1px solid #F49121;
+        .PlanButton {
+            background-color: #F49121;
+        }
+    }    
+    .PlanHeader {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 19px;
+     
+        .PlanTitle {
+            font-family: 'FiraGO MEDIUM';
+            font-weight: 500;
+            font-size: 23px;
+            line-height: 28px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+    }
+    .PlanDetails {
+        display: flex;
+        align-items: center;
+        span {
+            &:nth-child(1) {
+        font-family: 'FiraGO REGULAR';
+        font-style: normal;
+        font-size: 40px;
+        color: #130D1E;
+            }
+        }
     
+        .PlanPayDetails {
+            display: flex;
+            flex-direction: column;
+            span {
+                &:first-child {
+                    font-family: 'FiraGO REGULAR';
+                    font-weight: normal;
+                    font-size: 20px;
+                    line-height: 24px;
+                    color: #130D1E;
+                }
+                &:last-child {
+                    font-family: 'FiraGO REGULAR';
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 12px;
+                    line-height: 14px;
+                    color: #130D1E;
+                }
+            }
+        }
+    }
+    .PlanDescription {
+        display: flex;
+        flex-direction: column;
+            .desc-content {
+                display: inline-block;
+                margin-left: 14px;
+                font-family: 'FiraGO REGULAR';
+                font-size: 10px;
+                line-height: 14px;
+                color: #6B6B6B;
+            }    
+    }
+    .PlanButton {
+        width: 119px;
+        height: 33px;
+        color: #FFFFFF;
+        border-radius: 7px;
+        border: none;
+    }
+}

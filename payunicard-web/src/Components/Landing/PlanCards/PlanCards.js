@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 const PlanCards = (props) => {
 
     let Card = props.plan;
-
     
         if(!props.priceAnnual) {
             

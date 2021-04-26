@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import Routing from './Routing/Routing';
 import Language from './Services/SetLang';
-import LangContext from './Contexsts/lang-context';
+import GlobalContext, {contextState} from './Contexsts/GlobalContext';
 
 
 
@@ -11,6 +11,8 @@ import LangContext from './Contexsts/lang-context';
 
 class App extends Component {
   
+  static contextType = GlobalContext;
+
   state = {
     isLoaded: false,
     activeLang: Language.langKey
@@ -21,26 +23,31 @@ class App extends Component {
   }
   componentDidMount() {
     Language.getLang(Language.langKey, this.setInit);
-    this.langSubscribe = Language.subscribe(_ => {
+    this.langSubscribe = Language.subscribe(activeLang => {
+      this.setState({activeLang: activeLang });
+      contextState.setLang(activeLang);
       this.forceUpdate();
   })
-      
+  
+  
 
   }
 
   componentWillUnmount() {
     this.langSubscribe.unsubscribe();
   }
-
+  
+  
 
   render() {
+    console.log(this.state.activeLang)
     if(!this.state.isLoaded) return null
     return (
-        <LangContext.Provider value={{lang: this.state.activeLang}}>
+        <GlobalContext.Provider value={contextState}>
           <div className= "App">
             <Routing/>
           </div>
-        </LangContext.Provider>  
+        </GlobalContext.Provider>  
     );
   }
 }

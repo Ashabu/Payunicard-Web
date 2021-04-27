@@ -56,4 +56,36 @@
             }
         }
     }
-}    
+}  
+
+
+@media (max-width: 1580px) {
+    .SliderInfo {
+        .service-icon {
+            img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        .service-text {
+            .service-content {
+                .title-text {
+                    font-size: 28px;
+                    line-height: 42px;
+                }
+            }
+        }
+
+        .content-text {
+            font-size: 15px;
+            line-height: 25px;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .SliderInfo {
+        display: none;
+    }
+}

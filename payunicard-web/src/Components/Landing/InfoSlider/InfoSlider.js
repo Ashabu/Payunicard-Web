@@ -64,7 +64,7 @@ class InfoSlider extends Component {
             
             <GlobalContext.Consumer>{(context) =>  
             <div className = 'infoSlider'>
-                <div className = 'Mackbook'>
+                <div className = 'Macbook'>
                         <div id = "macBook" className = 'for-mac' ref={p => this.macbook = p} style={{backgroundImage: `url(${sliderCnofig[curIndex].computerImg[context.lang]})`}}></div>
                         <div id = "iphone"  className = 'for-phone' ref={p => this.iPhone = p} style={{backgroundImage: `url(${sliderCnofig[curIndex].phoneImg[context.lang]})`}} ></div>
                         <img src = '../../Assets/Images/LandingImg/MacBookPro.png' alt = 'macBook'/>

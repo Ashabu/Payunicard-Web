@@ -54,7 +54,7 @@
       
 
 
-    .Mackbook {
+    .Macbook {
         position: relative;
 
         img {
@@ -111,6 +111,38 @@
 
 @media (max-width: 1580px) {
     .infoSlider {
+        
+        .Macbook {
+            img {
+                &:nth-child(3){
+                    width: 740px;
+                }
+
+                &:last-child {
+                    width: 170px;
+                    top: 255px;
+                    right: -35px;
+                }
+            }
+
+            .for-mac {
+                width: 582px;
+                height: 375px;
+                left: 85px;
+                top: 20px;
+                background-size: 582px;
+              }
+
+              .for-phone {
+                width: 120px;
+                background-size: 120px;
+                height: 259px;
+                top: 268px;
+                z-index: 9;
+                right: -10px;
+                border-radius: 13px;
+              }
+        }
 
         .uni-services-wrap{
             width: 480px;
@@ -119,47 +151,88 @@
 
     }  
 
+}
+
+@media (max-width: 1280px) {
+    .infoSlider {
+        
+        .Macbook {
+            img {
+                &:nth-child(3){
+                    width: 550px;
+                }
+
+                &:last-child {
+                    width: 125px;
+                    top: 240px;
+                    right: -20px;
+                }
+            }
+
+            .for-mac {
+                width: 430px;
+                height: 275px;
+                left: 65px;
+                top: 15px;
+                background-size: 430px;
+            }
+
+            .for-phone {
+                width: 87px;
+                background-size: 87px;
+                height: 189px;
+                top: 250px;
+                z-index: 9;
+                right: -1px;
+                border-radius: 9px;
+            }
+        }
+
+        
+
+    }  
+
+}
 
 
-      .infoSlider.uni-services-wrap .service-icon img {
-        width: 60px;
-        height: 60px;
-      }
-    
-      .infoSlider.uni-services-wrap .service-text .service-content .title-text  {
-        font-size: 28px;
-        line-height: 42px;
-      }
-      .infoSlider.uni-services-wrap .service-text .service-content .content-text {
-        font-size: 15px;
-        line-height: 25px;
-      }
-      .infoSlider.uni-services-wrap .service-text .service-content .content-text img {
-        top: 7px;
-      }
-      .third-content-wrap .macbook,  .macbook img{
-      width: 740px;
-    }
-    
-    .third-content-wrap .macbook img:last-child{
-      width: 170px;
-      top: 255px;
-      right: -35px;
-    }
-    .third-content-wrap .macbook .for-mac {
-      width: 582px;
-      height: 375px;
-      left: 85px;
-      top: 20px;
-      background-size: 582px;
-    }
-    .third-content-wrap .macbook .for-phn {
-      width: 120px;
-      background-size: 120px;
-      height: 259px;
-      top: 268px;
-      z-index: 9;
-      right: -10px;
-      border-radius: 13px;
-    }
+@media (max-width: 1024px) {
+    .infoSlider {
+        align-items: unset;
+
+        .Macbook {
+            img {
+                &:nth-child(3){
+                    width: 370px;
+                }
+
+                &:last-child {
+                    width: 85px;
+                    top: 150px;
+                    right: -10px;
+                }
+            }
+
+            .for-mac {
+                width: 290px;
+                height: 180px;
+                left: 43px;
+                top: 15px;
+                background-size: 290px;
+            }
+
+            .for-phone {
+                width: 60px;
+                background-size: 60px;
+                height: 130px;
+                top: 155px;
+                z-index: 9;
+                right: 2px;
+                border-radius: 9px;
+            }
+        }
+
+        
+
+    }  
+
 }

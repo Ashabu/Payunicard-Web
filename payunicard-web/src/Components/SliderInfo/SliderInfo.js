@@ -21,6 +21,7 @@ const SliderInfo = props => {
                 </div>
             </div>
         </div>
+     
     );
 };
 

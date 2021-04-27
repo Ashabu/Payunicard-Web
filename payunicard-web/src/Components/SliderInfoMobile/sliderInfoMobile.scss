@@ -1,0 +1,62 @@
+.SliderInfo-mobile {
+    display: none;
+    margin-bottom: 53px;
+    .info-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        
+
+        img {
+            &:first-child {
+                margin-bottom: 23px;
+            }
+        }
+    
+    }
+    
+    .info-title {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 26px;
+        line-height: 31px;
+        text-align: center;
+        font-feature-settings: 'case' on;
+        color: #130D1E;
+        margin-bottom: 20px;
+    }
+
+    .info-content {
+        font-family: 'FIRAGO REGULAR';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        width: 100%;
+        text-align: left;
+        line-height: 25px;
+        color: #6B6B6B;
+        position: relative;
+        padding-left: 15px;
+
+        img {
+            width: 10px;
+            height: 10px;
+            margin: 0;
+            position: absolute;
+            top: 8px;
+            left: 0;
+        }
+    }
+
+
+}
+
+
+
+
+@media (max-width: 800px) {
+    .SliderInfo-mobile {
+        display: block;
+    }
+}

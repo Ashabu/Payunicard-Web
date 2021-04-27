@@ -20,42 +20,13 @@
     "landing": {
         "loyalWallet": "My Everyday Loyal UNIWallet ",
         "strategicPartner": "The First Strategic Partner In CISSEE Region",
-        "walletTitle": "Free lifetime UNIwallet Plan",
-        "walletDescrtiption": [
-            "Free kickoff plan - best option for users with limited access to banking servicesAffordable and confidential financial services online",
-            "E-wallet account for receiving & transferring funds, online payment of utility bills",
-            "Free account & online banking",
-            "Utility payments without verification"
-        ],
-        "uperaTitle": "Best UNIwallet Plan for Juniors and Family online Spendings",
-        "uperaDescription:": [
-            "Special plan for minors & online expenses",
-            "Alternative bank card for free",
-            "Account & card without age restriction",
-            "Open & verify the account, order UNIcard Visa/Mastercard cards online",
-            "Payment of utilities with UNIpoints – top rate 10 points – 1 GEL",
-            "Card protected from high-risk transactions"
-        ],
-        "uniPlusTitle": "Premium UNIwallet Plan",
-        "uniPlusDescription:": [
-            "Exclusive plan – for daily beneficial payments",
-            "Card customized for entertainment business",
-            "2 free currency accounts",
-            "Free online banking & SMS service",
-            "Free UNIcard Visa/Mastercard card delivered in Tbilisi",
-            "Free UNIpoints upon first account top up",
-            "Collect UNIpoints without limits"
-        ],
-        "uniUltraTitle": "Most Powerful UNIwallet Plan",
-        "uniUltraDescription:": [
-            "Premium plan - payments for special clients",
-            "Highest withdrawal/spending limits",
-            "3 free currency accounts",
-            "Free online banking & SMS service",
-            "Free UNIcard Visa/Mastercard card delivered in Tbilisi",
-            "Free UNIpoints upon first account top up{Collect UNIpoints at the best rate",
-            "Free withdrawal from VTB bank ATMs"
-        ]
+        "choosePlan": "Choose Plan",
+        "quarter": "Quarter",
+        "year": "Year",
+        "savePayment": "Save up to 16% on an Annual Payment!",
+        "operAccOnline": "Oper Your Account Online",
+        "start": "Start",
+        "confStandart": "HIGH STANDARDS OF CONFIDENTIALITY,  CONTACTLESS PAYMENTS, SECURE MONEY TRANSFERS"
     },
     "auth": {
         "signUp": "Sign Up",

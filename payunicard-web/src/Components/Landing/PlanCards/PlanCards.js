@@ -1,6 +1,7 @@
 import React from 'react';
 import './planCards.scss';
 import PlanCard from '../PlanCard/PlanCard';
+import Lang from '../../../Services/SetLang';
 
 import PropTypes from 'prop-types';
 
@@ -29,16 +30,16 @@ const PlanCards = (props) => {
     return (
         <div className = 'PlanCards'>
             <div className = 'PlanCards-Header'>
-                <p>აირჩიეთ ტარიფი</p>
+                <p>{Lang.tr('landing.choosePlan')}</p>
                 <div className = 'PayDuration' onClick = {props.onPayMethod}>
                     <div className = {!props.priceAnnual?'PayOption Active' : 'PayOption'}>
-                        <span>კვარტალი</span>
+                        <span>{Lang.tr('landing.quarter')}</span>
                     </div>
                     <div className = {props.priceAnnual?'PayOption Active' : 'PayOption'}>
-                        <span>წელიწადი</span>
+                        <span>{Lang.tr('landing.year')}</span>
                     </div>
                 </div>
-                <span>დაზოგე 16%-მდე წლიურად გადახდისას</span>
+                <span>{Lang.tr('landing.savePayment')}</span>
             </div>
             <div className = 'PlanCards-Body'>   
                 {Card}

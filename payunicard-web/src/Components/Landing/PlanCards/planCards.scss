@@ -60,8 +60,27 @@
         
     }
     .PlanCards-Body {
-        width: 100%;
+        width: 1124px;
         display: flex;
         justify-content: center;
     }
 } 
+
+
+@media (max-width: 1150px) {
+    .PlanCards {
+        .PlanCards-Body {
+            width: 80%;
+            flex-wrap: wrap;
+        }
+    }
+}
+
+@media (max-width: 870px) {
+    .PlanCards {
+        .PlanCards-Body {
+            width: 100%;
+            
+        }
+    }
+}

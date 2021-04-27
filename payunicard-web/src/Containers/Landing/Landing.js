@@ -140,9 +140,9 @@ class Landing extends Component {
                             />
                         </div>
                         <div className = 'La-last-container'>
-                            <span>კონფიდენციალობის მაღალი სტანდარტი, <br/> უკონტაქტო გადახდები, უსაფრთხო გადარიცხვები</span>
-                            <span>გახსენი ანგარიში ონლაინ!</span>
-                            <Button>დაიწყე</Button>
+                            <span>{Lang.tr('landing.confStandart').replace("$br", '</br>')}</span>
+                            <span>{Lang.tr('landing.openAccOnline')}</span>
+                            <Button>{Lang.tr('landing.start')}</Button>
                         </div>
                     </div>
                 </Layout>

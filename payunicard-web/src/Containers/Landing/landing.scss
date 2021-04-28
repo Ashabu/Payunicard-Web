@@ -139,7 +139,19 @@
     }
 
 }     
-
+@media (max-width: 1580px) {
+    .Landing-wrap {
+        .La-fourth-container {
+            padding: 280px 55px 168px 55px;
+            .visa-mc-images {
+                img { 
+                    width: 233px;
+                    height: 150px;
+                }
+            } 
+        }
+    }
+}
 @media (max-width: 1150px) {
     .PlanCards {
         .PlanCards-Body {

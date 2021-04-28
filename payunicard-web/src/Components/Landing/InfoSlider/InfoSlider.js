@@ -23,6 +23,7 @@ class InfoSlider extends Component {
         
         clearTimeout(this.serviceTmout);
         clearInterval(this.ChangeInterval);
+        clearInterval(this.fadeTimeInterval);
     }
 
     

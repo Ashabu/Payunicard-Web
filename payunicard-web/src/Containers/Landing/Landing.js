@@ -8,7 +8,8 @@ import UIdata from '../../Components//UI/UIdata';
 import Carousel from '../../Components/Landing/Carousel/Carousel';
 import InfoSlider from '../../Components/Landing/InfoSlider/InfoSlider';
 import PlanCards from '../../Components/Landing/PlanCards/PlanCards';
-import Button from '../../Components/UI/Button/Button';
+import { Link } from 'react-router-dom';
+import OtpBox from '../../Components/UI/Otp-Box/Otp-Box';
 
 
 
@@ -140,9 +141,10 @@ class Landing extends Component {
                             />
                         </div>
                         <div className = 'La-last-container'>
+                            
                             <span>{Lang.tr('landing.confStandart').replace("$br", '</br>')}</span>
                             <span>{Lang.tr('landing.openAccOnline')}</span>
-                            <Button>{Lang.tr('landing.start')}</Button>
+                            <Link className = 'unicard-btn green' to = '/register'>{Lang.tr('landing.start')}</Link>
                         </div>
                     </div>
                 </Layout>

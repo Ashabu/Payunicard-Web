@@ -1,11 +1,10 @@
 .Landing-wrap {
-    
 
     .La-first-container{
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 115px 125px 318px 125px;
+        padding: 115px 143px 318px 143px;
 
             .left-content {
 
@@ -21,6 +20,7 @@
                     text-transform: uppercase;
                     color: #130D1E;
                 }
+
                 .visa-partner {
                     font-family: 'FiraGO REGULAR';
                     margin:29px 0;
@@ -30,6 +30,7 @@
                     line-height: 23px;
                     color: #6B6B6B;
                 }
+
                 .appstore-logos {
                     img:nth-child(1) {
                        margin-right: 26px;                         
@@ -47,23 +48,22 @@
                     top: 55px;
                 }
             }
-            
     }
+
     .La-second-container {
        
         
     }    
+
     .La-third-container{
         background-color: #FAFAFA;
-
-           
     }
 
     .La-fourth-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 280px 143px 168px 143px;
+        padding: 0px 143px 168px 143px;
 
         .visa-mc-images {
             img {
@@ -72,10 +72,13 @@
                 }
             }
         }
+
         .visa-mc-text {
             display: flex;
             flex-flow: column;
+
             span {
+
                 &:first-child {
                     font-family: 'FIRAGO REGULAR';
                     font-style: normal;
@@ -97,49 +100,52 @@
                     line-height: 24px;
                     color: #6B6B6B;
                 }
-                }
             }
         }
-
-    .La-last-container {
-            display: flex;
-            flex-flow: column;
-            justify-content: center;
-            align-items: center;
-            padding: 127px 0;
-
-            span {
-                display: block;
-
-                &:first-child {
-                    font-family: 'FIRAGO MEDIUM';
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 30px;
-                    line-height: 36px;
-                    text-align: center;
-                    -moz-font-feature-settings: "case";
-                    -webkit-font-feature-settings: "case";
-                    font-feature-settings: "case" on;
-                    text-transform: uppercase;
-                    color: #130D1E;
-                }
-
-                &:nth-child(2) {
-                    font-family: 'FIRAGO MEDIUM';
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 30px;
-                    line-height: 36px;
-                    text-align: center;
-                    color: #AFADB4;
-                    margin: 52px 0 49px 0;
-                }
-            }
     }
 
-}     
-@media (max-width: 1580px) {
+    .La-last-container {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        padding: 127px 0;
+
+        span {
+            display: block;
+
+            &:first-child {
+                font-family: 'FIRAGO MEDIUM';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 30px;
+                line-height: 36px;
+                text-align: center;
+                -moz-font-feature-settings: "case";
+                -webkit-font-feature-settings: "case";
+                font-feature-settings: "case" on;
+                text-transform: uppercase;
+                color: #130D1E;
+            }
+
+            &:nth-child(2) {
+                font-family: 'FIRAGO MEDIUM';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 30px;
+                line-height: 36px;
+                text-align: center;
+                color: #AFADB4;
+                margin: 52px 0 49px 0;
+            }
+        }
+    }
+
+}  
+
+
+
+@media (max-width: 1610px) {
     .Landing-wrap {
         .La-fourth-container {
             padding: 280px 55px 168px 55px;
@@ -152,6 +158,16 @@
         }
     }
 }
+
+@media (max-width: 1440px) {
+    .Landing-wrap {
+        .La-first-container {
+            padding: 115px 55px 318px 55px;
+        }
+    }
+}
+
+
 @media (max-width: 1150px) {
     .PlanCards {
         .PlanCards-Body {
@@ -167,6 +183,8 @@
                     .uni-wallet {
                         font-size: 26px;
                         line-height: 31px;
+                        width: 326px;
+                        height: 62px;
                     }
 
                     .appstore-logos {
@@ -175,7 +193,50 @@
                             height: 40px;
                         }
                     }
-                } 
+
+                }
+                
+                .right-content {
+                    .visa-mc {
+                        img {
+                            width: 125px;
+                            height: 27px;
+                        }
+                        
+                        top: 50px;
+                    }
+                }
+        }
+
+        .La-fourth-container {
+            .visa-mc-text {
+                
+                span {
+                    &:first-child {
+                        font-size: 26px;
+                        line-height: 31px;
+    
+                    &:nth-child(2) {
+                        font-size: 14px;
+                        line-height: 17px;
+                    }
+                    }
+                }
+            }
+            
+        }
+    }
+}  
+
+@media (max-width: 1000) {
+    .Landing-wrap {
+        .La-fourth-container {
+            .visa-mc-images {
+                img { 
+                    width: 170px;
+                    height: 111px;
+                }
+            } 
         }
     }
 }  
@@ -263,6 +324,15 @@
                     }
                 }
             }
+        }
+
+        .La-fourth-container {
+            .visa-mc-images {
+                img { 
+                    width: 131px;
+                    height: 85px;
+                }
+            } 
         }
     }                
 }

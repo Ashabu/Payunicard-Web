@@ -24,12 +24,14 @@ class User {
     GetUserDetails = async () => {
         console.log(globalConfig)
         return await axios.get(`${globalConfig.api_URL}/User/GetUserDetails`);
-        
     }
 
     CheckUser = async (data) => {
         return await axios.post(`${globalConfig.api_URL}/User/CheckUser`, data);
+    }
 
+    UserRegistration = async (data) => {
+        return await axios.post(`${globalConfig.api_URL}/User/UserPreRegistration`, data);
     }
 }
 

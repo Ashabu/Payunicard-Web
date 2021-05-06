@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import axios from 'axios';
-import {Langs } from '../Constants/index'
+import { Langs } from '../Constants/index'
 
 class Lang  {
     constructor(){

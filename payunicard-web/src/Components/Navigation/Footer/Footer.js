@@ -2,6 +2,7 @@ import React from 'react';
 import './footer.scss'
 import { Link } from 'react-router-dom';
 import Lang from '../../../Services/SetLang';
+import GlobalContext from '../../../Contexsts/GlobalContext';
 
 const Footer = () => {
     return (
@@ -10,21 +11,23 @@ const Footer = () => {
                     <div className = 'first-container'>
                         <div className = 'footer-head'>
                             <div className = 'head-content'>
-                                <span><b>სასარგებლო</b> არასაბანკო  <br/> ფინანსური ოპერააციები</span>
+                                <span><b>{Lang.tr('footer.beneficial')}</b> {Lang.tr('footer.non-banking')}  <br/> {Lang.tr('footer.operations')}</span>
                             </div>
                         </div>
+                        <GlobalContext.Consumer>{(context) =>  
                         <div className = 'partners'>
                             <div className = 'partner-logos'>
                                     <img src = '../../../Assets/Images/LandingImg/visa-logo.svg' alt='visa' />
                                 <div className = 'wall'>
                                 </div>
-                                
-                                    <img src = '../../../Assets/Images/LandingImg/unicard_geo.svg' alt='visa' />
+
+                                    <img src = {`../../../Assets/Images/LandingImg/unicard_${context.lang}.svg` }alt='visa' />
                                 <div className = 'wall'>    
                                 </div>
                                     <img src = '../../../Assets/Images/LandingImg/mc-logo.svg' alt='visa' />
                             </div>
-                        </div>    
+                        </div> }
+                        </GlobalContext.Consumer>   
                     </div>
                     <div className = 'second-container'>
                         <div className = 'left-content'>
@@ -56,9 +59,9 @@ const Footer = () => {
                     
                 </div>  
                 <div className='third-container'>
-                        <span>©2020 შპს „ფეი უნიქარდი”</span>
+                        <span>{Lang.tr('footer.payunicard')}</span>
                         <div className='contact'>
-                            <span>კონტაქტი</span>
+                            <span>{Lang.tr('footer.contact')}</span>
                             <div className='social-btns' >
                                 <a href = 'https://www.facebook.com/payunicard' target = '_blank' rel="noreferrer">
                                     <span className = 'btn fa'><img src = '../../../Assets/Images/fb-icon.png' alt = 'fb-icon'/></span>
@@ -66,8 +69,7 @@ const Footer = () => {
                                 <a href = 'https://www.linkedin.com/company/payunicard' target = '_blank' rel="noreferrer">
                                     <span className = 'btn in'><img src = '../../../Assets/Images/in-icon.png' alt = 'in-icon' /></span>
                                 </a>
-                                {/* <a className='btn facebook' href='https://www.facebook.com/payunicard' target='_blank' rel='noreferrer'><i className='fa fa-facebook'></i></a>
-                                <a className='btn linkedin' href='https://www.linkedin.com/company/payunicard' target='_blank'  rel='noreferrer'><i className='fa fa-linkedin'></i></a> */}
+                                
                             </div>
                         </div>
                     </div>  

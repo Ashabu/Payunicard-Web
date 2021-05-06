@@ -40,7 +40,6 @@ class App extends Component {
   
 
   render() {
-    console.log(this.state.activeLang)
     if(!this.state.isLoaded) return null
     return (
         <GlobalContext.Provider value={contextState}>

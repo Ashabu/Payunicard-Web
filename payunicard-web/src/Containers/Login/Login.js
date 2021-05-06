@@ -20,7 +20,8 @@ class Login extends Component {
     state = {
         userName: "",
         password: "",
-        forgotPassword: false
+        forgotPassword: false,
+        forgotPasswordUsername: "",
     }
 
     login = () => {
@@ -37,7 +38,7 @@ class Login extends Component {
 
 
     handleModalClose = () => {
-        this.setState({forgotPassword: false, userName: ''})
+        this.setState({forgotPassword: false, forgotPasswordUsername: ''})
     }
 
         // alert();
@@ -56,14 +57,13 @@ class Login extends Component {
 
 
     render() {
-        // Validation.validate();
         return (
             <GlobalContext.Consumer>{(context) =>
             <Layout>
                 <Modal show = {this.state.forgotPassword} headerText = 'დაგავიწყდათ პაროლი?' onCloseModal = {this.handleModalClose}>
                     <Input className = 'Input Input-bg' type = 'text' placeholder = {Lang.tr('auth.username')} 
                         value = {this.state.userName}
-                        onInput = {(e)=> this.setState({userName: e.target.value})}/>
+                        onInput = {(e)=> this.setState({forgotPasswordUsername: e.target.value})}/>
                     <Button  buttonClass = 'button-sm gray' clicked = {this.handleCheckUser}> შემდეგი</Button>    
                 </Modal>
                 <div className = 'LoginWrap'>

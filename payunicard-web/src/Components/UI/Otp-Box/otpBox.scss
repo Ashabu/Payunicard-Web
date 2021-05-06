@@ -1,0 +1,19 @@
+.Otp-Box {
+    display: flex;
+    flex-flow: row;
+    width: 260px;
+    margin: auto;
+    justify-content: space-between;
+    
+    input {
+        width: 48px;
+        height: 64px;
+        border-radius: 10px;
+        background-color: #f1f1f1;
+        border: none;
+        outline: none;
+        font-size: 18px;
+        text-align: center;
+        font-family: 'FiraGo REGULAR';
+    }
+}

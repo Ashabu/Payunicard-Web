@@ -1,5 +1,5 @@
 
-    .Navbar {
+    .Header {
         height: auto;
         display: flex;
         justify-content: space-between;
@@ -32,7 +32,7 @@
     }
 
     @media (max-width: 800px) {
-    .Navbar {
+    .Header {
         .headerButtons {
             .auth-links {
                 display: none;
@@ -43,7 +43,7 @@
 }
 
 @media (max-width: 700px) {
-    .Navbar {
+    .Header {
         padding: 13px 18px 15px 26px;
         height: 70px;
 

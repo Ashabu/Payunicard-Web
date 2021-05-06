@@ -15,7 +15,12 @@
         "aboutUs": "About Us",
         "termsOfUse": "Terms of Use",
         "faq": "FAQ (Frequently Asked Quuestions)",
-        "webTermsOfUse": "Website Terms of Use"
+        "webTermsOfUse": "Website Terms of Use",
+        "payunicard": "© 2020 PayUnicard",
+        "contact" : "Contact Us",
+        "beneficial": "BENEFICIAL",
+        "non-banking": "NON-BANKING",
+        "operations" : "FINANCIAL OPERATIONS"
     },
     "landing": {
         "loyalWallet": "My Everyday Loyal UNIWallet ",

@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Lang from '../../../Services/SetLang';
 import { Langs } from '../../../Constants/index';
-import './navbar.scss'
+import './header.scss'
 
 var langs = []
 
-const  NavBar = () => {
+const  Header = () => {
     langs = Object.entries(Langs)
     // useEffect(() => {
     //     console.log(Lang.translate)
@@ -25,7 +25,7 @@ const  NavBar = () => {
     }
    
     return (
-        <div className = 'Navbar'>
+        <div className = 'Header'>
             <div className = 'unilogo'>
                 <Link to = '/'>
                     <img  src = {`../../../Assets/Images/LandingImg/Unilogo_${currentLang[1][1]}.svg`}  alt='unicard-logo'/>
@@ -44,4 +44,4 @@ const  NavBar = () => {
     )
 }
 
-export default NavBar;
+export default Header;

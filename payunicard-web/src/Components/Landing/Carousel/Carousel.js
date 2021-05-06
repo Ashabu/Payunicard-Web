@@ -77,57 +77,48 @@ class Carousel extends Component {
 
     onReportWindowSize = () => {
         let pageWidth = window.innerWidth;
-        console.log(pageWidth)
         let carousel = {...this.carouselConfig.carousel};
-        switch (pageWidth) {
-            case pageWidth > 1580:
-                carousel.visaPos = 0;
-                carousel.mcPos = 160;
-                carousel.visaNextPos = 340;
-                carousel.mcNextPos = 520;
-                carousel.lastPos = -340;
-                carousel.startPos = 340;
-                break;
-            case pageWidth <= 1580 && pageWidth > 1280:
-                carousel.visaPos = 0;
-                carousel.mcPos = 150;
-                carousel.visaNextPos = 300;
-                carousel.mcNextPos = 450;
-                carousel.lastPos = -300;
-                carousel.startPos = 300;
-                break;
-            case pageWidth <= 1280 && pageWidth > 1024:
-                carousel.visaPos = 0;
-                carousel.mcPos = 120;
-                carousel.visaNextPos = 240;
-                carousel.mcNextPos = 360;
-                carousel.lastPos = -240;
-                carousel.startPos = 240;
-                break;
-            case pageWidth <= 1024 && pageWidth > 800:
-                carousel.visaPos = 0;
-                carousel.mcPos = 74;
-                carousel.visaNextPos = 148;
-                carousel.mcNextPos = 222;
-                carousel.lastPos = -148;
-                carousel.startPos = 148;
-                break;
-            case pageWidth <= 800:
-                carousel.visaPos = 0;
-                carousel.mcPos = 120;
-                carousel.visaNextPos = 240;
-                carousel.mcNextPos = 360;
-                carousel.lastPos = -240;
-                carousel.startPos = 240;
-                break;
-                default:
-                break;
+        
+        if (pageWidth > 1580) {
+            carousel.visaPos = 0;
+            carousel.mcPos = 160;
+            carousel.visaNextPos = 340;
+            carousel.mcNextPos = 520;
+            carousel.lastPos = -340;
+            carousel.startPos = 340;
+        } else if (pageWidth <= 1580 && pageWidth > 1280) {
+            carousel.visaPos = 0;
+            carousel.mcPos = 150;
+            carousel.visaNextPos = 300;
+            carousel.mcNextPos = 450;
+            carousel.lastPos = -300;
+            carousel.startPos = 300;
+        } else if (pageWidth <= 1280 && pageWidth > 1000) {
+            carousel.visaPos = 0;
+            carousel.mcPos = 120;
+            carousel.visaNextPos = 240;
+            carousel.mcNextPos = 360;
+            carousel.lastPos = -240;
+            carousel.startPos = 240;
+        } else if (pageWidth <= 1000 && pageWidth > 800) {
+            carousel.visaPos = 0;
+            carousel.mcPos = 74;
+            carousel.visaNextPos = 148;
+            carousel.mcNextPos = 222;
+            carousel.lastPos = -148;
+            carousel.startPos = 148;
+        } else if (pageWidth <= 800) {
+            carousel.visaPos = 0;
+            carousel.mcPos = 120;
+            carousel.visaNextPos = 240;
+            carousel.mcNextPos = 360;
+            carousel.lastPos = -240;
+            carousel.startPos = 240;
+        }    
+        this.carouselConfig.carousel = carousel;
+           
         }
         
-        this.carouselConfig.carousel = carousel;
-
-    }
-
 
     render() {
         return (

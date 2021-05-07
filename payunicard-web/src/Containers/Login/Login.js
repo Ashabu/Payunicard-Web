@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import React, { Component } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import './login.scss';
 import Input from '../../Components/UI/Input/Input';
 import Button from '../../Components/UI/Button/Button';
@@ -25,13 +25,20 @@ class Login extends Component {
     }
 
     login = () => {
-        Validation.validate();
-        debugger
-        User.GetAccessToken().then(res => {
+       
+        // if(!Validation.validate()) {
+        //     console.log(Validation.errorStack);
+        //     return;
+        // } 
+        let loginData = {
+            username: this.state.userName,
+            password: this.state.password
+        }
+       
+        User.UserLogin(loginData).then(res => {
            let token=res.data.access_token;
            localStorage.setItem('token',token);
            this.props.history.push('/Dashboard')
-
 
        })
     }

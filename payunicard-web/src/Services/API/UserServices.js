@@ -4,21 +4,21 @@ import axios from 'axios'
 
 class User {
 
-    GetAccessToken = async () => {
+    UserLogin = async (data) => {
         const GRANT_TYPE = 'password',
         SCOPE =  'Wallet_Api.Full',
         CLIENT_ID = 'WalletApi',
         CLIENT_SECRET = 'abcd123'
 
-        let data = new FormData();
-        data.append('grant_type', GRANT_TYPE);
-        data.append('scope', SCOPE);
-        data.append('client_id', CLIENT_ID);
-        data.append('client_secret', CLIENT_SECRET);
-        data.append('username', 'Avtandil@test.com');
-        data.append( 'password', 'As123123!');
+        let loginData = new FormData();
+        loginData.append('grant_type', GRANT_TYPE);
+        loginData.append('scope', SCOPE);
+        loginData.append('client_id', CLIENT_ID);
+        loginData.append('client_secret', CLIENT_SECRET);
+        loginData.append('username', data.username);
+        loginData.append( 'password', data.password);
 
-        return await axios.post(globalConfig.token_URL, data)
+        return await axios.post(globalConfig.token_URL, loginData)
     }
 
     GetUserDetails = async () => {

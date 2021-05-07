@@ -5,14 +5,17 @@ import Input from '../../Components/UI/Input/Input';
 import Select from '../../Components/UI/Select/Select';
 import Selectlist from '../../Components/HOC/SelectList/SelectLIst';
 import Layout from '../Layout/Layout';
-//import Validation from '../../Components/UI/InputValidation/Validation';
+import Validation from '../../Components/UI/InputValidation/Validation';
 import User from '../../Services/API/UserServices';
 import Button from '../../Components/UI/Button/Button';
+import PasswordComplexity from '../../Components/UI/PasswordComplexity/PasswordComplexity';
+
 
 class UserRegistration extends Component {
 
     state = {
         selected:{},
+        countryCode: "",
         mobileNumber: "+995558120936",
         username: '',
         surname: '',
@@ -24,6 +27,11 @@ class UserRegistration extends Component {
         repPasswordError: '',
         isApplyTerms: 1,
         otp: null,
+        hasBigLetter: false,
+        hasSmallLetter: false,
+        hasNumber: false,
+        hasSpecialChar: false,
+
         
 
     }
@@ -36,9 +44,9 @@ class UserRegistration extends Component {
         }
     }        
 
-    
     handleUserRegistragion = async () => {
         debugger
+        if(!Validation.validate()) return
         //if(this.state.repPasswordError !== "") return;
         const { mobileNumber, username, surname, email, birthDate, personalNumber, password, repPassword, isApplyTerms, otp } = this.state
         let regData = {
@@ -58,6 +66,7 @@ class UserRegistration extends Component {
         })
     }
     render() {
+        console.log(this.state.password)
         let  repPasswordError = null;
         if(this.state.repPasswordError !== '') {
              repPasswordError =  (<span>{this.state.repPasswordError}</span>)
@@ -90,15 +99,15 @@ class UserRegistration extends Component {
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = 'მობილურის ნომერი'}/>
                         </div>      
-                        < Input className = 'Input Input-bg' type = 'text' placeholder = 'ელ-ფოსტა' 
+                        < Input className = 'Input Input-bg' type = 'text' placeholder = 'ელ-ფოსტა'  rule = {"email"}
                             onInput = {(e)=> this.setState({email: e.target.value})}
                             onFocus = {(e) => e.target.placeholder = ""}
                             onBlur = {(e) => e.target.placeholder = 'ელ-ფოსტა'}/>  
-                        < Input className = 'Input Input-bg' type = 'text' placeholder = 'სახელი' 
+                        < Input className = 'Input Input-bg' type = 'text' placeholder = 'სახელი' rule = {'required'}
                             onInput = {(e)=> this.setState({userName: e.target.value})}
                             onFocus = {(e) => e.target.placeholder = ""}
                             onBlur = {(e) => e.target.placeholder = 'სახელი'}/>
-                        < Input className = 'Input Input-bg' type = 'text' placeholder ='გვარი ' 
+                        < Input className = 'Input Input-bg' type = 'text' placeholder ='გვარი ' rule = {'required'}
                             onInput = {(e)=> this.setState({surname: e.target.value})}
                             onFocus = {(e) => e.target.placeholder = ""}
                             onBlur = {(e) => e.target.placeholder = 'გვარი'}/>    
@@ -106,12 +115,12 @@ class UserRegistration extends Component {
                             onInput = {(e)=> this.setState({birthDate: e.target.value})}
                             onFocus = {(e) => e.target.placeholder = ""}
                             onBlur = {(e) => e.target.placeholder = 'დაბადების თარიღი'}/>    
-                        < Input className = 'Input Input-bg' type = 'text' placeholder = 'პირადი ნომერი' 
+                        < Input className = 'Input Input-bg' type = 'text' placeholder = 'პირადი ნომერი' rule = {'required'}
                             onInput = {(e)=> this.setState({personalNumber: e.target.value})}
                             onFocus = {(e) => e.target.placeholder = ""}
                             onBlur = {(e) => e.target.placeholder = 'პირადი ნომერი'}/>
                         <div className = 'passwords'>   
-                            < Input className = 'Input' type = 'text' placeholder ='პაროლი' 
+                            < Input className = 'Input' type = 'text' placeholder ='პაროლი' rule = {'required'}
                                 onInput = {(e)=> this.setState({password: e.target.value})}
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = 'პაროლი'}/>
@@ -121,7 +130,9 @@ class UserRegistration extends Component {
                                 onBlur = {(e) => e.target.placeholder = 'გაიმეორეთ პაროლი'}
                                 onChange = {this.onRepeatePasswordCheck} />
                                 {repPasswordError}
-                        </div> 
+                        </div>
+                                    <PasswordComplexity 
+                                       regPassword = {this.state.password} />
                         < Input className = 'Input'  type = 'text'  
                                 onInput = {(e)=> this.setState({otp: e.target.value})}
                                 onFocus = {(e) => e.target.placeholder = ""}

@@ -1,16 +1,22 @@
-import React from 'react';
+import React, {Component} from 'react';
+import './dashboard.scss';
 import OtpBox from '../../Components/UI/Otp-Box/Otp-Box';
 
 
 
-function Dashboard(props) {
+class Dashboard extends Component {
     
-    return (
-        <div>
-            <OtpBox/>
-           
-        </div>
-    );
+    
+
+    render() {
+        return (
+            <div>
+               
+                <OtpBox/>
+
+            </div>
+        );
+    }
 }
 
 export default Dashboard;

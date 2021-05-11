@@ -32,7 +32,7 @@ class Validation {
             const rules = inp.getAttribute('rule')?.split(',') || [];
             
             rules.forEach(rule =>{
-                this.errorStack = 0;
+                this.errorStack = [];
                 if(rule === 'email') {
                     if(!this.validateEmail(inp.value)) {
                        errorSpan.innerHTML = this.errorMessages['email'];
@@ -102,9 +102,8 @@ class Validation {
         return reg.test(value)
     }
 
-    removeValidateMe = (ref) => {
+    removeValidate = (ref) => {
         this.inputs = this.inputs.filter(el => el !== ref);
-        console.log(this.inputs)
     }
 }
 

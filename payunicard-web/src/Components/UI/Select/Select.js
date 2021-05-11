@@ -12,7 +12,8 @@ var isFocused = false;
 
     const handleOnBlur = () => {
         if(blurTmout) clearTimeout(blurTmout);
-        setBlurTmout(setTimeout(()=>{ if(isFocused) return; setVisible(false)}, 200));
+        setBlurTmout(setTimeout(()=>{ if(isFocused) return; setVisible(false); setSearch('')}, 200));
+        
     }
 
 

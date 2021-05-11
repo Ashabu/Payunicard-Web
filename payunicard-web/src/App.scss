@@ -60,7 +60,7 @@ a {
     width: 220px;
     height: 45px;
     border-radius: 10px;
-    cursor: pointer;
+    
     border: none;
     outline: none;
     font-family: 'FiraGO MEDIUM';
@@ -70,10 +70,13 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
+    
+   
 }
 .gray {
     background: #efefef;
     color: #130D1E;
+    
 }
 .green {
     background: #94dd34;

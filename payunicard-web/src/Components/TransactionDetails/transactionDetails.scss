@@ -1,0 +1,67 @@
+.tran-detail-wrap {
+    
+    width: 100%;
+    display: inline-grid;
+    grid-template-columns: 60px auto auto 25px;
+    align-items: center;
+    padding: 10px 0;
+    box-sizing: border-box;
+    font-family: 'FiraGO BOOK';
+    border-bottom: 1px solid #f1f1f1;
+
+    .logo {
+        width: 40px;
+        height: 40px;
+        background: #f4f4f4;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            max-width: 30px;
+        }
+    }
+
+    .tran-details {
+            display: flex;
+            flex-flow: column;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            span {
+                display: inline-block;
+
+                &:first-child {
+                    font-family: 'FiraGO REGULAR';
+                    font-weight: normal;
+                    font-size: 12px;
+                    text-align: left;
+                    color: #6b6b6b;
+                    margin-bottom: 3px;
+                }
+
+                &:nth-child(2) {
+                    font-family: 'FiraGO REGULAR';
+                    font-weight: normal;
+                    font-size: 13px;
+                    text-align: left;
+                    color: #130d1e;
+                    margin-bottom: 5px;
+                }
+
+                &:nth-child(3) {
+                    font-family: 'FiraGO REGULAR';
+                    font-weight: normal;
+                    font-size: 12px;
+                    text-align: left;
+                    color: #6b6b6b;
+                    line-height: 1.3rem;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
+                }
+            }
+        }
+}

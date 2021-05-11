@@ -21,14 +21,22 @@ class User {
         return await axios.post(globalConfig.token_URL, loginData)
     }
 
+    CheckUser = async (data) => {
+        return await axios.post(`${globalConfig.api_URL}/User/CheckUser`, data);
+    }
+
+    GetPasswordResetData = async (data) => {
+        
+
+        return await axios.get(`${globalConfig.api_URL}/User/GetPasswordResetData`, data)
+    }
+
     GetUserDetails = async () => {
         console.log(globalConfig)
         return await axios.get(`${globalConfig.api_URL}/User/GetUserDetails`);
     }
 
-    CheckUser = async (data) => {
-        return await axios.post(`${globalConfig.api_URL}/User/CheckUser`, data);
-    }
+    
 
     UserRegistration = async (data) => {
         return await axios.post(`${globalConfig.api_URL}/User/UserPreRegistration`, data);

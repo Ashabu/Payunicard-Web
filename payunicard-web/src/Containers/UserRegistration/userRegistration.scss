@@ -15,6 +15,11 @@
     .RegLeft {
         max-width: 470px;
         margin-right: 115px;
+        
+        .auth-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
     }
     .passwords {
         width: 100%;

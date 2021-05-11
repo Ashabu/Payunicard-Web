@@ -8,6 +8,8 @@ import Layout from '../Layout/Layout';
 import Validation from '../../Components/UI/InputValidation/Validation';
 import User from '../../Services/API/UserServices';
 import Button from '../../Components/UI/Button/Button';
+import { Link } from 'react-router-dom';
+import Lang from '../../Services/SetLang';
 import PasswordComplexity from '../../Components/UI/PasswordComplexity/PasswordComplexity';
 
 
@@ -45,7 +47,6 @@ class UserRegistration extends Component {
     }        
 
     handleUserRegistragion = async () => {
-        debugger
         if(!Validation.validate()) return
         //if(this.state.repPasswordError !== "") return;
         const { mobileNumber, username, surname, email, birthDate, personalNumber, password, repPassword, isApplyTerms, otp } = this.state
@@ -74,6 +75,7 @@ class UserRegistration extends Component {
             repPasswordError = null;
         }
         
+        console.log(this.state.selected)
 
         return (
             <Layout>
@@ -89,7 +91,7 @@ class UserRegistration extends Component {
                                 <Selectlist  
                                     listClass = 'selectLIst' 
                                     key={element.name} 
-                                    clicked={() => {this.setState({selected: element}); setVisible(false) }} >
+                                    clicked={() => {this.setState({selected: element}); setVisible(false);}} >
                                        {element.dial_code} {element.name} 
                                 </Selectlist>
                             )} />
@@ -133,11 +135,14 @@ class UserRegistration extends Component {
                         </div>
                                     <PasswordComplexity 
                                        regPassword = {this.state.password} />
-                        < Input className = 'Input'  type = 'text'  
+                        {/* < Input className = 'Input'  type = 'text'  
                                 onInput = {(e)=> this.setState({otp: e.target.value})}
                                 onFocus = {(e) => e.target.placeholder = ""}
-                               />
-                        <Button clicked = {this.handleUserRegistragion}>რეგისტრაცია</Button>               
+                               /> */}
+                        <div className = 'auth-buttons'>
+                            <Button  clicked = {this.handleUserRegistragion}  buttonClass = 'button-sm green'> {Lang.tr('auth.signUp')} </Button>     
+                            <Link to = '/login' className = 'button-sm gray'>{Lang.tr('auth.signIn')}</Link>
+                        </div>            
                     </div>
                     <div>
                         <img src = '../../Assets/Images/LandingImg/login_img.svg' alt = 'login-img' />

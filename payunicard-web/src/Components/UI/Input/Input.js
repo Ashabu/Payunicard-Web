@@ -6,13 +6,13 @@ function Input(props) {
     const validateRef = useRef();
     useEffect(()=>{
         Validation.Set = validateRef;
-        return () => Validation.removeValidateMe(validateRef)
+        return () => Validation.removeValidate(validateRef)
     }, [])
 
     return (
-        <div ref= {validateRef}>
+        <div style={{display:'flex', flexFlow: 'column'}} ref= {validateRef}>
             <input {...props}  />
-            <span style={{color: 'red'}}></span>
+            <span style={{color: 'red'}}>{props.errormessage}</span>
         </div>    
     );
 }

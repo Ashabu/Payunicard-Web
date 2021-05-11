@@ -16,14 +16,14 @@ const  PasswordComplexity = (props) => {
     let passwordComplexity = (
         <div style = {{display: 'flex', flexDirection: 'column'}}>
             <span>პაროლი უნდა შეიცავდეს მინიმუმ:</span>     
-            {lengthCheck}
-            { bigLetterCheck}
-            { smallLetterCheck}
-            { numberCheck}
-            { specialNumbeCheck}
+            { lengthCheck }
+            { bigLetterCheck }
+            { smallLetterCheck }
+            { numberCheck }
+            { specialNumbeCheck }
         </div>
     )
-    
+
     if( Validation.validateFullPassword(regPassword)) {
         passwordComplexity = (
             <div>
@@ -31,6 +31,10 @@ const  PasswordComplexity = (props) => {
             </div>
         )
     }
+
+    useEffect(() => {
+
+    },[regPassword])
     
     return (
         <Fragment>

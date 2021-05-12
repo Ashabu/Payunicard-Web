@@ -8,6 +8,7 @@
     box-sizing: border-box;
     font-family: 'FiraGO BOOK';
     border-bottom: 1px solid #f1f1f1;
+    cursor: pointer;
 
     .logo {
         width: 40px;
@@ -63,5 +64,9 @@
                     -webkit-box-orient: vertical;
                 }
             }
+        }
+    
+        .tran-amount {
+            text-align: end;
         }
 }

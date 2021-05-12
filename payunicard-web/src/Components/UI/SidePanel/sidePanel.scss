@@ -1,0 +1,35 @@
+.sidePanel {
+    border-radius: 25px;
+    position: fixed;
+    right: -580px;
+    top: 0;
+    width: 570px;
+    background:#FFFFFF;
+    height: 100%;
+    transition: all 500ms linear;
+    z-index: 101;
+
+    &.active {
+        right: 0;
+    }
+
+    .header {
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 30px;
+        background: white;
+
+        .close-sidePanel {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #f1f1f1;
+            border: none;
+            text-align: center;
+            line-height: 50px;
+        }
+    }
+}
+

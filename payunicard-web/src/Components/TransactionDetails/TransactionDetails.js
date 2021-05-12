@@ -10,7 +10,7 @@ const  TransactionDetails =(props) => {
     return (
         <div className = 'tran-detail-wrap' onClick = {props.clicked}>
             <div className = 'logo'>
-                <img src = {imageUrl} alt = 'logo' />
+                <img src = '../../Assets/Images/MccCodeImg/ჯანმრთელობა-და-თავის-მოვლა.png' alt = 'logo' />
             </div>
             <div className = 'tran-details'>
                 <span>{ComonFn.formatDate(tranDate)}</span>
@@ -28,7 +28,13 @@ const  TransactionDetails =(props) => {
 }
 
 
-PropTypes.TransactionDetails = {
+TransactionDetails.propTypes = {
+    tranDate: PropTypes.string,
+    classCodeDescription: PropTypes.string,
+    description: PropTypes.string,
+    ccy: PropTypes.string,
+    imageUrl: PropTypes.string,
 
 }
+
 export default TransactionDetails;

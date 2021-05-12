@@ -1,54 +1,76 @@
 /* eslint-disable no-undef */
 import React, {Component} from 'react';
-import axios from 'axios'
+import GlobalContext, {contextState}  from '../../Contexsts/GlobalContext';
+import User from '../../Services/API/UserServices';
 import './dashboard.scss';
-import OtpBox from '../../Components/UI/Otp-Box/Otp-Box';
 import TransactionDetails from '../../Components/TransactionDetails/TransactionDetails';
+import SidePanel from '../../Components/UI/SidePanel/SidePanel';
+import Button from '../../Components/UI/Button/Button'
+import Backdrop from '../../Components/UI/Backdrop/Backdrop';
 
 
 
 class Dashboard extends Component {
 
+    static contextType = GlobalContext;
+
+    
+
     state = {
+        isInitialized: false,
         transactions: [],
+        panelVisible: false,
     }
 
     componentDidMount() {
         this.getTransactions();
     }
 
+  
+
     getTransactions = async () => {
-        await axios.post(`${globalConfig.api_URL}/user/GetUserAccountsStatement`,{
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-              },
-        }).then(res => {
+       User.GetUserAccountStatements().then(res => {
             if(res.data.ok) {
-                this.setState({transactions: res.data.data.statements})
-                console.log(this.state.transactions)
+                contextState.setUserStatements(res.data.data.statements)
+                this.setState({isInitialized: true})
             }
         })
     }
     
+   
 
     tranDetail = (transaction) => {
-        console.log(transaction)
+       
+        this.setState({panelVisible: true})
+        console.log(this.state.panelVisible)
         this.props.history.push({
             pathname: '/Dashboard/TransactionDetails',
             search: `?tranId=${transaction.tranID}`,
             
           })
+        
     }
 
+
     render() {
-        
+        console.log(contextState)
+        if(!this.state.isInitialized) return null;
         
         return (
-            <div style ={{maxWidth: 485}}>
-            {this.state.transactions.map(transaction =>(<TransactionDetails key = {transaction.tranID} transaction = {transaction} clicked = {() => this.tranDetail(transaction)}/>))}
+            <GlobalContext.Consumer>
+          {(context)=>  <div >
+              <Backdrop show = {this.state.panelVisible} hide = {()=> this.setState({panelVisible: false})}/>
+                <SidePanel
+                    stepBack 
+                    visible = {this.state.panelVisible}
+                    closePanel = {()=> this.setState({panelVisible: false})} 
+                    footer= {<Button/>} />
+                <div style ={{maxWidth: 485}}>
+                    {context.userStatements.map(transaction =>(<TransactionDetails key = {transaction.tranID} transaction = {transaction} clicked = {() => this.tranDetail(transaction)}/>))}
+                </div>
                 
-
-            </div>
+            </div>}
+            </GlobalContext.Consumer>
         );
     }
 }

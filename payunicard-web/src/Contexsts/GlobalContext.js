@@ -7,9 +7,15 @@ export const contextState = {
     },
 
     userAccounts: [],
-    setUserAccounts: (res) => {
-        contextState.userAccounts = res;
+    setUserAccounts: (data) => {
+        contextState.userAccounts = data;
+    },
+
+    userStatements: [],
+    setUserStatements: (data) => {
+        contextState.userStatements = data;
     }
+
 }
 const GlobalContext = React.createContext({contextState});
 

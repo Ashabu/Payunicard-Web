@@ -11,6 +11,8 @@ const _AuthToken = `Bearer ${localStorage.getItem('token')}`;
 
 
 axios.defaults.headers['Authorization'] = _AuthToken;
+axios.defaults.headers['Content-Type'] = "application/json; charset=utf-8"
+
 axios.interceptors.request.use(requestConfig => {
   
   return requestConfig;

@@ -23,14 +23,12 @@ class Validation {
     set Set(ref) {
         ref[0].current.groupId = ref[1];
         this.inputs.push(ref[0]); 
-
-        console.log(ref)
-        
     }
     
     validate = (key) => {
+        debugger
         let groupedInputs = key? this.inputs.filter(inp => inp.current.groupId === key) : this.inputs;
-        
+    
         groupedInputs.forEach(el =>{
             let inp = el.current.childNodes[0];
             let errorSpan = el.current.childNodes[1];

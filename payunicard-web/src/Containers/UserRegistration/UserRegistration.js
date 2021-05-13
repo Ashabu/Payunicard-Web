@@ -18,8 +18,8 @@ class UserRegistration extends Component {
 
     state = {
         selected:{},
-        countryCode: "",
-        mobileNumber: "+995558120936",
+        countryCode: '',
+        mobileNumber: '',
         username: '',
         surname: '',
         email: '',
@@ -50,12 +50,12 @@ class UserRegistration extends Component {
     handleUserRegistragion = async () => {
         if(!Validation.validate()) return
         //if(this.state.repPasswordError !== "") return;
-        const { mobileNumber, username, surname, email, birthDate, personalNumber, password, repPassword, isApplyTerms, otp } = this.state
+        const { countryCode, mobileNumber, username, surname, email, birthDate, personalNumber, password, repPassword, isApplyTerms, otp } = this.state
         let regData = {
             userName: email,
             password: password,
             confirmPassword: repPassword,
-            phone: mobileNumber,
+            phone: countryCode + mobileNumber,
             otpGuid: otp,
             isApplyTerms: isApplyTerms,
             name: username,
@@ -64,11 +64,9 @@ class UserRegistration extends Component {
             personalId: personalNumber
         }
         User.UserRegistration(regData).then(res => {
-            console.log(res.data)
         })
     }
     render() {
-        console.log(this.state.password)
         let  repPasswordError = null;
         if(this.state.repPasswordError !== '') {
              repPasswordError =  (<span>{this.state.repPasswordError}</span>)
@@ -76,7 +74,6 @@ class UserRegistration extends Component {
             repPasswordError = null;
         }
         
-        console.log(this.state.selected)
 
         return (
             <Layout>
@@ -94,10 +91,11 @@ class UserRegistration extends Component {
                                 <Selectlist  
                                     listClass = 'selectLIst' 
                                     key={element.name} 
-                                    clicked={() => {this.setState({selected: element}); setVisible(false);}} >
+                                    clicked={() => {this.setState({selected: element, countryCode: element.dial_code}); setVisible(false);}} >
                                        <Flag flagCode = {element.flag_code}/> {element.dial_code} {element.name} 
                                 </Selectlist>
-                            )} />
+                            )} 
+                            />
                            
                             < Input className = 'Input Input-bg' type = 'text' placeholder ='მობილურის ნომერი' 
                                 onInput = {(e)=> this.setState({mobileNumber: e.target.value})}

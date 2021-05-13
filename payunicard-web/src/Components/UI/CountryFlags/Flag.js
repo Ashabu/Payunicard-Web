@@ -3,5 +3,5 @@ import './flags.scss';
 
  const  Flag = props => (<div className = {props.flagCode}></div>)
 
- export default Flag;
+ export default React.memo(Flag);
 

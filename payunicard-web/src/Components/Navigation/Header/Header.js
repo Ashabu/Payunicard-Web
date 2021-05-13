@@ -8,9 +8,7 @@ var langs = []
 
 const  Header = () => {
     langs = Object.entries(Langs)
-    // useEffect(() => {
-    //     console.log(Lang.translate)
-    // },[Lang.translate])
+   
     const[currentLang, setCurrentLang] = useState(langs);
 
     const onChangeLang = () => {

@@ -41,11 +41,8 @@ class Login extends Component {
         User.UserLogin(loginData).then(res => {
            let token=res.data.access_token;
            localStorage.setItem('token',token);
-
-           this.loginTmt = setTimeout(() => {
-            this.props.history.push('/Dashboard');
-            clearTimeout(this.loginTmt)
-           }, 200)
+           this.props.history.push('/Dashboard');
+     
            
 
        })

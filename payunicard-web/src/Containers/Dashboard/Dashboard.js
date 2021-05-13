@@ -61,11 +61,11 @@ class Dashboard extends Component {
         return (
             <GlobalContext.Consumer>
           {(context)=>  <div >
-              <Backdrop show = {this.state.panelVisible} hide = {()=> this.setState({panelVisible: false})}/>
+              <Backdrop show = {this.state.panelVisible} hide = {()=> {this.setState({panelVisible: false}); this.props.history.goBack ()}}/>
                 <SidePanel
                     stepBack 
                     visible = {this.state.panelVisible}
-                    closePanel = {()=> this.setState({panelVisible: false})} 
+                    closePanel = {()=> {this.setState({panelVisible: false}); this.props.history.goBack ()}} 
                     footer= {<Button/>} />
                 <div style ={{maxWidth: 485}}>
                     {context.userStatements.map(transaction =>(<TransactionDetail key = {transaction.tranID} transaction = {transaction} clicked = {() => this.tranDetail(transaction)}/>))}

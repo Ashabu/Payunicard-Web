@@ -40,6 +40,7 @@ var isFocused = false;
     if(visible) {
         selectList = (
             <div className='SelectList'>
+                
                 {searchInput}
                 {visible && selectData.map(el => {return props.render(el, setVisible)})}
             </div>
@@ -49,7 +50,7 @@ var isFocused = false;
     return (
         <div >
             <div className = 'Selected' onClick = {() => setVisible(!visible)} onBlur = {handleOnBlur} tabIndex = '0'>
-                {props.selected ? props.selected : props.placeholder}
+                {props.icon} {props.selected ? props.selected : props.placeholder}
             </div>
             {selectList}
         </div>

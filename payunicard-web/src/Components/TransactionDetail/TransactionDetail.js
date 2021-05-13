@@ -1,9 +1,9 @@
 import React from 'react';
-import './transactionDetails.scss';
+import './transactionDetail.scss';
 import ComonFn from '../../Services/CommonFunctions';
 import PropTypes from 'prop-types'
 
-const  TransactionDetails =(props) => {
+const  TransactionDetail =(props) => {
 
     const {tranDate, classCodeDescription, description, amount, imageUrl, ccy, } = props.transaction;
 
@@ -28,7 +28,7 @@ const  TransactionDetails =(props) => {
 }
 
 
-TransactionDetails.propTypes = {
+TransactionDetail.propTypes = {
     tranDate: PropTypes.string,
     classCodeDescription: PropTypes.string,
     description: PropTypes.string,
@@ -37,4 +37,4 @@ TransactionDetails.propTypes = {
 
 }
 
-export default TransactionDetails;
+export default TransactionDetail;

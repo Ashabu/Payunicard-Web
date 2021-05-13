@@ -30,7 +30,7 @@ class Login extends Component {
 
     login = () => {
        
-        if(!Validation.validate()) {
+        if(!Validation.validate('login')) {
             return;
         } 
         let loginData = {
@@ -41,7 +41,12 @@ class Login extends Component {
         User.UserLogin(loginData).then(res => {
            let token=res.data.access_token;
            localStorage.setItem('token',token);
-           this.props.history.push('/Dashboard')
+
+           this.loginTmt = setTimeout(() => {
+            this.props.history.push('/Dashboard');
+            clearTimeout(this.loginTmt)
+           }, 200)
+           
 
        })
     }
@@ -54,7 +59,7 @@ class Login extends Component {
     
         
     handleCheckUser = async () => {
-        if(!Validation.validate()) return;
+        if(!Validation.validate('resetPassword')) return;
         this.setState({buttonLoading: true})
         let cData = {
             UserName: this.state.forgotPasswordUsername
@@ -65,7 +70,6 @@ class Login extends Component {
                    this.setState({buttonLoading: false})
                       this.setState({isRegistered: res.data.data.isRegistred})
                } else {
-                   debugger
                    if( res.data.errors.length > 0) {
                    this.setState({buttonLoading: false, errorMessage: res.data.errors[0].displayText})
                    }
@@ -75,6 +79,7 @@ class Login extends Component {
     }
     
     handleGetPasswordResetData = async () => {
+        if(!Validation.validate('resetPassword')) return;
          let resetData = {
             userName: this.state.forgotPasswordUsername
         }
@@ -92,7 +97,7 @@ class Login extends Component {
     render() {
         let idInput;
         if(this.state.isRegistered){
-            idInput = <Input className = 'Input Input-bg' type = 'text' value = {this.state.personalId} onInput = {(e) => this.setState({personalId: e.target.value})}  rule = {'required'} />
+            idInput = <Input className = 'Input Input-bg' type = 'text' groupid = 'resetPassword' value = {this.state.personalId} onInput = {(e) => this.setState({personalId: e.target.value})}  rule = {'required'} />
         }
 
         return (
@@ -104,7 +109,8 @@ class Login extends Component {
                         onInput = {(e)=> this.setState({forgotPasswordUsername: e.target.value})}
                         onFocus = {() => this.setState({errorMessage: ''})}
                         errormessage = {this.state.errorMessage}
-                        rule ={'required'}/>
+                        rule ={'required'}
+                        groupid = 'resetPassword'/>
                     {idInput}
                      <div style={{display: 'flex'}}>
                     <Button  buttonClass = 'button-sm gray' clicked = {this.handleCheckUser} loading = {this.state.buttonLoading}> შემდეგი</Button>    
@@ -120,14 +126,16 @@ class Login extends Component {
                             < Input className = 'Input Input-bg' type = 'text' placeholder = {Lang.tr('auth.username')} 
                                 value = {this.state.userName}
                                 onInput = {(e)=> this.setState({userName: e.target.value})}
-                                onFocus = {(e) => e.target.placeholder = ""}
+                                onFocus = {(e) =>e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = Lang.tr('auth.username')}
-                                rule = {"required"}/>
+                                rule = {"required"}
+                                groupid = 'login'/>
                             < Input className = 'Input Input-bg' type = 'text' placeholder = {Lang.tr('auth.password')}
                                 onInput = {(e)=> this.setState({password: e.target.value})}
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = Lang.tr('auth.password')}
-                                rule = {'required'}/>    
+                                rule = {'required'}
+                                groupid = 'login'/>    
                         </div>
                         <div className = 'LoginOptions'>
                             <label>

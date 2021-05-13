@@ -40,11 +40,7 @@ class User {
     }
 
     GetUserAccountStatements = async () => {
-        return await axios.post(`${globalConfig.api_URL}/user/GetUserAccountsStatement`, {
-            header : {
-                'Content-Type': "application/json; charset=utf-8"
-            }
-        });
+        return await axios.post(`${globalConfig.api_URL}/user/GetUserAccountsStatement`, {});
     } 
     
 

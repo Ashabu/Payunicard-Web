@@ -5,7 +5,7 @@ import Validation from '../InputValidation/Validation'
 function Input(props) {
     const validateRef = useRef();
     useEffect(()=>{
-        Validation.Set = validateRef;
+        Validation.Set = [validateRef, props.groupid]
         return () => Validation.removeValidate(validateRef)
     }, [])
 

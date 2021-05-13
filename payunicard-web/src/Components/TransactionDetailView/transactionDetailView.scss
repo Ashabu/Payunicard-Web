@@ -1,0 +1,44 @@
+.detail-view-wrap  {
+    padding: 30px;
+
+    p {
+        font-family: 'FiraGO REGULAR' ;
+        font-weight: bold;
+        font-size: 14px;
+        color: #6b6b6b;
+        white-space: nowrap;
+        margin: 0;
+        padding: 0;
+    }
+    .detail-header {
+        display: flex;
+        justify-content: space-between;
+
+        
+
+        .header-left {
+            display: flex;
+            flex-flow: column;
+
+            img {
+                width: 70px;
+                margin-bottom: 30px;
+            }
+        }
+
+        .header-right {
+            display: flex;
+            flex-flow: column;
+            text-align: right;
+
+            p {
+                &:nth-child(1){
+                    font-weight: bold;
+                    font-size: 25px;
+                    margin: 20px 0px;
+                }
+            }
+        }
+
+    }
+}

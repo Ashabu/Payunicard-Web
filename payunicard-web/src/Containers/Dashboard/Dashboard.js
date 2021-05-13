@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 import GlobalContext, {contextState}  from '../../Contexsts/GlobalContext';
 import User from '../../Services/API/UserServices';
 import './dashboard.scss';
-import TransactionDetails from '../../Components/TransactionDetails/TransactionDetails';
+import TransactionDetail from '../../Components/TransactionDetail/TransactionDetail';
+import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
 import SidePanel from '../../Components/UI/SidePanel/SidePanel';
 import Button from '../../Components/UI/Button/Button'
 import Backdrop from '../../Components/UI/Backdrop/Backdrop';
@@ -29,6 +30,7 @@ class Dashboard extends Component {
   
 
     getTransactions = async () => {
+        
        User.GetUserAccountStatements().then(res => {
             if(res.data.ok) {
                 contextState.setUserStatements(res.data.data.statements)
@@ -44,7 +46,7 @@ class Dashboard extends Component {
         this.setState({panelVisible: true})
         console.log(this.state.panelVisible)
         this.props.history.push({
-            pathname: '/Dashboard/TransactionDetails',
+            pathname: '/Dashboard/TransactionDetail',
             search: `?tranId=${transaction.tranID}`,
             
           })
@@ -66,9 +68,11 @@ class Dashboard extends Component {
                     closePanel = {()=> this.setState({panelVisible: false})} 
                     footer= {<Button/>} />
                 <div style ={{maxWidth: 485}}>
-                    {context.userStatements.map(transaction =>(<TransactionDetails key = {transaction.tranID} transaction = {transaction} clicked = {() => this.tranDetail(transaction)}/>))}
+                    {context.userStatements.map(transaction =>(<TransactionDetail key = {transaction.tranID} transaction = {transaction} clicked = {() => this.tranDetail(transaction)}/>))}
                 </div>
-                
+                <div>
+                    <TransactionDetailView/>
+                </div>
             </div>}
             </GlobalContext.Consumer>
         );

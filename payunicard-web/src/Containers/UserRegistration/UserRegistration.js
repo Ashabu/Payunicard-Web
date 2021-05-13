@@ -8,6 +8,7 @@ import Layout from '../Layout/Layout';
 import Validation from '../../Components/UI/InputValidation/Validation';
 import User from '../../Services/API/UserServices';
 import Button from '../../Components/UI/Button/Button';
+import Flag from '../../Components/UI/CountryFlags/Flag';
 import { Link } from 'react-router-dom';
 import Lang from '../../Services/SetLang';
 import PasswordComplexity from '../../Components/UI/PasswordComplexity/PasswordComplexity';
@@ -82,17 +83,19 @@ class UserRegistration extends Component {
                 <div className = 'RegWrap'>
                     <div className = 'RegLeft'>
                         <div className = 'mobileNumber'>
+                            
                             <Select 
                             search
                                 data={Codes.countryCodes} 
                                 placeholder = 'Please Select'
-                                selected = {this.state.selected.dial_code} 
+                                selected = {this.state.selected.dial_code}
+                                icon = {<Flag flagCode = {this.state.selected.flag_code} />} 
                                 render = {(element, setVisible) => (
                                 <Selectlist  
                                     listClass = 'selectLIst' 
                                     key={element.name} 
                                     clicked={() => {this.setState({selected: element}); setVisible(false);}} >
-                                       {element.dial_code} {element.name} 
+                                       <Flag flagCode = {element.flag_code}/> {element.dial_code} {element.name} 
                                 </Selectlist>
                             )} />
                            

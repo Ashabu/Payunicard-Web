@@ -1,7 +1,7 @@
 module.exports = {
     "base_URL": "/",
-    "api_URL": "https://testapi.payunicard.ge:2681",
-    "token_URL": "https://testidentity.payunicard.ge:444/connect/token",
+    "api_URL": "http://10.172.26.14:6001",
+    "token_URL": "http://10.172.26.14:6004/connect/token",
     "translate_Version": 1,
     
 };

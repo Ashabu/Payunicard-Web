@@ -1,12 +1,11 @@
 /* eslint-disable no-undef */
 import React, {Component} from 'react';
+import './dashboard.scss';
 import GlobalContext, {contextState}  from '../../Contexsts/GlobalContext';
 import User from '../../Services/API/UserServices';
-import './dashboard.scss';
 import TransactionDetail from '../../Components/TransactionDetail/TransactionDetail';
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
 import SidePanel from '../../Components/UI/SidePanel/SidePanel';
-import Button from '../../Components/UI/Button/Button'
 import Backdrop from '../../Components/UI/Backdrop/Backdrop';
 
 
@@ -21,6 +20,7 @@ class Dashboard extends Component {
         isInitialized: false,
         transactions: [],
         panelVisible: false,
+        selectedTransaction: {}
     }
 
     componentDidMount() {
@@ -36,15 +36,26 @@ class Dashboard extends Component {
                 contextState.setUserStatements(res.data.data.statements)
                 this.setState({isInitialized: true})
             }
+        }).catch(error => {
+            console.log(error)
         })
     }
     
    
 
     tranDetail = (transaction) => {
-       
-        this.setState({panelVisible: true})
-        console.log(this.state.panelVisible)
+        // let trData = new FormData();
+        // trData.append('tranId', transaction.tranID) 
+        User.GetTransactionDetails({tranId: transaction.tranID}).then(res => {
+            if(res.data.ok) {
+                this.setState({selectedTransaction: res.data.data, panelVisible: true})
+                debugger
+            } else {
+                console.log(error)
+            }
+        }).catch(error => {
+            console.log(error)
+        })
         this.props.history.push({
             pathname: '/Dashboard/TransactionDetail',
             search: `?tranId=${transaction.tranID}`,
@@ -55,7 +66,6 @@ class Dashboard extends Component {
 
 
     render() {
-        console.log(contextState)
         if(!this.state.isInitialized) return null;
         
         return (
@@ -66,12 +76,14 @@ class Dashboard extends Component {
                     stepBack 
                     visible = {this.state.panelVisible}
                     closePanel = {()=> {this.setState({panelVisible: false}); this.props.history.goBack ()}} 
-                    footer= {<Button/>} />
+                   >
+                        <TransactionDetailView transaction = {this.state.selectedTransaction}/>
+                    </SidePanel>
                 <div style ={{maxWidth: 485}}>
-                    {context.userStatements.map(transaction =>(<TransactionDetail key = {transaction.tranID} transaction = {transaction} clicked = {() => this.tranDetail(transaction)}/>))}
+                    {context.userStatements.map(transaction =>(<TransactionDetail key = {transaction.tranID} transaction = {transaction} clicked = {() =>  this.tranDetail(transaction)}/>))}
                 </div>
                 <div>
-                    <TransactionDetailView/>
+                    
                 </div>
             </div>}
             </GlobalContext.Consumer>

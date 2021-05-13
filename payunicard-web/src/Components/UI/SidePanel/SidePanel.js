@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 
 const  SidePanel = (props) => {
-    const {stepBack, visible, headerText, closePanel, footer} = props;
+    const {stepBack, visible, headerText, closePanel, children} = props;
     let StepBack = null;
 
     if(stepBack) {
@@ -24,8 +24,10 @@ const  SidePanel = (props) => {
                     <img src = '../../../Assets/Images/close-icon.svg' alt = 'icon' />
                 </div>
             </div>
-            <div className = 'body' style = {{height: 770, border: '1px solid red', }}></div>
-            <div className = 'footer'>{footer}</div>
+            <div>
+                {children}
+            </div>
+            
         </div>
     );
 }

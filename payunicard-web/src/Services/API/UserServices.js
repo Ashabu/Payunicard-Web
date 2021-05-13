@@ -41,7 +41,11 @@ class User {
 
     GetUserAccountStatements = async (data = {}) => {
         return await axios.post(`${globalConfig.api_URL}/user/GetUserAccountsStatement`, data);
-    } 
+    }
+    
+    GetTransactionDetails = async (data) => {
+        return await axios.post(`${globalConfig.api_URL}/User/GetTransactionDetails`, data);
+    }
     
 
    

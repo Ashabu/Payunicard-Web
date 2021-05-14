@@ -2,7 +2,7 @@ import React from 'react';
 import './footer.scss'
 import { Link } from 'react-router-dom';
 import Lang from '../../../Services/SetLang';
-import GlobalContext from '../../../Contexsts/GlobalContext';
+import {StoreConsumer} from '../../../Contexsts/GlobalContext';
 
 const Footer = () => {
     return (
@@ -14,7 +14,7 @@ const Footer = () => {
                                 <span><b>{Lang.tr('footer.beneficial')}</b> {Lang.tr('footer.non-banking')}  <br/> {Lang.tr('footer.operations')}</span>
                             </div>
                         </div>
-                        <GlobalContext.Consumer>{(context) =>  
+                        <StoreConsumer>{(context) =>  
                         <div className = 'partners'>
                             <div className = 'partner-logos'>
                                     <img src = '../../../Assets/Images/LandingImg/visa-logo.svg' alt='visa' />
@@ -27,7 +27,7 @@ const Footer = () => {
                                     <img src = '../../../Assets/Images/LandingImg/mc-logo.svg' alt='visa' />
                             </div>
                         </div> }
-                        </GlobalContext.Consumer>   
+                        </StoreConsumer>   
                     </div>
                     <div className = 'second-container'>
                         <div className = 'left-content'>

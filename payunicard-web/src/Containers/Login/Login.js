@@ -8,11 +8,11 @@ import Validation from '../../Components/UI/InputValidation/Validation';
 import Lang from '../../Services/SetLang';
 import User from '../../Services/API/UserServices';
 import Modal from '../../Components/UI/Modal/Modal';
-import GlobalContext from '../../Contexsts/GlobalContext';
+import {Store, StoreConsumer} from '../../Contexsts/GlobalContext';
 
 class Login extends Component {
 
-    static contextType = GlobalContext;
+    // static contextType = GlobalContext;
         
     state = {
         userName: "",
@@ -98,7 +98,7 @@ class Login extends Component {
         }
 
         return (
-            <GlobalContext.Consumer>{(context) =>
+            <StoreConsumer>{(context) =>
             <Layout>
                 <Modal show = {this.state.forgotPassword} headerText = 'დაგავიწყდათ პაროლი?' onCloseModal = {this.handleModalClose}>
                     <Input className = 'Input Input-bg' type = 'text' placeholder = {Lang.tr('auth.username')} 
@@ -153,7 +153,7 @@ class Login extends Component {
                     </div>      
                 </div>
             </Layout>}
-            </GlobalContext.Consumer>
+            </StoreConsumer>
         );
     }
 }

@@ -29,8 +29,6 @@ class User {
     }
 
     GetPasswordResetData = async (data) => {
-        
-
         return await axios.get(`${globalConfig.api_URL}/User/GetPasswordResetData`, data)
     }
 
@@ -45,6 +43,10 @@ class User {
     
     GetTransactionDetails = async (data) => {
         return await axios.post(`${globalConfig.api_URL}/User/GetTransactionDetails`, data);
+    }
+
+    GetUserBlockedFunds = async (data = {}) => {
+        return await axios.post(`${globalConfig.api_URL}/User/GetUserBlockedFunds`,data);
     }
     
 

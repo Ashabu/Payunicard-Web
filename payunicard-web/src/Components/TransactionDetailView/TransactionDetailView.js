@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import './transactionDetailView.scss';
 import { TrTypes } from '../../Constants/index';
 import ComonFn from '../../Services/CommonFunctions';
@@ -7,8 +7,7 @@ import PropTypes from 'prop-types'
 
 const  TransactionDetailView = (props) => {
 
-
-   const {description, amount, ccy, mccGroupCodeId, mccGroupName, abvrName,  uniBonus, senderMaskedCardNumber, senderaccount, 
+   const {description, amount, ccy, mccGroupCodeId, mccGroupName, abvrName,  uniBonus, senderMaskedCardNumber, senderaccount, terminal,
           senderBankName, senderBankCode, receivername, receiveraccount, receiverBankName, tranDate, dateCreated, aprCode, 
           tranid,  senderName, opClass, longopid, transactionDate, currency, cardNumber, merchantDescription, terminalNumber } = props.transaction;
     
@@ -16,7 +15,7 @@ const  TransactionDetailView = (props) => {
           let atmCashOut = false;
 
         if(TrTypes.cardPayment.includes(opClass)) {
-            if(TrTypes.atmCashOut.includes(opClass)) {
+            if(terminal === 'A') {
                 atmCashOut = true;
             } else {
                 atmCashOut = false;
@@ -42,9 +41,9 @@ const  TransactionDetailView = (props) => {
                 <p>თანხა</p>
                    <span>{ComonFn.formatNumber(amount)}</span>
                 <p>{atmCashOut? 'ბანკომატი': 'მერჩანტი' }</p>
-                   <span>Yandex.Taxi</span>
-                <p>უნი ქულები</p>
-                   <span>0,5</span>
+                   <span>{abvrName}</span>
+                {uniBonus? <Fragment><p>უნი ქულები</p>
+                   <span>{uniBonus} <img src = '../../Assets/Images/unipoint-star.svg' alt = 'icon' /> </span></Fragment> : null}
                 <p>ბარათის ნომერი</p>
                    <span>{senderMaskedCardNumber}</span>
                 <p>ანგარიშის ნომერი</p>
@@ -117,23 +116,18 @@ const  TransactionDetailView = (props) => {
             </div>   
         )}    
     
-    
-
-
-
-
     return (
         <div className = 'detail-view-wrap' >
             <div className= 'detail-header'>
                 <div className='header-left'>
-                    <img  src = {ComonFn.getMccImageUrl(mccGroupCodeId)} alt = 'icon'/>
+                    <img  src = {DetailContentId !==4? ComonFn.getMccImageUrl(mccGroupCodeId) : '../../Assets/Images/lock-grey.png'} alt = 'icon'/>
                     <p>{mccGroupName}</p>
                 </div>
                 <div className='header-right'>
                     <p >{abvrName}</p>
-                    <p>{DetailContentId === 4? ComonFn.formatDate(dateCreated) :ComonFn.formatDate(transactionDate)}</p>
+                    <p>{ComonFn.formatDate(dateCreated || transactionDate)}</p>
                 <div className = 'amount'>
-                     <p style = {{color: amount < 0? 'red' : 'green'}}>{ComonFn.formatNumber(amount)} {ComonFn.formatCurrencySymbol(ccy)}</p> 
+                     <p style = {{color: amount > 0? '#94dd34' : ccy? 'red' : 'grey'}}>{ComonFn.formatNumber(amount)} {ComonFn.formatCurrencySymbol(ccy || currency)}</p> 
                 </div>
                 </div>
             </div>
@@ -143,7 +137,7 @@ const  TransactionDetailView = (props) => {
                 {UtilityPayment}
                 {HoldedTrasaction}
             <hr/>
-            {DetailContentId === 4? 
+            {DetailContentId !== 4? 
             <div className = 'detail-footer'>
                 <p style = {{textAlign: 'end'}}>ტრანზაქციის დეტალები</p>
                 <p>ავტორიზაციის კოდი</p>

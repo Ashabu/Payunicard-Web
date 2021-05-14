@@ -3,13 +3,13 @@ import './infoSlider.scss';
 import PropTypes from 'prop-types';
 import SliderInfo from '../../SliderInfo/SliderInfo';
 import ClickableBulltes from '../../HOC/ClickableBulltes';
-import GlobalContext from '../../../Contexsts/GlobalContext'
+import {Store, StoreConsumer}from '../../../Contexsts/GlobalContext'
 import SliderInfoMobile from '../../SliderInfoMobile/SliderInfoMobile';
 
 
 class InfoSlider extends Component {
 
-   static contextType = GlobalContext;
+//    static contextType = GlobalContext;
 
    iPhone = React.createRef();
    macbook = React.createRef(); 
@@ -64,7 +64,7 @@ class InfoSlider extends Component {
         const curIndex = this.props.curIndex;
         return (
             
-            <GlobalContext.Consumer>{(context) =>  
+            <StoreConsumer>{(context) =>  
             <Fragment>   
                 <div className = 'infoSlider'>
                     <div className = 'Macbook'>
@@ -89,7 +89,7 @@ class InfoSlider extends Component {
                 </div>
                     {sliderCnofig.map((config, index) =>(<SliderInfoMobile key ={index} sliderCnofig = {config}/> ))}   
             </Fragment>}
-            </GlobalContext.Consumer>
+            </StoreConsumer>
             
         );
     }

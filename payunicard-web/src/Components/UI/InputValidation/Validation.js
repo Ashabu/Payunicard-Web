@@ -26,7 +26,6 @@ class Validation {
     }
     
     validate = (key) => {
-        debugger
         let groupedInputs = key? this.inputs.filter(inp => inp.current.groupId === key) : this.inputs;
     
         groupedInputs.forEach(el =>{

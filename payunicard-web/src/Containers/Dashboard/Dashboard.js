@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React, {Component} from 'react';
 import './dashboard.scss';
-import GlobalContext, {contextState}  from '../../Contexsts/GlobalContext';
+import  { StoreConsumer, Store}  from '../../Contexsts/GlobalContext';
 import User from '../../Services/API/UserServices';
 import TransactionDetail from '../../Components/TransactionDetail/TransactionDetail';
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
@@ -12,7 +12,7 @@ import Backdrop from '../../Components/UI/Backdrop/Backdrop';
 
 class Dashboard extends Component {
 
-    static contextType = GlobalContext;
+    // static contextType = GlobalContext;
 
     
 
@@ -30,11 +30,22 @@ class Dashboard extends Component {
   
 
     getTransactions = async () => {
-        
+        let blockedtr= [];
+        let tr = [];
+       User.GetUserBlockedFunds().then(res=>{
+           if(res.data.ok){
+               blockedtr = res.data.data.funds;
+           }
+       }).catch(error => {
+           console.log(error)
+       })
+       
        User.GetUserAccountStatements().then(res => {
             if(res.data.ok) {
-                contextState.setUserStatements(res.data.data.statements)
+                tr = res.data.data.statements
+                Store.setUserStatements([...blockedtr, ...tr])
                 this.setState({isInitialized: true})
+                
             }
         }).catch(error => {
             console.log(error)
@@ -44,23 +55,28 @@ class Dashboard extends Component {
    
 
     tranDetail = (transaction) => {
-        // let trData = new FormData();
-        // trData.append('tranId', transaction.tranID) 
-        User.GetTransactionDetails({tranId: transaction.tranID}).then(res => {
-            if(res.data.ok) {
-                this.setState({selectedTransaction: res.data.data, panelVisible: true})
-                debugger
-            } else {
+        if(transaction.tranID){ 
+            User.GetTransactionDetails({tranId: transaction.tranID}).then(res => {
+                if(res.data.ok) {
+                    this.setState({selectedTransaction: res.data.data})
+                } else {
+                    console.log(error)
+                }
+            }).catch(error => {
                 console.log(error)
-            }
-        }).catch(error => {
-            console.log(error)
-        })
-        this.props.history.push({
-            pathname: '/Dashboard/TransactionDetail',
-            search: `?tranId=${transaction.tranID}`,
+            })
+            this.props.history.push({
+                pathname: '/Dashboard/TransactionDetail',
+                search: `?tranId=${transaction.tranID}`,
+            })
+        } else {
+            this.setState({selectedTransaction: transaction})
+            this.props.history.push({
+                pathname: '/Dashboard/TransactionDetail',
+                search: `?cardNumber=${transaction.cardNumber}`,
+            })
             
-          })
+        }
         
     }
 
@@ -69,24 +85,29 @@ class Dashboard extends Component {
         if(!this.state.isInitialized) return null;
         
         return (
-            <GlobalContext.Consumer>
+          <StoreConsumer>
           {(context)=>  <div >
-              <Backdrop show = {this.state.panelVisible} hide = {()=> {this.setState({panelVisible: false}); this.props.history.goBack ()}}/>
+              <Backdrop show = {this.state.panelVisible} hide = {()=> {this.props.history.goBack(); this.setState({panelVisible: false})}}/>
                 <SidePanel
                     stepBack 
                     visible = {this.state.panelVisible}
-                    closePanel = {()=> {this.setState({panelVisible: false}); this.props.history.goBack ()}} 
+                    closePanel = {()=> {this.setState({panelVisible: false}); this.props.history.goBack()}} 
                    >
                         <TransactionDetailView transaction = {this.state.selectedTransaction}/>
                     </SidePanel>
                 <div style ={{maxWidth: 485}}>
-                    {context.userStatements.map(transaction =>(<TransactionDetail key = {transaction.tranID} transaction = {transaction} clicked = {() =>  this.tranDetail(transaction)}/>))}
+                    {context.userStatements.map((transaction, index) =>
+                        (<TransactionDetail 
+                            key = {index} 
+                            transaction = {transaction}  
+                            clicked = {() =>  {this.tranDetail(transaction); this.setState({panelVisible: true})}}
+                            />))}
                 </div>
                 <div>
                     
                 </div>
             </div>}
-            </GlobalContext.Consumer>
+            </StoreConsumer>
         );
     }
 }

@@ -62,6 +62,14 @@
                     display: -webkit-box;
                     -webkit-line-clamp: 1;
                     -webkit-box-orient: vertical;
+
+                    
+                }
+                &.forWeb {
+                    display: inline-block;
+                }
+                &.forMobile {
+                    display: none;
                 }
             }
         }
@@ -69,4 +77,20 @@
         .tran-amount {
             text-align: end;
         }
+}
+
+@media(max-width: 800px) {
+    .tran-detail-wrap {
+        .tran-details {
+            span {
+                &.forWeb {
+                    display: none;
+                }
+
+                &.forMobile {
+                    display: inline-block;
+                }
+            }
+        }
+    }
 }

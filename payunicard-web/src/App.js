@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import Routing from './Routing/Routing';
 import Language from './Services/SetLang';
-import GlobalContext, {contextState} from './Contexsts/GlobalContext';
+import { StoreProvider, Store} from './Contexsts/GlobalContext';
 
 
 
@@ -11,7 +11,7 @@ import GlobalContext, {contextState} from './Contexsts/GlobalContext';
 
 class App extends Component {
   
-  static contextType = GlobalContext;
+  // static contextType = GlobalContext;
 
   state = {
     isLoaded: false,
@@ -25,7 +25,7 @@ class App extends Component {
     Language.getLang(Language.langKey, this.setInit);
     this.langSubscribe = Language.subscribe(activeLang => {
       this.setState({activeLang: activeLang });
-      contextState.setLang(activeLang);
+      Store.setLang(activeLang);
       this.forceUpdate();
   })
   
@@ -42,11 +42,11 @@ class App extends Component {
   render() {
     if(!this.state.isLoaded) return null
     return (
-        <GlobalContext.Provider value={contextState}>
+        <StoreProvider value={Store}>
           <div className= "App">
             <Routing/>
           </div>
-        </GlobalContext.Provider>  
+        </StoreProvider>  
     );
   }
 }

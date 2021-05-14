@@ -1,23 +1,38 @@
 import React from 'react';
 
-export const contextState = {
+export const Store = {
     lang: 'geo',
     setLang: (p)=>{
-        contextState.lang = p;
+        Store.lang = p;
     },
 
     userAccounts: [],
     setUserAccounts: (data) => {
-        contextState.userAccounts = data;
+        Store.userAccounts = data;
     },
 
     userStatements: [],
     setUserStatements: (data) => {
-        contextState.userStatements = data;
+        Store.userStatements = data;
     }
 
 }
-const GlobalContext = React.createContext({contextState});
 
+const GlobalContext = React.createContext({Store});
 
-export default GlobalContext;
+export const StoreProvider = (props) => {
+    return (
+        <GlobalContext.Provider value = {Store}>
+            {props.children}
+        </GlobalContext.Provider>
+    )
+}
+
+export const StoreConsumer = (props) => {
+    return (
+        <GlobalContext.Consumer>
+            {props.children}
+        </GlobalContext.Consumer>
+    )
+}
+

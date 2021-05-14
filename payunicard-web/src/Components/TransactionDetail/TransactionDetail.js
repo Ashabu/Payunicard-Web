@@ -1,24 +1,29 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import './transactionDetail.scss';
 import ComonFn from '../../Services/CommonFunctions';
 import PropTypes from 'prop-types'
 
 const  TransactionDetail =(props) => {
 
-    const {tranDate, classCodeDescription, description, amount, imageUrl, ccy, } = props.transaction;
+    const {tranDate, transactionDate, classCodeDescription, description, amount, imageUrl, 
+            ccy, shortDescription, merchantDescription, currency } = props.transaction;
 
     return (
         <div className = 'tran-detail-wrap' onClick = {props.clicked}>
             <div className = 'logo'>
-                <img src = '../../Assets/Images/MccCodeImg/ჯანმრთელობა-და-თავის-მოვლა.png' alt = 'logo' />
+                <img src = {imageUrl || '../../Assets/Images/lock-grey.png'} alt = 'logo' />
             </div>
             <div className = 'tran-details'>
-                <span>{ComonFn.formatDate(tranDate)}</span>
+                <span>{ComonFn.formatDate(tranDate || transactionDate )}</span>
                 <span>{classCodeDescription}</span>
-                <span>{description}</span>
+                {props.showlong?
+                <Fragment> 
+                    <span className = 'forWeb'>{description || merchantDescription}</span>
+                    <span className = 'forMobile'>{shortDescription || merchantDescription}</span>
+                </Fragment> : <span>{shortDescription || merchantDescription}</span>}
             </div>
             <div className = 'tran-amount'>
-                <span style ={{color: amount < 0? 'red' : '#94dd34'}}>{amount}{ComonFn.formatCurrencySymbol(ccy)}</span>
+                <span style ={{color: amount > 0? '#94dd34' : ccy? 'red' : 'grey'  }}>{ComonFn.formatNumber(amount)}{ComonFn.formatCurrencySymbol(ccy || currency)}</span>
             </div>
             <div className = 'more'>
                 <img src = '../../Assets/Images/three_dot.png' alt = 'three-dots' />
@@ -30,10 +35,16 @@ const  TransactionDetail =(props) => {
 
 TransactionDetail.propTypes = {
     tranDate: PropTypes.string,
+    transactionDate:PropTypes.string,
     classCodeDescription: PropTypes.string,
     description: PropTypes.string,
+    shortDescription: PropTypes.string,
+    amount:PropTypes.number,
+    imageUrl:PropTypes.string,
     ccy: PropTypes.string,
-    imageUrl: PropTypes.string,
+    currency:PropTypes.string,
+    merchantDescription:PropTypes.string,
+    showlong: PropTypes.bool,
 
 }
 

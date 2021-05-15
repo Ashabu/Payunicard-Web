@@ -18,21 +18,15 @@ export const Store = {
 
 }
 
-const GlobalContext = React.createContext({Store});
+export const GlobalStore = React.createContext({Store});
 
 export const StoreProvider = (props) => {
     return (
-        <GlobalContext.Provider value = {Store}>
+        <GlobalStore.Provider value = {Store}>
             {props.children}
-        </GlobalContext.Provider>
+        </GlobalStore.Provider>
     )
 }
 
-export const StoreConsumer = (props) => {
-    return (
-        <GlobalContext.Consumer>
-            {props.children}
-        </GlobalContext.Consumer>
-    )
-}
+
 

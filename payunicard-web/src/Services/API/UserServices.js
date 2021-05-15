@@ -48,6 +48,14 @@ class User {
     GetUserBlockedFunds = async (data = {}) => {
         return await axios.post(`${globalConfig.api_URL}/User/GetUserBlockedFunds`,data);
     }
+
+    GetUserAccounts = async () => {
+        return await axios.get(`${globalConfig.api_URL}/User/GetAccountBalanceByccy`);
+    }
+
+    GetUnicards = () =>  {
+        return axios.get(`${globalConfig.api_URL}/Card/GetUnicards`);
+    }
     
 
    

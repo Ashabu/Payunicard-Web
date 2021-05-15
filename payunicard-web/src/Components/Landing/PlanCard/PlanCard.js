@@ -3,7 +3,7 @@ import './planCard.scss';
 import PropTypes from "prop-types";
 import Button from '../../UI/Button/Button';
 import Lang from '../../../Services/SetLang';
-import { StoreConsumer } from '../../../Contexsts/GlobalContext';
+import { GlobalStore } from '../../../Contexsts/GlobalContext';
 
 const PlanCard = (props) => {
     const getPlanColor =(planType) => {
@@ -39,7 +39,7 @@ const PlanCard = (props) => {
                     </div>
                 </div>
             </div>
-                <StoreConsumer>{(context) => <div className ='PlanDescription'>
+                <GlobalStore.Consumer>{(context) => <div className ='PlanDescription'>
                     {content[context.lang].map((content, index) => (
                         <span key={index} style={{position: 'relative', display: 'flex', alignItems: 'center'}}>
                             <img style={{position: 'absolute', top: 3}}src={getPlanColor(paketTypeId).imgUrl} alt='checkmark'/>
@@ -47,7 +47,7 @@ const PlanCard = (props) => {
                         </span>
                     ))}
                     </div>}
-                </StoreConsumer>
+                </GlobalStore.Consumer>
                 </div>    
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                     <Button buttonClass='PlanButton'>{Lang.tr('ui.learnMore')}</Button>

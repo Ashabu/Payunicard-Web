@@ -5,8 +5,6 @@ import './select.scss';
 var isFocused = false; 
 
  const Select = (props) => {
-     console.log(props)
-    //  const selected = (props.selected || "").toString()
     
     const [visible, setVisible] = useState(false); 
     const [search, setSearch] = useState('');
@@ -31,7 +29,6 @@ var isFocused = false;
         selectData = props.data
     }
 
-    
     let  selectList = null;
     let searchInput = null;
 

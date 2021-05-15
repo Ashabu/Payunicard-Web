@@ -1,9 +1,8 @@
 import './App.scss';
 import React, { Component } from 'react';
-
 import Routing from './Routing/Routing';
 import Language from './Services/SetLang';
-import { StoreProvider, Store} from './Contexsts/GlobalContext';
+import { StoreProvider, Store, GlobalStore} from './Contexsts/GlobalContext';
 
 
 
@@ -11,7 +10,7 @@ import { StoreProvider, Store} from './Contexsts/GlobalContext';
 
 class App extends Component {
   
-  // static contextType = GlobalContext;
+  static contextType = GlobalStore;
 
   state = {
     isLoaded: false,

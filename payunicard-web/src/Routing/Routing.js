@@ -12,7 +12,7 @@ const Routing = () => (
         <Route path = '/login' component = {Login}/>
         <Route path = '/register' component = {UserRegistration}/>
         <Route path = '/dashboard' component = {Dashboard}/>
-        <Route path = '/transaction' component = {Transaction} />
+        <Route path = '/transactions' component = {Transaction}/>
     </Switch>
 );
 

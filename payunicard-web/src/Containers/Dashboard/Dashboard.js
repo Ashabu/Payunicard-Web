@@ -8,7 +8,6 @@ import TransactionDetailView from '../../Components/TransactionDetailView/Transa
 import SidePanel from '../../Components/UI/SidePanel/SidePanel';
 import Backdrop from '../../Components/UI/Backdrop/Backdrop';
 import Button from '../../Components/UI/Button/Button';
-import Calendar from '../../Components/Calendar/Calendar';
 import Select from '../../Components/UI/Select/Select';
 import Selectlist from '../../Components/HOC/SelectList/SelectLIst'
 
@@ -21,11 +20,10 @@ class Dashboard extends Component {
     
 
     state = {
-        fromDate: '',
-        toDate: '',
+        
         isInitialized: false,
         transactions: [],
-        panelVisible: false,
+        detailVisible: false,
         selectedTransaction: {},
         userAccounts: [],
         allUserCurrencies: [],
@@ -38,28 +36,20 @@ class Dashboard extends Component {
     }
 
   
-    handleDate = (data) => {
-        if(data.val === 'From') {
-            this.setState({fromDate: data.fromDate})
-        } else {
-            this.setState({toDate: data.toDate})
-        }
-
-    }
 
     getTransactions = async () => {
         if(Store.userStatements.length > 0) return;
         let blockedtr= [];
         let tr = [];
-       User.GetUserBlockedFunds().then(res=>{
+        User.GetUserBlockedFunds().then(res=>{
            if(res.data.ok){
                blockedtr = res.data.data.funds;
            }
-       }).catch(error => {
+        }).catch(error => {
            console.log(error)
-       })
+        })
        
-       User.GetUserAccountStatements().then(res => {
+        User.GetUserAccountStatements().then(res => {
             if(res.data.ok) {
                 tr = res.data.data.statements
                 Store.setUserStatements([...blockedtr, ...tr])
@@ -188,7 +178,7 @@ class Dashboard extends Component {
     }
    
 
-    tranDetail = (transaction) => {
+    handleTransactionDetailView = (transaction) => {
         if(transaction.tranID){ 
             User.GetTransactionDetails({tranId: transaction.tranID}).then(res => {
                 if(res.data.ok) {
@@ -223,12 +213,11 @@ class Dashboard extends Component {
         return (
           <GlobalStore.Consumer>
           {(context)=>  <div >
-              <Backdrop show = {this.state.panelVisible} hide = {()=> {this.props.history.goBack(); this.setState({panelVisible: false})}}/>
+              <Backdrop show = {this.state.detailVisible} hide = {()=> {this.props.history.goBack(); this.setState({detailVisible: false})}}/>
                 <SidePanel
                     stepBack 
-                    visible = {this.state.panelVisible}
-                    closePanel = {()=> {this.setState({panelVisible: false}); this.props.history.goBack()}} 
-                   >
+                    visible = {this.state.detailVisible}
+                    closePanel = {()=> {this.setState({detailVisible: false}); this.props.history.goBack()}}>
                         <TransactionDetailView transaction = {this.state.selectedTransaction}/>
                     </SidePanel>
                 <div style ={{maxWidth: 485}}>
@@ -238,7 +227,7 @@ class Dashboard extends Component {
                                 data={this.state.userAccounts} 
                                 placeholder = 'Please Select'
                                 selected = {this.state.selected.accountNumber}
-                                render = {(element, setVisible) => (
+                                display ={(element, setVisible) => (
                                 <Selectlist  
                                     listClass = 'selectLIst' 
                                     key={element.accountNumber} 
@@ -254,7 +243,7 @@ class Dashboard extends Component {
                         (<TransactionDetail 
                             key = {index} 
                             transaction = {transaction}  
-                            clicked = {() =>  {this.tranDetail(transaction); this.setState({panelVisible: true})}}
+                            clicked = {() =>  {this.handleTransactionDetailView(transaction); this.setState({detailVisible: true})}}
                             />))}
                 </div>
                 <div>

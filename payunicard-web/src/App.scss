@@ -123,3 +123,16 @@ a {
     border-bottom: 1px solid #edf0f3;
 }
 
+.select-mini {
+    width: 100%;
+    max-width: 280px;
+    height: 40px;
+    border-radius: 10px;
+    background: #f1f1f1;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}

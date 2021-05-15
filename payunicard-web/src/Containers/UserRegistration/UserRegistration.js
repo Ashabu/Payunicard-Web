@@ -87,7 +87,7 @@ class UserRegistration extends Component {
                                 placeholder = 'Please Select'
                                 selected = {this.state.selected.dial_code}
                                 icon = {<Flag flagCode = {this.state.selected.flag_code} />} 
-                                render = {(element, setVisible) => (
+                                display ={(element, setVisible) => (
                                 <Selectlist  
                                     listClass = 'selectLIst' 
                                     key={element.name} 

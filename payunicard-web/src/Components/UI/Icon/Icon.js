@@ -1,5 +1,5 @@
-import React from 'ract';
+import React from 'react';
 
-const Icon = props => <img className = {props.iconClass} src = {props.iconUrl} alt = 'icon' />
+const Icon = props => props.iconUrl? <img className = {props.iconClass} src = {props.iconUrl} alt = 'icon' /> : null
 
 export default Icon;

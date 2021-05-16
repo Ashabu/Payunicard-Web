@@ -33,7 +33,6 @@ class User {
     }
 
     GetUserDetails = async () => {
-        console.log(globalConfig)
         return await axios.get(`${globalConfig.api_URL}/User/GetUserDetails`);
     }
 

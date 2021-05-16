@@ -115,6 +115,7 @@ a {
 /*select global styles*/ 
 
 .selectLIst {
+    cursor: pointer;
     color: #666;
     width: auto ;
     height: 54px;
@@ -133,6 +134,18 @@ a {
     user-select: none;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    
     position: relative;
+}
+
+.selectLIst-mini {
+    width: 100%;
+    max-width: 280px;
+    cursor: pointer;
+    color: #666;
+    width: auto ;
+    height: 54px;
+    line-height: 54px;
+    border-left: 2px solid transparent;
+    border-bottom: 1px solid #edf0f3;
 }

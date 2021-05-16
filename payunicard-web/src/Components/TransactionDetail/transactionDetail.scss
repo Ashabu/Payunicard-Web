@@ -77,6 +77,10 @@
         .tran-amount {
             text-align: end;
         }
+        .more {
+            display: flex;
+            justify-content: flex-end;
+        }
 }
 
 @media(max-width: 800px) {

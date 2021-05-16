@@ -1,0 +1,64 @@
+.calendar {
+    
+    display: flex;
+    background-color: #ececec;
+    border-radius: 5px;
+    width: 340px;
+    padding: 10px 0;
+
+    span{
+        text-align: left;
+        font-size: 14px;
+        line-height: 17px;
+        font-family: 'FiraGO BOOK';
+        font-weight: normal;
+        color: #6b6b6b;
+        font-feature-settings: "case" on;
+        text-transform: uppercase;
+        
+    }
+
+    div {
+        padding: 0 0 0 10px;
+    }
+
+    &__from {
+        display: flex;
+        align-items: center;
+
+        &::after {
+            content: "";
+            background-color: #bababa;
+            width: 1px;
+            height: 24px;
+            top: 10px;
+            left: 50%;
+            display: block;
+        }
+    }
+    
+    &__to{
+        display: flex;
+        align-items: center;
+    }
+}
+
+
+input[type = "date"] {
+    width: 100%;
+    margin: 0 0 0 10px;
+    z-index: 5;
+    border: none;
+    padding: 3px;
+    transition: all 2s ease-in-out 3s;
+    outline: none;
+    text-transform: uppercase;
+    background: transparent;
+    border-radius: 3px;
+}
+input[type="date"]::-webkit-calendar-picker-indicator { 
+    background-image: url('../../../Assets/Images/Date-Pick.png');
+    cursor: pointer;
+    margin: 0;
+    
+}

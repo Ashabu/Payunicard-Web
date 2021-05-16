@@ -5,11 +5,7 @@ import  {GlobalStore , Store}  from '../../Contexsts/GlobalContext';
 import User from '../../Services/API/UserServices';
 import TransactionDetail from '../../Components/TransactionDetail/TransactionDetail';
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
-import SidePanel from '../../Components/UI/SidePanel/SidePanel';
-import Backdrop from '../../Components/UI/Backdrop/Backdrop';
-import Button from '../../Components/UI/Button/Button';
-import Select from '../../Components/UI/Select/Select';
-import Selectlist from '../../Components/HOC/SelectList/SelectLIst'
+import {Backdrop, Button, Select, SelectList, SidePanel } from '../../Components/UI/UiComponents';
 
 
 
@@ -169,9 +165,10 @@ class Dashboard extends Component {
                         }
                     });
                 })
-
+                console.log(allUserCurrencies)
                 this.setState({userAccounts: [...userAccounts,...userUnicards], allUserCurrencies})
                 Store.setUserAccounts([...userAccounts,...userUnicards])
+                Store.setAllUserCurrencies(allUserCurrencies)
                 
             }
         })
@@ -206,7 +203,6 @@ class Dashboard extends Component {
 
 
     render() {
-    console.log(this.state.allUserCurrencies, this.state.userAccounts)
         
         if(!this.state.isInitialized) return null;
         
@@ -222,23 +218,22 @@ class Dashboard extends Component {
                     </SidePanel>
                 <div style ={{maxWidth: 485}}>
                 
-                <Select 
-                            
-                                data={this.state.userAccounts} 
-                                placeholder = 'Please Select'
-                                selected = {this.state.selected.accountNumber}
-                                display ={(element, setVisible) => (
-                                <Selectlist  
-                                    listClass = 'selectLIst' 
-                                    key={element.accountNumber} 
-                                    clicked={() => {this.setState({selected: element, }); setVisible(false);}} >
-                                         {element.accountNumber} 
-                                </Selectlist>
-                            )}/>
-
-
-
-
+                    {/* <Select 
+                        data={this.state.userAccounts} 
+                        placeholder = 'Please Select'
+                        selected = {this.state.selected.accountNumber}
+                        display ={(element, setVisible) => (
+                        <SelectList  
+                            listClass = 'selectLIst' 
+                            key={element.accountNumber} 
+                            clicked={() => {this.setState({selected: element, }); setVisible(false);}} >
+                                 {element.accountNumber} 
+                        </SelectList>
+                    )}/> */}
+                    <p style={{display: 'flex', justifyContent: 'center'}}>WELCOME TO Dashboard</p>
+                    <div>
+                    <Button clicked = {()=>this.props.history.push('/transactions')}>go to transaction page</Button>
+                </div>
                     {context.userStatements.map((transaction, index) =>
                         (<TransactionDetail 
                             key = {index} 
@@ -246,9 +241,7 @@ class Dashboard extends Component {
                             clicked = {() =>  {this.handleTransactionDetailView(transaction); this.setState({detailVisible: true})}}
                             />))}
                 </div>
-                <div>
-                    <Button clicked = {()=>this.props.history.push('/transactions')}>go to transaction</Button>
-                </div>
+                
             </div>}
             </GlobalStore.Consumer>
         );

@@ -5,13 +5,13 @@ import PropTypes from 'prop-types'
 
 const  TransactionDetail =(props) => {
 
-    const {tranDate, transactionDate, classCodeDescription, description, amount, imageUrl, 
+    const {tranDate, transactionDate, classCodeDescription, description, amount, imageUrl, accounttype, 
             ccy, shortDescription, merchantDescription, currency } = props.transaction;
 
     return (
         <div className = 'tran-detail-wrap' onClick = {props.clicked}>
             <div className = 'logo'>
-                <img src = {imageUrl || '../../Assets/Images/lock-grey.png'} alt = 'logo' />
+                <img src = {ComonFn.setLogoByAccountType(accounttype) || '../../Assets/Images/lock-grey.png'} alt = 'logo' />
             </div>
             <div className = 'tran-details'>
                 <span>{ComonFn.formatDate(tranDate || transactionDate )}</span>

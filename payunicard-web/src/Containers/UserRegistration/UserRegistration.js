@@ -3,7 +3,7 @@ import './userRegistration.scss';
 import Codes from '../../Services/Data/CountryCodes';
 import Input from '../../Components/UI/Input/Input';
 import Select from '../../Components/UI/Select/Select';
-import Selectlist from '../../Components/HOC/SelectList/SelectLIst';
+import Selectlist from '../../Components/HOC/SelectList/SelectList';
 import Layout from '../Layout/Layout';
 import Validation from '../../Components/UI/InputValidation/Validation';
 import User from '../../Services/API/UserServices';

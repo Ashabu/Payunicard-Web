@@ -120,14 +120,14 @@ class Login extends Component {
                             <span>მოგესალმებით</span>
                         </div>
                         <div className = 'Login-inputs'>
-                            < Input className = 'Input Input-bg' type = 'text' placeholder = {Lang.tr('auth.username')} 
+                            <Input className = 'Input Input-bg' type = 'text' placeholder = {Lang.tr('auth.username')} 
                                 value = {this.state.userName}
                                 onInput = {(e)=> this.setState({userName: e.target.value})}
                                 onFocus = {(e) =>e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = Lang.tr('auth.username')}
                                 rule = {"required"}
                                 groupid = 'login'/>
-                            < Input className = 'Input Input-bg' type = 'text' placeholder = {Lang.tr('auth.password')}
+                            <Input className = 'Input Input-bg' type = 'text' placeholder = {Lang.tr('auth.password')}
                                 onInput = {(e)=> this.setState({password: e.target.value})}
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = Lang.tr('auth.password')}

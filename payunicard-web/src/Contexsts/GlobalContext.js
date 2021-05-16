@@ -14,6 +14,11 @@ export const Store = {
     userStatements: [],
     setUserStatements: (data) => {
         Store.userStatements = data;
+    },
+
+    allUserCurrencies: [],
+    setAllUserCurrencies: (data) => {
+        Store.allUserCurrencies = data;
     }
 
 }

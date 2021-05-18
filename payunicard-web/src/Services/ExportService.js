@@ -24,7 +24,6 @@ exportStatementsInPDF = async (data) => {
             request.onload = function (e) {
                 if (this.status === 200) {
                     // `blob` response
-                    console.log(this.response);
                     // create `objectURL` of `this.response` : `.pdf` as `Blob`
                     let file = window.URL.createObjectURL(this.response);
                     let a = document.createElement("a");

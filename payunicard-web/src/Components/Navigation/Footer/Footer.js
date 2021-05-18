@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './footer.scss'
 import { Link } from 'react-router-dom';
 import Lang from '../../../Services/SetLang';
-import {GlobalStore} from '../../../Contexsts/GlobalContext';
+import { Context } from '../../../Context/AppContext';
 
 const Footer = () => {
+
+    const { state } = useContext(Context);
+    const { activeLang } = state;
+
+
     return (
             <footer>
                 <div className = 'footer-center'>
@@ -14,20 +19,19 @@ const Footer = () => {
                                 <span><b>{Lang.tr('footer.beneficial')}</b> {Lang.tr('footer.non-banking')}  <br/> {Lang.tr('footer.operations')}</span>
                             </div>
                         </div>
-                        <GlobalStore.Consumer>{(context) =>  
+                        
                         <div className = 'partners'>
                             <div className = 'partner-logos'>
                                     <img src = '../../../Assets/Images/LandingImg/visa-logo.svg' alt='visa' />
                                 <div className = 'wall'>
                                 </div>
 
-                                    <img src = {`../../../Assets/Images/LandingImg/unicard_${context.lang}.svg` }alt='visa' />
+                                    <img src = {`../../../Assets/Images/LandingImg/unicard_${activeLang}.svg` }alt='visa' />
                                 <div className = 'wall'>    
                                 </div>
                                     <img src = '../../../Assets/Images/LandingImg/mc-logo.svg' alt='visa' />
                             </div>
-                        </div> }
-                        </GlobalStore.Consumer>   
+                        </div> 
                     </div>
                     <div className = 'second-container'>
                         <div className = 'left-content'>

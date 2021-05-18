@@ -1,53 +1,46 @@
 import './App.scss';
-import React, { Component } from 'react';
+import React, {  useState, useEffect, useContext, useReducer } from 'react';
 import Routing from './Routing/Routing';
-import Language from './Services/SetLang';
-import { StoreProvider, Store, GlobalStore} from './Contexsts/GlobalContext';
+import Lang from './Services/SetLang';
+import {  Context } from './Context/AppContext';
 
 
 
 
 
-class App extends Component {
+
+const  App = () => {
   
-  static contextType = GlobalStore;
-
-  state = {
-    isLoaded: false,
-    activeLang: Language.langKey
-  }
-
-  setInit = () => {
-    this.setState({isLoaded: true})
-  }
-  componentDidMount() {
-    Language.getLang(Language.langKey, this.setInit);
-    this.langSubscribe = Language.subscribe(activeLang => {
-      this.setState({activeLang: activeLang });
-      Store.setLang(activeLang);
-      this.forceUpdate();
-  })
-  
+  const { state, setGlobalValue  } = useContext(Context);
   
 
-  }
-
-  componentWillUnmount() {
-    this.langSubscribe.unsubscribe();
-  }
   
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [activeLang, setActiveLang] = useState(Lang.langKey);
+  const [, forceUpdate]  = useReducer(x => x + 1, 0);
   
+  const langSubscribe = () => Lang.subscribe(activeLang => {
+    setActiveLang(activeLang);
+    setGlobalValue('activeLang', activeLang);
+    forceUpdate();
+  });
 
-  render() {
-    if(!this.state.isLoaded) return null
-    return (
-        <StoreProvider value={Store}>
-          <div className= "App">
-            <Routing/>
-          </div>
-        </StoreProvider>  
-    );
-  }
+
+
+useEffect(() => {
+  Lang.getLang(Lang.langKey, setIsLoaded(true));
+  langSubscribe();
+  return () => langSubscribe.unsubscribe();
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [])
+
+
+  
+    return( 
+    <div className= "App">
+      <Routing/>
+    </div> 
+    )
 }
 
 export default App;

@@ -1,88 +1,89 @@
 /* eslint-disable no-undef */
-import React, { Component } from 'react';
+import React, { useState, useEffect,  } from 'react';
+import { useHistory } from "react-router";
 import './login.scss';
-import Input from '../../Components/UI/Input/Input';
-import Button from '../../Components/UI/Button/Button';
+import { Button, Input, Modal, InputValidation } from '../../Components/UI/UiComponents';
 import Layout from '../Layout/Layout';
-import Validation from '../../Components/UI/InputValidation/Validation';
 import Lang from '../../Services/SetLang';
 import User from '../../Services/API/UserServices';
-import Modal from '../../Components/UI/Modal/Modal';
-import {Store, GlobalStore} from '../../Contexsts/GlobalContext';
 
-class Login extends Component {
+const  Login = () => {
 
-    static contextType = GlobalStore;
-        
-    state = {
+    
+    const history = useHistory();
+
+    const [loginData, setLoginData] = useState({
         userName: "",
-        password: "",
+        password: ""
+    });
+
+    const [forgotPasswordData, setForgotPasswordData] = useState({
         forgotPassword: false,
-        forgotPasswordUsername: "",
+        userName: "",
         personalId: "",
-        errorMessage: "",
         isRegistered: null,
-        buttonLoading: false
-    }
+    });
+
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const [buttonLoading, setButtonLoading] = useState(false);
 
 
 
 
-    login = () => {
+    const login = () => {
        
-        if(!Validation.validate('login')) {
+        if(!InputValidation.validate('login')) {
             return;
         } 
-        let loginData = {
-            username: this.state.userName,
-            password: this.state.password
+        let Data = {
+            username: loginData.userName,
+            password: loginData.password
         }
        
-        User.UserLogin(loginData).then(res => {
+        User.UserLogin(Data).then(res => {
+           
            let token=res.data.access_token;
            localStorage.setItem('token',token);
-           this.props.history.push('/Dashboard');
-     
-           
-
+           history.push('/Dashboard');
        })
     }
 
 
-    handleModalClose = () => {
-        this.setState({forgotPassword: false, forgotPasswordUsername: ''})
+    const handleModalClose = () => {
+        setForgotPasswordData(prevState => {return {...prevState, forgotPassword: false, userName: ''}})
     }
 
     
         
-    handleCheckUser = async () => {
-        if(!Validation.validate('resetPassword')) return;
-        this.setState({buttonLoading: true})
+    const handleCheckUser = async () => {
+        if(!InputValidation.validate('resetPassword')) return;
+        setButtonLoading(true)
         let cData = {
-            UserName: this.state.forgotPasswordUsername
+            UserName: forgotPasswordData.userName
         }
            User.CheckUser(cData).then(res => {
               
                if(res.data.ok) {
-                   this.setState({buttonLoading: false})
-                      this.setState({isRegistered: res.data.data.isRegistred})
+                   setButtonLoading(false)
+                   setForgotPasswordData(prevState =>{return {...prevState, isRegistered: res.data.data.isRegistred}})
                } else {
                    if( res.data.errors.length > 0) {
-                   this.setState({buttonLoading: false, errorMessage: res.data.errors[0].displayText})
+                       setButtonLoading(false)
+                       setErrorMessage(res.data.errors[0].displayText)
                    }
                }
-            console.log('check user =>', res.data.data)
         })
     }
     
-    handleGetPasswordResetData = async () => {
-        if(!Validation.validate('resetPassword')) return;
+    const handleGetPasswordResetData = async () => {
+        if(!InputValidation.validate('resetPassword')) return;
          let resetData = {
-            userName: this.state.forgotPasswordUsername
+            userName: forgotPasswordData.userName
         }
 
-        if(this.state.isRegistered) {
-            resetData = {...resetData, personalId: this.state.personalId}
+        if(forgotPasswordData.isRegistered) {
+            resetData = {...resetData, personalId: forgotPasswordData.personalId}
         }
 
         User.GetPasswordResetData(resetData).then(res => {
@@ -91,27 +92,31 @@ class Login extends Component {
     }
 
 
-    render() {
-        let idInput;
-        if(this.state.isRegistered){
-            idInput = <Input className = 'Input Input-bg' type = 'text' groupid = 'resetPassword' value = {this.state.personalId} onInput = {(e) => this.setState({personalId: e.target.value})}  rule = {'required'} />
-        }
+    
+        const fpd = forgotPasswordData;
+        const ld = loginData
+
+        console.log(ld)
 
         return (
-            <GlobalStore.Consumer>{(context) =>
+            
             <Layout>
-                <Modal show = {this.state.forgotPassword} headerText = 'დაგავიწყდათ პაროლი?' onCloseModal = {this.handleModalClose}>
+                <Modal show = {fpd.forgotPassword} headerText = 'დაგავიწყდათ პაროლი?' onCloseModal = {handleModalClose}>
                     <Input className = 'Input Input-bg' type = 'text' placeholder = {Lang.tr('auth.username')} 
-                        value = {this.state.forgotPasswordUsername}
-                        onInput = {(e)=> this.setState({forgotPasswordUsername: e.target.value})}
-                        onFocus = {() => this.setState({errorMessage: ''})}
-                        errormessage = {this.state.errorMessage}
+                        value = {fpd.userName}
+                        onInput = {(e)=> {const value = e.target.value; setForgotPasswordData(prevState => {return {...prevState, userName: value }} )}}
+                        onFocus = {() => setErrorMessage('')}
+                        errormessage = {errorMessage}
                         rule ={'required'}
                         groupid = 'resetPassword'/>
-                    {idInput}
+                    { fpd.isRegistered? 
+                    <Input  className = 'Input Input-bg' type = 'text' groupid = 'resetPassword' 
+                        value = {fpd.personalId} 
+                        onInput = {(e) => {const value = e.target.value; setForgotPasswordData(prevState =>{return {...prevState, personalId: value}})}}  
+                        rule = {'required'} /> :null }
                      <div style={{display: 'flex'}}>
-                    <Button  buttonClass = 'button-sm gray' clicked = {this.handleCheckUser} loading = {this.state.buttonLoading}> შემდეგი</Button>    
-                    <Button  buttonClass = 'button-sm gray' clicked = {this.handleGetPasswordResetData} loading = {this.state.buttonLoading}> შემდეგი</Button>   
+                    <Button  buttonClass = 'button-sm gray' clicked = {handleCheckUser} loading = {buttonLoading}> შემდეგი</Button>    
+                    <Button  buttonClass = 'button-sm gray' clicked = {handleGetPasswordResetData} loading = {buttonLoading}> შემდეგი</Button>   
                     </div>    
                 </Modal>
                 <div className = 'LoginWrap'>
@@ -121,14 +126,15 @@ class Login extends Component {
                         </div>
                         <div className = 'Login-inputs'>
                             <Input className = 'Input Input-bg' type = 'text' placeholder = {Lang.tr('auth.username')} 
-                                value = {this.state.userName}
-                                onInput = {(e)=> this.setState({userName: e.target.value})}
+                                value = {ld.userName}
+                                onInput = {(e)=> {const value = e.target.value; setLoginData(prevState => {return {...prevState, userName: value }})}}
                                 onFocus = {(e) =>e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = Lang.tr('auth.username')}
                                 rule = {"required"}
                                 groupid = 'login'/>
                             <Input className = 'Input Input-bg' type = 'text' placeholder = {Lang.tr('auth.password')}
-                                onInput = {(e)=> this.setState({password: e.target.value})}
+                                value = {ld.password}
+                                onInput = {(e)=> {const value = e.target.value; setLoginData(prevState => {return {...prevState, password: value }})}}
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = Lang.tr('auth.password')}
                                 rule = {'required'}
@@ -141,21 +147,19 @@ class Login extends Component {
                             </label>
                             
                            
-                            <span onClick = {()=> this.setState({forgotPassword: true})}>დაგავიწყდა პაროლი?</span>
+                            <span onClick = {()=> setForgotPasswordData(prevState =>{return {...prevState, forgotPassword: false}})}>დაგავიწყდა პაროლი?</span>
                         </div>
                         <div className = 'LoginFooter'>
                             <Button  buttonClass = 'button-sm gray'> რეგისტრაცია</Button>
-                            <Button  clicked = {this.login} buttonClass = 'button-sm green'>შესვლა</Button>
+                            <Button  clicked = {login} buttonClass = 'button-sm green'>შესვლა</Button>
                         </div>
                     </div>
                     <div className = 'Login-rightSide'>
                         <img src = '../../Assets/Images/LandingImg/login_img.svg' alt = 'login-img' />
                     </div>      
                 </div>
-            </Layout>}
-            </GlobalStore.Consumer>
+            </Layout>
         );
-    }
 }
 
 export default Login;

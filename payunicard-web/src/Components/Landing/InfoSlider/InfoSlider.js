@@ -3,13 +3,11 @@ import './infoSlider.scss';
 import PropTypes from 'prop-types';
 import SliderInfo from '../../SliderInfo/SliderInfo';
 import ClickableBulltes from '../../HOC/ClickableBulltes';
-import {Store, GlobalStore}from '../../../Contexsts/GlobalContext'
 import SliderInfoMobile from '../../SliderInfoMobile/SliderInfoMobile';
 
 
 class InfoSlider extends Component {
 
-    static contextType = GlobalStore;
 
    iPhone = React.createRef();
    macbook = React.createRef(); 
@@ -55,21 +53,20 @@ class InfoSlider extends Component {
         },4000)
       }
       
-      fpd = (context) => {
-        context.setLang("eng");
-      }
+    //   fpd = (context) => {
+    //     context.setLang("eng");
+    //   }
      
     render() {
         const sliderCnofig  =  this.props.sliderConfig;
         const curIndex = this.props.curIndex;
         return (
             
-            <GlobalStore.Consumer>{(context) =>  
             <Fragment>   
                 <div className = 'infoSlider'>
                     <div className = 'Macbook'>
-                            <div id = "macBook" className = 'for-mac' ref={p => this.macbook = p} style={{backgroundImage: `url(${sliderCnofig[curIndex].computerImg[context.lang]})`}}></div>
-                            <div id = "iphone"  className = 'for-phone' ref={p => this.iPhone = p} style={{backgroundImage: `url(${sliderCnofig[curIndex].phoneImg[context.lang]})`}} ></div>
+                            <div id = "macBook" className = 'for-mac' ref={p => this.macbook = p} style={{backgroundImage: `url(${sliderCnofig[curIndex].computerImg['eng']})`}}></div>
+                            <div id = "iphone"  className = 'for-phone' ref={p => this.iPhone = p} style={{backgroundImage: `url(${sliderCnofig[curIndex].phoneImg['eng']})`}} ></div>
                             <img src = '../../Assets/Images/LandingImg/MacbookPro.png' alt = 'macBook'/>
                             <img src = '../../Assets/Images/LandingImg/iPhone.png' alt = 'iPhone' />
                         </div>
@@ -78,8 +75,8 @@ class InfoSlider extends Component {
                          
                             <SliderInfo 
                                 imgUrl = {sliderCnofig[curIndex].icon}
-                                title = {sliderCnofig[curIndex].title[context.lang]}
-                                content = {sliderCnofig[curIndex].content[context.lang]} />
+                                title = {sliderCnofig[curIndex].title['eng']}
+                                content = {sliderCnofig[curIndex].content['eng']} />
                                
                             <div className = 'js-cont-center'>{sliderCnofig.map((item, index) => (
                                 <ClickableBulltes key = {index} bullets = {item.active? 'bullets active' : 'bullets'} clicked = {() =>this.handleUniServicesSwitch(index)}/>
@@ -88,8 +85,7 @@ class InfoSlider extends Component {
                         </div>  
                 </div>
                     {sliderCnofig.map((config, index) =>(<SliderInfoMobile key ={index} sliderCnofig = {config}/> ))}   
-            </Fragment>}
-            </GlobalStore.Consumer>
+            </Fragment>
             
         );
     }

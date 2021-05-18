@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, Fragment} from 'react';
 import Input from '../Input/Input';
 import './select.scss';
 
@@ -11,8 +11,8 @@ var isFocused = false;
     const [blurTmout, setBlurTmout] = useState(null);
 
     // useEffect(() => {
-
-    // },[selected])
+    //     return () => clearTimeout(blurTmout)
+    // },[props.selected, blurTmout])
 
 
     const handleOnBlur = () => {
@@ -43,22 +43,21 @@ var isFocused = false;
 
     if(visible) {
         selectList = (
-            <div className='SelectList'>
+            <div className= {props.listClass || 'SelectList'}>
                 
                 {searchInput}
                 {visible && selectData.map(el => {return props.display(el, setVisible)})}
             </div>
         )
     }
-  console.log(props.selected)
     return (
-        <div >
-            <div style = {{position: 'relative', padding: 5}} className ={ props.selectClass ||'Selected'} onClick = {() => setVisible(!visible)} onBlur = {handleOnBlur} tabIndex = '0'>
+        <Fragment>
+            <div style = {{position: 'relative', padding: 5, 'width': '100%'}} className ={ props.selectClass ||'Selected'} onClick = {() => setVisible(!visible)} onBlur = {handleOnBlur} tabIndex = '0'>
             <img style = {{position: 'absolute', top: 20, right: 15,}} src = '../../../Assets/Images/arrow_down.png' alt = 'icon' />
                 {props.icon? props.icon : null} {props.selected ? props.selected : props.placeholder}
             </div>
             {selectList}
-        </div>
+        </Fragment>
     );
 }
 

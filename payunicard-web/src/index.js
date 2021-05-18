@@ -1,10 +1,27 @@
-import React from 'react';
+import React  from 'react';
+import Lang from './Services/SetLang';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from "axios";
+
+import { createProvider, Context } from './Context/AppContext';
+
+const initialState = {
+    isUserAuthorized: false,
+    activeLang: Lang.langKey,
+    paymentTemplates: [],
+    transactions: [],
+    transactionTemplates: [],
+    userAccounts: [],
+    userDetails: [],
+
+}
+
+
+const AppProvider = createProvider(initialState);
 
 
 const _AuthToken = `Bearer ${localStorage.getItem('token')}`;
@@ -34,10 +51,15 @@ axios.interceptors.response.use(responseConfing => {
 
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-  document.getElementById('root')
+
+  <AppProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </AppProvider>
+   
+  
+  ,document.getElementById('root')
 );
 
 reportWebVitals();

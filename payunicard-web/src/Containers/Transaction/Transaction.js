@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './transaction.scss';
 import PropTypes from 'prop-types';
-import  { GlobalStore, Store } from '../../Contexsts/GlobalContext';
 import User from '../../Services/API/UserServices';
 import ComonFn from '../../Services/CommonFunctions';
 import Exp from '../../Services/ExportService';
 import { Backdrop, Calendar, Icon, Select, SelectList, Search, SidePanel } from '../../Components/UI/UiComponents';
+import Layout from '../../Containers/Layout/Layout';
 import TransactionDetail from '../../Components/TransactionDetail/TransactionDetail';
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
 
@@ -13,7 +13,8 @@ import TransactionDetailView from '../../Components/TransactionDetailView/Transa
 class Transaction extends Component {
 
 
-    static contextType = GlobalStore;
+
+
     state = {
         fromDate: '',
         toDate: '',
@@ -28,24 +29,13 @@ class Transaction extends Component {
     }
 
     componentDidMount() {
-        document.addEventListener('mousedown', this.handleClickOutside)
-        this.setState({searchInTransaction: Store.userStatements})
         this.getTransactions();
         this.setLastMonthInterval();
     }
 
-    componentWillUnmount() {
-        document.removeEventListener('mousedown', this.handleClickOutside)
-    }
+    
 
-
-    handleClickOutside = (e) => {
-        if(this.state.exportOptions && e.path[1].className !== 'export__options') {
-            this.setState({exportOptions: false});
-            console.log(e.path)
-        }
-    }
-  
+    
 
 
    
@@ -58,15 +48,14 @@ class Transaction extends Component {
         let pMonth  = ("0" + (prevDate.getMonth() + 1)).slice(-2);
         let pDay = cDay;
         this.setState({fromDate: [prevDate.getFullYear(), pMonth, pDay].join("-"), toDate: [curDate.getFullYear(), cMonth, cDay].join("-")})
-        console.log('from =>', this.state.fromDate, 'to => ', this.state.toDate)
     }
     
 
     getTransactions = async () => {
-        if(Store.userStatements.length > 0) {
-            this.setState({transactions: Store.userStatements})
-            return;
-        } else {    
+        // if(Store.userStatements.length > 0) {
+        //     this.setState({transactions: Store.userStatements})
+        //     return;
+        // } else {    
             let blockedtr= [];
             let tr = [];
             User.GetUserBlockedFunds().then(res=>{
@@ -80,14 +69,14 @@ class Transaction extends Component {
             User.GetUserAccountStatements().then(res => {
                 if(res.data.ok) {
                     tr = res.data.data.statements;
-                    Store.setUserStatements([...blockedtr, ...tr])
+                    //Store.setUserStatements([...blockedtr, ...tr])
                     this.setState({transactions: [...blockedtr, ...tr], searchInTransaction:[...blockedtr, ...tr], isInitialized: true})
 
                 }
             }).catch(error => {
                 console.log(error)
             })
-        }
+        //}
     }
 
     
@@ -151,10 +140,10 @@ class Transaction extends Component {
    
 
     render() {
-        console.log(this.wrapperRef)
         return (
-            <GlobalStore.Consumer>{(store) =>
-                <React.Fragment>
+            
+                <Layout>
+
                 <Backdrop show = {this.state.detailVisible} hide = {()=> {this.props.history.goBack(); this.setState({detailVisible: false})}}/>
                 <SidePanel
                     stepBack 
@@ -163,53 +152,59 @@ class Transaction extends Component {
                         <TransactionDetailView transaction = {this.state.selectedTransaction}/>
                     </SidePanel>
             <div className = 'transaction'>
+            <p>ტრანზაქციები</p>
+
                 <div className = 'transaction__header'>
-                    <button onClick = {() => this.props.history.push('/Dashboard')}>go dashboard</button>
-                    <Calendar fromDate = {this.state.fromDate} toDate = {this.state.toDate} setDate = {this.handleDate}/>
-                    <Search searchValue = {this.state.searchValue} onsearch = {this.handleSearch}/>
-                    <Select
-                        selectClass = 'select-mini' 
-                        data={store.userAccounts} 
-                        placeholder = 'Select Account'
-                        selected = {this.state.selectedAccount.accountNumber}
-                        icon = {<Icon iconUrl = {ComonFn.setLogoByAccountType(this.state.selectedAccount.type)}/>}
-                        display ={(element, setVisible) => (
-                        <SelectList  
-                            listClass = 'selectLIst-mini' 
-                            key={element.accountNumber} 
-                            clicked={() => {this.setState({selectedAccount: element, }); setVisible(false);}} >
-                                 <Icon iconUrl = {ComonFn.setLogoByAccountType(element.type)}/>{element.accountNumber} 
-                        </SelectList>)} 
-                    />
-                    <Select
-                        selectClass = 'select-mini' 
-                        data={store.allUserCurrencies} 
-                        placeholder = 'Select Currency'
-                        selected = {this.state.selectedCurrency.title }
-                        display ={(element, setVisible) => (
-                        <SelectList  
-                            listClass = 'selectLIst-mini' 
-                            key={element.title} 
-                            clicked={() => {this.setState({selectedCurrency: element, }); setVisible(false);}} >
-                                 {element.value + '/' + element.title} 
-                        </SelectList>)} 
-                    />
-                    <div className = 'export'>
-                        <div className = 'export__icon'  onClick = {() => this.setState({exportOptions: !this.state.exportOptions})} >
-                            <img src = '../../Assets/Images/download-icon.png' alt = 'icon' />
+                    <button onClick = {this.getTransactions}>go dashboard</button>
+                    <div className = 'transaction__header__search-options'>
+                        <Calendar fromDate = {this.state.fromDate} toDate = {this.state.toDate} setDate = {this.handleDate}/>
+                        <Search searchValue = {this.state.searchValue} onsearch = {this.handleSearch}/>
+                        <div className = 'export' tabIndex = '0' onClick = {() => this.setState({exportOptions: true})} onBlur = {()=> this.setState({exportOptions: false})} >
+                            <div className = 'export__icon'  >
+                                <img src = '../../Assets/Images/download-icon.png' alt = 'icon' />
+                            </div>
+                            {this.state.exportOptions? <div  className = 'export__options'>
+                                <div onClick = {this.handleExportStatementsAsPDF}>
+                                    PDF
+                                </div>
+                                <div>
+                                    XLS
+                                </div>
+                            </div> : null}
                         </div>
-                        {this.state.exportOptions? <div  className = 'export__options'>
-                            <div onClick = {this.handleExportStatementsAsPDF}>
-                                PDF
-                            </div>
-                            <div>
-                                XLS
-                            </div>
-                        </div> : null}
+                    </div>
+                    <div className = 'transaction__header__search-options'>
+                        <Select
+                            selectClass = 'select-mini' 
+                            listClass = 'selectLIst-mini'
+                            //data={store.userAccounts} 
+                            placeholder = 'Select Account'
+                            selected = {this.state.selectedAccount.accountNumber}
+                            icon = {<Icon iconUrl = {ComonFn.setLogoByAccountType(this.state.selectedAccount.type)}/>}
+                            display ={(element, setVisible) => (
+                            <SelectList  
+                                 
+                                key={element.accountNumber} 
+                                clicked={() => {this.setState({selectedAccount: element, }); setVisible(false);}} >
+                                    <Icon iconUrl = {ComonFn.setLogoByAccountType(element.type)}/>{element.accountNumber} 
+                            </SelectList>)} 
+                        />
+                        <Select
+                            selectClass = 'select-mini' 
+                            //data={store.allUserCurrencies} 
+                            placeholder = 'Select Currency'
+                            selected = {this.state.selectedCurrency.title }
+                            display ={(element, setVisible) => (
+                            <SelectList  
+                                listClass = 'selectLIst-mini' 
+                                key={element.title} 
+                                clicked={() => {this.setState({selectedCurrency: element, }); setVisible(false);}} >
+                                    {element.value + '/' + element.title} 
+                            </SelectList>)} 
+                        />
                     </div>
                 </div>
                 <div className = 'transaction__body'>
-                    <p>ტრანზაქციები</p>
                     {this.state.searchInTransaction.map((transaction, index)=> (<TransactionDetail 
                             showlong
                             key = {index} 
@@ -218,11 +213,11 @@ class Transaction extends Component {
                             />))}
                 </div>
             </div>
-            </React.Fragment> }
-            </GlobalStore.Consumer>
+            </Layout>
         );
     }
 }
+
 
 Transaction.propTypes = {
 

@@ -12,7 +12,6 @@ const Button = (props) => {
     // useEffect(() => {
     //     window.addEventListener('click', clickEvent);
     //     return () => {
-    //         debugger
     //         window.removeEventListener(clickEvent);
     //     }
     // }, [])

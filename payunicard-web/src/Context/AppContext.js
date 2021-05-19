@@ -6,12 +6,14 @@ const Context = React.createContext();
 const createProvider = (initialState = {}) => (props) => { 
     const [appState, setAppstate] = useState(initialState);
 
-    const setGlobalValue = (key, value) => {
+    const setGlobalValue = (updatedValue) => {
         setAppstate(prevState =>({
             ...prevState,
-            [key] : value
+            ...updatedValue
+            
         }));
     }
+    
         return <Context.Provider
             value = {{
                 state: appState,

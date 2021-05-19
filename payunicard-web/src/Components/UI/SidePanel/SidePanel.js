@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 
 const  SidePanel = (props) => {
+    
     const {stepBack, visible, headerText, closePanel, children} = props;
     let StepBack = null;
 

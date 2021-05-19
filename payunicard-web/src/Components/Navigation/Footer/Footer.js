@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './footer.scss'
 import { Link } from 'react-router-dom';
 import Lang from '../../../Services/SetLang';
@@ -9,7 +9,10 @@ const Footer = () => {
     const { state } = useContext(Context);
     const { activeLang } = state;
 
-
+    useEffect(() => {
+        
+    }, [activeLang])
+    
     return (
             <footer>
                 <div className = 'footer-center'>

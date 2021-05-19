@@ -6,20 +6,19 @@ import './header.scss';
 import { Context } from '../../../Context/AppContext';
 
 var langs = []
-var isUserAuthorized = false;
-
-
 
 const  Header = (props) => {
     const { state  } = useContext(Context);
     const { isUserAuthorized } = state;
-    langs = Object.entries(Langs)
- 
 
+    langs = Object.entries(Langs)
    
     const[currentLang, setCurrentLang] = useState(langs);
     const[userDropDwon, setUserDropDwon] = useState(false);
 
+    useEffect(() => {
+        
+    }, [isUserAuthorized])
 
     const onChangeLang = () => {
         setCurrentLang(lang => {
@@ -29,16 +28,8 @@ const  Header = (props) => {
             return lang
         });
 
-        
         Lang.getLang(currentLang[1][1]);
-        
     }
-
-
-
-
-
-   
    
     return (
         <div className = 'Header'>
@@ -48,7 +39,6 @@ const  Header = (props) => {
                 </Link>    
             </div>
             {isUserAuthorized ? 
-                
                 <div className = 'Header___authorized'>
                     <div className = 'Header___userinfo' tabIndex ='0' onClick = {() => setUserDropDwon(true)}  onBlur = {() => setUserDropDwon(false)}>
                         <span>a.shaburishvili</span>

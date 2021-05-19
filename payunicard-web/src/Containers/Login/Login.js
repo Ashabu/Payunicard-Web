@@ -28,6 +28,12 @@ const  Login = () => {
 
     const [buttonLoading, setButtonLoading] = useState(false);
 
+    const fpd = forgotPasswordData;
+    const ld = loginData;
+
+    useEffect(() => {
+
+    },[ld.userName, ld.password, fpd.forgotPassword, fpd.isRegistered, fpd.personalId, fpd.userName])
 
 
 
@@ -93,10 +99,8 @@ const  Login = () => {
 
 
     
-        const fpd = forgotPasswordData;
-        const ld = loginData
+       
 
-        console.log(ld)
 
         return (
             
@@ -145,8 +149,6 @@ const  Login = () => {
                                 <input type = 'checkbox'/>
                                 <span>მომხმარებლის დამახსოვრება</span>
                             </label>
-                            
-                           
                             <span onClick = {()=> setForgotPasswordData(prevState =>{return {...prevState, forgotPassword: false}})}>დაგავიწყდა პაროლი?</span>
                         </div>
                         <div className = 'LoginFooter'>

@@ -6,16 +6,16 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from "axios";
-
-import { createProvider, Context } from './Context/AppContext';
+import { createProvider } from './Context/AppContext';
 
 const initialState = {
-    isUserAuthorized: false,
+    allUserCurrencies: [],
     activeLang: Lang.langKey,
+    isUserAuthorized: false,
     paymentTemplates: [],
-    transactions: [],
     transactionTemplates: [],
     userAccounts: [],
+    userTransactions: [],
     userDetails: [],
 
 }
@@ -23,9 +23,7 @@ const initialState = {
 
 const AppProvider = createProvider(initialState);
 
-
 const _AuthToken = `Bearer ${localStorage.getItem('token')}`;
-
 
 axios.defaults.headers['Authorization'] = _AuthToken;
 axios.defaults.headers['Content-Type'] = "application/json; charset=utf-8"

@@ -1,23 +1,17 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import './userRegistration.scss';
 import Codes from '../../Services/Data/CountryCodes';
-import Input from '../../Components/UI/Input/Input';
-import Select from '../../Components/UI/Select/Select';
-import Selectlist from '../../Components/HOC/SelectList/SelectList';
+
 import Layout from '../Layout/Layout';
-import Validation from '../../Components/UI/InputValidation/Validation';
 import User from '../../Services/API/UserServices';
-import Button from '../../Components/UI/Button/Button';
-import Flag from '../../Components/UI/CountryFlags/Flag';
 import { Link } from 'react-router-dom';
+import { Backdrop, Button, Flags, Input, InputValidation, PasswordComplexity, Select, SelectList } from '../../Components/UI/UiComponents';
 import Lang from '../../Services/SetLang';
-import PasswordComplexity from '../../Components/UI/PasswordComplexity/PasswordComplexity';
 
 
-class UserRegistration extends Component {
-
-    state = {
-        selected:{},
+const UserRegistration = Component => {
+    
+    const [ registrationData, setRegistrationData ] = useState({
         countryCode: '',
         mobileNumber: '',
         username: '',
@@ -26,37 +20,40 @@ class UserRegistration extends Component {
         birthDate: '',
         personalNumber: '',
         password: '',
-        repPassword: '',
-        repPasswordError: '',
+        repeatePassword: '',
         isApplyTerms: 1,
-        otp: null,
-        hasBigLetter: false,
-        hasSmallLetter: false,
-        hasNumber: false,
-        hasSpecialChar: false,
+        })
 
-        
+    const [ repeatePasswordError, setRepeatePasswordError ] = useState('');
+    
+    const [ oneTimePasscode, setOneTimePasscode ] = useState(null);
+    
+    const [ selected, setSelected ] = useState({});
 
-    }
-
-    onRepeatePasswordCheck = () => {
-        if(this.state.password !== '' &&  this.state.repPassword !== '' && this.state.repPassword !== this.state.password) {
-            this.setState({repPasswordError: 'პაროლები არ ემთხვევა'})
+    const onRepeatePasswordCheck = () => {
+        if(rd.password !== '' &&  rd.repPassword !== '' && rd.repPassword !== rd.password) {
+            setRepeatePasswordError('პაროლები არ ემთხვევა')
         } else {
-            this.setState({repPasswordError: ''})
+            setRepeatePasswordError('')
         }
     }        
 
-    handleUserRegistragion = async () => {
-        if(!Validation.validate()) return
+
+    useEffect(() => {
+
+    },[ registrationData, repeatePasswordError, oneTimePasscode, selected ])
+
+
+    const handleUserRegistragion = async () => {
+        if(!InputValidation.validate()) return
         //if(this.state.repPasswordError !== "") return;
-        const { countryCode, mobileNumber, username, surname, email, birthDate, personalNumber, password, repPassword, isApplyTerms, otp } = this.state
+        const { countryCode, mobileNumber, username, surname, email, birthDate, personalNumber, password, repeatePassword, isApplyTerms } = registrationData;
         let regData = {
             userName: email,
             password: password,
-            confirmPassword: repPassword,
+            confirmPassword: repeatePassword,
             phone: countryCode + mobileNumber,
-            otpGuid: otp,
+            otpGuid: oneTimePasscode,
             isApplyTerms: isApplyTerms,
             name: username,
             surname: surname,
@@ -66,14 +63,10 @@ class UserRegistration extends Component {
         User.UserRegistration(regData).then(res => {
         })
     }
-    render() {
-        let  repPasswordError = null;
-        if(this.state.repPasswordError !== '') {
-             repPasswordError =  (<span>{this.state.repPasswordError}</span>)
-        } else  {
-            repPasswordError = null;
-        }
-        
+       
+
+
+        const rd = registrationData;
 
         return (
             <Layout>
@@ -83,65 +76,65 @@ class UserRegistration extends Component {
                             
                             <Select 
                             search
-                                data={Codes.countryCodes} 
+                                data={ Codes.countryCodes } 
                                 placeholder = 'Please Select'
-                                selected = {this.state.selected.dial_code}
-                                icon = {<Flag flagCode = {this.state.selected.flag_code} />} 
+                                selected = { selected.dial_code }
+                                icon = {<Flags flagCode = { selected.flag_code } />} 
                                 display ={(element, setVisible) => (
-                                <Selectlist  
+                                <SelectList 
                                     listClass = 'selectLIst' 
-                                    key={element.name} 
-                                    clicked={() => {this.setState({selected: element, countryCode: element.dial_code}); setVisible(false);}} >
-                                       <Flag flagCode = {element.flag_code}/> {element.dial_code} {element.name} 
-                                </Selectlist>
+                                    key={ element.name } 
+                                    clicked={() => { setRegistrationData(prevState => { return {...prevState, countryCode: element.dial_code} }); setSelected(element); setVisible(false) }} >
+                                       <Flags flagCode = {element.flag_code}/> {element.dial_code} {element.name} 
+                                </SelectList>
                             )} 
                             />
                            
-                            < Input className = 'Input Input-bg' type = 'text' placeholder ='მობილურის ნომერი' 
-                                onInput = {(e)=> this.setState({mobileNumber: e.target.value})}
+                            < Input className = 'Input Input-bg' type = 'text' placeholder ='მობილურის ნომერი'
+                                onInput = {(e) => { const value = e.target.value; setRegistrationData(prevState => {return {...prevState, mobileNumber: value }}) }} 
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = 'მობილურის ნომერი'}/>
                         </div>      
                         < Input className = 'Input Input-bg' type = 'text' placeholder = 'ელ-ფოსტა'  rule = {"email"}
-                            onInput = {(e)=> this.setState({email: e.target.value})}
+                            onInput = {(e) => { const value = e.target.value; setRegistrationData(prevState => {return {...prevState, email: value }}) }} 
                             onFocus = {(e) => e.target.placeholder = ""}
                             onBlur = {(e) => e.target.placeholder = 'ელ-ფოსტა'}/>  
                         < Input className = 'Input Input-bg' type = 'text' placeholder = 'სახელი' rule = {'required'}
-                            onInput = {(e)=> this.setState({userName: e.target.value})}
+                            onInput = {(e) => { const value = e.target.value; setRegistrationData(prevState => {return {...prevState, userName: value }}) }} 
                             onFocus = {(e) => e.target.placeholder = ""}
                             onBlur = {(e) => e.target.placeholder = 'სახელი'}/>
                         < Input className = 'Input Input-bg' type = 'text' placeholder ='გვარი ' rule = {'required'}
-                            onInput = {(e)=> this.setState({surname: e.target.value})}
+                            onInput = {(e) => { const value = e.target.value; setRegistrationData(prevState => {return {...prevState, surname: value }}) }} 
                             onFocus = {(e) => e.target.placeholder = ""}
                             onBlur = {(e) => e.target.placeholder = 'გვარი'}/>    
                         < Input className = 'Input Input-bg' type = 'text' placeholder ='დაბადების თარიღი' 
-                            onInput = {(e)=> this.setState({birthDate: e.target.value})}
+                            onInput = {(e) => { const value = e.target.value; setRegistrationData(prevState => {return {...prevState, birthDate: value }}) }} 
                             onFocus = {(e) => e.target.placeholder = ""}
                             onBlur = {(e) => e.target.placeholder = 'დაბადების თარიღი'}/>    
                         < Input className = 'Input Input-bg' type = 'text' placeholder = 'პირადი ნომერი' rule = {'required'}
-                            onInput = {(e)=> this.setState({personalNumber: e.target.value})}
+                            onInput = {(e) => { const value = e.target.value; setRegistrationData(prevState => {return {...prevState, personalNumber: value }}) }} 
                             onFocus = {(e) => e.target.placeholder = ""}
                             onBlur = {(e) => e.target.placeholder = 'პირადი ნომერი'}/>
                         <div className = 'passwords'>   
                             < Input className = 'Input' type = 'text' placeholder ='პაროლი' rule = {'required'}
-                                onInput = {(e)=> this.setState({password: e.target.value})}
+                                onInput = {(e) => { const value = e.target.value; setRegistrationData(prevState => {return {...prevState, password: value }}) }} 
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = 'პაროლი'}/>
                             < Input className = 'Input'  type = 'text' placeholder ='გაიმეორეთ პაროლი' 
-                                onInput = {(e)=> this.setState({repPassword: e.target.value})}
+                                onInput = {(e) => { const value = e.target.value; setRegistrationData(prevState => {return {...prevState, repeatePassword: value }}) }} 
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = 'გაიმეორეთ პაროლი'}
-                                onChange = {this.onRepeatePasswordCheck} />
-                                {repPasswordError}
+                                onChange = { onRepeatePasswordCheck } />
+                                { repeatePasswordError? <span>{ repeatePasswordError }</span> : null }
                         </div>
                                     <PasswordComplexity 
-                                       regPassword = {this.state.password} />
+                                       regPassword = { rd.password } />
                         {/* < Input className = 'Input'  type = 'text'  
                                 onInput = {(e)=> this.setState({otp: e.target.value})}
                                 onFocus = {(e) => e.target.placeholder = ""}
                                /> */}
                         <div className = 'auth-buttons'>
-                            <Button  clicked = {this.handleUserRegistragion}  buttonClass = 'button-sm green'> {Lang.tr('auth.signUp')} </Button>     
+                            <Button  clicked = { handleUserRegistragion }  buttonClass = 'button-sm green'> {Lang.tr('auth.signUp')} </Button>     
                             <Link to = '/login' className = 'button-sm gray'>{Lang.tr('auth.signIn')}</Link>
                         </div>            
                     </div>
@@ -151,7 +144,6 @@ class UserRegistration extends Component {
                 </div>
             </Layout>    
         );
-    }
 }
 
 export default UserRegistration;

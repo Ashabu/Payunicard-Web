@@ -13,7 +13,6 @@ const  App = () => {
   
   const { state, setGlobalValue  } = useContext(Context);
   
-
   
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeLang, setActiveLang] = useState(Lang.langKey);
@@ -21,7 +20,7 @@ const  App = () => {
   
   const langSubscribe = () => Lang.subscribe(activeLang => {
     setActiveLang(activeLang);
-    setGlobalValue('activeLang', activeLang);
+    setGlobalValue({activeLang});
     forceUpdate();
   });
 

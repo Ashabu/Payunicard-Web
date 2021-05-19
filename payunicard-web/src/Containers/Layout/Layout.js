@@ -1,20 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import './layout.scss';
 import User from '../../Services/API/UserServices';
 import Header from '../../Components/Navigation/Header/Header';
 import Footer from '../../Components/Navigation/Footer/Footer';
-import './layout.scss';
+import { Context } from '../../Context/AppContext';
+
+
 
 
 
 
 const  Layout = (props) =>  {
 
+    const { state, setGlobalValue } = useContext(Context)
+    const { userAccounts,  paymentTemplates, userTransactions, transactionTemplates,  userDetails, activeLang } = state;
+
+
 
 useEffect(() => {
-    // getUserAccounts();
+    getUserAccounts();
+    getTransactions();
 }, [])
 
+
+
+
     const getUserAccounts = async () => {
+        if(userAccounts.length > 0) return;
         let userUnicards = [];
          User.GetUnicards().then(res => {
             if(res.data.ok) {
@@ -39,11 +51,11 @@ useEffect(() => {
             }
         })
 
-        let userAccounts = [];
+        let UserAccounts = [];
          User.GetUserAccounts().then(res => {
             if(res.data.ok) {
-                userAccounts = res.data.data.accountBallances;
-                userAccounts.map(account => {
+                UserAccounts = res.data.data.accountBallances;
+                UserAccounts.map(account => {
                     if(account.customerPaketId === 2) {
                       account.accountTypeName = "UPERA"
                     } else if (account.customerPaketId === 3) {
@@ -116,19 +128,40 @@ useEffect(() => {
             [...userAccounts].forEach(acc => {
                 [...acc.currencies].forEach(cur => {
                     if(allUserCurrencies.filter(item => item.value === cur.value).length <= 0) {
-                        cur.title = currencyTitle[Store.lang].filter(el => el.v === cur.key)[0]?.title || '';
+                        cur.title = currencyTitle[activeLang].filter(el => el.v === cur.key)[0]?.title || '';
                         allUserCurrencies.push(cur)
                     }
                 });
             })
-            Store.setUserAccounts([...userAccounts,...userUnicards])
-            Store.setAllUserCurrencies(allUserCurrencies)
+
+            setGlobalValue({ userAccounts:[ ...UserAccounts,...userUnicards], allUserCurrencies })
+            
         })
     }
 
-   
-
+    const  getTransactions = async () => {
+        if(userTransactions.length > 0) return;
+        
+        let blockedtr= [];
+        let tr = [];
+        User.GetUserBlockedFunds().then(res=>{
+           if(res.data.ok){
+               blockedtr = res.data.data.funds;
+           }
+        }).catch(error => {
+           console.log(error)
+        })
        
+        User.GetUserAccountStatements().then(res => {
+            if(res.data.ok) {
+                tr = res.data.data.statements
+                setGlobalValue({ userTransactions: [...blockedtr, ...tr] })
+            }
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+    
         return (
             
                 <React.Fragment>

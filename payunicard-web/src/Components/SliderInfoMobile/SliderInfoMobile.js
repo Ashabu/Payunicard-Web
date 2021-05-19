@@ -5,7 +5,7 @@ import  PropTypes  from 'prop-types';
 
 
 const SliderInfoMobile = (props) => {
-    const {icon, title, content} = props.sliderCnofig
+    const {icon, title, content} = props.sliderConfig;
 
     return (
        

@@ -11,7 +11,7 @@ import Search from './Search/Search';
 import Select from './Select/Select';
 import SelectList from '../HOC/SelectList/SelectList';
 import SidePanel from './SidePanel/SidePanel';
-
+import Widget from './../HOC/Widget';
 
 
 
@@ -30,4 +30,5 @@ export {
     Select,
     SelectList,
     SidePanel,
+    Widget
 }

@@ -20,6 +20,9 @@ class User {
         loginData.append('client_secret', CLIENT_SECRET);
         loginData.append('username', data.username);
         loginData.append( 'password', data.password);
+        if(data.Otp)
+        loginData.append('Otp', data.Otp );
+        debugger
 
         return await axios.post(globalConfig.token_URL, loginData)
     }
@@ -34,6 +37,14 @@ class User {
 
     GetUserDetails = async () => {
         return await axios.get(`${globalConfig.api_URL}/User/GetUserDetails`);
+    }
+
+    GetUserTotalBalance = async () => {
+        return await axios.get(`${globalConfig.api_URL}/User/GetUserTotalBalance`);
+    }
+
+    GetUserProducts = async () => {
+        return await axios.get(`${globalConfig.api_URL}/user/GetUserProducts`);
     }
 
     GetUserAccountStatements = async (data = {}, params = {}) => {

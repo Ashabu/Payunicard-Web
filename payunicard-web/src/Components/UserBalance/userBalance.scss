@@ -1,0 +1,12 @@
+.userBalance {
+    display: flex;
+
+    p {
+        margin: 0;
+        font-family: 'FiraGO MEDIUM';
+    }
+
+    &__balance {
+        width: 50%;
+    }
+}

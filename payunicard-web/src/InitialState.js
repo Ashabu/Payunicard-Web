@@ -7,7 +7,7 @@ export const initialState = {
     paymentTemplates: [],
     transactionTemplates: [],
     userAccounts: [],
-    userBalance: [],
+    userTotalBalance: [],
     userTransactions: [],
     userDetails: []
 }

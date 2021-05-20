@@ -17,6 +17,8 @@ const  Login = () => {
         password: ""
     });
 
+    const [ oneTimePasscode, setOneTimePasscode ] = useState(null)
+
     const [forgotPasswordData, setForgotPasswordData] = useState({
         forgotPassword: false,
         userName: "",
@@ -44,7 +46,8 @@ const  Login = () => {
         } 
         let Data = {
             username: loginData.userName,
-            password: loginData.password
+            password: loginData.password,
+            Otp: oneTimePasscode,
         }
        
         User.UserLogin(Data).then(res => {
@@ -142,7 +145,8 @@ const  Login = () => {
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = Lang.tr('auth.password')}
                                 rule = {'required'}
-                                groupid = 'login'/>    
+                                groupid = 'login'/>
+                            <Input type = 'number' value = {oneTimePasscode} onInput = {(e) => setOneTimePasscode(e.target.value)}/>        
                         </div>
                         <div className = 'LoginOptions'>
                             <label>

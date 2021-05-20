@@ -5,7 +5,7 @@ import './transaction.scss';
 import PropTypes from 'prop-types';
 import User from '../../Services/API/UserServices';
 import ComonFn from '../../Services/CommonFunctions';
-import { Backdrop, Calendar, Icon, Select, SelectList, Search, SidePanel, Button } from '../../Components/UI/UiComponents';
+import { Backdrop, Calendar, Icon, Select, SelectList, Search, SidePanel, Button, Widget } from '../../Components/UI/UiComponents';
 import Layout from '../../Containers/Layout/Layout';
 import TransactionDetail from '../../Components/TransactionDetail/TransactionDetail';
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
@@ -75,7 +75,6 @@ const Transaction = Component => {
 
 
     const handleDate = (data) => {
-        console.log(data)
         if(data.val === 'From') {
             setDates(prevState => { return { ...prevState, fromDate: data.fromDate }})
             handleLoadMoreTransactions();

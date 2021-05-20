@@ -13,13 +13,14 @@ import { Context } from '../../Context/AppContext';
 const  Layout = (props) =>  {
 
     const { state, setGlobalValue } = useContext(Context)
-    const { userAccounts,  paymentTemplates, userTransactions, transactionTemplates,  userDetails, activeLang } = state;
+    const { userAccounts,  paymentTemplates, userTransactions, transactionTemplates,  userDetails, userTotalBalance, activeLang } = state;
 
 
 
 useEffect(() => {
     getUserAccounts();
     getTransactions();
+    getUserTotalBalance();
 }, [])
 
 
@@ -159,6 +160,18 @@ useEffect(() => {
             }
         }).catch(error => {
             console.log(error)
+        })
+    }
+
+
+    const getUserTotalBalance = () => {
+        if(userTotalBalance.length > 0) return;
+        
+        User.GetUserTotalBalance().then(res => {
+            if(res.data.ok){
+                setGlobalValue({ userTotalBalance: res.data.data })
+            }
+            console.log(res.data.data)
         })
     }
     

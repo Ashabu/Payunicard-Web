@@ -7,15 +7,18 @@ import User from '../../Services/API/UserServices';
 import Layout from '../../Containers/Layout/Layout';
 import TransactionDetail from '../../Components/TransactionDetail/TransactionDetail';
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
+import UserBalance from './../../Components/UserBalance/UserBalance';
 import { Backdrop, Button, Select, SelectList, SidePanel } from '../../Components/UI/UiComponents';
+import UserProducts from './../../Components/UserProducts/UserProducts';
 
 
 
 
 const  Dashboard = () => {
+    let temp = [];
 
     const { state } = useContext(Context);
-    const { userTransactions, userAccounts } = state;
+    const { userTransactions, userAccounts, userTotalBalance } = state;
     
     const history = useHistory();
 
@@ -27,9 +30,14 @@ const  Dashboard = () => {
 
     const [selected, setSelected] = useState({}); 
 
-   useEffect(() => {
+    const [ userProducts, setUserProducts ] = useState([]);
 
-   }, [userTransactions,userAccounts ])
+   useEffect(() => {
+    getUserProducts();
+    console.log(temp)
+   }, [])
+
+   
    
 
     const handleTransactionDetailView = (transaction) => {
@@ -57,6 +65,15 @@ const  Dashboard = () => {
         }
         
     }
+
+    const getUserProducts= () => {
+        User.GetUserProducts().then(res => {
+            if(res.data.ok) {
+                temp = res.data.data;
+                
+            }
+        })
+    }
         
         return (
           
@@ -70,20 +87,12 @@ const  Dashboard = () => {
                     </SidePanel>
                 <div style ={{maxWidth: 485}}>
                 
-                    <Select 
-                        data={userAccounts} 
-                        placeholder = 'Please Select'
-                        selected = {selected.accountNumber}
-                        display ={(element, setVisible) => (
-                        <SelectList  
-                            listClass = 'selectLIst' 
-                            key={element.accountNumber} 
-                            clicked={() => {setSelected(element); setVisible(false);}} >
-                                 {element.accountNumber} 
-                        </SelectList>
-                    )}/>
+                    
                     <p style={{display: 'flex', justifyContent: 'center'}}>WELCOME TO Dashboard</p>
+                    <UserBalance userBalance = { userTotalBalance } />
+                    
                     <div>
+                    <UserProducts userproducts = { temp } />
                     <Button clicked = {() => history.push('/transactions')}>go to transaction page</Button>
                 </div>
                     {userTransactions.map((transaction, index) =>

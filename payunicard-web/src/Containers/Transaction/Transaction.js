@@ -5,7 +5,7 @@ import './transaction.scss';
 import PropTypes from 'prop-types';
 import User from '../../Services/API/UserServices';
 import ComonFn from '../../Services/CommonFunctions';
-import { Backdrop, Calendar, Icon, Select, SelectList, Search, SidePanel } from '../../Components/UI/UiComponents';
+import { Backdrop, Calendar, Icon, Select, SelectList, Search, SidePanel, Button } from '../../Components/UI/UiComponents';
 import Layout from '../../Containers/Layout/Layout';
 import TransactionDetail from '../../Components/TransactionDetail/TransactionDetail';
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
@@ -17,6 +17,8 @@ const Transaction = Component => {
     const { userAccounts, userTransactions, allUserCurrencies } = state;
     
     const history = useHistory();
+
+    // const []
 
     const [dates, setDates ] = useState({
             fromDate: '',
@@ -35,12 +37,15 @@ const Transaction = Component => {
 
     const [ exportOptions, setExportOptions ] = useState(false);
 
-    const [ searchValue, setSearchvalue ] = useState('')
+    const [ searchValue, setSearchvalue ] = useState('');
+
+    const [ rowValues, setRowValue ] = useState({count: 10, index: 0})
+
 
 
     useEffect(() => {
         setLastMonthInterval();
-        setSearchInTransaction(userTransactions);
+        if(searchInTransaction.length <= 0) setSearchInTransaction(userTransactions);
     }, [ searchInTransaction, userTransactions ])
 
    
@@ -54,8 +59,6 @@ const Transaction = Component => {
         let pDay = cDay;
         setDates(prevState => { return { ...prevState, fromDate:[prevDate.getFullYear(), pMonth, pDay].join("-"), toDate: [curDate.getFullYear(), cMonth, cDay].join("-") }})
     }
-    
-
     
     
     const handleSearch = (value) => {
@@ -75,8 +78,11 @@ const Transaction = Component => {
         console.log(data)
         if(data.val === 'From') {
             setDates(prevState => { return { ...prevState, fromDate: data.fromDate }})
+            handleLoadMoreTransactions();
         } else {
             setDates(prevState => { return { ...prevState, toDate: data.toDate }})
+            handleLoadMoreTransactions(); 
+            
         }
 
     }
@@ -107,6 +113,34 @@ const Transaction = Component => {
     }
 
 
+    const handleLoadMoreTransactions = () => {
+        setRowValue(prevState => { return  {...prevState, index: rowValues.index +=1 } })
+        let addData = {
+            Rowindex: rowValues.index,
+            rowCount: rowValues.count
+        }
+
+        let params = {
+            startDate: dates.fromDate,
+            endDate : dates.toDate,
+            accountID: selectedAccount.accountID || null
+        }
+
+        User.GetUserAccountStatements(  addData , { params }).then(res => {
+            if(res.data.ok) {
+                let moreTransactions = res.data.data.statements;
+                setSearchInTransaction(prevState => { return [...prevState, ...moreTransactions] });
+
+            }
+
+            console.log(searchInTransaction)
+        })
+        
+
+
+    }
+
+
 
    
 
@@ -129,7 +163,7 @@ const Transaction = Component => {
                     <div className = 'transaction__header__search-options'>
                         <Calendar fromDate = { dates.fromDate } toDate = { dates.toDate } setDate = { handleDate }/>
                         <Search searchValue = {searchValue} onsearch = {handleSearch}/>
-                        <div className = 'export' tabIndex = '0' onClick = {() => setExportOptions(true) } onBlur = {() => setExportOptions(true) } >
+                        <div className = 'export' tabIndex = '0' onClick = {() => setExportOptions(true) } onBlur = {() => setExportOptions(false) } >
                             <div className = 'export__icon'  >
                                 <img src = '../../Assets/Images/download-icon.png' alt = 'icon' />
                             </div>
@@ -144,21 +178,22 @@ const Transaction = Component => {
                         </div>
                     </div>
                     <div className = 'transaction__header__search-options'>
-                        <Select
-                            selectClass = 'select-mini' 
-                            listClass = 'selectLIst-mini'
-                            data = { userAccounts } 
-                            placeholder = 'Select Account'
-                            selected = { selectedAccount.accountNumber }
-                            icon = { <Icon iconUrl = { ComonFn.setLogoByAccountType(selectedAccount.type) }/> }
-                            display ={(element, setVisible) => (
-                            <SelectList  
-                                 
-                                key={ element.accountNumber } 
-                                clicked={() => { setSelectedAccount(element); setVisible(false) }} >
-                                    <Icon iconUrl = { ComonFn.setLogoByAccountType(element.type) }/>{ element.accountNumber } 
-                            </SelectList>)} 
-                        />
+                        <div className = 'select-wrap'>
+                            <Select
+                                selectClass = 'select-mini' 
+                                listClass = 'selectLIst-mini'
+                                data = { userAccounts } 
+                                placeholder = 'Select Account'
+                                selected = { selectedAccount.accountNumber }
+                                icon = { <Icon iconUrl = { ComonFn.setLogoByAccountType(selectedAccount.type) }/> }
+                                display ={(element, setVisible) => (
+                                <SelectList  
+                                    key={ element.accountNumber } 
+                                    clicked={() => { setSelectedAccount(element); setVisible(false) }} >
+                                        <Icon iconUrl = { ComonFn.setLogoByAccountType(element.type) }/>{ element.accountNumber } 
+                                </SelectList>)} 
+                            />
+                        </div>
                         <Select
                             selectClass = 'select-mini' 
                             data={ allUserCurrencies } 
@@ -181,6 +216,7 @@ const Transaction = Component => {
                             transaction = { transaction }  
                             clicked = {() =>  { handleTransactionDetailView(transaction); setDetailVisible(true) }}
                             />))}
+                    <Button clicked = { handleLoadMoreTransactions }>მეტი</Button>        
                 </div>
             </div>
             </Layout>

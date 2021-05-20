@@ -9,7 +9,7 @@ import { Backdrop, Button, Flags, Input, InputValidation, PasswordComplexity, Se
 import Lang from '../../Services/SetLang';
 
 
-const UserRegistration = Component => {
+const UserRegistration = props => {
     
     const [ registrationData, setRegistrationData ] = useState({
         countryCode: '',

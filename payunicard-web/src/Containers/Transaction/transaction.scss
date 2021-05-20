@@ -79,6 +79,21 @@
     
 
     &__body {
+        width: 100%;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+
+        button {
+            width: 100%;
+            padding-top: 25px;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            background-color: #FFFFFF;
+
+        }
        
     }
 }

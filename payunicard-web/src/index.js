@@ -1,5 +1,4 @@
 import React  from 'react';
-import Lang from './Services/SetLang';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.scss';
@@ -7,18 +6,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from "axios";
 import { createProvider } from './Context/AppContext';
+import { initialState } from './InitialState';
 
-const initialState = {
-    allUserCurrencies: [],
-    activeLang: Lang.langKey,
-    isUserAuthorized: false,
-    paymentTemplates: [],
-    transactionTemplates: [],
-    userAccounts: [],
-    userTransactions: [],
-    userDetails: [],
 
-}
 
 
 const AppProvider = createProvider(initialState);

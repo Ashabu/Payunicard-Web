@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, { Fragment }  from 'react';
 import "./button.scss"
 import PropTypes from "prop-types"
 const Button = (props) => {
@@ -25,9 +25,9 @@ const Button = (props) => {
         }
 
     return (
-        <div>
+        <Fragment>
            {button}
-        </div>
+        </Fragment>
     );
 };
 

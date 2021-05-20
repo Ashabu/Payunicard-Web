@@ -114,6 +114,10 @@ a {
 
 /*select global styles*/ 
 
+.select-wrap {
+
+}
+
 .selectLIst {
     cursor: pointer;
     color: #666;
@@ -140,12 +144,11 @@ a {
 
 .selectLIst-mini {
     width: 100%;
-    max-width: 280px;
+    min-width: 280px;
     cursor: pointer;
     color: #666;
-    width: auto ;
-    height: 54px;
     line-height: 54px;
-    border-left: 2px solid transparent;
-    border-bottom: 1px solid #edf0f3;
+    border: 1px solid;
+    position: absolute;
+    z-index: 200;
 }

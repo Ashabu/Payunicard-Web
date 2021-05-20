@@ -51,13 +51,13 @@ var isFocused = false;
         )
     }
     return (
-        <Fragment>
-            <div style = {{position: 'relative', padding: 5, 'width': '100%'}} className ={ props.selectClass ||'Selected'} onClick = {() => setVisible(!visible)} onBlur = {handleOnBlur} tabIndex = '0'>
+        <div>
+            <div style = {{position: 'relative', padding: 5, 'width': '100%'}} className ={ props.selectClass ||'Selected'} onClick = {() => setVisible(!visible)}  tabIndex = '0'>
             <img style = {{position: 'absolute', top: 20, right: 15,}} src = '../../../Assets/Images/arrow_down.png' alt = 'icon' />
                 {props.icon? props.icon : null} {props.selected ? props.selected : props.placeholder}
             </div>
             {selectList}
-        </Fragment>
+        </div>
     );
 }
 

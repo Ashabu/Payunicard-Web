@@ -2,7 +2,7 @@ import React from 'react';
 import './userProduct.scss';
 import PropTypes from 'prop-types'
 
-function UserProduct(props) {
+const  UserProduct = (props) => {
 
     const {balance, imageURL, productName } = props.userproduct;
 

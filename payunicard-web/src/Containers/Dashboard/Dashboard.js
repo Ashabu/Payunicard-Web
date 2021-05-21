@@ -9,8 +9,9 @@ import TransactionDetail from '../../Components/TransactionDetail/TransactionDet
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
 import UserBalance from './../../Components/UserBalance/UserBalance';
 import { Backdrop, Button, Select, SelectList, SidePanel, Widget } from '../../Components/UI/UiComponents';
-import UserProduct from '../../Components/UserProduct/UserProduct';
+import UserProduct from '../../Components/UserProducts/UserProducts';
 import NavigationPanel from '../../Components/Navigation/NavigationPanel/NavigationPanel';
+import UserProducts from './../../Components/UserProducts/UserProducts';
 
 
 
@@ -95,14 +96,8 @@ const  Dashboard = () => {
                     <p style={{display: 'flex', justifyContent: 'center'}}>WELCOME TO Dashboard</p>
                     <UserBalance userBalance = { userTotalBalance } />
 
-                    <Widget>
-                        {userProducts.length > 0? 
-                        <Fragment>
-                            <p>ჩემი პროდუქტები</p>
-                            {userProducts.map(product =>(<UserProduct key = {product.productID} userproduct = { product }/>))}
-                            <Button buttonClass = 'loadmore'   clicked = {() => history.push('/transactions')}>მეტი</Button>  
-                        </Fragment> :  <img style = {{width: 50, margin: 'auto'}} src = '../../Assets/Images/loader.svg' alt = 'loader' /> }
-                    </Widget>
+                        <UserProducts userproducts = { userProducts }/>
+                        
 
                     <Widget>
                         <p onClick = {() => history.push('/transactions')}>ტანზაქციები</p>

@@ -22,7 +22,6 @@ class User {
         loginData.append( 'password', data.password);
         if(data.Otp)
         loginData.append('Otp', data.Otp );
-        debugger
 
         return await axios.post(globalConfig.token_URL, loginData)
     }

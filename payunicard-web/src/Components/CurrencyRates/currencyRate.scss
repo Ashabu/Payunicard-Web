@@ -1,0 +1,72 @@
+.currencyRate {
+    display: grid;
+    grid-template-columns: 17% 51% 14% 18%;
+    height: 40px;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+
+  
+
+    .currency-img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        
+        border-radius: 50%;
+        background-color: #f1f1f1;
+        img {
+            
+            margin: auto;
+        }
+    }
+
+    p {
+        margin: 0;
+    }
+    .currency-state {
+        p {
+            font-family: 'FiraGO REGULAR';
+            font-size: 14px;
+            color: #6B6B6B;
+        }
+        span {
+            display: flex;
+            align-items: center;
+
+            &:nth-child(1) {
+                font-family: 'FiraGO MEDIUM';
+                font-size: 16px;
+                color: #130D1E;
+            }
+            &:nth-child(2) {
+                font-family: 'FiraGO REGULAR';
+                font-size: 14px;
+                color: #6B6B6B;
+                display: inline-flex;
+                align-items: center;
+                margin-left: 10px;
+                img {
+                    margin-left: 9px;
+                }
+            }
+        }
+    }
+    .buy, .sell {
+        text-align: end;
+        p {
+            &:first-child {
+                font-family: 'FiraGO MEDIUM';
+                font-size: 16px;
+                color: #130D1E;
+            }
+            &:last-child {
+                font-family: 'FiraGO REGULAR';
+                font-size: 14px;
+                color: #6B6B6B;
+            }
+        }
+    }
+}

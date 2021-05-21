@@ -3,15 +3,14 @@ import React, {Fragment, useState, useEffect, useContext } from 'react';
 import { useHistory } from "react-router";
 import { Context } from '../../Context/AppContext';
 import './dashboard.scss';
-import User from '../../Services/API/UserServices';
+import { User, Currency } from '../../Services/API/APIS';
+import { Backdrop, Button, Select, SelectList, SidePanel, Widget } from '../../Components/UI/UiComponents';
 import Layout from '../../Containers/Layout/Layout';
 import TransactionDetail from '../../Components/TransactionDetail/TransactionDetail';
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
 import UserBalance from './../../Components/UserBalance/UserBalance';
-import { Backdrop, Button, Select, SelectList, SidePanel, Widget } from '../../Components/UI/UiComponents';
-import UserProduct from '../../Components/UserProducts/UserProducts';
-import NavigationPanel from '../../Components/Navigation/NavigationPanel/NavigationPanel';
 import UserProducts from './../../Components/UserProducts/UserProducts';
+import CurrencyRates from './../../Components/CurrencyRates/CurrencyRates';
 
 
 
@@ -19,7 +18,7 @@ import UserProducts from './../../Components/UserProducts/UserProducts';
 const  Dashboard = () => {
 
     const { state } = useContext(Context);
-    const { userTransactions, userAccounts, userTotalBalance } = state;
+    const { userTransactions, userAccounts, userTotalBalance, currencyRates } = state;
     
     const history = useHistory();
 
@@ -94,9 +93,11 @@ const  Dashboard = () => {
                 <div style ={{maxWidth: 485, marginLeft: 150}}>
                     
                     <p style={{display: 'flex', justifyContent: 'center'}}>WELCOME TO Dashboard</p>
+                    <CurrencyRates currencyrates = { currencyRates }/>
+
                     <UserBalance userBalance = { userTotalBalance } />
 
-                        <UserProducts userproducts = { userProducts }/>
+                    <UserProducts userproducts = { userProducts }/>
                         
 
                     <Widget>
@@ -109,7 +110,6 @@ const  Dashboard = () => {
                                 />))}
                         <Button buttonClass = 'loadmore'   clicked = {() => history.push('/transactions')}>მეტი</Button>             
                     </Widget>    
-
 
                 </div>
               

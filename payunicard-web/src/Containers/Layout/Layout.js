@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './layout.scss';
-import User from '../../Services/API/UserServices';
+import { User, Currency } from '../../Services/API/APIS';
 import Header from '../../Components/Navigation/Header/Header';
 import Footer from '../../Components/Navigation/Footer/Footer';
 import NavigationPanel from '../../Components/Navigation/NavigationPanel/NavigationPanel';
@@ -14,7 +14,7 @@ import { Context } from '../../Context/AppContext';
 const  Layout = (props) =>  {
 
     const { state, setGlobalValue } = useContext(Context)
-    const { userAccounts,  paymentTemplates, userTransactions, transactionTemplates,  userDetails, userTotalBalance, activeLang } = state;
+    const { currencyRates, userAccounts,  paymentTemplates, userTransactions, transactionTemplates,  userDetails, userTotalBalance, activeLang } = state;
 
 
 
@@ -22,6 +22,8 @@ useEffect(() => {
     getUserAccounts();
     getTransactions();
     getUserTotalBalance();
+    getCurrencyRates();
+    
 }, [])
 
 
@@ -175,6 +177,17 @@ useEffect(() => {
             console.log(res.data.data)
         })
     }
+
+    const getCurrencyRates = () => {
+        if(currencyRates.length > 0) return;
+
+        Currency.GetCurrencyRates().then(res => {
+            if(res.data.ok) {
+                setGlobalValue({currencyRates: res.data.data.currencyRates})
+            }
+        })
+        console.log(currencyRates)
+    } 
     
         return (
             

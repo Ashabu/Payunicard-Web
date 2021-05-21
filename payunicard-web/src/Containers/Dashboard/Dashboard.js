@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState, useEffect, useContext } from 'react';
+import React, {Fragment, useState, useEffect, useContext } from 'react';
 import { useHistory } from "react-router";
 import { Context } from '../../Context/AppContext';
 import './dashboard.scss';
@@ -8,14 +8,14 @@ import Layout from '../../Containers/Layout/Layout';
 import TransactionDetail from '../../Components/TransactionDetail/TransactionDetail';
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
 import UserBalance from './../../Components/UserBalance/UserBalance';
-import { Backdrop, Button, Select, SelectList, SidePanel } from '../../Components/UI/UiComponents';
-import UserProducts from './../../Components/UserProducts/UserProducts';
+import { Backdrop, Button, Select, SelectList, SidePanel, Widget } from '../../Components/UI/UiComponents';
+import UserProduct from '../../Components/UserProduct/UserProduct';
+import NavigationPanel from '../../Components/Navigation/NavigationPanel/NavigationPanel';
 
 
 
 
 const  Dashboard = () => {
-    let temp = [];
 
     const { state } = useContext(Context);
     const { userTransactions, userAccounts, userTotalBalance } = state;
@@ -33,10 +33,12 @@ const  Dashboard = () => {
     const [ userProducts, setUserProducts ] = useState([]);
 
    useEffect(() => {
-    getUserProducts();
-    console.log(temp)
-   }, [])
+    
+   }, [userTotalBalance, userTransactions])
 
+   useEffect(() => {
+    getUserProducts();
+   }, [])
    
    
 
@@ -69,40 +71,53 @@ const  Dashboard = () => {
     const getUserProducts= () => {
         User.GetUserProducts().then(res => {
             if(res.data.ok) {
-                temp = res.data.data;
-                
+                setUserProducts(res.data.data.products);
             }
+
+            console.log(userProducts)
         })
     }
         
         return (
           
-          <Layout >
+            <Layout >
               <Backdrop show = {detailVisible} hide = {() => {history.goBack(); setDetailVisible(false)}}/>
+
                 <SidePanel
                     stepBack 
                     visible = {detailVisible}
                     closePanel = {()=> {setDetailVisible(false); history.goBack()}}>
                         <TransactionDetailView transaction = {selectedTransaction}/>
-                    </SidePanel>
-                <div style ={{maxWidth: 485}}>
-                
+                </SidePanel>
+
+                <div style ={{maxWidth: 485, marginLeft: 150}}>
                     
                     <p style={{display: 'flex', justifyContent: 'center'}}>WELCOME TO Dashboard</p>
                     <UserBalance userBalance = { userTotalBalance } />
-                    
-                    <div>
-                    <UserProducts userproducts = { temp } />
-                    <Button clicked = {() => history.push('/transactions')}>go to transaction page</Button>
+
+                    <Widget>
+                        {userProducts.length > 0? 
+                        <Fragment>
+                            <p>ჩემი პროდუქტები</p>
+                            {userProducts.map(product =>(<UserProduct key = {product.productID} userproduct = { product }/>))}
+                            <Button buttonClass = 'loadmore'   clicked = {() => history.push('/transactions')}>მეტი</Button>  
+                        </Fragment> :  <img style = {{width: 50, margin: 'auto'}} src = '../../Assets/Images/loader.svg' alt = 'loader' /> }
+                    </Widget>
+
+                    <Widget>
+                        <p onClick = {() => history.push('/transactions')}>ტანზაქციები</p>
+                        {userTransactions.map((transaction, index) =>
+                            (<TransactionDetail 
+                                key = {index} 
+                                transaction = {transaction}  
+                                clicked = {() =>  {handleTransactionDetailView(transaction); setDetailVisible(true)}}
+                                />))}
+                        <Button buttonClass = 'loadmore'   clicked = {() => history.push('/transactions')}>მეტი</Button>             
+                    </Widget>    
+
+
                 </div>
-                    {userTransactions.map((transaction, index) =>
-                        (<TransactionDetail 
-                            key = {index} 
-                            transaction = {transaction}  
-                            clicked = {() =>  {handleTransactionDetailView(transaction); setDetailVisible(true)}}
-                            />))}
-                </div>
-                
+              
             </Layout>
         );
     

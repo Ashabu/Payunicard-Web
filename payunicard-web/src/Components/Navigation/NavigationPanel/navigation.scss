@@ -1,0 +1,33 @@
+.NavigationPanel {
+    position: fixed;
+    border-right: 1px solid #f1f1f1;
+    height: 100%;
+    padding: 10px;
+
+    .navItem-wrap {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        margin-bottom: 20px;
+
+        span {
+            display: inline-block;
+            margin-top: 5px;
+            word-break: break-all;
+        }
+
+        .navItem {
+            width: 50px;
+            height: 50px;
+            background: #f4f4f4;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+        }
+    
+    }
+
+}
+

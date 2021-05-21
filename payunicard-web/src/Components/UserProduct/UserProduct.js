@@ -1,5 +1,5 @@
 import React from 'react';
-import './userProducts.scss';
+import './userProduct.scss';
 import PropTypes from 'prop-types'
 
 function UserProduct(props) {

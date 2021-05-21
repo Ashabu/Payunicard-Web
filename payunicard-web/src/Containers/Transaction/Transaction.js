@@ -215,7 +215,7 @@ const Transaction = Component => {
                             transaction = { transaction }  
                             clicked = {() =>  { handleTransactionDetailView(transaction); setDetailVisible(true) }}
                             />))}
-                    <Button clicked = { handleLoadMoreTransactions }>მეტი</Button>        
+                    <Button buttonClass = 'loadmore' clicked = { handleLoadMoreTransactions }>მეტი</Button>        
                 </div>
             </div>
             </Layout>

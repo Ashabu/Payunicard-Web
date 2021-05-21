@@ -38,6 +38,8 @@ a {
     text-decoration: none;
 }
 
+
+// button classes 
 .disabled {
     opacity: 0.3;
 }
@@ -88,6 +90,17 @@ a {
     color: #130D1E;
 }
 
+.loadmore {
+    width: 100%;
+    padding: 25px 0 15px 0;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: #FFFFFF;
+}
+
+
+//input classes
 
 .Input {
     width: 100%;

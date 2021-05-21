@@ -3,6 +3,7 @@ import './layout.scss';
 import User from '../../Services/API/UserServices';
 import Header from '../../Components/Navigation/Header/Header';
 import Footer from '../../Components/Navigation/Footer/Footer';
+import NavigationPanel from '../../Components/Navigation/NavigationPanel/NavigationPanel';
 import { Context } from '../../Context/AppContext';
 
 
@@ -179,7 +180,8 @@ useEffect(() => {
             
                 <React.Fragment>
                     <Header/>
-                        <div style={{padding: 30}}>
+                        <div style={{display: 'flex'}}>
+                            <NavigationPanel/>
                             {props.children}
                         </div>
                     <Footer/>

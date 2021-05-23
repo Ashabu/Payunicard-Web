@@ -10,5 +10,6 @@ export const initialState = {
     userAccounts: [],
     userTotalBalance: [],
     userTransactions: [],
-    userDetails: []
+    userDetails: [],
+    userVerificationStatus: 'Not Verified'
 }

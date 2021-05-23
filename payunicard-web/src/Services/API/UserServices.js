@@ -66,7 +66,6 @@ class User {
         return axios.get(`${globalConfig.api_URL}/Card/GetUnicards`);
     }
     
-
    
 }
 

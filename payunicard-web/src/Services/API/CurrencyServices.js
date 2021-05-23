@@ -6,7 +6,7 @@ class Currency {
     GetCurrencyRates = async () => {
         return await axios.get(`${globalConfig.api_URL}/Currency/GetCurrencyRates`);
     }
-
+    
 }
 
 

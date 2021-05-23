@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import Lang from '../../../Services/SetLang';
 import { Langs } from '../../../Constants/index';
@@ -8,7 +9,10 @@ import { Context } from '../../../Context/AppContext';
 var langs = []
 
 const  Header = (props) => {
-    const { state  } = useContext(Context);
+    
+    const history = useHistory();
+
+    const { state, setGlobalValue  } = useContext(Context);
     const { isUserAuthorized } = state;
 
     langs = Object.entries(Langs)
@@ -50,7 +54,7 @@ const  Header = (props) => {
                             <div>
                                 Profile
                             </div>
-                            <div>
+                            <div onClick = {() => { setGlobalValue({ isUserAuthorized: false}); history.push('/'); localStorage.removeItem('token')}}>
                                 Logout
                             </div>
 

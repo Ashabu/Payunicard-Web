@@ -14,7 +14,7 @@ import { Context } from '../../Context/AppContext';
 const  Layout = (props) =>  {
 
     const { state, setGlobalValue } = useContext(Context)
-    const { currencyRates, userAccounts,  paymentTemplates, userTransactions, transactionTemplates,  userDetails, userTotalBalance, activeLang } = state;
+    const { currencyRates, userAccounts,  paymentTemplates, userTransactions, transactionTemplates,  userDetails, userTotalBalance, activeLang, isUserAuthorized } = state;
 
 
 
@@ -24,7 +24,7 @@ useEffect(() => {
     getUserTotalBalance();
     getCurrencyRates();
     
-}, [])
+}, [isUserAuthorized])
 
 
 
@@ -189,12 +189,18 @@ useEffect(() => {
         console.log(currencyRates)
     } 
     
+    
+    console.log(isUserAuthorized)
+
         return (
             
                 <React.Fragment>
                     <Header/>
                         <div style={{display: 'flex'}}>
-                            <NavigationPanel/>
+                            {isUserAuthorized? 
+                                <NavigationPanel/>
+                             : null}
+                            
                             {props.children}
                         </div>
                     <Footer/>

@@ -1,14 +1,15 @@
 /* eslint-disable no-undef */
-import React, { useState, useEffect,  } from 'react';
+import React, { useState, useEffect, useContext,  } from 'react';
 import { useHistory } from "react-router";
 import './login.scss';
+import { Context } from '../../Context/AppContext';
 import { Button, Input, Modal, InputValidation } from '../../Components/UI/UiComponents';
 import Layout from '../Layout/Layout';
 import Lang from '../../Services/SetLang';
 import User from '../../Services/API/UserServices';
 
 const  Login = () => {
-
+    const { setGlobalValue } = useContext(Context);
     
     const history = useHistory();
 
@@ -17,7 +18,7 @@ const  Login = () => {
         password: ""
     });
 
-    const [ oneTimePasscode, setOneTimePasscode ] = useState(null)
+    const [ oneTimePasscode, setOneTimePasscode ] = useState("")
 
     const [forgotPasswordData, setForgotPasswordData] = useState({
         forgotPassword: false,
@@ -54,6 +55,7 @@ const  Login = () => {
            
            let token=res.data.access_token;
            localStorage.setItem('token',token);
+           setGlobalValue({ isUserAuthorized: true })
            history.push('/Dashboard');
        })
     }

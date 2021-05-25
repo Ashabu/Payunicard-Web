@@ -7,11 +7,11 @@ import User from '../../Services/API/UserServices';
 import ComonFn from '../../Services/CommonFunctions';
 import { Backdrop, Calendar, Icon, Select, SelectList, Search, SidePanel, Button, Widget } from '../../Components/UI/UiComponents';
 import Layout from '../../Containers/Layout/Layout';
-import TransactionDetail from '../../Components/TransactionDetail/TransactionDetail';
+import TransactionDetail from '../../Components/TransactionDetails/TransactionDetail';
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
 
 
-const Transaction = Component => {
+const Transaction = () => {
 
     const { state } = useContext(Context);
     const { userAccounts, userTransactions, allUserCurrencies } = state;

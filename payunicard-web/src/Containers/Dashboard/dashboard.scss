@@ -1,0 +1,37 @@
+.dashboard-wrap {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+
+    
+    
+        .service-widget {
+            display: flex;
+            justify-content: space-between;
+            
+        
+            div {
+                display: flex;
+                align-items: center;
+                width: 50%;
+                padding-left: 20px;
+                cursor: pointer;
+            
+                &:first-child {
+                    border-right: 2px solid #f1f1f1;
+                }
+            
+                &:last-child {
+                    margin-left: 30px;
+                }
+            }
+
+    }
+
+    .dashboard-right {
+        width: 100%;
+        max-width: 485px;
+    }
+
+    
+}

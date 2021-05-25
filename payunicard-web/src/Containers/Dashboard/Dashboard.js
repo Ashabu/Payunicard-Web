@@ -6,7 +6,7 @@ import './dashboard.scss';
 import { User } from '../../Services/API/APIS';
 import { Backdrop, Button, Select, SelectList, SidePanel, Widget } from '../../Components/UI/UiComponents';
 import Layout from '../../Containers/Layout/Layout';
-import TransactionDetail from '../../Components/TransactionDetail/TransactionDetail';
+import TransactionDetail from '../../Components/TransactionDetails/TransactionDetail';
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
 import UserBalance from './../../Components/UserBalance/UserBalance';
 import UserProducts from './../../Components/UserProducts/UserProducts';
@@ -114,11 +114,27 @@ const  Dashboard = () => {
                     <UserVerificationstatus/>
 
                     <p style={{display: 'flex', justifyContent: 'center'}}>WELCOME TO Dashboard</p>
-                    
-                    <UserBalance userBalance = { userTotalBalance } />
 
+                    <div>
+                        <UserBalance userBalance = { userTotalBalance } />
+
+                        <Widget>
+                            <div className = 'service-widget'>
+                                <div>
+                                    <img src = '../../Assets/Images/Top_Up.svg' alt = 'icon' />
+                                    <span>შევსება</span>
+                                </div>
+                                <div>
+                                    <img src = '../../Assets/Images/Add_Card.svg' alt = 'icon' />
+                                    <span>საბანკო ბარათის დამატება</span>
+                                </div>
+                            </div>    
+                        </Widget>
+                    </div>
+                   
+                    <div>
                     <UserProducts userproducts = { userProducts }/>
-
+</div>
                     <CurrencyRates currencyrates = { currencyRates }/>    
 
                     <Widget>

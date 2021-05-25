@@ -26,11 +26,34 @@ useEffect(() => {
     
 }, [isUserAuthorized])
 
+useEffect(() => {
+    chekIsUserAuthorized();
+}, [])
 
+
+
+const chekIsUserAuthorized = () => { 
+    const token = localStorage.getItem('token');
+    const refreshToken = 'skjadljsdlajsldjalkjsdlakjsldjals';
+        try {
+             if(!token || !refreshToken) {
+                setGlobalValue({isUserAuthorized: false})
+                 return false;
+             } else {
+                setGlobalValue({isUserAuthorized: true})
+             }
+        } 
+        catch (error) {
+            setGlobalValue({isUserAuthorized: false})
+            return false;
+        }
+       
+        return true;
+}
 
 
     const getUserAccounts = async () => {
-        if(userAccounts.length > 0) return;
+        if(userAccounts.length > 0 || !isUserAuthorized) return;
         let userUnicards = [];
          User.GetUnicards().then(res => {
             if(res.data.ok) {
@@ -144,7 +167,7 @@ useEffect(() => {
     }
 
     const  getTransactions = async () => {
-        if(userTransactions.length > 0) return;
+        if(userTransactions.length > 0 || !isUserAuthorized) return;
         
         let blockedtr= [];
         let tr = [];
@@ -168,7 +191,7 @@ useEffect(() => {
 
 
     const getUserTotalBalance = () => {
-        if(userTotalBalance.length > 0) return;
+        if(userTotalBalance.length > 0 ||  !isUserAuthorized) return;
         
         User.GetUserTotalBalance().then(res => {
             if(res.data.ok){
@@ -179,7 +202,7 @@ useEffect(() => {
     }
 
     const getCurrencyRates = () => {
-        if(currencyRates.length > 0) return;
+        if(currencyRates.length > 0 ||  !isUserAuthorized) return;
 
         Currency.GetCurrencyRates().then(res => {
             if(res.data.ok) {

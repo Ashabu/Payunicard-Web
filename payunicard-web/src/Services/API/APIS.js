@@ -1,6 +1,7 @@
 import Currency from './CurrencyServices';
 import Presentation from './PresentationServices';
 import User from './UserServices';
+import UploadImage from './UploadImage';
 
 
 
@@ -11,5 +12,6 @@ import User from './UserServices';
 export {
     Currency,
     Presentation,
-    User
+    User,
+    UploadImage
 }

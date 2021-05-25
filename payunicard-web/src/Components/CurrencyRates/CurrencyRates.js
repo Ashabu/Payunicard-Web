@@ -9,7 +9,7 @@ const CurrencyRates = (props) => {
     const currencyRates = props.currencyrates
 
     return (
-        <Widget>
+        <Widget class = 'currency-widget'>
             <p>ვალუტეის კურსები</p>
             {currencyRates.map((currency, index) => (<CurrencyRate key = { index } Currency = { currency}/>))}
         </Widget>

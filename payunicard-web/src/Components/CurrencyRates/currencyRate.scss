@@ -1,12 +1,18 @@
-.currencyRate {
-    display: grid;
-    grid-template-columns: 17% 51% 14% 18%;
-    height: 40px;
-    align-items: center;
-    margin-bottom: 20px;
-    width: 100%;
+.currency-widget{
+    max-width: 485px;
+    height: min-content;
+    
+    div {
+        width: 100%;
+    }
 
-  
+    .currencyRate {
+        display: grid;
+        grid-template-columns: 17% 51% 14% 18%;
+        height: 40px;
+        align-items: center;
+        margin-bottom: 20px;
+        width: 100%;
 
     .currency-img {
         display: flex;
@@ -68,5 +74,6 @@
                 color: #6B6B6B;
             }
         }
+    }
     }
 }

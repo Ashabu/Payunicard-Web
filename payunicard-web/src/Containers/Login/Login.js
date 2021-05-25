@@ -148,7 +148,7 @@ const  Login = () => {
                                 onBlur = {(e) => e.target.placeholder = Lang.tr('auth.password')}
                                 rule = {'required'}
                                 groupid = 'login'/>
-                            <Input type = 'number' value = {oneTimePasscode} onInput = {(e) => setOneTimePasscode(e.target.value)}/>        
+                            <Input className = 'Input Input-med' type = 'numeric' value = {oneTimePasscode} onInput = {(e) => setOneTimePasscode(e.target.value)}/>        
                         </div>
                         <div className = 'LoginOptions'>
                             <label>

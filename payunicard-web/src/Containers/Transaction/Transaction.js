@@ -9,6 +9,7 @@ import { Backdrop, Calendar, Icon, Select, SelectList, Search, SidePanel, Button
 import Layout from '../../Containers/Layout/Layout';
 import TransactionDetail from '../../Components/TransactionDetails/TransactionDetail';
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
+import {handleTransactionDetailView } from '../../Providers/TransactionProvider';
 
 
 const Transaction = () => {
@@ -19,6 +20,14 @@ const Transaction = () => {
     const history = useHistory();
 
     // const []
+    const navigate = (id) => {
+        history.push(
+            {
+             pathname: '/Transactions/TransactionDetail',
+             search: `?tranId=${id}`,
+            }
+        )
+    }
 
     const [dates, setDates ] = useState({
             fromDate: '',
@@ -86,30 +95,7 @@ const Transaction = () => {
 
     }
 
-    const handleTransactionDetailView = (transaction) => {
-        if(transaction.tranID){ 
-            User.GetTransactionDetails({tranId: transaction.tranID}).then(res => {
-                if(res.data.ok) {
-                    setSelectedTransaction(res.data.data)
-                } else {
-                    console.log('error')
-                }
-            }).catch(error => {
-                console.log(error)
-            })
-                history.push({
-                pathname: '/Transactions/TransactionDetail',
-                search: `?tranId=${transaction.tranID}`,
-            })
-        } else {
-            setSelectedTransaction(transaction)
-                history.push({
-                pathname: '/Transactions/TransactionDetail',
-                search: `?cardNumber=${transaction.cardNumber}`,
-            })
-        }
-        
-    }
+   
 
 
     const handleLoadMoreTransactions = () => {
@@ -213,7 +199,7 @@ const Transaction = () => {
                             showlong
                             key = { index } 
                             transaction = { transaction }  
-                            clicked = {() =>  { handleTransactionDetailView(transaction); setDetailVisible(true) }}
+                            clicked = {() =>   {handleTransactionDetailView(transaction, setSelectedTransaction, navigate); setDetailVisible(true)}}
                             />))}
                     <Button buttonClass = 'loadmore' clicked = { handleLoadMoreTransactions }>მეტი</Button>        
                 </div>

@@ -12,6 +12,8 @@ import UserBalance from './../../Components/UserBalance/UserBalance';
 import UserProducts from './../../Components/UserProducts/UserProducts';
 import CurrencyRates from './../../Components/CurrencyRates/CurrencyRates';
 import UserVerificationstatus from '../../Components/UserVerificationStatus/UserVerificationStatus';
+import {handleTransactionDetailView } from '../../Providers/TransactionProvider';
+
 
 
 
@@ -42,33 +44,16 @@ const  Dashboard = () => {
         getUserProducts();
     }, [])
    
-   
+   const navigate = (id) => {
+       history.push(
+           {
+            pathname: '/Dashboard/TransactionDetail',
+            search: `?tranId=${id}`,
+           }
+       )
+   }
 
-    const handleTransactionDetailView = (transaction) => {
-        if(transaction.tranID){ 
-            User.GetTransactionDetails({tranId: transaction.tranID}).then(res => {
-                if(res.data.ok) {
-                    setSelectedTransaction(res.data.data)
-                } else {
-                    console.log(error)
-                }
-            }).catch(error => {
-                console.log(error)
-            })
-                history.push({
-                pathname: '/Dashboard/TransactionDetail',
-                search: `?tranId=${transaction.tranID}`,
-            })
-        } else {
-            setSelectedTransaction(transaction)
-                history.push({
-                pathname: '/Dashboard/TransactionDetail',
-                search: `?cardNumber=${transaction.cardNumber}`,
-            })
-            
-        }
-        
-    }
+
 
     const getUserProducts= () => {
         User.GetUserProducts().then(res => {
@@ -143,7 +128,7 @@ const  Dashboard = () => {
                             (<TransactionDetail 
                                 key = {index} 
                                 transaction = {transaction}  
-                                clicked = {() =>  {handleTransactionDetailView(transaction); setDetailVisible(true)}}
+                                clicked = {() =>  {handleTransactionDetailView(transaction, setSelectedTransaction, navigate); setDetailVisible(true)}}
                                 />))}
                         <Button buttonClass = 'loadmore'   clicked = {() => history.push('/transactions')}>მეტი</Button>             
                     </Widget>

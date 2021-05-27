@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './layout.scss';
-import { User, Currency } from '../../Services/API/APIS';
+import { User, Currency, Presentation } from '../../Services/API/APIS';
 import Header from '../../Components/Navigation/Header/Header';
 import Footer from '../../Components/Navigation/Footer/Footer';
 import NavigationPanel from '../../Components/Navigation/NavigationPanel/NavigationPanel';
@@ -14,7 +14,8 @@ import { Context } from '../../Context/AppContext';
 const  Layout = (props) =>  {
 
     const { state, setGlobalValue } = useContext(Context)
-    const { currencyRates, userAccounts,  paymentTemplates, userTransactions, transactionTemplates,  userDetails, userTotalBalance, activeLang, isUserAuthorized } = state;
+    const { currencyRates, userAccounts, paymentServices, paymentTemplates, userTransactions, transactionTemplates,  
+        userDetails, userTotalBalance, activeLang, isUserAuthorized } = state;
 
 
 
@@ -23,6 +24,7 @@ useEffect(() => {
     getTransactions();
     getUserTotalBalance();
     getCurrencyRates();
+    getPaymetnServices();
     
 }, [isUserAuthorized])
 
@@ -197,7 +199,6 @@ const chekIsUserAuthorized = () => {
             if(res.data.ok){
                 setGlobalValue({ userTotalBalance: res.data.data })
             }
-            console.log(res.data.data)
         })
     }
 
@@ -209,17 +210,22 @@ const chekIsUserAuthorized = () => {
                 setGlobalValue({currencyRates: res.data.data.currencyRates})
             }
         })
-        console.log(currencyRates)
     } 
     
-    
-    console.log(isUserAuthorized)
+    const getPaymetnServices = () => {
+        Presentation.getPaymentServices().then(res => {
+            if(res.data.ok) {
+                setGlobalValue({paymentServices: res.data.data.categories});
+            }
+            
+        })
+    }
 
         return (
             
                 <React.Fragment>
                     <Header/>
-                        <div style={{display: 'flex'}}>
+                        <div style={{display: 'flex', overflow: 'hidden'}}>
                             {isUserAuthorized? 
                                 <NavigationPanel/>
                              : null}

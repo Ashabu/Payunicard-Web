@@ -82,7 +82,6 @@ const  Dashboard = () => {
         })
     }
         
-    console.log('verification status ==>', userVerificationStatus)
         return (
           
             <Layout >
@@ -97,6 +96,8 @@ const  Dashboard = () => {
                
                 <div style ={{maxWidth: 485, marginLeft: 150}}>
                     <UserVerificationstatus/>
+
+                    <Button clicked = {()=> history.push('/payments')}>go to payments</Button>
 
                     <p style={{display: 'flex', justifyContent: 'center'}}>WELCOME TO Dashboard</p>
 

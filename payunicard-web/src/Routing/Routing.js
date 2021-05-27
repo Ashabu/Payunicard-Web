@@ -6,6 +6,7 @@ import Login from '../Containers/Login/Login';
 import UserRegistration from '../Containers/UserRegistration/UserRegistration';
 import Dashboard from '../Containers/Dashboard/Dashboard';
 import Transaction from '../Containers/Transaction/Transaction';
+import Payments from './../Containers/Payments/Payments';
 
 
 
@@ -55,6 +56,8 @@ const Routing = () => (
         <Route path = '/register' component = {UserRegistration}/>
         <ProtectedRoute path = '/dashboard' component = {Dashboard}/>
         <ProtectedRoute path = '/transactions' component = {Transaction}/>
+        <ProtectedRoute path = '/payments' component = {Payments}/>
+
     </Switch>
 );
 

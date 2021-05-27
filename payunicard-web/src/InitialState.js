@@ -5,6 +5,7 @@ export const initialState = {
     activeLang: Lang.langKey,
     currencyRates: [],
     isUserAuthorized: false,
+    paymentServices: [],
     paymentTemplates: [],
     transactionTemplates: [],
     userAccounts: [],

@@ -1,14 +1,13 @@
 import React, {useState, useEffect, useContext} from 'react';
+import './payments.scss';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import {Context} from '../../Context/AppContext';
-import PropTypes from 'prop-types';
 import {Presentation} from '../../Services/API/APIS';
 import Layout from '../../Containers/Layout/Layout';
 import { Backdrop, SidePanel } from './../../Components/UI/UiComponents';
 import PaymentCategory from './../../Components/Payments/PaymentCategory';
-import PaymentServices from '../../Components/Payments/PaymentServices';
-import FillPaymentData from '../../Components/Payments/FillPaymentData';
-
+import PaymentPanel from '../../Components/Payments/PaymentPanel';
 
 
 
@@ -23,7 +22,6 @@ const Payments = () => {
     const [ merchantServices, setMerchantServices ] = useState([]);
     const [ merchantData, setMerchantData] = useState({});
     const [ paymentStep, setPaymentStep] = useState(0);
-
     const [ paymentPanelVisible, setPaymentPanelVisible ] = useState(false)
 
 
@@ -36,26 +34,35 @@ const Payments = () => {
         })
     }
 
-    const getMerchantServices = (service) => {
-        if(!service.merchantCode) {
-            Presentation.getMetchantServices(service.categoryID).then(res => {
+    const getMerchantServices = (data) => {
+        const { s } = data
+        //if merchantCode prop is undefind, it means services has children
+        if(!s.merchantCode) {
+            Presentation.getMetchantServices(s.categoryID).then(res => {
                 console.log(res.data)
                 if(res.data.ok) {
-                    setMerchantServices(res.data.data.merchants)
+                    setMerchantServices(res.data.data.merchants);
+                    setPaymentStep(1)
                 }
             }).catch(error => {
                 console.log(error)
             })
         } else {
-            Presentation.getPaymentDetails(service.merchantCode, service.merchantServiceCode).then(res => {
+            let querryParams = {
+                forMerchantCode: s.merchantCode,
+                forMerchantServiceCode: s.merchantServiceCode,
+                forOpClassCode: 'B2B.F'
+            }
+            Presentation.getPaymentDetails(querryParams).then(res => {
                 if(res.data.ok) {
-                    setMerchantData({...res.data.data, merchantName: service.name, merchantImgUrl: service.merchantServiceURL })
+                    setMerchantData({...res.data.data, merchantName: s.name, merchantImgUrl: s.merchantServiceURL || s.imageUrl });
+                    setPaymentStep(2)
                 }
             }).catch(error => {
                 console.log(error)
             })
         }
-        setPaymentStep(1)
+        
     }
 
     useEffect(() => {
@@ -63,25 +70,15 @@ const Payments = () => {
     return (
         <Layout>
             <Backdrop show = {paymentPanelVisible} hide = {() => { setPaymentPanelVisible(false)}}/>
-           
 
-<SidePanel
-    stepBack 
-    visible = {paymentPanelVisible}
-    closePanel = {()=> {setPaymentPanelVisible(false)}}>
-        {paymentStep === 0? 
-        <div>
-            {services.map((service, index) => (<PaymentServices key = {index} services = {service} clicked ={() => getMerchantServices(service)}/>))}
-        </div>     
-         :
-         <div>
-            {merchantServices.map(service => (<PaymentServices key ={service.merchantServiceID} services  = {service} clicked ={() => getMerchantServices(service)}/>))}
-            </div>
-               
-        }
-
-            </SidePanel>
-        
+            <PaymentPanel 
+                tabvisible = {paymentPanelVisible}
+                step = {paymentStep}
+                services = {services} 
+                merchantservices = {merchantServices} 
+                merchantdata = { merchantData } 
+                getServices ={getMerchantServices}
+                merchantData = {merchantData}/>
 
         <div style = {{height: 1000, overflow: 'scroll', marginLeft: 200}}>
             <p>WELCOME TO PAYMENTS</p>
@@ -90,11 +87,7 @@ const Payments = () => {
                     <PaymentCategory key = {index} services = {service} clicked = {() => getServices(service.categoryID) }/>
                 ))}
             </div>
-            
-             <FillPaymentData merchantdata = { merchantData } />       
-            
         </div>
-        
         </Layout>
     )
 }

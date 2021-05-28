@@ -18,8 +18,9 @@ class Presentation  {
         return await axios.get(`${globalConfig.api_URL}/GetMerchantServices?CategoryID=${id}`);
     }
 
-    getPaymentDetails = async (merchantCode, merchantServiceCode) => {
-        return await axios.get(`${globalConfig.api_URL}/GetPaymentDetails?forMerchantCode=${merchantCode}&forMerchantServiceCode=${merchantServiceCode}&forOpClassCode=B2B.F`);
+    getPaymentDetails = async (params) => {
+        
+        return await axios.get(`${globalConfig.api_URL}/GetPaymentDetails`, {params});
     }
 
     checkCostumerDebt = async (data) => {

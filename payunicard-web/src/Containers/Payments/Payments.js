@@ -37,7 +37,6 @@ const Payments = () => {
     }
 
     const getMerchantServices = (service) => {
-        console.log(service)
         if(!service.merchantCode) {
             Presentation.getMetchantServices(service.categoryID).then(res => {
                 console.log(res.data)
@@ -50,7 +49,7 @@ const Payments = () => {
         } else {
             Presentation.getPaymentDetails(service.merchantCode, service.merchantServiceCode).then(res => {
                 if(res.data.ok) {
-                    setMerchantData(res.data.data)
+                    setMerchantData({...res.data.data, merchantName: service.name, merchantImgUrl: service.merchantServiceURL })
                 }
             }).catch(error => {
                 console.log(error)

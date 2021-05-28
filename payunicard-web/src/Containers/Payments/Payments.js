@@ -3,7 +3,7 @@ import './payments.scss';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import {Context} from '../../Context/AppContext';
-import {Presentation} from '../../Services/API/APIS';
+import { Presentation, Transaction } from '../../Services/API/APIS';
 import Layout from '../../Containers/Layout/Layout';
 import { Backdrop, SidePanel } from './../../Components/UI/UiComponents';
 import PaymentCategory from './../../Components/Payments/PaymentCategory';
@@ -65,20 +65,36 @@ const Payments = () => {
         
     }
 
+    const proceedPayment = (paymentData) => {
+        console.log('payment data',paymentData)
+        Transaction.startPaymentTransaction(paymentData).then(res => {
+            if(res.data.ok) {
+                setPaymentStep(3);
+            }
+        })
+
+    }
+
+
+
+
     useEffect(() => {
     }, [])
+
     return (
         <Layout>
             <Backdrop show = {paymentPanelVisible} hide = {() => { setPaymentPanelVisible(false)}}/>
 
             <PaymentPanel 
                 tabvisible = {paymentPanelVisible}
+                close = {() => setPaymentPanelVisible(false)}
                 step = {paymentStep}
                 services = {services} 
                 merchantservices = {merchantServices} 
                 merchantdata = { merchantData } 
                 getServices ={getMerchantServices}
-                merchantData = {merchantData}/>
+                merchantData = {merchantData} 
+                proceedPayment = {proceedPayment}/>
 
         <div style = {{height: 1000, overflow: 'scroll', marginLeft: 200}}>
             <p>WELCOME TO PAYMENTS</p>

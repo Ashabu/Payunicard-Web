@@ -14,7 +14,7 @@ class User {
         CLIENT_SECRET = 'abcd123'
 
         let loginData = new FormData();
-        loginData.append('grant_type', GRANT_TYPE);
+        loginData.append('grant_type',GRANT_TYPE);
         loginData.append('scope', SCOPE);
         loginData.append('client_id', CLIENT_ID);
         loginData.append('client_secret', CLIENT_SECRET);
@@ -22,6 +22,16 @@ class User {
         loginData.append( 'password', data.password);
         if(data.Otp)
         loginData.append('Otp', data.Otp );
+
+        // let loginData = {
+        //     grant_type: GRANT_TYPE,
+        //     scope: SCOPE,
+        //     client_id: CLIENT_ID,
+        //     client_secret: CLIENT_SECRET,
+        //     username: data.username,
+        //     password: data.password,
+
+        // }
 
         return await axios.post(globalConfig.token_URL, loginData)
     }

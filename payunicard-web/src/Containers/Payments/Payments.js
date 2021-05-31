@@ -66,7 +66,6 @@ const Payments = () => {
     }
 
     const proceedPayment = (paymentData) => {
-        console.log('payment data',paymentData)
         Transaction.startPaymentTransaction(paymentData).then(res => {
             if(res.data.ok) {
                 setPaymentStep(3);
@@ -83,18 +82,18 @@ const Payments = () => {
 
     return (
         <Layout>
-            <Backdrop show = {paymentPanelVisible} hide = {() => { setPaymentPanelVisible(false)}}/>
+            <Backdrop show = {paymentPanelVisible} hide = {() => {setPaymentPanelVisible(false); setPaymentStep(0)}}/>
 
-            <PaymentPanel 
+            {services && <PaymentPanel 
                 tabvisible = {paymentPanelVisible}
-                close = {() => setPaymentPanelVisible(false)}
+                close = {() => {setPaymentPanelVisible(false); setPaymentStep(0)}}
                 step = {paymentStep}
                 services = {services} 
                 merchantservices = {merchantServices} 
                 merchantdata = { merchantData } 
                 getServices ={getMerchantServices}
                 merchantData = {merchantData} 
-                proceedPayment = {proceedPayment}/>
+                proceedPayment = {proceedPayment}/>}
 
         <div style = {{height: 1000, overflow: 'scroll', marginLeft: 200}}>
             <p>WELCOME TO PAYMENTS</p>

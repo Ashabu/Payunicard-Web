@@ -9,7 +9,7 @@ class User {
 
     UserLogin = async (data) => {
         const GRANT_TYPE = 'password',
-        SCOPE =  'Wallet_Api.Full',
+        SCOPE =  'Wallet_Api.Full offline_access',
         CLIENT_ID = 'WalletApi',
         CLIENT_SECRET = 'abcd123'
 

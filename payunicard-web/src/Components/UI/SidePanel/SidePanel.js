@@ -5,11 +5,19 @@ import PropTypes from 'prop-types';
 
 const  SidePanel = (props) => {
     
-    const {stepBack, visible, headerText, closePanel, children} = props;
+    const {stepBack, visible, headerText, closePanel, children, bredcrump} = props;
     let StepBack = null;
 
     if(stepBack) {
         StepBack = (<img src = '../../../Assets/Images/step-back.png' alt = 'icon' />)
+    }
+
+    let bredCrump = null;
+
+    if(bredcrump.length > 0) {
+        bredCrump = bredcrump.map((item, index) => (<span key = {index} onClick = {() => props.bredClick(index)}>{item + ' >'}</span>))
+    }  else {
+        
     }
 
     return (
@@ -20,6 +28,7 @@ const  SidePanel = (props) => {
                 </div>
                 <div>
                     <p>{headerText}</p>
+                    {bredCrump}
                 </div>
                 <div className = 'close-sidePanel' onClick = {closePanel}>
                     <img src = '../../../Assets/Images/close-icon.svg' alt = 'icon' />
@@ -37,6 +46,7 @@ SidePanel.propTypes = {
     stepBack: PropTypes.bool,
     visible: PropTypes.bool,
     closePanel: PropTypes.func,
+    breadcrump: PropTypes.array,
     headerText: PropTypes.string,
 };
 

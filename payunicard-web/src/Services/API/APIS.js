@@ -2,7 +2,8 @@ import Currency from './CurrencyServices';
 import Presentation from './PresentationServices';
 import User from './UserServices';
 import UploadImage from './UploadImage';
-import Transaction from './TransactionService'
+import Template from './TemplateService';
+import Transaction from './TransactionService';
 
 
 
@@ -15,5 +16,6 @@ export {
     Presentation,
     User,
     UploadImage,
+    Template,
     Transaction
 }

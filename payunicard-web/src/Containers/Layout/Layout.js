@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './layout.scss';
-import { User, Currency, Presentation } from '../../Services/API/APIS';
+import { User, Currency, Presentation, Template } from '../../Services/API/APIS';
 import Header from '../../Components/Navigation/Header/Header';
 import Footer from '../../Components/Navigation/Footer/Footer';
 import NavigationPanel from '../../Components/Navigation/NavigationPanel/NavigationPanel';
@@ -19,22 +19,23 @@ const  Layout = (props) =>  {
 
 
 
-useEffect(() => {
-    getUserAccounts();
-    getTransactions();
-    getUserTotalBalance();
-    getCurrencyRates();
-    getPaymetnServices();
-    
-}, [isUserAuthorized])
+    useEffect(() => {
+        getUserAccounts();
+        getTransactions();
+        getUserTotalBalance();
+        getCurrencyRates();
+        getPaymetnServices();
+        getPaymentTemplates();
 
-useEffect(() => {
-    chekIsUserAuthorized();
-}, [])
+    }, [isUserAuthorized])
+
+    useEffect(() => {
+        chekIsUserAuthorized();
+    }, [])
 
 
 
-const chekIsUserAuthorized = () => { 
+    const chekIsUserAuthorized = () => { 
     const token = localStorage.getItem('token');
     const refreshToken = 'skjadljsdlajsldjalkjsdlakjsldjals';
         try {
@@ -51,8 +52,7 @@ const chekIsUserAuthorized = () => {
         }
        
         return true;
-}
-
+    }
 
     const getUserAccounts = async () => {
         if(userAccounts.length > 0 || !isUserAuthorized) return;
@@ -191,7 +191,6 @@ const chekIsUserAuthorized = () => {
         })
     }
 
-
     const getUserTotalBalance = () => {
         if(userTotalBalance.length > 0 ||  !isUserAuthorized) return;
         
@@ -220,6 +219,13 @@ const chekIsUserAuthorized = () => {
             
         })
     }
+
+    const getPaymentTemplates = () => {
+        Template.getUtilityTemplates().then(res => {
+            console.log('getUtilityTemplates', res.data)
+        })
+    }
+
 
         return (
             

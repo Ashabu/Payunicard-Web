@@ -52,6 +52,7 @@ const  FillPaymentData = (props) => {
             abonentCode: abonentCode
         }
 
+
         Presentation.checkCostumerDebt(checkDetails).then(res => {
             if(res.data.Ok) {
                 let tempDebtData = res.data.Data.Structures;
@@ -97,7 +98,6 @@ const  FillPaymentData = (props) => {
             InAmount: amount,
             ForCustomerType: selectedAccount.customerAccountType,
         }
-        console.log('ssssssssssssssssssss', amount)
         commisionTimeout.current = setTimeout(() => {
             Presentation.getPaymentDetails(querryParams).then(res => {
                 if(res.data.ok) {

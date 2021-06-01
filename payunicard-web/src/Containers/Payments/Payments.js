@@ -53,6 +53,7 @@ const Payments = () => {
                 forMerchantServiceCode: s.merchantServiceCode,
                 forOpClassCode: 'B2B.F'
             }
+
             Presentation.getPaymentDetails(querryParams).then(res => {
                 if(res.data.ok) {
                     setMerchantData({...res.data.data, merchantName: s.name, merchantImgUrl: s.merchantServiceURL || s.imageUrl });
@@ -65,6 +66,14 @@ const Payments = () => {
         
     }
 
+    const handlePaymentStep = (i) => {
+        if(i) {
+            setPaymentStep(i)
+        }
+        if(paymentStep === 0) return;
+        setPaymentStep(paymentStep - 1);
+    }
+
     const proceedPayment = (paymentData) => {
         Transaction.startPaymentTransaction(paymentData).then(res => {
             if(res.data.ok) {
@@ -74,7 +83,7 @@ const Payments = () => {
 
     }
 
-
+    console.log(paymentStep)
 
 
     useEffect(() => {
@@ -86,14 +95,15 @@ const Payments = () => {
 
             {services && <PaymentPanel 
                 tabvisible = {paymentPanelVisible}
-                close = {() => {setPaymentPanelVisible(false); setPaymentStep(0)}}
-                step = {paymentStep}
-                services = {services} 
-                merchantservices = {merchantServices} 
+                close = {() => { setPaymentPanelVisible(false); setPaymentStep(0) }}
+                step = { paymentStep }
+                onPaymentStep = { handlePaymentStep }
+                services = { services } 
+                merchantservices = { merchantServices } 
                 merchantdata = { merchantData } 
-                getServices ={getMerchantServices}
-                merchantData = {merchantData} 
-                proceedPayment = {proceedPayment}/>}
+                getServices = { getMerchantServices }
+                merchantData = { merchantData } 
+                proceedPayment = { proceedPayment }/>}
 
         <div style = {{height: 1000, overflow: 'scroll', marginLeft: 200}}>
             <p>WELCOME TO PAYMENTS</p>

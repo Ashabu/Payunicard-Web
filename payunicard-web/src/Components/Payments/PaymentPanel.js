@@ -24,14 +24,9 @@ const PaymentPanel = (props) => {
         //debugger
     }, [services] )
 
-
-console.log(bredCrump)
-
     const paymentData = (data) => {
-       
         props.proceedPayment(data.paymentData)
         setSuccessInfo(data.info)
-
     }
 
     const cc = (i) => {
@@ -45,15 +40,18 @@ console.log(bredCrump)
         }
         setBredCrump(a)
 
+        props.onPaymentStep(i)
+
     }
 
     return (
         <SidePanel
             bredcrump = {bredCrump}
             stepBack 
-            visible = {tabvisible}
-            closePanel = {props.close}
-            bredClick = {cc}>
+            onStepBack = { props.onPaymentStep }
+            visible = { tabvisible }
+            closePanel = { props.close }
+            bredClick = { cc }>
                 <ErrorNotification errorMessages = {errorArray}/>
             {step === 0? 
                 <div>

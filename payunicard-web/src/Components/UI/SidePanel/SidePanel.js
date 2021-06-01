@@ -5,16 +5,16 @@ import PropTypes from 'prop-types';
 
 const  SidePanel = (props) => {
     
-    const {stepBack, visible, headerText, closePanel, children, bredcrump} = props;
+    const {stepBack, onStepBack, visible, headerText, closePanel, children, bredcrump} = props;
     let StepBack = null;
 
     if(stepBack) {
-        StepBack = (<img src = '../../../Assets/Images/step-back.png' alt = 'icon' />)
+        StepBack = (<img src = '../../../Assets/Images/step-back.png' alt = 'icon' onClick = {onStepBack} />)
     }
 
     let bredCrump = null;
 
-    if(bredcrump.length > 0) {
+    if(bredcrump?.length > 0) {
         bredCrump = bredcrump.map((item, index) => (<span key = {index} onClick = {() => props.bredClick(index)}>{item + ' >'}</span>))
     }  else {
         

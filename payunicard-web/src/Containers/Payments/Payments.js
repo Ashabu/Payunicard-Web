@@ -70,7 +70,9 @@ const Payments = () => {
         if(i) {
             setPaymentStep(i)
         }
+
         if(paymentStep === 0) return;
+        
         setPaymentStep(paymentStep - 1);
     }
 

@@ -17,41 +17,50 @@ const PaymentPanel = (props) => {
     const [errorArray, setErrorArray] = useState([]);
 
     useEffect(() => {
-      if(services[0]) {
-            setBredCrump([services[0]?.name])
-        
-      }
-        //debugger
+        if(services[0]) {
+            setBredCrump([services[0]?.name]);
+        }
     }, [services] )
 
     const paymentData = (data) => {
-        props.proceedPayment(data.paymentData)
-        setSuccessInfo(data.info)
+        props.proceedPayment(data.paymentData);
+        setSuccessInfo(data.info);
     }
 
-    const cc = (i) => {
-        console.log(i)
-        let temp = bredCrump;
-        let a
+    const handleBredCrump = (i) => {
+        let crump;
         if(i === 0){
-            a = [temp[0]]
+            debugger
+            crump = [ bredCrump[0] ];
         } else {
-            a = temp.slice(0, i+1)
+            crump = bredCrump.slice(0, i + 1);
         }
-        setBredCrump(a)
+        setBredCrump(crump);
 
         props.onPaymentStep(i)
 
     }
 
+    const handlePaymentStep = () => {
+        if(bredCrump.length <= 0) return;
+        bredCrump.pop();
+        setBredCrump(bredCrump);
+        props.onPaymentStep();
+        debugger
+       
+    }
+
+    console.log(bredCrump)
+
+
     return (
         <SidePanel
-            bredcrump = {bredCrump}
+            bredcrump = { bredCrump }
             stepBack 
-            onStepBack = { props.onPaymentStep }
+            onStepBack = { handlePaymentStep }
             visible = { tabvisible }
             closePanel = { props.close }
-            bredClick = { cc }>
+            bredClick = { handleBredCrump }>
                 <ErrorNotification errorMessages = {errorArray}/>
             {step === 0? 
                 <div>

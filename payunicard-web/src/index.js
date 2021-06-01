@@ -4,7 +4,6 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import axios from "axios";
 import { createProvider } from './Context/AppContext';
 import { initialState } from './InitialState';
 
@@ -12,28 +11,6 @@ import { initialState } from './InitialState';
 
 
 const AppProvider = createProvider(initialState);
-
-const _AuthToken = `Bearer ${localStorage.getItem('token')}`;
-
-axios.defaults.headers['Authorization'] = _AuthToken;
-axios.defaults.headers['Content-Type'] = "application/json; charset=utf-8"
-
-axios.interceptors.request.use(requestConfig => {
-  
-  return requestConfig;
-}, error => {
-  console.log(error);
-  return Promise.reject(error);
-});
-
-axios.interceptors.response.use(responseConfing => {
-  
-  return responseConfing;
-
-}, error => {
-  console.log(error)
-  return Promise.reject(error);
-});
 
 
 

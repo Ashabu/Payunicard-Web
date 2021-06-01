@@ -7,6 +7,7 @@ import { Button, Input, Modal, InputValidation } from '../../Components/UI/UiCom
 import Layout from '../Layout/Layout';
 import Lang from '../../Services/SetLang';
 import User from '../../Services/API/UserServices';
+import AuthService from './../../Services/AuthService';
 
 const  Login = () => {
     const { setGlobalValue } = useContext(Context);
@@ -14,8 +15,8 @@ const  Login = () => {
     const history = useHistory();
 
     const [loginData, setLoginData] = useState({
-        userName: "",
-        password: ""
+        userName: "Avtandil@test.com",
+        password: "As123123!"
     });
 
     const [ oneTimePasscode, setOneTimePasscode ] = useState("")
@@ -38,7 +39,9 @@ const  Login = () => {
 
     },[ld.userName, ld.password, fpd.forgotPassword, fpd.isRegistered, fpd.personalId, fpd.userName])
 
-
+useEffect(() => {
+    if(!AuthService.isAuthenticated()) setGlobalValue({isUserAuthorized: false})
+}, [])
 
     const login = () => {
        
@@ -52,9 +55,8 @@ const  Login = () => {
         }
        
         User.UserLogin(Data).then(res => {
-           
-           let token=res.data.access_token;
-           localStorage.setItem('token',token);
+            AuthService.setToken(res.data.access_token, res.data.refresh_token)
+         
            setGlobalValue({ isUserAuthorized: true })
            history.push('/Dashboard');
        })

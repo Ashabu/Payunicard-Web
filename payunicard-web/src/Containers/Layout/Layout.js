@@ -29,32 +29,10 @@ const  Layout = (props) =>  {
 
     }, [isUserAuthorized])
 
-    useEffect(() => {
-        chekIsUserAuthorized();
-    }, [])
-
-
-
-    const chekIsUserAuthorized = () => { 
-    const token = localStorage.getItem('token');
-    const refreshToken = 'skjadljsdlajsldjalkjsdlakjsldjals';
-        try {
-             if(!token || !refreshToken) {
-                setGlobalValue({isUserAuthorized: false})
-                 return false;
-             } else {
-                setGlobalValue({isUserAuthorized: true})
-             }
-        } 
-        catch (error) {
-            setGlobalValue({isUserAuthorized: false})
-            return false;
-        }
-       
-        return true;
-    }
+ 
 
     const getUserAccounts = async () => {
+        
         if(userAccounts.length > 0 || !isUserAuthorized) return;
         let userUnicards = [];
          User.GetUnicards().then(res => {

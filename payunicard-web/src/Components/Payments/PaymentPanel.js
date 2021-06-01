@@ -39,7 +39,7 @@ console.log(bredCrump)
         let temp = bredCrump;
         let a
         if(i === 0){
-            a = temp[0]
+            a = [temp[0]]
         } else {
             a = temp.slice(0, i+1)
         }

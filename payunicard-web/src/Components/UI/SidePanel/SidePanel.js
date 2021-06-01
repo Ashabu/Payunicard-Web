@@ -14,7 +14,7 @@ const  SidePanel = (props) => {
 
     let bredCrump = null;
 
-    if(bredcrump.length > 0) {
+    if(bredcrump?.length > 0) {
         bredCrump = bredcrump.map((item, index) => (<span key = {index} onClick = {() => props.bredClick(index)}>{item + ' >'}</span>))
     }  else {
         

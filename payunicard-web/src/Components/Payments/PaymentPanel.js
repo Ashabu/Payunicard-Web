@@ -43,7 +43,7 @@ const PaymentPanel = (props) => {
     }
 
     const handlePaymentStep = () => {
-        if(bredCrump.length <= 0) return;
+        if(bredCrump.length <= 0) return; 
         bredCrump.pop();
         setBredCrump(bredCrump);
         props.onPaymentStep();

@@ -67,14 +67,25 @@ const Payments = () => {
     }
 
     const handlePaymentStep = (i) => {
-        if(i) {
-            setPaymentStep(i)
-        }
-
         if(paymentStep === 0) return;
+        if(i !== undefined) {
+            setPaymentStep(i);
+            return
+        }
+        if(merchantServices.length <= 0) {
+            setPaymentStep(0);
+        } else {
+            setPaymentStep(paymentStep - 1);
+        }
         
-        setPaymentStep(paymentStep - 1);
     }
+
+    const handlePaymentPanelClose = () => {
+        setPaymentPanelVisible(false);
+        setPaymentStep(0);
+        setServices([]);
+        setMerchantServices([]);
+    } 
 
     const proceedPayment = (paymentData) => {
         Transaction.startPaymentTransaction(paymentData).then(res => {
@@ -85,7 +96,7 @@ const Payments = () => {
 
     }
 
-    console.log(paymentStep)
+    // console.log('paymentStep ==>',paymentStep, 'services ==>', services, 'merchantServices ==>', merchantServices)
 
 
     useEffect(() => {
@@ -93,11 +104,11 @@ const Payments = () => {
 
     return (
         <Layout>
-            <Backdrop show = {paymentPanelVisible} hide = {() => {setPaymentPanelVisible(false); setPaymentStep(0)}}/>
+            <Backdrop show = {paymentPanelVisible} hide = { handlePaymentPanelClose }/>
 
             {services && <PaymentPanel 
                 tabvisible = {paymentPanelVisible}
-                close = {() => { setPaymentPanelVisible(false); setPaymentStep(0) }}
+                close = { handlePaymentPanelClose }
                 step = { paymentStep }
                 onPaymentStep = { handlePaymentStep }
                 services = { services } 

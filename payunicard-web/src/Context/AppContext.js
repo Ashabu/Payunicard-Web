@@ -7,7 +7,7 @@ const createProvider = (initialState = {}) => (props) => {
     const [appState, setAppstate] = useState(initialState);
 
     const setGlobalValue = (updatedValue) => {
-        console.log('setGlobalValue =>', updatedValue)
+        // console.log('setGlobalValue =>', updatedValue)
         setAppstate(prevState =>({
             ...prevState,
             ...updatedValue

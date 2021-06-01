@@ -13,7 +13,6 @@ const PaymentPanel = (props) => {
     const {tabvisible, services, merchantservices, merchantdata, step} = props;
     const [ successInfo, setSuccessInfo] = useState({});
     const [ bredCrump, setBredCrump ] = useState([]);
-
     const [errorArray, setErrorArray] = useState([]);
 
     useEffect(() => {
@@ -27,17 +26,19 @@ const PaymentPanel = (props) => {
         setSuccessInfo(data.info);
     }
 
-    const handleBredCrump = (i) => {
+    const handleBredCrump = (i, d) => {
+        let cIndex = i;
         let crump;
-        if(i === 0){
-            debugger
+        if(cIndex === 0){
             crump = [ bredCrump[0] ];
         } else {
-            crump = bredCrump.slice(0, i + 1);
+            crump = bredCrump.slice(0, cIndex + 1);
         }
         setBredCrump(crump);
-
-        props.onPaymentStep(i)
+        if(merchantservices.length <= 0){
+            cIndex = 0;
+        }
+        props.onPaymentStep(cIndex)
 
     }
 
@@ -46,11 +47,10 @@ const PaymentPanel = (props) => {
         bredCrump.pop();
         setBredCrump(bredCrump);
         props.onPaymentStep();
-        debugger
        
     }
 
-    console.log(bredCrump)
+    // console.log('bredCrump ==>',bredCrump)
 
 
     return (

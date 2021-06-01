@@ -212,6 +212,7 @@ const  Layout = (props) =>  {
     } 
     
     const getPaymetnServices = () => {
+        if(paymentServices.length > 0 ||  !isUserAuthorized) return;
         Presentation.getPaymentServices().then(res => {
             if(res.data.ok) {
                 setGlobalValue({paymentServices: res.data.data.categories});
@@ -221,8 +222,12 @@ const  Layout = (props) =>  {
     }
 
     const getPaymentTemplates = () => {
+        if(paymentTemplates.length > 0 ||  !isUserAuthorized) return;
         Template.getUtilityTemplates().then(res => {
-            console.log('getUtilityTemplates', res.data)
+            if(res.data.ok) {
+                setGlobalValue({paymentTemplates: res.data.data.templates})
+                console.log(paymentTemplates)
+            }
         })
     }
 

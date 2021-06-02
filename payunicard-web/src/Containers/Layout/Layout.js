@@ -202,7 +202,13 @@ const  Layout = (props) =>  {
         if(paymentTemplates.length > 0 ||  !isUserAuthorized) return;
         Template.getUtilityTemplates().then(res => {
             if(res.data.ok) {
-                setGlobalValue({paymentTemplates: res.data.data.templates})
+                let paymentTemplates = res.data.data.templates;
+                paymentTemplates.map(t => {
+                    t.checked = false;
+                    return t
+                })
+                setGlobalValue({paymentTemplates})
+                
             }
         })
     }

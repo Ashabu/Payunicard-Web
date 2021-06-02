@@ -26,18 +26,24 @@ const PaymentPanel = (props) => {
         setSuccessInfo(data.info);
     }
 
-    const handleBredCrump = (i, d) => {
+    const handleBredCrump = (i) => {
         let cIndex = i;
         let crump;
+
         if(cIndex === 0){
             crump = [ bredCrump[0] ];
         } else {
             crump = bredCrump.slice(0, cIndex + 1);
         }
+
         setBredCrump(crump);
-        if(merchantservices.length <= 0){
+
+        if(merchantservices.length <= 0 && i !== 1){
             cIndex = 0;
+        } else if(merchantservices.length <= 0 && i === 1) {
+            cIndex = 2;
         }
+        
         props.onPaymentStep(cIndex)
 
     }
@@ -50,7 +56,7 @@ const PaymentPanel = (props) => {
        
     }
 
-    // console.log('bredCrump ==>',bredCrump)
+    console.log('bredCrump ==>',bredCrump)
 
 
     return (

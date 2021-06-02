@@ -20,46 +20,64 @@ const  App = () => {
   const [, forceUpdate]  = useReducer(x => x + 1, 0);
   const history = useHistory() 
   
+  //set Application language
   const langSubscribe = () => Lang.subscribe(activeLang => {
     setActiveLang(activeLang);
     setGlobalValue({activeLang});
     forceUpdate();
   });
 
+  
+  useEffect(() => {
+    Lang.getLang(Lang.langKey, setIsLoaded(true));
+    langSubscribe();
+    return () => langSubscribe.unsubscribe();
+  }, [])
+
+
+  
+
+  useEffect(() => {
+    AuthInterceptorSubscription.current = AuthService.registerAuthInterceptor(logOut);
+
+    return () => {
+      AuthInterceptorSubscription.current.unsubscribe();
+    }
+  }, [])
+
+
+//checking if user session is out 
+  useEffect(() => {
+    if(AuthService.isAuthenticated()) {
+      setGlobalValue({isUserAuthorized: true})
+    } else {
+      setGlobalValue({isUserAuthorized: false})
+    }
+  }, [])
+
+
+// logout user 
   const logOut = () => {
     history.replace({pathname: '/login'})
   }
 
-useEffect(() => {
-  AuthInterceptorSubscription.current = AuthService.registerAuthInterceptor(logOut);
+  useEffect(() => {
+    if(!isUserAuthorized && isLoaded){
+      AuthService.SignOut();
+      logOut();
+    }
+  }, [isUserAuthorized, isLoaded])
 
-  return () => {
-    AuthInterceptorSubscription.current.unsubscribe();
-  }
-}, [])
 
-useEffect(() => {
-  if(AuthService.isAuthenticated()) {
-    setGlobalValue({isUserAuthorized: true})
-  } else {
-    setGlobalValue({isUserAuthorized: false})
-  }
-}, [])
 
-useEffect(() => {
-  Lang.getLang(Lang.langKey, setIsLoaded(true));
-  langSubscribe();
-  return () => langSubscribe.unsubscribe();
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [])
 
 
   
-    return( 
-    <div className= "App">
-     <Routing/>
-    </div> 
-    )
+  return( 
+  <div className= "App">
+   <Routing/>
+  </div> 
+  )
 }
 
 export default App;

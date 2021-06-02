@@ -6,7 +6,8 @@ function Input(props) {
     const validateRef = useRef();
     useEffect(()=>{
         Validation.Set = [validateRef, props.groupid]
-        return () => Validation.removeValidate(validateRef)
+        
+       return () => Validation.removeValidate(validateRef)
     }, [])
 
     return (

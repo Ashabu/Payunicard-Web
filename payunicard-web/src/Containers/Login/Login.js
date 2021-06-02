@@ -151,7 +151,7 @@ useEffect(() => {
                                 onBlur = {(e) => e.target.placeholder = Lang.tr('auth.password')}
                                 rule = {'required'}
                                 groupid = 'login'/>
-                            <Input className = 'Input Input-med' type = 'numeric' value = {oneTimePasscode} onInput = {(e) => setOneTimePasscode(e.target.value)}/>        
+                            <Input className = 'Input Input-med' type = 'numeric' value = {oneTimePasscode} onInput = {(e) => setOneTimePasscode(e.target.value)}    groupid = 'login'/>        
                         </div>
                         <div className = 'LoginOptions'>
                             <label>

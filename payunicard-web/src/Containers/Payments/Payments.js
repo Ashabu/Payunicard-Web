@@ -8,13 +8,15 @@ import Layout from '../../Containers/Layout/Layout';
 import { Backdrop, SidePanel } from './../../Components/UI/UiComponents';
 import PaymentCategory from './../../Components/Payments/PaymentCategory';
 import PaymentPanel from '../../Components/Payments/PaymentPanel';
+import PaymentTemplate from './../../Components/Payments/PaymentTemplate';
 
 
 
 const Payments = () => {
 
     const { state } = useContext(Context);
-    const { paymentServices } = state;
+    const { paymentServices , paymentTemplates } = state;
+    console.log(paymentTemplates)
 
     const history = useHistory();
 
@@ -22,7 +24,8 @@ const Payments = () => {
     const [ merchantServices, setMerchantServices ] = useState([]);
     const [ merchantData, setMerchantData] = useState({});
     const [ paymentStep, setPaymentStep] = useState(0);
-    const [ paymentPanelVisible, setPaymentPanelVisible ] = useState(false)
+    const [ paymentPanelVisible, setPaymentPanelVisible ] = useState(false);
+    const [ templates, setTemplates ] = useState([])
 
 
     const getServices = (id) =>{
@@ -69,18 +72,26 @@ const Payments = () => {
     const handlePaymentStep = (i) => {
         if(paymentStep === 0) return;
         if(i !== undefined) {
+            if(i === 0) {
+                setMerchantServices([]);
+            }
             setPaymentStep(i);
             return
         }
+
         if(merchantServices.length <= 0) {
-            
             setPaymentStep(0);
         } else {
             setPaymentStep(paymentStep - 1);
+            if(paymentStep === 1) {
+                setMerchantServices([]);
+            }
+            
         }
         
     }
-//უნდა გავანულო merchantServices 0 სტეპზე გადმოსვლისას 
+
+
     const handlePaymentPanelClose = () => {
         setPaymentPanelVisible(false);
         setPaymentStep(0);
@@ -101,7 +112,28 @@ const Payments = () => {
 
 
     useEffect(() => {
-    }, [])
+        setTemplates(paymentTemplates)
+    }, [paymentTemplates])
+
+  
+    const yvela = () => {
+            let rame  = paymentTemplates.map(t => {
+            t.checked = !t.checked;
+            return t;
+        })
+
+        setTemplates(rame)
+        
+    }
+
+    const toggleTemplate = (id) => {
+        console.log(id)
+        setTemplates(templates => {
+            let i = templates.findIndex(s => s.payTempID == id);
+            templates[i].checked = !templates[i].checked;
+            return templates;
+        })
+    }
 
     return (
         <Layout>
@@ -119,13 +151,18 @@ const Payments = () => {
                 merchantData = { merchantData } 
                 proceedPayment = { proceedPayment }/>}
 
-        <div style = {{height: 1000, overflow: 'scroll', marginLeft: 200}}>
+        <div style = {{height: 1000, width: '100%', maxWidth: 1000, overflow: 'scroll', marginLeft: 200}}>
             <p>WELCOME TO PAYMENTS</p>
             <div style = {{display: 'flex'}}>
                 {paymentServices.map((service, index) => (
                     <PaymentCategory key = {index} services = {service} clicked = {() => getServices(service.categoryID) }/>
                 ))}
             </div>
+            <div style = {{width: '100%'}}>
+                <p onClick = {yvela}>ყველას მონიშვნა</p>
+             {templates.map((payTemplate, index) =>(<PaymentTemplate key = { payTemplate.payTempID } template = { payTemplate } toggle = {toggleTemplate}/>))}           
+            </div>
+            {/* <PaymentTemplate/> */}
         </div>
         </Layout>
     )

@@ -43,3 +43,102 @@
         border-bottom: 1px solid #6b6b6b;
     }
 }
+
+.PaymetnTemplate {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+
+        .leftSide {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            
+            .tempImage {
+                background: #F1F1F1;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 9px;
+
+                img {
+                    width: 40px;
+                }
+            }
+            
+
+            .TemplateInfo {
+                display: flex;
+                flex-flow: column;
+
+                span {
+                    &:first-child {
+                        font-family: 'FiraGO MEDIUM';
+                        font-size: 14px;
+                        line-height: 17px;
+                        color: #130D1E;
+                    }
+
+                    &:last-child {
+                        font-family: 'FiraGO MEDIUM';
+                        font-size: 10px;
+                        line-height: 12px;
+                        color: #6B6B6B;
+                    }
+                }
+            }
+        }
+        
+        .rightSide {
+            display: flex;
+            align-items: center;
+            img {
+                margin-right: 17px;
+            }
+
+            span {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 83px;
+                height: 26px;
+                border: 1px solid #F1F1F1;
+                box-sizing: border-box;
+                border-radius: 7px;
+                margin: 0 9px 0 18px;
+            }
+        }
+
+        .templateOptions {
+            position: absolute;
+            top: 50px;
+            right: 30px;
+            width: 177px;
+            z-index: 200;
+            height: 62px;
+            background: #FFFFFF;
+            box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.12);
+            border-radius: 7px;
+            
+
+            .templateOption {
+                display: flex;
+                align-items: center;
+                height: 31px;
+                padding-left: 9px;
+                
+                &:hover {
+                    border-left: 2px solid #94dd34;
+                }
+
+                &:first-child {
+                    border-bottom: 1px solid #EBEBEB;
+                }
+            }
+        }
+
+}

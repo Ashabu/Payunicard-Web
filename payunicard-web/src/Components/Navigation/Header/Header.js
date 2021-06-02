@@ -54,7 +54,7 @@ const  Header = (props) => {
                             <div>
                                 Profile
                             </div>
-                            <div onClick = {() => { setGlobalValue({ isUserAuthorized: false}); history.push('/'); localStorage.removeItem('token')}}>
+                            <div onClick = {() =>  setGlobalValue({ isUserAuthorized: false}) }>
                                 Logout
                             </div>
 

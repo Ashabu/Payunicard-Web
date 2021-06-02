@@ -22,12 +22,17 @@ class Validation {
 
     set Set(ref) {
         ref[0].current.groupId = ref[1];
+        
         this.inputs.push(ref[0]); 
     }
     
+    clearInputRef = () => {
+        inputs = [];
+    }
+
     validate = (key) => {
-        let groupedInputs = key? this.inputs.filter(inp => inp.current.groupId === key) : this.inputs;
-    
+
+        let groupedInputs = key? this.inputs.filter(inp => inp?.current?.groupId === key) : this.inputs;
         groupedInputs.forEach(el =>{
             let inp = el.current.childNodes[0];
             let errorSpan = el.current.childNodes[1];
@@ -106,7 +111,7 @@ class Validation {
     }
 
     removeValidate = (ref) => {
-        this.inputs = this.inputs.filter(el => el !== ref.current);
+       this.inputs = this.inputs.filter(el => el !== ref.current);
         
     }
 }

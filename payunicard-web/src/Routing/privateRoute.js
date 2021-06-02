@@ -39,7 +39,7 @@ export default class PrivateRoute extends SimpleRoute {
         return (
             isAuthenticated ?
                 (<Route {...this.getInjectedProps()} />) :
-                (<Redirect to={routingService.routePath('/login')} />)
+                (<Redirect to={routingService.routePath('login')} />)
         );
     }
 }

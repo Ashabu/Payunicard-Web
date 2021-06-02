@@ -73,13 +73,14 @@ const Payments = () => {
             return
         }
         if(merchantServices.length <= 0) {
+            
             setPaymentStep(0);
         } else {
             setPaymentStep(paymentStep - 1);
         }
         
     }
-
+//უნდა გავანულო merchantServices 0 სტეპზე გადმოსვლისას 
     const handlePaymentPanelClose = () => {
         setPaymentPanelVisible(false);
         setPaymentStep(0);

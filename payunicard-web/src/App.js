@@ -12,6 +12,7 @@ import AuthService from './Services/AuthService';
 const  App = () => {
   
   const { state, setGlobalValue  } = useContext(Context);
+  const { isUserAuthorized } = state;
   
   const AuthInterceptorSubscription = useRef();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -32,9 +33,17 @@ const  App = () => {
 useEffect(() => {
   AuthInterceptorSubscription.current = AuthService.registerAuthInterceptor(logOut);
 
-  // return () => {
-  //   AuthInterceptorSubscription.current.unsubscribe();
-  // }
+  return () => {
+    AuthInterceptorSubscription.current.unsubscribe();
+  }
+}, [])
+
+useEffect(() => {
+  if(AuthService.isAuthenticated()) {
+    setGlobalValue({isUserAuthorized: true})
+  } else {
+    setGlobalValue({isUserAuthorized: false})
+  }
 }, [])
 
 useEffect(() => {
@@ -48,7 +57,7 @@ useEffect(() => {
   
     return( 
     <div className= "App">
-      {isLoaded ? <Routing/> : '...'}
+     <Routing/>
     </div> 
     )
 }

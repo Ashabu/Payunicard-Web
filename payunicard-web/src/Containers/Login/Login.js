@@ -10,7 +10,8 @@ import User from '../../Services/API/UserServices';
 import AuthService from './../../Services/AuthService';
 
 const  Login = () => {
-    const { setGlobalValue } = useContext(Context);
+    const { state, setGlobalValue } = useContext(Context);
+    const { isUserAuthorized } = state;
     
     const history = useHistory();
 

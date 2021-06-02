@@ -14,12 +14,12 @@ class RoutingService {
             transactions: 'transactions',
             payments: 'payments'
         }
-        this.routes[this.routeNames.landing] = `${baseUrl}/`;
-        this.routes[this.routeNames.login] = `${baseUrl}/login`;
-        this.routes[this.routeNames.register] = `${baseUrl}/register`;
-        this.routes[this.routeNames.dashboard] = `${baseUrl}/dashboard`;
-        this.routes[this.routeNames.transactions] = `${baseUrl}/transactions`;
-        this.routes[this.routeNames.payments] = `${baseUrl}/payments`;
+        this.routes[this.routeNames.landing] = `${baseUrl}`;
+        this.routes[this.routeNames.login] = `${baseUrl}login`;
+        this.routes[this.routeNames.register] = `${baseUrl}register`;
+        this.routes[this.routeNames.dashboard] = `${baseUrl}dashboard`;
+        this.routes[this.routeNames.transactions] = `${baseUrl}transactions`;
+        this.routes[this.routeNames.payments] = `${baseUrl}payments`;
     }
 
     //set history and match objects
@@ -84,7 +84,6 @@ class RoutingService {
                 route = route.replace(`:${prop}`, params[prop]);
             }
         }
-
         return route;
     }
 

@@ -1,12 +1,13 @@
-import React, {Fragment } from 'react';
+import React, {Fragment, useEffect } from 'react';
 import './userBalance.scss';
 import Widget from './../HOC/Widget';
 
 
 const  UserBalance = (props) => {
+    useEffect(() => {
+    }, [props.userBalance])
     const { balance, ccy, points } = props.userBalance;
 
-    
 
     return (
         <Widget class = 'userBalance'>

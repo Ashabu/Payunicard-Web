@@ -171,7 +171,6 @@ const  Layout = (props) =>  {
 
     const getUserTotalBalance = () => {
         if(userTotalBalance.length > 0 ||  !isUserAuthorized) return;
-        
         User.GetUserTotalBalance().then(res => {
             if(res.data.ok){
                 setGlobalValue({ userTotalBalance: res.data.data })
@@ -204,7 +203,6 @@ const  Layout = (props) =>  {
         Template.getUtilityTemplates().then(res => {
             if(res.data.ok) {
                 setGlobalValue({paymentTemplates: res.data.data.templates})
-                console.log(paymentTemplates)
             }
         })
     }

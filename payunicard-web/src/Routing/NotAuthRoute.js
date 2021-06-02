@@ -29,7 +29,7 @@ export default class NotAuthRoute extends SimpleRoute {
         return (
             !authService.isAuthenticated() ?
                 (<Route {...this.getInjectedProps()} />) :
-                (<Redirect to={routingService.routePath(redirectPath || '/dashboard')} />)
+                (<Redirect to={routingService.routePath('dashboard')} />)
         );
     }
 }

@@ -12,7 +12,7 @@ const EditTemplate = (props) => {
         <Widget class = 'editTemplate'>
            <span> {nameEdit?'სახელის შეცვლა' : 'შაბლონის წაშლა'}</span>
             {nameEdit? <Input className = 'editInput' value = { eiditName } onChange = {(e) => setEditName(e.target.value)}/> : null}
-            <div style= {{display: 'flex', placeContent: 'center space-around', width: '100%'}}>
+            <div style= {{display: 'flex', placeContent: 'center space-between', width: '100%'}}>
                {nameEdit? 
                 <Button buttonClass = 'editButton green' clicked = {() => confirmEdit(eiditName) }>შენახვა</Button> : 
                 <Button buttonClass = 'editButton danger' clicked = {removeTemplate}>წაშლა</Button>}

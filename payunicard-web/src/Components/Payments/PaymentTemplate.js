@@ -21,6 +21,12 @@ const PaymentTemplate = (props) => {
         deleteTempl: false
     });
     
+
+    const onEditTemplate = () => {
+        setEditTemplateModal({visible: true, editTempl: true, deleteTempl: false});
+        setTemplateOptions(false); 
+    }
+
     const editTemplateName = (newName) => {
         let editTemplateData = {
             payTempID: payTempID,
@@ -35,6 +41,11 @@ const PaymentTemplate = (props) => {
           })
     }
 
+    const onDeleteTemplate = () => {
+        setEditTemplateModal({visible: true, editTempl: false, deleteTempl: true});
+        setTemplateOptions(false); 
+    }
+
     const deleteTemplate = () => {
         let deleteTemplateData = {
             payTempID: payTempID,
@@ -47,35 +58,41 @@ const PaymentTemplate = (props) => {
         })
     }
 
+    const onClosEditTemplateModal = () => {
+        setEditTemplateModal(prevState =>{ return {...prevState, visible: false} })
+
+    }
+
     return(
         <div>
-            <Backdrop show = {editTemplateModal.visible} hide = {() => setEditTemplateModal(prevState =>{ return {...prevState, visible: false} })}/>
-            {editTemplateModal.visible? <EditTemplate nameEdit = {editTemplateModal.editTempl} templateName = { templName } close = {() => setEditTemplateModal(prevState =>{ return {...prevState, visible: false} })} confirmEdit = {editTemplateName} removeTemplate = {deleteTemplate}/> : null}
+            <Backdrop show = { editTemplateModal.visible } hide = { onClosEditTemplateModal }/>
+            {editTemplateModal.visible? 
+                <EditTemplate nameEdit = { editTemplateModal.editTempl } templateName = { templName } close = { onClosEditTemplateModal } confirmEdit = { editTemplateName } removeTemplate = { deleteTemplate }/> : null}
         
         <div className = 'PaymetnTemplate'>
             <div className = 'leftSide'>
                 <div className = 'tempImage'>
-                    <img src = {imageUrl} alt = 'icon' />
+                    <img src = { imageUrl } alt = 'icon' />
                 </div>
                 <div className = 'TemplateInfo'>
-                    <span> {templName}</span>
-                    <span>{abonentCode}</span>
+                    <span> { templName }</span>
+                    <span>{ abonentCode }</span>
                 </div>
             </div>
             
             <div className = 'rightSide'>
                 <img src = '../../Assets/Images/unicard-logo-sm.png' alt = '' />
                 <RoundCheckmark checkType = 'checkbox' toggle = { props.toggle }  checked  = { checked } id = { payTempID } for = { payTempID }/>
-                <span>{ComonFn.formatNumber(debt)} ₾</span>
+                <span>{ ComonFn.formatNumber(debt) } ₾</span>
                 <img src = '../../Assets/Images/three_dot.png' alt = 'icon' onClick = {() => setTemplateOptions(!templateOptions)}/>
             </div>
             { templateOptions?
             <Fragment>
                 <div className = 'templateOptions' tabIndex = '0' onBlur = {() => setTemplateOptions(false)}>
-                    <div className = 'templateOption'  onClick = {() => {setTemplateOptions(false); setEditTemplateModal({visible: true, editTempl: false, deleteTempl: true})}}>
+                    <div className = 'templateOption'  onClick = { onEditTemplate }>
                         შაბლონის წაშლა
                     </div>
-                    <div className = 'templateOption'  onClick = {() => {setTemplateOptions(false); setEditTemplateModal({visible: true, editTempl: true, deleteTempl: false})}}>
+                    <div className = 'templateOption'  onClick = { onEditTemplate }>
                         სახელის ცვლილება
                     </div>
                 </div> 

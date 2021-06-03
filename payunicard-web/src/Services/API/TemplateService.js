@@ -9,6 +9,11 @@ class Template {
     editUtilityTemplate = async (data) => {
         return await axios.post(`${globalConfig.api_URL}/Template/EditPayTemplate`, data);
     }
+
+    deleteUtilityTemplate = async (data) => {
+        return await axios.post(`${globalConfig.api_URL}/Template/PayTemplateDeActivate`, data);
+    }
+
 }
 
 export default new Template

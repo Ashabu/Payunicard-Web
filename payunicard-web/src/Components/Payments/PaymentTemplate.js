@@ -1,7 +1,9 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState, useContext} from 'react';
 import './payment.scss';
+import { Context } from '../../Context/AppContext';
 import ComonFn from '../../Services/CommonFunctions';
 import { Backdrop, RoundCheckmark } from './../UI/UiComponents';
+import { Template } from '../../Services/API/APIS';
 import EditTemplate from './../EditTemlpate/EditTemplate';
 
 
@@ -9,17 +11,46 @@ import EditTemplate from './../EditTemlpate/EditTemplate';
 const PaymentTemplate = (props) => {
     const { imageUrl, templName, abonentCode, payTempID, debt , checked } = props.template;
 
-    const [ templateOptions, setTemplateOptions ] = useState(false);
-    const [ editTemplateModal, setEditTemplateModal ] = useState(false)
-    
-    const editTemplateName = (id) => {
+    const { state, setGlobalValue } = useContext(Context);
+    const { paymentTemplates} = state;
 
+    const [ templateOptions, setTemplateOptions ] = useState(false);
+    const [ editTemplateModal, setEditTemplateModal ] = useState({
+        visible: false,
+        editTempl: false,
+        deleteTempl: false
+    });
+    
+    const editTemplateName = (newName) => {
+        let editTemplateData = {
+            payTempID: payTempID,
+            templName: newName,
+        }
+        Template.editUtilityTemplate(editTemplateData).then(res => {
+            if(res.data.ok) {
+                setEditTemplateModal(false)
+            }
+          }).catch(error => {
+              console.log(error)
+          })
+    }
+
+    const deleteTemplate = () => {
+        let deleteTemplateData = {
+            payTempID: payTempID,
+        }
+
+        Template.deleteUtilityTemplate(deleteTemplateData).then(res => {
+            console.log(res)
+            let newPaymentTemplates = paymentTemplates.filter(t => t.payTempID !== payTempID);
+            setGlobalValue({paymentTemplates: newPaymentTemplates})
+        })
     }
 
     return(
         <div>
-            <Backdrop show = {editTemplateModal} hide = {() => setEditTemplateModal(false)}/>
-            {editTemplateModal? <EditTemplate templateName = { templName } close = {() => setEditTemplateModal(false)}/> : null}
+            <Backdrop show = {editTemplateModal.visible} hide = {() => setEditTemplateModal(prevState =>{ return {...prevState, visible: false} })}/>
+            {editTemplateModal.visible? <EditTemplate nameEdit = {editTemplateModal.editTempl} templateName = { templName } close = {() => setEditTemplateModal(prevState =>{ return {...prevState, visible: false} })} confirmEdit = {editTemplateName} removeTemplate = {deleteTemplate}/> : null}
         
         <div className = 'PaymetnTemplate'>
             <div className = 'leftSide'>
@@ -41,10 +72,10 @@ const PaymentTemplate = (props) => {
             { templateOptions?
             <Fragment>
                 <div className = 'templateOptions' tabIndex = '0' onBlur = {() => setTemplateOptions(false)}>
-                    <div className = 'templateOption'  onClick = {() => setTemplateOptions(false)}>
+                    <div className = 'templateOption'  onClick = {() => {setTemplateOptions(false); setEditTemplateModal({visible: true, editTempl: false, deleteTempl: true})}}>
                         შაბლონის წაშლა
                     </div>
-                    <div className = 'templateOption'  onClick = {() => {setTemplateOptions(false); setEditTemplateModal(true)}}>
+                    <div className = 'templateOption'  onClick = {() => {setTemplateOptions(false); setEditTemplateModal({visible: true, editTempl: true, deleteTempl: false})}}>
                         სახელის ცვლილება
                     </div>
                 </div> 

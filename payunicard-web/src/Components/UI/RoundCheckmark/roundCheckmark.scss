@@ -14,7 +14,7 @@
             height: 16px;
             left: 0;
             position: absolute;
-            top: 20px;
+            top: 0;
             
             &::after {
                 border: 2px solid #fff;
@@ -34,7 +34,7 @@
       }
 
     input{
-       
+       visibility: hidden;
 
         &:checked + label {
             background-color: #94dd34;

@@ -1,0 +1,26 @@
+.editTemplate {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 200;
+    top: 40%;
+    left: 40%;
+    width: 300px;
+    padding: 20px; 
+    border-radius: 7px;
+    background: rgb(255, 255, 255);
+    
+
+    .editInput {
+        width: 100%;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid rgb(255, 222, 222);
+        margin: 20px auto 0px;
+        display: block;
+        outline: none;
+        box-sizing: border-box;
+    }
+}

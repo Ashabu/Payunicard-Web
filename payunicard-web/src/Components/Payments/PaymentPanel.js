@@ -56,9 +56,6 @@ const PaymentPanel = (props) => {
        
     }
 
-    console.log('bredCrump ==>',bredCrump)
-
-
     return (
         <SidePanel
             bredcrump = { bredCrump }

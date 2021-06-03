@@ -3,7 +3,7 @@ import './payments.scss';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import {Context} from '../../Context/AppContext';
-import { Presentation, Transaction } from '../../Services/API/APIS';
+import { Presentation, Transaction, Template } from '../../Services/API/APIS';
 import Layout from '../../Containers/Layout/Layout';
 import { Backdrop, SidePanel } from './../../Components/UI/UiComponents';
 import PaymentCategory from './../../Components/Payments/PaymentCategory';
@@ -16,7 +16,6 @@ const Payments = () => {
 
     const { state } = useContext(Context);
     const { paymentServices , paymentTemplates } = state;
-    console.log(paymentTemplates)
 
     const history = useHistory();
 
@@ -25,7 +24,22 @@ const Payments = () => {
     const [ merchantData, setMerchantData] = useState({});
     const [ paymentStep, setPaymentStep] = useState(0);
     const [ paymentPanelVisible, setPaymentPanelVisible ] = useState(false);
-    const [ templates, setTemplates ] = useState([])
+    const [ templates, setTemplates ] = useState([]);
+    const [ selectAllTemplates, setSelectAllTemplates ] = useState(false);
+
+
+    useEffect(() => {
+        let allTemplates  = paymentTemplates.map(template => {
+            template.checked = selectAllTemplates;
+            return template;
+        });
+        setTemplates(allTemplates);
+    }, [selectAllTemplates])
+
+    useEffect(() => {
+        setTemplates(paymentTemplates);
+    }, [paymentTemplates]);
+
 
 
     const getServices = (id) =>{
@@ -42,7 +56,6 @@ const Payments = () => {
         //if merchantCode prop is undefind, it means services has children
         if(!s.merchantCode) {
             Presentation.getMetchantServices(s.categoryID).then(res => {
-                console.log(res.data)
                 if(res.data.ok) {
                     setMerchantServices(res.data.data.merchants);
                     setPaymentStep(1)
@@ -71,6 +84,7 @@ const Payments = () => {
 
     const handlePaymentStep = (i) => {
         if(paymentStep === 0) return;
+
         if(i !== undefined) {
             if(i === 0) {
                 setMerchantServices([]);
@@ -86,11 +100,8 @@ const Payments = () => {
             if(paymentStep === 1) {
                 setMerchantServices([]);
             }
-            
         }
-        
     }
-
 
     const handlePaymentPanelClose = () => {
         setPaymentPanelVisible(false);
@@ -108,39 +119,37 @@ const Payments = () => {
 
     }
 
-    // console.log('paymentStep ==>',paymentStep, 'services ==>', services, 'merchantServices ==>', merchantServices)
-
-
-    useEffect(() => {
-        setTemplates(paymentTemplates)
-    }, [paymentTemplates])
-
-  
-    const yvela = () => {
-            let rame  = paymentTemplates.map(t => {
-            t.checked = !t.checked;
-            return t;
-        })
-
-        setTemplates(rame)
-        
+    const checkAllTemplates = () => {
+        setSelectAllTemplates(!selectAllTemplates);
     }
 
-    const toggleTemplate = (id) => {
-        console.log(id)
+    const toggleTemplateCheck = (id) => {
+            
         setTemplates(templates => {
             let i = templates.findIndex(s => s.payTempID == id);
             templates[i].checked = !templates[i].checked;
-            return templates;
+            console.log( templates[i].checked )
+            return [...templates];
+        })
+
+        
+    }
+    
+    const editUtilityTemplateName = (data) => {
+        Template.editUtilityTemplate(data).then(res => {
+            console.log(res)
         })
     }
 
+
+
+
     return (
         <Layout>
-            <Backdrop show = {paymentPanelVisible} hide = { handlePaymentPanelClose }/>
+            <Backdrop show = { paymentPanelVisible } hide = { handlePaymentPanelClose }/>
 
             {services && <PaymentPanel 
-                tabvisible = {paymentPanelVisible}
+                tabvisible = { paymentPanelVisible }
                 close = { handlePaymentPanelClose }
                 step = { paymentStep }
                 onPaymentStep = { handlePaymentStep }
@@ -155,14 +164,19 @@ const Payments = () => {
             <p>WELCOME TO PAYMENTS</p>
             <div style = {{display: 'flex'}}>
                 {paymentServices.map((service, index) => (
-                    <PaymentCategory key = {index} services = {service} clicked = {() => getServices(service.categoryID) }/>
+                    <PaymentCategory key = { index } services = { service } clicked = {() => getServices(service.categoryID) }/>
                 ))}
             </div>
             <div style = {{width: '100%'}}>
-                <p onClick = {yvela}>ყველას მონიშვნა</p>
-             {templates.map((payTemplate, index) =>(<PaymentTemplate key = { payTemplate.payTempID } template = { payTemplate } toggle = {toggleTemplate}/>))}           
+                <p onClick = { checkAllTemplates }>ყველას მონიშვნა</p>
+             {templates.map(payTemplate => (
+                <PaymentTemplate 
+                    key = { payTemplate.payTempID } 
+                    template = { payTemplate } 
+                    toggle = { toggleTemplateCheck }
+                    editName = { editUtilityTemplateName }/>
+                ))}           
             </div>
-            {/* <PaymentTemplate/> */}
         </div>
         </Layout>
     )

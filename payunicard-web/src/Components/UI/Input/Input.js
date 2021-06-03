@@ -11,7 +11,7 @@ function Input(props) {
     }, [])
 
     return (
-        <div style={{display:'flex', flexFlow: 'column'}} ref= {validateRef}>
+        <div style={{display:'flex', flexFlow: 'column', width: '100%'}} ref= {validateRef}>
             <input {...props}  />
             <span style={{color: 'red'}}>{props.errormessage}</span>
         </div>    

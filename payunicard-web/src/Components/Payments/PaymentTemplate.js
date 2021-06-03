@@ -2,14 +2,14 @@ import React, {Fragment, useEffect, useState, useContext} from 'react';
 import './payment.scss';
 import { Context } from '../../Context/AppContext';
 import ComonFn from '../../Services/CommonFunctions';
-import { Backdrop, RoundCheckmark } from './../UI/UiComponents';
+import { Backdrop, RoundCheckmark, Search } from './../UI/UiComponents';
 import { Template } from '../../Services/API/APIS';
 import EditTemplate from './../EditTemlpate/EditTemplate';
 
 
 
 const PaymentTemplate = (props) => {
-    const { imageUrl, templName, abonentCode, payTempID, debt , checked } = props.template;
+    const { imageUrl, templName, abonentCode, payTempID, debt , checked, toggle } = props.template;
 
     const { state, setGlobalValue } = useContext(Context);
     const { paymentTemplates} = state;
@@ -89,7 +89,7 @@ const PaymentTemplate = (props) => {
             { templateOptions?
             <Fragment>
                 <div className = 'templateOptions' tabIndex = '0' onBlur = {() => setTemplateOptions(false)}>
-                    <div className = 'templateOption'  onClick = { onEditTemplate }>
+                    <div className = 'templateOption'  onClick = { onDeleteTemplate }>
                         შაბლონის წაშლა
                     </div>
                     <div className = 'templateOption'  onClick = { onEditTemplate }>

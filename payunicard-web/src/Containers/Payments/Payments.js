@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import {Context} from '../../Context/AppContext';
 import { Presentation, Transaction, Template } from '../../Services/API/APIS';
 import Layout from '../../Containers/Layout/Layout';
-import { Backdrop, SidePanel } from './../../Components/UI/UiComponents';
+import { Backdrop, SidePanel, Widget, Search } from './../../Components/UI/UiComponents';
 import PaymentCategory from './../../Components/Payments/PaymentCategory';
 import PaymentPanel from '../../Components/Payments/PaymentPanel';
 import PaymentTemplate from './../../Components/Payments/PaymentTemplate';
@@ -26,6 +26,7 @@ const Payments = () => {
     const [ paymentPanelVisible, setPaymentPanelVisible ] = useState(false);
     const [ templates, setTemplates ] = useState([]);
     const [ selectAllTemplates, setSelectAllTemplates ] = useState(false);
+    
 
 
     useEffect(() => {
@@ -141,6 +142,18 @@ const Payments = () => {
         })
     }
 
+    const searchTemplates = (value) => {
+        let paymentTemplats = paymentTemplates;
+        let searchInTemplates = [...paymentTemplats].filter(t => {
+            return t.abonentCode?.toLowerCase().match(value.toLowerCase()) || t.templName?.toLowerCase().match(value.toLowerCase()) || t.merchServiceName.toLowerCase().match(value.toLowerCase()) ; 
+        })
+        if (value == "") {
+            setTemplates(paymentTemplates);
+        } else {
+            setTemplates(searchInTemplates);
+        }
+    }
+
 
 
 
@@ -160,15 +173,20 @@ const Payments = () => {
                 merchantData = { merchantData } 
                 proceedPayment = { proceedPayment }/>}
 
-        <div style = {{height: 1000, width: '100%', maxWidth: 1000, overflow: 'scroll', marginLeft: 200}}>
+        <div style = {{ marginLeft: 200}}>
             <p>WELCOME TO PAYMENTS</p>
-            <div style = {{display: 'flex'}}>
+            <Widget class = 'Utilities'>
                 {paymentServices.map((service, index) => (
                     <PaymentCategory key = { index } services = { service } clicked = {() => getServices(service.categoryID) }/>
                 ))}
-            </div>
-            <div style = {{width: '100%'}}>
-                <p onClick = { checkAllTemplates }>ყველას მონიშვნა</p>
+            </Widget>
+            <Widget>
+                <div>
+                    <p>გადახდის შაბლონები</p>
+                    <Search  onsearch = { searchTemplates }/>
+                    <p onClick = { checkAllTemplates }>ყველას მონიშვნა</p>
+                </div>
+                
              {templates.map(payTemplate => (
                 <PaymentTemplate 
                     key = { payTemplate.payTempID } 
@@ -176,7 +194,7 @@ const Payments = () => {
                     toggle = { toggleTemplateCheck }
                     editName = { editUtilityTemplateName }/>
                 ))}           
-            </div>
+            </Widget>
         </div>
         </Layout>
     )

@@ -46,8 +46,6 @@ const Transaction = () => {
 
     const [ exportOptions, setExportOptions ] = useState(false);
 
-    const [ searchValue, setSearchvalue ] = useState('');
-
     const [ rowValues, setRowValue ] = useState({count: 10, index: 0})
 
 
@@ -70,7 +68,7 @@ const Transaction = () => {
     }
     
     
-    const handleSearch = (value) => {
+    const searchTransaction = (value) => {
         let transactions = userTransactions;
         let filteredTransactions = [...transactions].filter(tr => {
             return tr.merchantDescription?.toLowerCase().match(value.toLowerCase()) || tr.description?.toLowerCase().match(value.toLowerCase()); 
@@ -147,7 +145,7 @@ const Transaction = () => {
                     <button onClick = {() => history.push('/dashboard') }>go dashboard</button>
                     <div className = 'transaction__header__search-options'>
                         <Calendar fromDate = { dates.fromDate } toDate = { dates.toDate } setDate = { handleDate }/>
-                        <Search searchValue = {searchValue} onsearch = {handleSearch}/>
+                        <Search onsearch = { searchTransaction }/>
                         <div className = 'export' tabIndex = '0' onClick = {() => setExportOptions(true) } onBlur = {() => setExportOptions(false) } >
                             <div className = 'export__icon'  >
                                 <img src = '../../Assets/Images/download-icon.png' alt = 'icon' />

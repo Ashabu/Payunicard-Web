@@ -9,9 +9,8 @@ import PropTypes from 'prop-types';
 
 
 const  FillPaymentData = (props) => {
-    const { merchantdata } = props;
-    const { forMerchantCode, forMerchantServiceCode, forOpClassCode, forPaySPCode, debtCode, minAmount, maxAmount , merchantImgUrl , merchantName} = merchantdata;
-    console.log(merchantdata)
+    const { forMerchantCode, forMerchantServiceCode, forOpClassCode, forPaySPCode, debtCode, minAmount, maxAmount , merchantImgUrl , merchantName} = props.merchantdata;
+    console.log(props.merchantdata)
 
     const { state } = useContext(Context);
     const { userAccounts } = state;
@@ -45,10 +44,10 @@ const  FillPaymentData = (props) => {
 
     const checkCostumerDebt = () => {
         let checkDetails = {
-            forPaySPCode: merchantdata.forPaySPCode,
-            forMerchantCode: merchantdata.forMerchantCode,
-            forMerchantServiceCode: merchantdata.forMerchantServiceCode,
-            serviceId: merchantdata.debtCode,
+            forPaySPCode: forPaySPCode,
+            forMerchantCode: forMerchantCode,
+            forMerchantServiceCode: forMerchantServiceCode,
+            serviceId: debtCode,
             abonentCode: abonentCode
         }
 

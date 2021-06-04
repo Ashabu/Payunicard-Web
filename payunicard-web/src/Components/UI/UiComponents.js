@@ -14,6 +14,7 @@ import Select from './Select/Select';
 import SelectList from '../HOC/SelectList/SelectList';
 import SidePanel from './SidePanel/SidePanel';
 import Widget from './../HOC/Widget';
+import Loader from './../HOC/Loader/Loader';
 
 
 
@@ -27,6 +28,7 @@ export {
     Icon,
     Input,
     InputValidation,
+    Loader,
     Modal,
     PasswordComplexity,
     RoundCheckmark,

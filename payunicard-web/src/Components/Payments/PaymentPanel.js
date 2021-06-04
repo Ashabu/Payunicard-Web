@@ -67,14 +67,14 @@ const PaymentPanel = (props) => {
                 <ErrorNotification errorMessages = {errorArray}/>
             {step === 0? 
                 <div>
-                    {services.slice(1).map((s, index) => (<PaymentServices key = {index} services = {s} 
-                    clicked ={() => {props.getServices({s}); setBredCrump(prevState => {return [...prevState, s.name]}) }}/>))}
+                    {services.slice(1).map((merchant, index) => (<PaymentServices key = {index} services = {merchant} 
+                    clicked ={() => {props.getServices({merchant}); setBredCrump(prevState => {return [...prevState, merchant.name]}) }}/>))}
                 </div>     
                  :
             step === 1?     
                 <div>
-                    {merchantservices.map(s => (<PaymentServices key ={ s.merchantServiceID } services  = { s } 
-                    clicked ={() => {props.getServices({s}); setBredCrump(prevState => {return [...prevState, s.name]}) }} />))}
+                    {merchantservices.map(merchant => (<PaymentServices key ={ merchant.merchantServiceID } services  = { merchant } 
+                    clicked ={() => {props.getServices({merchant}); setBredCrump(prevState => {return [...prevState, merchant.name]}) }} />))}
                 </div>
                :
             step === 2?   

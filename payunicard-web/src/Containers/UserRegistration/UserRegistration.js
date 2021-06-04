@@ -45,7 +45,7 @@ const UserRegistration = props => {
 
 
     const handleUserRegistragion = async () => {
-        if(!InputValidation.validate()) return
+        // if(!InputValidation.validate()) return
         //if(this.state.repPasswordError !== "") return;
         const { countryCode, mobileNumber, username, surname, email, birthDate, personalNumber, password, repeatePassword, isApplyTerms } = registrationData;
         let regData = {

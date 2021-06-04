@@ -11,13 +11,14 @@ const  PaymentCategory = (props) =>{
             <div className = 'serviceImg'>
                 <img src = { imageUrl } alt = 'icon'/>
             </div>
-            <p>{ name }</p>
+            <span>{ name }</span>
         </div>
     )
 }
 
 PaymentCategory.propTypes = {
-
+    imageUrl: PropTypes.string,
+    name: PropTypes.string
 }
 
 export default PaymentCategory;

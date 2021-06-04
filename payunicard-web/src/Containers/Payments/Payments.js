@@ -1,14 +1,15 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {Fragment, useState, useEffect, useContext, useRef} from 'react';
 import './payments.scss';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import {Context} from '../../Context/AppContext';
 import { Presentation, Transaction, Template } from '../../Services/API/APIS';
 import Layout from '../../Containers/Layout/Layout';
-import { Backdrop, SidePanel, Widget, Search } from './../../Components/UI/UiComponents';
+import { Backdrop, Loader, SidePanel, Widget, Search } from './../../Components/UI/UiComponents';
 import PaymentCategory from './../../Components/Payments/PaymentCategory';
 import PaymentPanel from '../../Components/Payments/PaymentPanel';
 import PaymentTemplate from './../../Components/Payments/PaymentTemplate';
+import SearchMerchants from './../../Components/Payments/SearchMerchants';
 
 
 
@@ -18,6 +19,9 @@ const Payments = () => {
     const { paymentServices , paymentTemplates } = state;
 
     const history = useHistory();
+    const searchMerchant = useRef();
+
+    const [ isLoading, setIsLoading ] = useState(false);
 
     const [ services, setServices ] = useState([]);
     const [ merchantServices, setMerchantServices ] = useState([]);
@@ -25,12 +29,14 @@ const Payments = () => {
     const [ paymentStep, setPaymentStep] = useState(0);
     const [ paymentPanelVisible, setPaymentPanelVisible ] = useState(false);
     const [ templates, setTemplates ] = useState([]);
+    const [ utilities, setUtilities ] = useState([]);
+    const [ searchUtilies, setSearchUtilities ] = useState({data:[], search: false});
     const [ selectAllTemplates, setSelectAllTemplates ] = useState(false);
     
 
 
     useEffect(() => {
-        let allTemplates  = paymentTemplates.map(template => {
+        let allTemplates  = templates.map(template => {
             template.checked = selectAllTemplates;
             return template;
         });
@@ -40,6 +46,14 @@ const Payments = () => {
     useEffect(() => {
         setTemplates(paymentTemplates);
     }, [paymentTemplates]);
+
+    useEffect(() => {
+        setUtilities(paymentServices);
+    }, [paymentServices]);
+
+    useEffect(() => {
+        
+    }, [searchUtilies])
 
 
 
@@ -52,11 +66,11 @@ const Payments = () => {
         })
     }
 
-    const getMerchantServices = (data) => {
-        const { s } = data
+    const getMerchantServices = (data, fromSerach = false) => {
+        const { merchant } = data
         //if merchantCode prop is undefind, it means services has children
-        if(!s.merchantCode) {
-            Presentation.getMetchantServices(s.categoryID).then(res => {
+        if(!merchant.merchantCode && !fromSerach) {
+            Presentation.getMetchantServices(merchant.categoryID).then(res => {
                 if(res.data.ok) {
                     setMerchantServices(res.data.data.merchants);
                     setPaymentStep(1)
@@ -66,14 +80,15 @@ const Payments = () => {
             })
         } else {
             let querryParams = {
-                forMerchantCode: s.merchantCode,
-                forMerchantServiceCode: s.merchantServiceCode,
+                forMerchantCode: merchant.merchantCode,
+                forMerchantServiceCode: merchant.merchantServiceCode,
                 forOpClassCode: 'B2B.F'
             }
 
             Presentation.getPaymentDetails(querryParams).then(res => {
                 if(res.data.ok) {
-                    setMerchantData({...res.data.data, merchantName: s.name, merchantImgUrl: s.merchantServiceURL || s.imageUrl });
+                    if(fromSerach) setPaymentPanelVisible(true);
+                    setMerchantData({...res.data.data, merchantName: merchant.name, merchantImgUrl: merchant.merchantServiceURL || merchant.imageUrl });
                     setPaymentStep(2)
                 }
             }).catch(error => {
@@ -125,13 +140,14 @@ const Payments = () => {
     }
 
     const toggleTemplateCheck = (id) => {
-            
-        setTemplates(templates => {
-            let i = templates.findIndex(s => s.payTempID == id);
-            templates[i].checked = !templates[i].checked;
-            console.log( templates[i].checked )
-            return [...templates];
+        let tempTemplates = templates;
+        tempTemplates.map(template => {
+            let i = template.findIndex(merchant => merchant.payTempID == id);
+            template[i].checked = !template[i].checked;
+            console.log( template[i].checked )
+            return templates;
         })
+        setTemplates(tempTemplates)
 
         
     }
@@ -154,7 +170,23 @@ const Payments = () => {
         }
     }
 
-
+    const searchInUtilities = (value) => {
+        if(searchMerchant.current) clearTimeout(searchMerchant.current)
+        if(value.length <= 2){
+            setSearchUtilities({data: [], search: false });
+            
+        } else {
+            setIsLoading(true)
+            setSearchUtilities(prevState => {return {...prevState, search: true} });
+            searchMerchant.current = setTimeout(() => {
+                Presentation.searchMerchants(value).then(res => {
+                    setIsLoading(false);
+                    setSearchUtilities(prevState => {return {...prevState, data: [...res.data.data.services]} });
+                    console.log(searchUtilies)
+                })
+            }, 1000);
+        }
+    }
 
 
     return (
@@ -170,21 +202,37 @@ const Payments = () => {
                 merchantservices = { merchantServices } 
                 merchantdata = { merchantData } 
                 getServices = { getMerchantServices }
-                merchantData = { merchantData } 
+                // merchantData = { merchantData } 
                 proceedPayment = { proceedPayment }/>}
 
         <div style = {{ marginLeft: 200}}>
             <p>WELCOME TO PAYMENTS</p>
             <Widget class = 'Utilities'>
-                {paymentServices.map((service, index) => (
+                <div className = 'UtilityHeader'>
+                    <span>კატეგორიები</span>
+                    <Search  onsearch = { searchInUtilities }/>
+                </div>
+               {searchUtilies.search? <Fragment >
+                   {isLoading? <Loader width = { 100 } heigh = { 100 }/> :
+                    searchUtilies.data?.map((merchant, index) =>(
+                        <SearchMerchants 
+                            key = { index }  
+                            merchants = { merchant } 
+                            clicked = {() => getMerchantServices({ merchant }, true)}/>))}
+                   
+                   </Fragment> :
+               <Fragment>
+                {utilities.map((service, index) => (
                     <PaymentCategory key = { index } services = { service } clicked = {() => getServices(service.categoryID) }/>
                 ))}
+                </Fragment> }
             </Widget>
             <Widget>
                 <div>
                     <p>გადახდის შაბლონები</p>
                     <Search  onsearch = { searchTemplates }/>
                     <p onClick = { checkAllTemplates }>ყველას მონიშვნა</p>
+                    
                 </div>
                 
              {templates.map(payTemplate => (

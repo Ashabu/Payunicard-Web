@@ -18,6 +18,10 @@ class Presentation  {
         return await axios.get(`${globalConfig.api_URL}/GetMerchantServices?CategoryID=${id}`);
     }
 
+    searchMerchants = async (value) => {
+        return await axios.get(`${globalConfig.api_URL}/SearchMerchantServices?Search=${value}`); 
+    }
+
     getPaymentDetails = async (params) => {
         
         return await axios.get(`${globalConfig.api_URL}/GetPaymentDetails`, {params});

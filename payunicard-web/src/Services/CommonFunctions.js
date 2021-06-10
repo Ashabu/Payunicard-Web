@@ -119,7 +119,7 @@ class ComonFunctions  {
         if(!type) return;
         if(type === 'MC' || type === 2) {
             return '../Assets/Images/mc-logo-sm.png';
-        } else if (type === 'VS' || type === 2) {
+        } else if (type === 'VS' || type === 3) {
             return '../Assets/Images/visa-logo_sm.png';
         } else if (type === 'UN' || type === 7) {
             return '../Assets/Images/unicard-logo-sm.png';

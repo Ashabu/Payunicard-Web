@@ -2,14 +2,17 @@ import React, {Fragment, useState, useEffect, useContext, useRef} from 'react';
 import './payments.scss';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
-import {Context} from '../../Context/AppContext';
+import { Context } from '../../Context/AppContext';
 import { Presentation, Transaction, Template } from '../../Services/API/APIS';
 import Layout from '../../Containers/Layout/Layout';
-import { Backdrop, Loader, SidePanel, Widget, Search } from './../../Components/UI/UiComponents';
+import { Icon, Backdrop, Loader, SidePanel, Widget, Search } from './../../Components/UI/UiComponents';
+import ComonFn from '../../Services/CommonFunctions';
 import PaymentCategory from './../../Components/Payments/PaymentCategory';
 import PaymentPanel from '../../Components/Payments/PaymentPanel';
 import PaymentTemplate from './../../Components/Payments/PaymentTemplate';
 import SearchMerchants from './../../Components/Payments/SearchMerchants';
+import SelectedAccount from './../../Components/HOC/SelectedAccount/SelectedAccount';
+import SelectAccount from './../../Components/SelectAccount/SelectAccount';
 
 
 
@@ -32,6 +35,7 @@ const Payments = () => {
     const [ utilities, setUtilities ] = useState([]);
     const [ searchUtilies, setSearchUtilities ] = useState({data:[], search: false});
     const [ selectAllTemplates, setSelectAllTemplates ] = useState(false);
+    const [ isFromTemplate, setIsFromTemplate ] = useState(false)
     
 
 
@@ -141,11 +145,11 @@ const Payments = () => {
 
     const toggleTemplateCheck = (id) => {
         let tempTemplates = templates;
+        let i = tempTemplates.findIndex(merchant => merchant.payTempID == id);
+        debugger
         tempTemplates.map(template => {
-            let i = template.findIndex(merchant => merchant.payTempID == id);
-            template[i].checked = !template[i].checked;
-            console.log( template[i].checked )
-            return templates;
+            tempTemplates[i].checked = !tempTemplates[i].checked;
+            return template;
         })
         setTemplates(tempTemplates)
 
@@ -188,6 +192,18 @@ const Payments = () => {
         }
     }
 
+    const selectAccount = (account) => {
+        console.log(account)
+    }
+
+    const opentTemplateTab = (data) => {
+        console.log(data)
+        setIsFromTemplate(true)
+        setMerchantData(data);
+        setPaymentStep(2); 
+        setPaymentPanelVisible(true);
+    }
+
 
     return (
         <Layout>
@@ -202,11 +218,13 @@ const Payments = () => {
                 merchantservices = { merchantServices } 
                 merchantdata = { merchantData } 
                 getServices = { getMerchantServices }
-                // merchantData = { merchantData } 
+                test = { isFromTemplate }
                 proceedPayment = { proceedPayment }/>}
 
         <div style = {{ marginLeft: 200}}>
             <p>WELCOME TO PAYMENTS</p>
+            
+
             <Widget class = 'Utilities'>
                 <div className = 'UtilityHeader'>
                     <span>კატეგორიები</span>
@@ -240,7 +258,9 @@ const Payments = () => {
                     key = { payTemplate.payTempID } 
                     template = { payTemplate } 
                     toggle = { toggleTemplateCheck }
-                    editName = { editUtilityTemplateName }/>
+                    editName = { editUtilityTemplateName }
+                    clicked = {opentTemplateTab}
+                    />
                 ))}           
             </Widget>
         </div>

@@ -1,24 +1,26 @@
-import React, {useContext, useState, useRef, Fragment,useCallback, useEffect} from 'react';
+import React, {useContext, useState, useRef, Fragment, useCallback, useEffect} from 'react';
 import './payment.scss';
 import { Context } from '../../Context/AppContext';
 import { Button, Icon, Input, Select, SelectList } from '../UI/UiComponents';
 import ComonFn from '../../Services/CommonFunctions';
 import { Presentation, Transaction } from '../../Services/API/APIS';
 import PropTypes from 'prop-types';
+import SelectAccount from '../SelectAccount/SelectAccount';
+import SelectedAccount from './../HOC/SelectedAccount/SelectedAccount';
 
 
 
 const  FillPaymentData = (props) => {
-    const { forMerchantCode, forMerchantServiceCode, forOpClassCode, forPaySPCode, debtCode, minAmount, maxAmount , merchantImgUrl , merchantName} = props.merchantdata;
+    const {abonentCode,forFromAccount, forMerchantCode, merchantCode,  forMerchantServiceCode, merchantServiceCode, forOpClassCode, forPaySpCode, forPaySPCode, debtCode, minAmount, maxAmount , imageUrl, merchantImgUrl , merchantName} = props.merchantdata;
     console.log(props.merchantdata)
 
     const { state } = useContext(Context);
-    const { userAccounts } = state;
+    
 
     const commisionTimeout = useRef();
 
     const [ selectedAccount, setSelectedAccount] = useState({});
-    const [ abonentCode, setAbonentCode ] = useState('');
+    const [ AbonentCode, setAbonentCode ] = useState(abonentCode || '');
     const [ debt, setDebt ] = useState('');
     const [ debtCcy, setDebtCcy ] = useState('');
     const [ costumer, setCostumer ] = useState('');
@@ -34,21 +36,21 @@ const  FillPaymentData = (props) => {
         forMerchantServiceCode: forMerchantServiceCode,
         serviceId: debtCode,
         amount: amount,
-        abonentCode: abonentCode,
+        abonentCode: AbonentCode,
         forFundsSPCode: 'UniWallet',
         bankId: null,
         forPaySPCode: forPaySPCode,
         AccountId: selectedAccount.accountId,
-        forOpClassCode: forOpClassCode,
+        forOpClassCode: forOpClassCode || forPaySpCode,
    }
 
     const checkCostumerDebt = () => {
         let checkDetails = {
-            forPaySPCode: forPaySPCode,
-            forMerchantCode: forMerchantCode,
-            forMerchantServiceCode: forMerchantServiceCode,
+            forPaySPCode: forPaySPCode || forPaySpCode,
+            forMerchantCode: forMerchantCode || merchantCode,
+            forMerchantServiceCode: forMerchantServiceCode || merchantServiceCode,
             serviceId: debtCode,
-            abonentCode: abonentCode
+            abonentCode: AbonentCode
         }
 
 
@@ -59,6 +61,7 @@ const  FillPaymentData = (props) => {
                 let tempDebt = tempDebtData?.filter(i => i.FieldCode === 'Debt' || i.FieldCode === "FineAmount" || i.FieldCode === "TotalDebt" || i.FieldCode === "Balance");
                 if (tempDebt.length) {
                     setDebt(tempDebt[0].Value);
+                    setAmount(tempDebt[0].Value)
                     setDebtCcy(tempDebt[0].CCY);
                     if (!debtCcy) {
                         setDebtCcy("₾");
@@ -108,7 +111,15 @@ const  FillPaymentData = (props) => {
          
     }
 
+    const selectAccount = (account) => {
+        setSelectedAccount(account)
+    }
 
+    useEffect(() => {
+        if(AbonentCode !== '')
+            checkCostumerDebt();
+        
+    }, [])
 
     useEffect(() => {
         getCostumerCommision();
@@ -120,30 +131,18 @@ const  FillPaymentData = (props) => {
             <div style={{width: '100%', height: '100%', minHeight: 400,  boxSizing: 'border-box', padding: 20}}>
                 <div>
                     <p>Please Choose a Card</p>
-                    <Select
-                        data = { userAccounts } 
-                        placeholder = 'Select Account'
-                        selected = { selectedAccount.accountNumber }
-                        icon = { <Icon iconUrl = { ComonFn.setLogoByAccountType(selectedAccount.type) }/> }
-                        display ={(element, setVisible) => (
-                        <SelectList 
-                            listClassRow = 'Selected'
-                            key={ element.accountNumber } 
-                            clicked={() => { setSelectedAccount(element); setVisible(false)}} >
-                                <Icon iconUrl = { ComonFn.setLogoByAccountType(element.type) }/>{ element.accountNumber } 
-                        </SelectList>)} 
-                        />
+                    <SelectAccount account = { selectAccount } placeholder = 'Select Account' icon  current = '566'/>
                 </div>
                 <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 30}}>
                     <div style={{width: 300}}>
                         <div style = {{display: 'flex'}}>
-                            <img style = {{width: 70}} src ={merchantImgUrl} alt = 'merchant logo' />
+                            <img style = {{width: 70}} src ={merchantImgUrl || imageUrl} alt = 'merchant logo' />
                             <p>{merchantName}</p>
                         </div>           
                     </div>
                     <div style = {{display: 'flex', flexFlow: 'column'}}>
-                        <Input value = {abonentCode} onInput = {(e) => setAbonentCode(e.target.value)} />
-                        {abonentCode !== ''? <Button clicked = {checkCostumerDebt}>შემომწმება</Button> : null}
+                        <Input value = {AbonentCode} onInput = {(e) => setAbonentCode(e.target.value)} />
+                        {AbonentCode !== ''? <Button clicked = {checkCostumerDebt}>შემომწმება</Button> : null}
                     </div>
                 </div>
                 <div className = 'payment-info'>
@@ -183,8 +182,8 @@ const  FillPaymentData = (props) => {
             <hr/>
             <p>{totalPaymentAmount.toFixed(2)}</p>
             <div className = 'd-flex'>
-                <p style = {{marginRight: 10}}>მაქსიმალური თანხა: {maxAmount.toFixed(2)}</p>
-                <p>მინიმალური თანხა: {minAmount.toFixed(2)}</p>
+                <p style = {{marginRight: 10}}>მაქსიმალური თანხა: {maxAmount?.toFixed(2)}</p>
+                <p>მინიმალური თანხა: {minAmount?.toFixed(2)}</p>
             </div>
              <Button clicked = {()=> props.getPaymentData({paymentData, info:{costumer, merchantImgUrl, merchantName }})}>გადახდა</Button>
         </div>

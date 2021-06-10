@@ -1,0 +1,32 @@
+.selectedAccount {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 20px 0 0;
+    height: 54px;
+    cursor: pointer;
+    
+    &.list {
+        border-bottom: 1px solid #edf0f3;
+    }
+    
+    .accountWrap {
+        display: flex;
+        .account {
+            display: flex;
+            flex-flow: column;
+            .currencies {
+                display: flex;
+                span {
+                    font-size: 12px;
+                    padding-right: 5px;
+                }
+            }
+        }
+    }
+    .balance {
+        display: flex;
+        align-items: center;
+    }
+}

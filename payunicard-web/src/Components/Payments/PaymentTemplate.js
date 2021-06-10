@@ -69,7 +69,7 @@ const PaymentTemplate = (props) => {
             {editTemplateModal.visible? 
                 <EditTemplate nameEdit = { editTemplateModal.editTempl } templateName = { templName } close = { onClosEditTemplateModal } confirmEdit = { editTemplateName } removeTemplate = { deleteTemplate }/> : null}
         
-        <div className = 'PaymetnTemplate'>
+        <div className = 'PaymetnTemplate' onClick = {() => props.clicked(props.template) }>
             <div className = 'leftSide'>
                 <div className = 'tempImage'>
                     <img src = { imageUrl } alt = 'icon' />

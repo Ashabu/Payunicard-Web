@@ -47,7 +47,7 @@ const  Layout = (props) =>  {
                         isUnicard: true,
                         availableInGEL: uni.amount,
                         cards: [],
-                        currencies: [{ key: "GEL", value: "₾" }],
+                        currencies: [{ key: "GEL", value: "₾", balance: uni.amount/10 }],
                         imageUrl: "/images/pngImages/Unicard.png",
                         isActive: true,
                         type: 7 // type 7 is custom type for unicard

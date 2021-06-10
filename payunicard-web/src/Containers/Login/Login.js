@@ -16,8 +16,8 @@ const  Login = () => {
     const history = useHistory();
 
     const [loginData, setLoginData] = useState({
-        userName: "Avtandil@test.com",
-        password: "As123123!"
+        userName: "a.shaburishvili",
+        password: "M6p6khezcxc!"
     });
 
     const [ oneTimePasscode, setOneTimePasscode ] = useState("")

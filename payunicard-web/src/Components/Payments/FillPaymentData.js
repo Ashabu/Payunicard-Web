@@ -1,12 +1,10 @@
-import React, {useContext, useState, useRef, Fragment, useCallback, useEffect} from 'react';
+import React, {useContext, useState, useRef, Fragment, useEffect} from 'react';
 import './payment.scss';
-import { Context } from '../../Context/AppContext';
-import { Button, Icon, Input, Select, SelectList } from '../UI/UiComponents';
+import { Button, Input } from '../UI/UiComponents';
 import ComonFn from '../../Services/CommonFunctions';
 import { Presentation, Transaction } from '../../Services/API/APIS';
 import PropTypes from 'prop-types';
 import SelectAccount from '../SelectAccount/SelectAccount';
-import SelectedAccount from './../HOC/SelectedAccount/SelectedAccount';
 
 
 

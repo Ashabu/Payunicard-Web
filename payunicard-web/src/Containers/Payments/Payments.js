@@ -14,6 +14,7 @@ import SearchMerchants from './../../Components/Payments/SearchMerchants';
 import TransactionDetail from './../../Components/TransactionDetails/TransactionDetail';
 import {handleTransactionDetailView } from '../../Providers/TransactionProvider';
 import TransactionDetailView from './../../Components/TransactionDetailView/TransactionDetailView';
+import PayAllTemplate from './../../Components/Payments/PayAllTemplate';
 
 
 
@@ -286,7 +287,12 @@ const Payments = () => {
         <div style = {{ marginLeft: 200}}>
             <p>WELCOME TO PAYMENTS</p>
             
-
+            {templates.map(payTemplate => (
+                <PayAllTemplate 
+                    key = { payTemplate.payTempID } 
+                    template = { payTemplate } 
+                    />
+                ))} 
             <Widget class = 'Utilities'>
                 <div className = 'UtilityHeader'>
                     <span>კატეგორიები</span>

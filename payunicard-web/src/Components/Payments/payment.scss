@@ -1,15 +1,16 @@
 .CategoryItem {
-    height: 70px;
-    width: 70px;
-    border-radius: 50%;
-    margin: 15px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.11);
-    cursor: pointer;
-    transition: transform 0.2s;
     text-align: center;
 
     .serviceImg {
         margin-bottom: 10px;
+        height: 70px;
+        width: 70px;
+        border-radius: 50%;
+        margin: 15px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.11);
+        cursor: pointer;
+        transition: transform 0.2s;
+        text-align: center;
         img {
             display: block;
             margin: auto;

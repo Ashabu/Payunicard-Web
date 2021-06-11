@@ -21,6 +21,7 @@ const Transaction = () => {
 
     // const []
     const navigate = (id) => {
+        history.location.hash
         history.push(
             {
              pathname: '/Transactions/TransactionDetail',
@@ -133,7 +134,6 @@ const Transaction = () => {
 
                 <Backdrop show = { detailVisible } hide = {() => { history.goBack(); setDetailVisible(false) }}/>
                 <SidePanel
-                    stepBack 
                     visible = { detailVisible }
                     closePanel = {() => { setDetailVisible(false); history.goBack() }}>
                         <TransactionDetailView transaction = { selectedTransaction }/>

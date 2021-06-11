@@ -11,10 +11,24 @@ import SelectedAccount from './../HOC/SelectedAccount/SelectedAccount';
 
 
 const  FillPaymentData = (props) => {
-    const {abonentCode,forFromAccount, forMerchantCode, merchantCode,  forMerchantServiceCode, merchantServiceCode, forOpClassCode, forPaySpCode, forPaySPCode, debtCode, minAmount, maxAmount , imageUrl, merchantImgUrl , merchantName} = props.merchantdata;
-    console.log(props.merchantdata)
-
-    const { state } = useContext(Context);
+    const {
+        abonentCode, 
+        debtCode, 
+        forFromAccount, 
+        forMerchantCode,
+        forMerchantServiceCode, 
+        forOpClassCode,
+        forPaySpCode, 
+        forPaySPCode, 
+        imageUrl, 
+        maxAmount ,
+        merchantCode, 
+        merchantId,
+        merchantImgUrl , 
+        merchantName, 
+        merchantServiceCode,
+        minAmount
+        } = props.merchantdata;
     
 
     const commisionTimeout = useRef();
@@ -43,6 +57,16 @@ const  FillPaymentData = (props) => {
         AccountId: selectedAccount.accountId,
         forOpClassCode: forOpClassCode || forPaySpCode,
    }
+
+    const templateData = {
+        merchantServiceID: merchantId,
+        templName: "new string",
+        forOpClassCode: forOpClassCode,
+        abonentCode: AbonentCode,
+        externalAccountId: selectedAccount.accountId,
+        amount,
+        isFavourite: false
+    }
 
     const checkCostumerDebt = () => {
         let checkDetails = {
@@ -131,7 +155,7 @@ const  FillPaymentData = (props) => {
             <div style={{width: '100%', height: '100%', minHeight: 400,  boxSizing: 'border-box', padding: 20}}>
                 <div>
                     <p>Please Choose a Card</p>
-                    <SelectAccount account = { selectAccount } placeholder = 'Select Account' icon  current = '566'/>
+                    <SelectAccount account = { selectAccount } placeholder = 'Select Account' icon  current = { forFromAccount }/>
                 </div>
                 <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 30}}>
                     <div style={{width: 300}}>
@@ -139,6 +163,9 @@ const  FillPaymentData = (props) => {
                             <img style = {{width: 70}} src ={merchantImgUrl || imageUrl} alt = 'merchant logo' />
                             <p>{merchantName}</p>
                         </div>           
+                    </div>
+                    <div>
+                    <Button clicked = {()=> props.getPaymentData({templateData})}>გადახდა</Button>
                     </div>
                     <div style = {{display: 'flex', flexFlow: 'column'}}>
                         <Input value = {AbonentCode} onInput = {(e) => setAbonentCode(e.target.value)} />
@@ -206,6 +233,7 @@ FillPaymentData.propTypes = {
     costumerAddress: PropTypes.string,
     amount: PropTypes.string,
     errorMessage: PropTypes.string,
+    merchantId: PropTypes.number,
     paymentCommision: PropTypes.number,
     totalPaymentAmount: PropTypes.number,
     userAccounts: PropTypes.array

@@ -3,6 +3,7 @@ import './payment.scss';
 import PaymentServices from './PaymentServices';
 import FillPaymentData from './FillPaymentData';
 import { ErrorNotification, SidePanel } from '../UI/UiComponents';
+import { Template } from '../../Services/API/APIS';
 
 import PropTypes from 'prop-types';
 
@@ -11,9 +12,10 @@ import PropTypes from 'prop-types';
 
 const PaymentPanel = (props) => {
     const {tabvisible, services, merchantservices, merchantdata, step} = props;
-    const [ successInfo, setSuccessInfo] = useState({});
+    const [ successInfo, setSuccessInfo ] = useState({});
     const [ bredCrump, setBredCrump ] = useState([]);
-    const [errorArray, setErrorArray] = useState([]);
+    const [ errorArray, setErrorArray ] = useState([]);
+    const [ templateName, setTemplateName ] = useState('')
 
     useEffect(() => {
         if(services[0]) {
@@ -22,9 +24,18 @@ const PaymentPanel = (props) => {
     }, [services] )
 
     const paymentData = (data) => {
-        props.proceedPayment(data.paymentData);
-        setSuccessInfo(data.info);
+        if(data.templateData) {
+            props.saveTemplate(data.templateData)
+        } else {
+            props.proceedPayment(data.paymentData);
+            setSuccessInfo(data.info);
+        }
+        
+       
     }
+
+   
+
 
     const handleBredCrump = (i) => {
         let cIndex = i;
@@ -82,6 +93,7 @@ const PaymentPanel = (props) => {
                :
                <div>
                    <p>გადახდა წარმატებით შესრულდა</p>
+                   <button onClick = {props.saveTemplate}>შაბლლონის შენახვა</button>
                </div>
 
             }

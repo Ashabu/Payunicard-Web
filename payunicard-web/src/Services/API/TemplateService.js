@@ -6,6 +6,10 @@ class Template {
         return await axios.get(`${globalConfig.api_URL}/Template/PayTemplateGet?IncludeDebt=true`);
     }
 
+    addUtilityTemplate = async (data) => {
+        return await axios.post(`${globalConfig.api_URL}/Template/PayTemplateAdd`, data);
+    }
+
     editUtilityTemplate = async (data) => {
         return await axios.post(`${globalConfig.api_URL}/Template/EditPayTemplate`, data);
     }

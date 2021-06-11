@@ -1,18 +1,20 @@
-import React, {Fragment, useState, useEffect, useContext, useRef} from 'react';
+import React, {Fragment, useState, useEffect, useContext, useRef,} from 'react';
 import './payments.scss';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import { Context } from '../../Context/AppContext';
-import { Presentation, Transaction, Template } from '../../Services/API/APIS';
+import { Presentation, Transaction, Template, User } from '../../Services/API/APIS';
 import Layout from '../../Containers/Layout/Layout';
-import { Icon, Backdrop, Loader, SidePanel, Widget, Search } from './../../Components/UI/UiComponents';
+import { Icon, Backdrop, Loader, Widget, Search, SidePanel } from './../../Components/UI/UiComponents';
 import ComonFn from '../../Services/CommonFunctions';
 import PaymentCategory from './../../Components/Payments/PaymentCategory';
 import PaymentPanel from '../../Components/Payments/PaymentPanel';
 import PaymentTemplate from './../../Components/Payments/PaymentTemplate';
 import SearchMerchants from './../../Components/Payments/SearchMerchants';
-import SelectedAccount from './../../Components/HOC/SelectedAccount/SelectedAccount';
-import SelectAccount from './../../Components/SelectAccount/SelectAccount';
+import TransactionDetail from './../../Components/TransactionDetails/TransactionDetail';
+import {handleTransactionDetailView } from '../../Providers/TransactionProvider';
+import TransactionDetailView from './../../Components/TransactionDetailView/TransactionDetailView';
+
 
 
 
@@ -22,20 +24,30 @@ const Payments = () => {
     const { paymentServices , paymentTemplates } = state;
 
     const history = useHistory();
+
+    const navigate = (id) => {
+        history.push({pathname: `/payments/TransactionDetail?tranId=${id}`});
+    };
+
     const searchMerchant = useRef();
 
     const [ isLoading, setIsLoading ] = useState(false);
+
+    const [ paymentStatements, setPaymentStatements ] = useState([]);
+    const [ selectedTransaction, setSelectedTransaction ] = useState({});
+    const [ detailVisible, setDetailVisible ] = useState(false) 
 
     const [ services, setServices ] = useState([]);
     const [ merchantServices, setMerchantServices ] = useState([]);
     const [ merchantData, setMerchantData] = useState({});
     const [ paymentStep, setPaymentStep] = useState(0);
     const [ paymentPanelVisible, setPaymentPanelVisible ] = useState(false);
+    
     const [ templates, setTemplates ] = useState([]);
+    const [ paymentData, setPaymentData ] = useState(null);
     const [ utilities, setUtilities ] = useState([]);
     const [ searchUtilies, setSearchUtilities ] = useState({data:[], search: false});
     const [ selectAllTemplates, setSelectAllTemplates ] = useState(false);
-    const [ isFromTemplate, setIsFromTemplate ] = useState(false)
     
 
 
@@ -49,6 +61,7 @@ const Payments = () => {
 
     useEffect(() => {
         setTemplates(paymentTemplates);
+        
     }, [paymentTemplates]);
 
     useEffect(() => {
@@ -57,8 +70,27 @@ const Payments = () => {
 
     useEffect(() => {
         
-    }, [searchUtilies])
+    }, [searchUtilies]);
 
+    useEffect(() => {
+        getPaymentStatements();
+    }, [paymentTemplates])
+
+    const getPaymentStatements = () => {
+        let data = {
+            rowCount: 10,
+            opClass: 'P2B',
+        }
+        
+        User.GetUserAccountStatements(data).then(res => {
+            if(res.data.ok){
+                setPaymentStatements(res.data.data.statements)
+            }
+            console.log(res.data)
+        }).catch (error => {
+            console.log(error)
+        })
+    }
 
 
     const getServices = (id) =>{
@@ -130,10 +162,14 @@ const Payments = () => {
         setMerchantServices([]);
     } 
 
-    const proceedPayment = (paymentData) => {
-        Transaction.startPaymentTransaction(paymentData).then(res => {
+    const proceedPayment = (data) => {
+        setPaymentData(data);
+        
+        Transaction.startPaymentTransaction(data).then(res => {
             if(res.data.ok) {
+                setPaymentData(prevState => { return{...prevState, longOpID: res.data.data.op_id }})
                 setPaymentStep(3);
+                
             }
         })
 
@@ -146,14 +182,38 @@ const Payments = () => {
     const toggleTemplateCheck = (id) => {
         let tempTemplates = templates;
         let i = tempTemplates.findIndex(merchant => merchant.payTempID == id);
-        debugger
-        tempTemplates.map(template => {
-            tempTemplates[i].checked = !tempTemplates[i].checked;
-            return template;
-        })
-        setTemplates(tempTemplates)
+        tempTemplates[i].checked = !tempTemplates[i].checked
+        setTemplates([...tempTemplates]);
+    }
 
+    const saveUtilityTemplate = (data) => {
+        //const { abonentCode, AccountId, Amount, forFundsSPCode, forMerchantCode, forMerchantServiceCode, forOpClassCode, forPaySPCode, longOpID, serviceId } = paymentData;
         
+        let templateData = {}
+        if(data) {
+            templateData = data
+        } else {
+            const { longOpID } = paymentData;
+            templateData = {
+                longOpID,
+                templName: 'axali shabloni',
+            }
+        }
+        Template.addUtilityTemplate(templateData).then(res => {
+            if(res.data.ok) {
+                Template.getUtilityTemplates().then(res => {
+                    if(res.data.ok) {
+                        let paymentTemplates = res.data.data.templates;
+                        paymentTemplates.map(t => {
+                            t.checked = false;
+                            return t
+                        })
+                        setGlobalValue({paymentTemplates})
+                        
+                    }
+                })
+            }
+        })
     }
     
     const editUtilityTemplateName = (data) => {
@@ -192,13 +252,9 @@ const Payments = () => {
         }
     }
 
-    const selectAccount = (account) => {
-        console.log(account)
-    }
+    
 
     const opentTemplateTab = (data) => {
-        console.log(data)
-        setIsFromTemplate(true)
         setMerchantData(data);
         setPaymentStep(2); 
         setPaymentPanelVisible(true);
@@ -207,7 +263,7 @@ const Payments = () => {
 
     return (
         <Layout>
-            <Backdrop show = { paymentPanelVisible } hide = { handlePaymentPanelClose }/>
+            <Backdrop show = { paymentPanelVisible || detailVisible } hide = { handlePaymentPanelClose }/>
 
             {services && <PaymentPanel 
                 tabvisible = { paymentPanelVisible }
@@ -218,8 +274,14 @@ const Payments = () => {
                 merchantservices = { merchantServices } 
                 merchantdata = { merchantData } 
                 getServices = { getMerchantServices }
-                test = { isFromTemplate }
-                proceedPayment = { proceedPayment }/>}
+                proceedPayment = { proceedPayment }
+                saveTemplate = { saveUtilityTemplate }/>}
+
+            <SidePanel
+                    visible = { detailVisible }
+                    closePanel = {() => { setDetailVisible(false); history.goBack() }}>
+                        <TransactionDetailView transaction = { selectedTransaction }/>
+                    </SidePanel>    
 
         <div style = {{ marginLeft: 200}}>
             <p>WELCOME TO PAYMENTS</p>
@@ -262,6 +324,16 @@ const Payments = () => {
                     clicked = {opentTemplateTab}
                     />
                 ))}           
+            </Widget>
+            <Widget>
+                <div>
+                    <p>ბოლო ტრანზაქციები</p>
+                </div>
+                {paymentStatements.map((transaction, index) => (
+                    <TransactionDetail key = { index } 
+                    transaction = { transaction }
+                    clicked = {() =>   {handleTransactionDetailView(transaction, setSelectedTransaction, navigate); setDetailVisible(true)}}/>
+                ))}
             </Widget>
         </div>
         </Layout>

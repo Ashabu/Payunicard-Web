@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import './transactionDetail.scss';
-import ComonFn from '../../Services/CommonFunctions';
+import { formatCurrencySymbol, formatDate, formatNumber, setLogoByAccountType } from '../../Services/CommonFunctions';
 import PropTypes from 'prop-types'
 
 const  TransactionDetail =(props) => {
@@ -11,10 +11,10 @@ const  TransactionDetail =(props) => {
     return (
         <div className = 'tran-detail-wrap' onClick = {props.clicked}>
             <div className = 'logo'>
-                <img src = {ComonFn.setLogoByAccountType(accounttype) || '../../Assets/Images/lock-grey.png'} alt = 'logo' />
+                <img src = { setLogoByAccountType(accounttype) || '../../Assets/Images/lock-grey.png' } alt = 'logo' />
             </div>
             <div className = 'tran-details'>
-                <span>{ComonFn.formatDate(tranDate || transactionDate )}</span>
+                <span>{ formatDate(tranDate || transactionDate) }</span>
                 <span>{classCodeDescription}</span>
                 {props.showlong?
                 <Fragment> 
@@ -23,7 +23,7 @@ const  TransactionDetail =(props) => {
                 </Fragment> : <span>{shortDescription || merchantDescription}</span>}
             </div>
             <div className = 'tran-amount'>
-                <span style ={{color: amount > 0? '#94dd34' : ccy? 'red' : 'grey'  }}>{ComonFn.formatNumber(amount)}{ComonFn.formatCurrencySymbol(ccy || currency)}</span>
+                <span style ={{color: amount > 0? '#94dd34' : ccy? 'red' : 'grey'  }}>{ formatNumber(amount) }{ formatCurrencySymbol(ccy || currency) }</span>
             </div>
             <div className = 'more'>
                 <img src = '../../Assets/Images/three_dot.png' alt = 'three-dots' />

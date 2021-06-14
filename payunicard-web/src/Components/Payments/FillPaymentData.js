@@ -1,7 +1,7 @@
 import React, {useContext, useState, useRef, Fragment, useEffect} from 'react';
 import './payment.scss';
 import { Button, Input } from '../UI/UiComponents';
-import ComonFn from '../../Services/CommonFunctions';
+import { formatCurrencySymbol } from '../../Services/CommonFunctions';
 import { Presentation, Transaction } from '../../Services/API/APIS';
 import PropTypes from 'prop-types';
 import SelectAccount from '../SelectAccount/SelectAccount';
@@ -176,7 +176,7 @@ const  FillPaymentData = (props) => {
                     {debt? <Fragment>
                         <div className = 'd-flex'>
                             <p>დავალიანება:</p>
-                            <p>{Number(debt).toFixed(2)} {ComonFn.formatCurrencySymbol(debtCcy)}</p>
+                            <p>{Number(debt).toFixed(2)} { formatCurrencySymbol(debtCcy)}</p>
                         </div>
                     </Fragment> : null}
                     {costumer? <Fragment>

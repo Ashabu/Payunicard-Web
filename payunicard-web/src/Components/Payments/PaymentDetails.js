@@ -1,5 +1,5 @@
 import React from 'react';
-import CommonFn from '../../Services/CommonFunctions';
+import { formatNumber } from '../../Services/CommonFunctions';
 import { Icon } from '../UI/UiComponents';
 
 
@@ -25,18 +25,18 @@ const PaymentDetails = (props) =>{
                 </div>
                 <div className = 'templAmount'>
 
-                   <span> { CommonFn.formatNumber(Math.abs(item.debt)) } ₾</span> 
+                   <span> { formatNumber(Math.abs(item.debt)) } ₾</span> 
                 </div>
                 <div className = 'templAmount'>
 
-                   <span>{ CommonFn.formatNumber(item.commission) } ₾</span> 
+                   <span>{ formatNumber(item.commission) } ₾</span> 
                 </div>
             </div>))}
             <div style={{display:'flex', flexFlow: 'column', textAlign: 'end'}}>
-                <span>თანხა: { CommonFn.formatNumber(debtAmmount) } ₾</span>
-                <span>საკომისიო: { CommonFn.formatNumber(commisionAmmount) } ₾</span>
+                <span>თანხა: { formatNumber(debtAmmount) } ₾</span>
+                <span>საკომისიო: { formatNumber(commisionAmmount) } ₾</span>
                 <hr style={{width: '100%'}}/>
-                <span>ჯამური თანხა: { CommonFn.formatNumber(totalDue)} ₾</span>
+                <span>ჯამური თანხა: { formatNumber(totalDue)} ₾</span>
             </div>
             
             

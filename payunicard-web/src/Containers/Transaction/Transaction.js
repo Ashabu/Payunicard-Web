@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 import './transaction.scss';
 import PropTypes from 'prop-types';
 import User from '../../Services/API/UserServices';
-import ComonFn from '../../Services/CommonFunctions';
+import { setLogoByAccountType } from '../../Services/CommonFunctions';
 import { Backdrop, Calendar, Icon, Select, SelectList, Search, SidePanel, Button, Widget } from '../../Components/UI/UiComponents';
 import Layout from '../../Containers/Layout/Layout';
 import TransactionDetail from '../../Components/TransactionDetails/TransactionDetail';
@@ -168,12 +168,12 @@ const Transaction = () => {
                                 data = { userAccounts } 
                                 placeholder = 'Select Account'
                                 selected = { selectedAccount.accountNumber }
-                                icon = { <Icon iconUrl = { ComonFn.setLogoByAccountType(selectedAccount.type) }/> }
+                                icon = { <Icon iconUrl = { setLogoByAccountType(selectedAccount.type) }/> }
                                 display ={(element, setVisible) => (
                                 <SelectList  
                                     key={ element.accountNumber } 
                                     clicked={() => { setSelectedAccount(element); setVisible(false) }} >
-                                        <Icon iconUrl = { ComonFn.setLogoByAccountType(element.type) }/>{ element.accountNumber } 
+                                        <Icon iconUrl = { setLogoByAccountType(element.type) }/>{ element.accountNumber } 
                                 </SelectList>)} 
                             />
                         </div>

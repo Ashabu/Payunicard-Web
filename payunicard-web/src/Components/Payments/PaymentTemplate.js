@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState, useContext} from 'react';
 import './payment.scss';
 import { Context } from '../../Context/AppContext';
-import ComonFn from '../../Services/CommonFunctions';
+import { formatNumber } from '../../Services/CommonFunctions';
 import { Backdrop, RoundCheckmark, Search } from './../UI/UiComponents';
 import { Template } from '../../Services/API/APIS';
 import EditTemplate from './../EditTemlpate/EditTemplate';
@@ -83,7 +83,7 @@ const PaymentTemplate = (props) => {
             <div className = 'rightSide'>
                 {canPayWithUnipoints === 1? <img src = '../../Assets/Images/unicard-logo-sm.png' alt = '' />: null}
                 <RoundCheckmark checkType = 'checkbox' toggle = { props.toggle }  checked  = { checked } id = { payTempID } for = { payTempID }/>
-                <span>{ ComonFn.formatNumber(debt) } ₾</span>
+                <span>{ formatNumber(debt) } ₾</span>
                 <img src = '../../Assets/Images/three_dot.png' alt = 'icon' onClick = {() => setTemplateOptions(!templateOptions)}/>
             </div>
             { templateOptions?

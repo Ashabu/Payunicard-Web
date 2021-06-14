@@ -2,7 +2,7 @@ import React, {useState, useRef, useContext} from 'react';
 import './payment.scss';
 import PropTypes from 'prop-types';
 import { Icon ,RoundCheckmark } from '../UI/UiComponents';
-import CommonFn from '../../Services/CommonFunctions';
+import { formatNumber } from '../../Services/CommonFunctions';
 
 
 const  PayAllTemplate =(props) => {
@@ -31,7 +31,7 @@ const  PayAllTemplate =(props) => {
             </div>
             <div className = 'templAmount'>
            
-                {!editAmmount? <span onClick ={()=> {setEditAmmount(true); setNewAmmount(Math.abs(debt)) }}>{CommonFn.formatNumber(debtAmmount)} ₾</span> :
+                {!editAmmount? <span onClick ={()=> {setEditAmmount(true); setNewAmmount(Math.abs(debt)) }}>{ formatNumber(debtAmmount) } ₾</span> :
                <input value = { debtAmmount } onChange = {(e)=> setNewAmmount(e.target.value)}  onBlur = {() => test(debtAmmount) } autoFocus = {true}/>}
             </div>
             

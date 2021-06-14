@@ -15,7 +15,7 @@ const PayAllPaymentPanel = (props) => {
     const { paymentTemplates } = state
 
     const [ selectedAccount, setSelectedAccount] = useState({});
-    const [ canPayWithUnicard, setCanPayWithUnicard ] = useState(0);
+    const [ canPayWithUnicard, setCanPayWithUnicard ] = useState(null);
     const [ templates, setTemplates ] = useState([]);
     const [ amountSum, setAmountSum ] = useState(0);
     const [ commissionSum, setCommissionSum ] = useState(0);
@@ -28,13 +28,15 @@ const PayAllPaymentPanel = (props) => {
     useEffect(() => {
         
         setTemplates(paymentTemplates)
+        hasUnicard(templates)
        
     }, [paymentTemplates])
 
 
     const handleEditDebt = (val, i) => {
         templates[i].debt = val;
-        setTemplates([...templates])
+        setTemplates([...templates]);
+        hasUnicard(templates)
     }
 
     
@@ -110,17 +112,20 @@ const PayAllPaymentPanel = (props) => {
 
     }
 
+    const hasUnicard = (data) => {
+        return data.every(el => el.canPayWithUniPoints === true);
+    }
     const payAllBills = () => {
         Transaction.startPayBatchTransaction(test)
     }
     
-   console.log('*********',test)
     
     let PayAllStep = null;
+    
     if(paymentStep === 0) {
         PayAllStep = (
             <div style = {{padding: 20, boxSizing: 'border-box'}}>
-                <SelectAccount account = { selectAccount } icon hasUnicard = { 1 }/>  
+                <SelectAccount account = { selectAccount } icon hasUnicard = { hasUnicard? 1 : 0 }/>  
                 <button onClick = {() => getPaymentCommision([...paymentTemplates], 2)}>კომისია</button> 
                 {templates?.map((t, i) =>(<PayAllTemplate key ={i} template = { t } editDebt = {(val)=> handleEditDebt(val,i)}/>))}
             </div>

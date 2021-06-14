@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import './transactionDetailView.scss';
 import { TrTypes } from '../../Constants/index';
-import ComonFn from '../../Services/CommonFunctions';
+import { formatCurrencySymbol, formatDate, formatNumber, getMccImageUrl } from '../../Services/CommonFunctions';
 
 import PropTypes from 'prop-types'
 
@@ -39,7 +39,7 @@ const  TransactionDetailView = (props) => {
             <div className = 'detail-body'>
                 <p style = {{textAlign: 'end'}}>დეტალები </p>
                 <p>თანხა</p>
-                   <span>{ComonFn.formatNumber(amount)}</span>
+                   <span>{ formatNumber(amount) }</span>
                 <p>{atmCashOut? 'ბანკომატი': 'მერჩანტი' }</p>
                    <span>{abvrName}</span>
                 {uniBonus? <Fragment><p>უნი ქულები</p>
@@ -49,9 +49,9 @@ const  TransactionDetailView = (props) => {
                 <p>ანგარიშის ნომერი</p>
                    <span>{senderaccount}</span>
                 <p>{atmCashOut? 'განაღდების თარიღი' : 'გადახდის თარიღი'}</p>
-                   <span>{ComonFn.formatDate(tranDate)}</span>
+                   <span>{ formatDate(tranDate) }</span>
                 <p>გატარების თარიღი</p>
-                   <span>{ComonFn.formatDate(dateCreated)}</span>
+                   <span>{ formatDate(dateCreated) }</span>
             </div>)}
 
      let Transfer = null;
@@ -74,13 +74,13 @@ const  TransactionDetailView = (props) => {
                 <hr/>
                 <p style = {{textAlign: 'end'}}>დეტალები </p>
                 <p>თანხა</p>
-                    <span>{ComonFn.formatNumber(amount)}</span>
+                    <span>{ formatNumber(amount) }</span>
                 <p>დანიშნულება</p>
                     <span>{description}</span>
                 <p>გადახდის თარიღი</p>
-                    <span>{ComonFn.formatDate(tranDate)}</span>
+                    <span>{ formatDate(tranDate) }</span>
                 <p>გატარების თარიღი</p>
-                   <span>{ComonFn.formatDate(dateCreated)}</span>
+                   <span>{ formatDate(dateCreated) }</span>
             </div>)}
 
     let UtilityPayment = null;
@@ -99,7 +99,7 @@ const  TransactionDetailView = (props) => {
                 <hr/>
                 <p style = {{textAlign: 'end'}}>დეტალები </p>
                 <p>თანხა</p>
-                    <span>{ComonFn.formatNumber(amount)}</span>        
+                    <span>{ formatNumber(amount) }</span>        
             </div>)}
 
     let HoldedTrasaction = null;
@@ -108,7 +108,7 @@ const  TransactionDetailView = (props) => {
             <div className = 'detail-body'>
                 <p style = {{textAlign: 'end'}}>დეტალები </p>
                 <p>თანხა</p>
-                   <span>{ComonFn.formatNumber(amount)}</span>
+                   <span>{ formatNumber(amount) }</span>
                 <p>მერჩანტი</p>
                     <span>{merchantDescription}</span>
                <p>ბარათის ნომერი</p>
@@ -120,14 +120,14 @@ const  TransactionDetailView = (props) => {
         <div className = 'detail-view-wrap' >
             <div className= 'detail-header'>
                 <div className='header-left'>
-                    <img  src = {DetailContentId !==4? ComonFn.getMccImageUrl(mccGroupCodeId) : '../../Assets/Images/lock-grey.png'} alt = 'icon'/>
+                    <img  src = {DetailContentId !==4?  getMccImageUrl(mccGroupCodeId) : '../../Assets/Images/lock-grey.png'} alt = 'icon'/>
                     <p>{mccGroupName}</p>
                 </div>
                 <div className='header-right'>
                     <p >{abvrName}</p>
-                    <p>{ComonFn.formatDate(dateCreated || transactionDate)}</p>
+                    <p>{ formatDate(dateCreated || transactionDate) }</p>
                 <div className = 'amount'>
-                     <p style = {{color: amount > 0? '#94dd34' : ccy? 'red' : 'grey'}}>{ComonFn.formatNumber(amount)} {ComonFn.formatCurrencySymbol(ccy || currency)}</p> 
+                     <p style = {{color: amount > 0? '#94dd34' : ccy? 'red' : 'grey'}}>{ formatNumber(amount) } { formatCurrencySymbol(ccy || currency) }</p> 
                 </div>
                 </div>
             </div>

@@ -15,7 +15,8 @@ import TransactionDetail from './../../Components/TransactionDetails/Transaction
 import {handleTransactionDetailView } from '../../Providers/TransactionProvider';
 import TransactionDetailView from './../../Components/TransactionDetailView/TransactionDetailView';
 import PayAllPaymentPanel from '../../Components/Payments/PayAllPaymentPanel';
-
+import PaymentDetails from '../../Components/Payments/PaymentDetails';
+ 
 
 
 const Payments = () => {
@@ -47,7 +48,7 @@ const Payments = () => {
     const [ paymentData, setPaymentData ] = useState(null);
     const [ utilities, setUtilities ] = useState([]);
     const [ searchUtilies, setSearchUtilities ] = useState({data:[], search: false});
-    const [ selectAllTemplates, setSelectAllTemplates ] = useState(false);
+    const [ selectAllTemplates, setSelectAllTemplates ] = useState(true);
     
     //-----------------------------------
     const [ allvisible, setAllVisible ] = useState(false);
@@ -265,7 +266,8 @@ const Payments = () => {
         setPaymentStep(2); 
         setPaymentPanelVisible(true);
     }
-
+    
+    
 
     return (
         <Layout>
@@ -317,9 +319,9 @@ const Payments = () => {
             </Widget>
             <Widget>
                 <div>
-                    <p>გადახდის შაბლონები</p>
+                    <p >გადახდის შაბლონები</p>
                     <Search  onsearch = { searchTemplates }/>
-                    <p onClick = { checkAllTemplates }>ყველას მონიშვნა</p>
+                    <p style = {{cursor: 'pointer'}} onClick = { checkAllTemplates }>ყველას მონიშვნა</p>
                     
                 </div>
                 
@@ -334,7 +336,8 @@ const Payments = () => {
                 ))}
                 <button onClick = {()=> setAllVisible(true)}>გადახდა</button>           
             </Widget>
-            <Widget>
+            
+            {/* <Widget>
                 <div>
                     <p>ბოლო ტრანზაქციები</p>
                 </div>
@@ -343,7 +346,7 @@ const Payments = () => {
                     transaction = { transaction }
                     clicked = {() =>   {handleTransactionDetailView(transaction, setSelectedTransaction, navigate); setDetailVisible(true)}}/>
                 ))}
-            </Widget>
+            </Widget> */}
         </div>
         </Layout>
     )

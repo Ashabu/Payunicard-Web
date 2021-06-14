@@ -196,3 +196,43 @@
         }
     }
 }
+
+
+.detail-header {
+    display: grid;
+    grid-template-columns: 70% auto 17%;
+    margin-bottom: 10px;
+     span {
+         &:nth-child(2), &:last-child {
+             text-align: center;
+         }
+     }
+}
+
+.detail-body {
+    display: grid;
+    grid-template-columns: 12% auto 15% 15%;
+
+    .checkmark {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .templImg {
+        img {
+            width: 50px;
+        }
+    }
+    .templDetails {
+        display: flex;
+        flex-flow: column;
+    }
+    .templAmount {
+        text-align: center;
+        border-radius: 7px;
+        padding: 5px;
+        margin-right: 10px;
+
+        
+    }   
+}

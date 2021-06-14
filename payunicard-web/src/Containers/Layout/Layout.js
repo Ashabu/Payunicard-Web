@@ -204,7 +204,7 @@ const  Layout = (props) =>  {
             if(res.data.ok) {
                 let paymentTemplates = res.data.data.templates;
                 paymentTemplates.map(t => {
-                    t.checked = false;
+                    t.checked = true;
                     return t
                 })
                 setGlobalValue({paymentTemplates})

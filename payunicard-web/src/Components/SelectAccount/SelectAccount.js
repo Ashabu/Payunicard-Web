@@ -11,9 +11,10 @@ const SelectAccount = (props) => {
     const { state } = useContext(Context);
     const { userAccounts } = state;
 
-    const { placeholder, current } = props;
+    const { placeholder, current, hasUnicard } = props;
 
     const [ selectedAccount, setSelectedAccount] = useState(null);
+    const [ UserAccounts, setUserAccounts ] = useState([])
 
     const setAccount = (data) => {
         props.account(data)
@@ -30,11 +31,24 @@ const SelectAccount = (props) => {
         if(current) {
             currentAccount(current);
         }
-    }, [current])
+    }, [current]) 
 
+    useEffect(() => {
+        if(hasUnicard === 0) {
+            let tempAccounts = userAccounts.filter(acc => acc.type !==7)
+            setUserAccounts([...tempAccounts])
+        } else {
+            
+            setUserAccounts([...userAccounts])
+            debugger
+        }
+       
+        
+    }, [])
+    
     return (
         <Select
-            data = { userAccounts } 
+            data = { UserAccounts } 
             selected = { selectedAccount? 
                 <SelectedAccount 
                     selected = { selectedAccount } 
@@ -47,7 +61,8 @@ const SelectAccount = (props) => {
                     selected = { element } 
                     icon = { props.icon } 
                     orderCard = {props.orderCard} 
-                    list clicked={() => { setSelectedAccount(element); setVisible(false); setAccount(element)}}/>
+                    list 
+                    clicked={() => { setSelectedAccount(element); setVisible(false); setAccount(element)}}/>
                 )} 
             />
     )

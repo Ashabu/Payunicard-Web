@@ -11,6 +11,7 @@ import SelectAccount from '../SelectAccount/SelectAccount';
 const  FillPaymentData = (props) => {
     const {
         abonentCode, 
+        canPayWithUnipoints,
         debtCode, 
         forFromAccount, 
         forMerchantCode,
@@ -25,7 +26,7 @@ const  FillPaymentData = (props) => {
         merchantImgUrl , 
         merchantName, 
         merchantServiceCode,
-        minAmount
+        minAmount,
         } = props.merchantdata;
     
 
@@ -147,13 +148,13 @@ const  FillPaymentData = (props) => {
         getCostumerCommision();
     }, [amount, selectedAccount.accountNumber])
 
-    
+    console.log(canPayWithUnipoints)
     return (
         <div>
             <div style={{width: '100%', height: '100%', minHeight: 400,  boxSizing: 'border-box', padding: 20}}>
                 <div>
                     <p>Please Choose a Card</p>
-                    <SelectAccount account = { selectAccount } placeholder = 'Select Account' icon  current = { forFromAccount }/>
+                    <SelectAccount account = { selectAccount } placeholder = 'Select Account' icon  current = { forFromAccount } hasUnicard = { canPayWithUnipoints }/>
                 </div>
                 <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 30}}>
                     <div style={{width: 300}}>

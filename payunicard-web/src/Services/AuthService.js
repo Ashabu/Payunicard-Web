@@ -45,6 +45,7 @@ class AuthService {
     const setAuthToken =  (config) => {
       config.headers = config.headers || {};
       config.headers.Authorization = `Bearer ${this.getToken()}`;
+      
     };
 
     const waitForRefresh = (config) => {

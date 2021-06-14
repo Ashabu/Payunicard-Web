@@ -69,6 +69,7 @@ const PaymentPanel = (props) => {
 
     return (
         <SidePanel
+        
             bredcrump = { bredCrump }
             stepBack 
             onStepBack = { handlePaymentStep }

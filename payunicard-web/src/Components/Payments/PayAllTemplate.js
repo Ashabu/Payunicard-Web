@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useRef, useContext} from 'react';
 import './payment.scss';
 import PropTypes from 'prop-types';
 import { Icon ,RoundCheckmark } from '../UI/UiComponents';
@@ -7,6 +7,15 @@ import CommonFn from '../../Services/CommonFunctions';
 
 const  PayAllTemplate =(props) => {
     const { imageUrl, templName, abonentCode,  debt , payTempID, checked, toggle } = props.template;
+    const [ editAmmount, setEditAmmount ] = useState(false);
+    const [ debtAmmount, setNewAmmount ] = useState(Math.abs(debt))
+
+
+    const test = (val) => {
+        setEditAmmount(false);
+        props.editDebt(val);
+
+    }
 
     return (
         <div className = 'PayAllTemplate'>
@@ -21,7 +30,9 @@ const  PayAllTemplate =(props) => {
                 <span>{abonentCode}</span>
             </div>
             <div className = 'templAmount'>
-                <span>{CommonFn.formatNumber(Math.abs(debt))} ₾</span>
+           
+                {!editAmmount? <span onClick ={()=> {setEditAmmount(true); setNewAmmount(Math.abs(debt)) }}>{CommonFn.formatNumber(debtAmmount)} ₾</span> :
+               <input value = { debtAmmount } onChange = {(e)=> setNewAmmount(e.target.value)}  onBlur = {() => test(debtAmmount) } autoFocus = {true}/>}
             </div>
             
         </div>

@@ -14,8 +14,7 @@ import SearchMerchants from './../../Components/Payments/SearchMerchants';
 import TransactionDetail from './../../Components/TransactionDetails/TransactionDetail';
 import {handleTransactionDetailView } from '../../Providers/TransactionProvider';
 import TransactionDetailView from './../../Components/TransactionDetailView/TransactionDetailView';
-import PayAllTemplate from './../../Components/Payments/PayAllTemplate';
-
+import PayAllPaymentPanel from '../../Components/Payments/PayAllPaymentPanel';
 
 
 
@@ -50,6 +49,12 @@ const Payments = () => {
     const [ searchUtilies, setSearchUtilities ] = useState({data:[], search: false});
     const [ selectAllTemplates, setSelectAllTemplates ] = useState(false);
     
+    //-----------------------------------
+    const [ allvisible, setAllVisible ] = useState(false);
+
+
+
+    //-----------------------------------
 
 
     useEffect(() => {
@@ -264,7 +269,7 @@ const Payments = () => {
 
     return (
         <Layout>
-            <Backdrop show = { paymentPanelVisible || detailVisible } hide = { handlePaymentPanelClose }/>
+            <Backdrop show = { paymentPanelVisible || detailVisible || allvisible } hide = { handlePaymentPanelClose }/>
 
             {services && <PaymentPanel 
                 tabvisible = { paymentPanelVisible }
@@ -278,6 +283,8 @@ const Payments = () => {
                 proceedPayment = { proceedPayment }
                 saveTemplate = { saveUtilityTemplate }/>}
 
+             <PayAllPaymentPanel payallvisible = { allvisible } />   
+
             <SidePanel
                     visible = { detailVisible }
                     closePanel = {() => { setDetailVisible(false); history.goBack() }}>
@@ -287,12 +294,7 @@ const Payments = () => {
         <div style = {{ marginLeft: 200}}>
             <p>WELCOME TO PAYMENTS</p>
             
-            {templates.map(payTemplate => (
-                <PayAllTemplate 
-                    key = { payTemplate.payTempID } 
-                    template = { payTemplate } 
-                    />
-                ))} 
+           
             <Widget class = 'Utilities'>
                 <div className = 'UtilityHeader'>
                     <span>კატეგორიები</span>
@@ -329,7 +331,8 @@ const Payments = () => {
                     editName = { editUtilityTemplateName }
                     clicked = {opentTemplateTab}
                     />
-                ))}           
+                ))}
+                <button onClick = {()=> setAllVisible(true)}>გადახდა</button>           
             </Widget>
             <Widget>
                 <div>

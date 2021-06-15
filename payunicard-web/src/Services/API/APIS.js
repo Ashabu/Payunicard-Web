@@ -4,6 +4,7 @@ import User from './UserServices';
 import UploadImage from './UploadImage';
 import Template from './TemplateService';
 import Transaction from './TransactionService';
+import Otp from './OtpServices';
 
 
 
@@ -14,6 +15,7 @@ import Transaction from './TransactionService';
 export {
     Currency,
     Presentation,
+    Otp,
     User,
     UploadImage,
     Template,

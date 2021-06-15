@@ -12,7 +12,7 @@ import SelectedAccount from './../HOC/SelectedAccount/SelectedAccount';
 
 const PayAllPaymentPanel = (props) => {
     const { state } = useContext(Context);
-    const { paymentTemplates } = state
+    const { paymentTemplates } = state;
 
     const [ selectedAccount, setSelectedAccount] = useState({});
     const [ canPayWithUnicard, setCanPayWithUnicard ] = useState(null);
@@ -26,17 +26,16 @@ const PayAllPaymentPanel = (props) => {
     const [ test, setTest] = useState([]);
 
     useEffect(() => {
-        
         setTemplates(paymentTemplates)
-        hasUnicard(templates)
-       
+        ckeckForUniPoints(paymentTemplates)
     }, [paymentTemplates])
 
+   
 
     const handleEditDebt = (val, i) => {
         templates[i].debt = val;
         setTemplates([...templates]);
-        hasUnicard(templates)
+        ckeckForUniPoints(templates);
     }
 
     
@@ -112,9 +111,10 @@ const PayAllPaymentPanel = (props) => {
 
     }
 
-    const hasUnicard = (data) => {
-        return data.every(el => el.canPayWithUniPoints === true);
+    const ckeckForUniPoints = (data) => {
+        data.every(el => el.canPayWithUniPoints === true)? setCanPayWithUnicard(1) : setCanPayWithUnicard(0);
     }
+
     const payAllBills = () => {
         Transaction.startPayBatchTransaction(test)
     }
@@ -125,7 +125,7 @@ const PayAllPaymentPanel = (props) => {
     if(paymentStep === 0) {
         PayAllStep = (
             <div style = {{padding: 20, boxSizing: 'border-box'}}>
-                <SelectAccount account = { selectAccount } icon hasUnicard = { hasUnicard? 1 : 0 }/>  
+                <SelectAccount account = { selectAccount } icon hasUnicard = { canPayWithUnicard }/>  
                 <button onClick = {() => getPaymentCommision([...paymentTemplates], 2)}>კომისია</button> 
                 {templates?.map((t, i) =>(<PayAllTemplate key ={i} template = { t } editDebt = {(val)=> handleEditDebt(val,i)}/>))}
             </div>
@@ -146,7 +146,7 @@ const PayAllPaymentPanel = (props) => {
 
 
     return (
-        <SidePanel visible = {props.payallvisible}>
+        <SidePanel visible = {props.payallvisible} closePanel = { props.close } >
             {PayAllStep}
             
         </SidePanel>

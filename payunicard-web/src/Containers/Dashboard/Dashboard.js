@@ -13,6 +13,7 @@ import UserProducts from './../../Components/UserProducts/UserProducts';
 import CurrencyRates from './../../Components/CurrencyRates/CurrencyRates';
 import UserVerificationstatus from '../../Components/UserVerificationStatus/UserVerificationStatus';
 import {handleTransactionDetailView } from '../../Providers/TransactionProvider';
+import OTP from '../../Components/UI/OTP/OTP';
 
 
 
@@ -96,7 +97,9 @@ const  Dashboard = () => {
                
                 <div style ={{maxWidth: 485, marginLeft: 150}}>
                     <UserVerificationstatus/>
-
+                    <div style={{width: 500, height: 600, border: '1px solid black'}}>
+                        <OTP/>
+                    </div>
                     <Button clicked = {()=> history.push('/payments')}>go to payments</Button>
 
                     <p style={{display: 'flex', justifyContent: 'center'}}>WELCOME TO Dashboard</p>

@@ -66,10 +66,6 @@ const Payments = () => {
         setTemplates(allTemplates);
     }, [selectAllTemplates])
 
-    useEffect(() => {
-        setTemplates(paymentTemplates);
-        
-    }, [paymentTemplates]);
 
     useEffect(() => {
         setUtilities(paymentServices);
@@ -80,6 +76,7 @@ const Payments = () => {
     }, [searchUtilies]);
 
     useEffect(() => {
+        setTemplates(paymentTemplates);
         getPaymentStatements();
     }, [paymentTemplates])
 
@@ -267,7 +264,7 @@ const Payments = () => {
         setPaymentPanelVisible(true);
     }
     
-    
+   
 
     return (
         <Layout>
@@ -285,7 +282,7 @@ const Payments = () => {
                 proceedPayment = { proceedPayment }
                 saveTemplate = { saveUtilityTemplate }/>}
 
-             <PayAllPaymentPanel payallvisible = { allvisible } />   
+             <PayAllPaymentPanel payallvisible = { allvisible } close = {() =>setAllVisible(false)}/>   
 
             <SidePanel
                     visible = { detailVisible }
@@ -337,7 +334,7 @@ const Payments = () => {
                 <button onClick = {()=> setAllVisible(true)}>გადახდა</button>           
             </Widget>
             
-            {/* <Widget>
+            <Widget>
                 <div>
                     <p>ბოლო ტრანზაქციები</p>
                 </div>
@@ -346,7 +343,7 @@ const Payments = () => {
                     transaction = { transaction }
                     clicked = {() =>   {handleTransactionDetailView(transaction, setSelectedTransaction, navigate); setDetailVisible(true)}}/>
                 ))}
-            </Widget> */}
+            </Widget>
         </div>
         </Layout>
     )

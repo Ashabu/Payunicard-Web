@@ -9,7 +9,7 @@ class Transaction {
 
     startPayBatchTransaction = async (data) => {
         let paydata =  {
-            transaction: data
+            transactions: data
         }
         return await axios.post(`${globalConfig.api_URL}/Transaction/RegisterBatchPayTransaction`, paydata);
     }

@@ -38,13 +38,10 @@ const SelectAccount = (props) => {
             let tempAccounts = userAccounts.filter(acc => acc.type !==7)
             setUserAccounts([...tempAccounts])
         } else {
-            
             setUserAccounts([...userAccounts])
-            debugger
         }
-       
         
-    }, [])
+    }, [hasUnicard, userAccounts])
     
     return (
         <Select

@@ -1,0 +1,61 @@
+.tr-template {
+    position: relative;
+    text-align: center;
+    margin: 0 0 60px 47px;
+    .t-body {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+
+       
+        .t-photo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #F6F6F6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 13px;
+        }
+    }
+
+    .t-name {
+        width: 50px;
+        span {
+            font-family: 'FiraGO MEDIUM';
+            font-size: 12px;
+            line-height: 14px;
+            text-align: center;
+        }
+    }
+
+    .t-options {
+        position: absolute;
+        top: 78px;
+        right: 0px;
+        width: 177px;
+        z-index: 200;
+        height: 62px;
+        background: #FFFFFF;
+        box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.12);
+        border-radius: 7px;
+        cursor: pointer;
+
+            .t-option {
+                display: flex;
+                align-items: center;
+                height: 31px;
+                padding-left: 9px;
+            
+
+            &:hover {
+                border-left: 2px solid #94dd34;
+            }
+
+            &:first-child {
+                border-bottom: 1px solid #EBEBEB;
+            }
+        }
+    }
+}

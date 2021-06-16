@@ -21,4 +21,4 @@ class Otp {
 }
 
 
-export default Otp;
+export default new Otp;

@@ -7,6 +7,7 @@ import UserRegistration from '../Containers/UserRegistration/UserRegistration';
 import Dashboard from '../Containers/Dashboard/Dashboard';
 import Transaction from '../Containers/Transaction/Transaction';
 import Payments from './../Containers/Payments/Payments';
+import Transfers from './../Containers/Transfers/Transfers';
 import AuthService from './../Services/AuthService';
 import PrivateRoute from './privateRoute';
 import NotAuthRoute from './NotAuthRoute';
@@ -59,6 +60,7 @@ const Routing = () => (
         <PrivateRoute path = '/dashboard' component = {Dashboard}/>
         <PrivateRoute path = '/transactions' component = {Transaction}/>
         <PrivateRoute path = '/payments' component = {Payments}/>
+        <PrivateRoute path = '/transfers' component = {Transfers}/>
 
     </Switch>
 );

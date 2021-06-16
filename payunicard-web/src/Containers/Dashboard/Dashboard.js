@@ -101,6 +101,7 @@ const  Dashboard = () => {
                         <OTP/>
                     </div>
                     <Button clicked = {()=> history.push('/payments')}>go to payments</Button>
+                    <Button clicked = {()=> history.push('/transfers')}>go to transfers</Button>
 
                     <p style={{display: 'flex', justifyContent: 'center'}}>WELCOME TO Dashboard</p>
 

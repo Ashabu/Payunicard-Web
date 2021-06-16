@@ -168,7 +168,7 @@ const  FillPaymentData = (props) => {
                     </div>
                     <div style = {{display: 'flex', flexFlow: 'column'}}>
                         <Input value = {AbonentCode} onInput = {(e) => setAbonentCode(e.target.value)} />
-                        {AbonentCode !== ''? <Button clicked = {checkCostumerDebt}>შემომწმება</Button> : null}
+                        {AbonentCode !== ''? <Button clicked = { checkCostumerDebt }>შემომწმება</Button> : null}
                     </div>
                 </div>
                 <div className = 'payment-info'>

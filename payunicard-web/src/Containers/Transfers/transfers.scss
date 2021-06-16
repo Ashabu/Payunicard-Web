@@ -1,0 +1,13 @@
+.tr-services {
+    display: flex;
+    .tr-service {
+        width: 200px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #FFFFFF;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+        border-radius: 7px;
+    }
+}

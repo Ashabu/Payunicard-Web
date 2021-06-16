@@ -14,7 +14,7 @@ import { Context } from '../../Context/AppContext';
 const  Layout = (props) =>  {
 
     const { state, setGlobalValue } = useContext(Context)
-    const { currencyRates, userAccounts, paymentServices, paymentTemplates, userTransactions, transactionTemplates,  
+    const { currencyRates, userAccounts, paymentServices, paymentTemplates, userTransactions, transferTemplates,  
         userDetails, userTotalBalance, activeLang, isUserAuthorized } = state;
 
 
@@ -26,6 +26,7 @@ const  Layout = (props) =>  {
         getCurrencyRates();
         getPaymetnServices();
         getPaymentTemplates();
+        getTransferTemplates();
 
     }, [isUserAuthorized])
 
@@ -209,6 +210,16 @@ const  Layout = (props) =>  {
                 })
                 setGlobalValue({paymentTemplates})
                 
+            }
+        })
+    }
+
+    const getTransferTemplates = () => {
+        if(transferTemplates.length > 0 || !isUserAuthorized) return;
+        Template.getTransferTemplates().then(res => {
+            if(res.data.ok) {
+                console.log(res.data)
+                setGlobalValue({transferTemplates: res.data.data.templates})
             }
         })
     }

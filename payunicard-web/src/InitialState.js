@@ -7,7 +7,7 @@ export const initialState = {
     isUserAuthorized: false,
     paymentServices: [],
     paymentTemplates: [],
-    transactionTemplates: [],
+    transferTemplates: [],
     userAccounts: [],
     userTotalBalance: [],
     userTransactions: [],

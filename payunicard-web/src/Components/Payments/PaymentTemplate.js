@@ -52,7 +52,6 @@ const PaymentTemplate = (props) => {
         }
 
         Template.deleteUtilityTemplate(deleteTemplateData).then(res => {
-            console.log(res)
             let newPaymentTemplates = paymentTemplates.filter(t => t.payTempID !== payTempID);
             setGlobalValue({paymentTemplates: newPaymentTemplates})
         })

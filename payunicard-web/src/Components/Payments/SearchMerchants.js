@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 
 const  SearchMerchants = (props) =>{
     const {merchantServiceURL, resourceValue } = props.merchants;
-    console.log(props.merchants)
     return (
         <div className = 'CategoryItem' onClick = {props.clicked}>
             <div className = 'serviceImg'>

@@ -11,10 +11,11 @@ const SelectAccount = (props) => {
     const { state } = useContext(Context);
     const { userAccounts } = state;
 
-    const { placeholder, current, hasUnicard } = props;
+    const { placeholder, current, choseDisabled, hasUnicard } = props;
 
     const [ selectedAccount, setSelectedAccount] = useState(null);
-    const [ UserAccounts, setUserAccounts ] = useState([])
+    const [ UserAccounts, setUserAccounts ] = useState([]);
+    const [ disabled, setDisabled ] = useState(false);
 
     const setAccount = (data) => {
         props.account(data)
@@ -31,7 +32,7 @@ const SelectAccount = (props) => {
         if(current) {
             currentAccount(current);
         }
-    }, [current]) 
+    }, [current]); 
 
     useEffect(() => {
         if(hasUnicard === 0) {
@@ -41,7 +42,19 @@ const SelectAccount = (props) => {
             setUserAccounts([...userAccounts])
         }
         
-    }, [hasUnicard, userAccounts])
+    }, [hasUnicard, userAccounts]);
+
+    useEffect(() => {
+        if(choseDisabled) {
+            let i = UserAccounts.findIndex(acc => acc.accountNumber === choseDisabled );
+            UserAccounts.forEach(acc => acc.choseDisabled = false);
+            UserAccounts[i].choseDisabled = true;
+            setUserAccounts([...UserAccounts]);
+
+        }
+        
+    }, [choseDisabled])
+  
     
     return (
         <Select
@@ -57,8 +70,9 @@ const SelectAccount = (props) => {
                     key={ element.accountNumber } 
                     selected = { element } 
                     icon = { props.icon } 
-                    orderCard = {props.orderCard} 
-                    list 
+                    orderCard = { props.orderCard } 
+                    list
+                    onDisabled = { element.choseDisabled }
                     clicked={() => { setSelectedAccount(element); setVisible(false); setAccount(element)}}/>
                 )} 
             />

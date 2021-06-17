@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import './transfers.scss';
 import { Context } from '../../Context/AppContext.js';
 import { formatNumber, } from '../../Services/CommonFunctions'; 
-import { Backdrop, Search, Widget } from '../../Components/UI/UiComponents';
+import { Backdrop, OTP, Search, Widget } from '../../Components/UI/UiComponents';
 import { Otp, Transaction } from '../../Services/API/APIS';
 import Layout from '../../Containers/Layout/Layout';
 import PropTypes from 'prop-types';
@@ -18,7 +18,13 @@ const Transfers = (props) => {
     const [ templates, setTemplates ] = useState([]);
     const [ selectedTemplate, setSelectedTemplate ] = useState(undefined)
     const [ transferPanelVisible, setTransferPanelVisible ] = useState(false);
+    const [ transferStep, setTransferStep ] = useState(0);
     const [ transferType, setTransferType ] = useState('');
+    const [ transferData, setTransferData ] = useState(null);
+    const [ oneTimePasscode, setOneTimePasscode ] = useState('')
+
+    //------------------------------------------------------------
+    const [ otpWindowVisible,  setOtpWindowVisible ] = useState(false)
 
     useEffect(() => {
         setTemplates(transferTemplates)
@@ -49,25 +55,50 @@ const Transfers = (props) => {
     }
 
     const startTransfer = (data) => {
-    
-        // Otp.PhoneOtpByUser({userName: 'a.shaburishvili'}); return;
-
-        Transaction.startTransaction({...data, otp: '6933'}).then(res => {
-            console.log(res.data)
-        })
-        console.log(data)
+        if(transferType === 'BetweenAccounts') {
+            makeTransaction(data);
+        } else {
+            setTransferData(data);
+            setOtpWindowVisible(true);
+            Otp.PhoneOtpByUser({userName: 'a.shaburishvili'}); 
+        }
+        
     }
+
+    const makeTransfer = (data) => {
+        debugger
+        if(transferData) {
+            data = {...transferData, otp: oneTimePasscode};
+        }
+        
+        Transaction.makeTransaction(transferType, data).then(res => {
+            console.log(res.data)
+            if(res.data.ok) {
+                setOtpWindowVisible(false);
+                setTransferStep(1);
+            }
+        })
+    }
+
+    const getOtpValue = (value) => {
+        setOneTimePasscode(value);
+    }
+
+
 
 
 
     return (
         <Layout>
             <Backdrop show = { transferPanelVisible } hide = { closeTransferPanel }/>
+            <OTP submitAction = {()=> makeTransfer() } getOtpValue = { getOtpValue } otpVisible = { otpWindowVisible} closeOtpWindow = {() => setOtpWindowVisible(false)}/>
             <TransferPanel 
             templateData = { selectedTemplate }
             tabvisible = { transferPanelVisible }
+            step = { transferStep }
             closeTransferPanel = { closeTransferPanel }
-            onTransfer = { startTransfer } />
+            onTransfer = { startTransfer }
+            type = { transferType }/>
             <div style = {{height: 1000, marginLeft: 300}}>
                 
                 
@@ -82,7 +113,7 @@ const Transfers = (props) => {
                 
             </Widget>
             <div className = 'tr-services'>
-                    <div className = 'tr-service' onClick = {() => {setTransferPanelVisible(true); setTransferType('ToBank')}}>
+                    <div className = 'tr-service' onClick = {() => {setTransferPanelVisible(true); setTransferType('BetweenAccounts')}}>
                          <img src = '../../Assets/Images/TransferImg/betweenOwnAccounts.png' alt = 'icon' />   
                     </div>
                     <div className = 'tr-service' onClick = {() => {setTransferPanelVisible(true); setTransferType('Conversion')}}>
@@ -91,7 +122,7 @@ const Transfers = (props) => {
                     <div className = 'tr-service' onClick = {() => {setTransferPanelVisible(true); setTransferType('ToWallet')}}>
                          <img src = '../../Assets/Images/TransferImg/toUniwallet.png' alt = 'icon' />   
                     </div>
-                    <div className = 'tr-service' onClick = {() => {setTransferPanelVisible(true); setTransferType('BetweenAccounts')}}>
+                    <div className = 'tr-service' onClick = {() => {setTransferPanelVisible(true); setTransferType('ToBank')}}>
                          <img src = '../../Assets/Images/TransferImg/toBank.png' alt = 'icon' />   
                     </div>
                 </div>

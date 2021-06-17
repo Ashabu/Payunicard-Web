@@ -47,8 +47,8 @@ a {
 // button classes 
 .disabled {
     opacity: 0.3;
+    pointer-events: none;
 }
-
 
 .unicard-btn {
     width: 187px;

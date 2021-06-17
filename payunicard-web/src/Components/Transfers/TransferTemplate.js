@@ -19,7 +19,6 @@ const TransferTemplate = (props) => {
         }
 
         Template.deleteTransferTemplate(deleteTemplateData).then(res => {
-            console.log(res)
             let newTransferTemplates = transferTemplates.filter(t => t.templateId !== templateId);
             setGlobalValue({transferTemplates: newTransferTemplates})
         })

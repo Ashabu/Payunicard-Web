@@ -132,8 +132,8 @@ const  Layout = (props) =>  {
              }
             
             let allUserCurrencies = [];
-    
-            [...userAccounts].forEach(acc => {
+             
+            [...UserAccounts].forEach(acc => {
                 [...acc.currencies].forEach(cur => {
                     if(allUserCurrencies.filter(item => item.value === cur.value).length <= 0) {
                         cur.title = currencyTitle[activeLang].filter(el => el.v === cur.key)[0]?.title || '';
@@ -218,7 +218,6 @@ const  Layout = (props) =>  {
         if(transferTemplates.length > 0 || !isUserAuthorized) return;
         Template.getTransferTemplates().then(res => {
             if(res.data.ok) {
-                console.log(res.data)
                 setGlobalValue({transferTemplates: res.data.data.templates})
             }
         })

@@ -15,13 +15,10 @@ class Transaction {
     }
 
     makeTransaction = async (type, data) => {
-        const P2BTrasnaction = await axios.post(`${globalConfig.api_URL}/Transaction/MakeP2BTransaction`, data);
-        const P2PTransaction = await axios.post(`${globalConfig.api_URL}/Transaction/MakeP2PTransaction`, data);
-
         if(type === 'ToBank') {
-            return P2BTrasnaction;
+            return await axios.post(`${globalConfig.api_URL}/Transaction/MakeP2BTransaction`, data);
         } else {
-            return P2PTransaction;
+            return await axios.post(`${globalConfig.api_URL}/Transaction/MakeP2PTransaction`, data);
         }
 
     }

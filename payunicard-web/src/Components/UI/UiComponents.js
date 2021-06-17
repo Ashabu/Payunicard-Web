@@ -15,7 +15,7 @@ import SelectList from '../HOC/SelectList/SelectList';
 import SidePanel from './SidePanel/SidePanel';
 import Widget from './../HOC/Widget';
 import Loader from './../HOC/Loader/Loader';
-
+import OTP from './OTP/OTP';
 
 
 
@@ -30,6 +30,7 @@ export {
     InputValidation,
     Loader,
     Modal,
+    OTP,
     PasswordComplexity,
     RoundCheckmark,
     Search,

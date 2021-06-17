@@ -90,7 +90,6 @@ const Payments = () => {
             if(res.data.ok){
                 setPaymentStatements(res.data.data.statements)
             }
-            console.log(res.data)
         }).catch (error => {
             console.log(error)
         })
@@ -250,7 +249,6 @@ const Payments = () => {
                 Presentation.searchMerchants(value).then(res => {
                     setIsLoading(false);
                     setSearchUtilities(prevState => {return {...prevState, data: [...res.data.data.services]} });
-                    console.log(searchUtilies)
                 })
             }, 1000);
         }

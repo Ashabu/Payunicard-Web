@@ -116,8 +116,6 @@ const Transaction = () => {
                 setSearchInTransaction(prevState => { return [...prevState, ...moreTransactions] });
 
             }
-
-            console.log(searchInTransaction)
         })
         
 

@@ -4,7 +4,7 @@ import { formatNumber, setLogoByAccountType } from '../../../Services/CommonFunc
 import Icon from './../../UI/Icon/Icon';
 
 const SelectedAccount = props => {
-    const { icon, selected, orderCard, list } = props;
+    const { icon, selected, orderCard, list, onDisabled } = props;
     const { accountNumber, accountTypeName, availableInGEL, currencies, mAskedCard, type } = selected;
 
     let UserCurrencies = (
@@ -22,11 +22,9 @@ const SelectedAccount = props => {
         BalanceCurrency = <img src = '../../../Assets/Images/unipoint-star.svg' alt = 'icon'/>      
     } 
 
-
-    
     
 return (
-        <div className = {list? 'selectedAccount list ' : 'selectedAccount'} onClick = {list? props.clicked : () =>{}}>
+        <div className = {onDisabled? 'selectedAccount list disabled' : 'selectedAccount'} onClick = {list? props.clicked : () =>{}}>
             <div className = 'accountWrap'>
                    
                 {icon? <div style = {{width: 40, display: 'flex', alignItems: 'center', justifyContent: 'center'}}><Icon iconUrl = { setLogoByAccountType(type) }/></div> : null}
@@ -36,7 +34,7 @@ return (
                 </div> 
             </div>     
             <div className = 'balance'>
-                {formatNumber(availableInGEL)} {BalanceCurrency}
+                { formatNumber(availableInGEL) } { BalanceCurrency }
             </div>
         </div>
     )

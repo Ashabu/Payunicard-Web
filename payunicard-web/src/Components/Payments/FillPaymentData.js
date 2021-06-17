@@ -148,7 +148,6 @@ const  FillPaymentData = (props) => {
         getCostumerCommision();
     }, [amount, selectedAccount.accountNumber])
 
-    console.log(canPayWithUnipoints)
     return (
         <div>
             <div style={{width: '100%', height: '100%', minHeight: 400,  boxSizing: 'border-box', padding: 20}}>

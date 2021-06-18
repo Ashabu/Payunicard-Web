@@ -8,11 +8,12 @@ import Layout from '../../Containers/Layout/Layout';
 import PropTypes from 'prop-types';
 import TransferTemplate from './../../Components/Transfers/TransferTemplate';
 import TransferPanel from './../../Components/Transfers/TransferPanel';
+import ConversionPanel from '../../Components/Transfers/ConversionPanel';
 
 const Transfers = (props) => {
 
     const { state, setGlobalValue } = useContext(Context);
-    const { transferTemplates } = state;
+    const { transferTemplates, allUserCurrencies } = state;
     const {} = props;
 
     const [ templates, setTemplates ] = useState([]);
@@ -21,14 +22,17 @@ const Transfers = (props) => {
     const [ transferStep, setTransferStep ] = useState(0);
     const [ transferType, setTransferType ] = useState('');
     const [ transferData, setTransferData ] = useState(null);
-    const [ oneTimePasscode, setOneTimePasscode ] = useState('')
+    const [ oneTimePasscode, setOneTimePasscode ] = useState('');
 
     //------------------------------------------------------------
-    const [ otpWindowVisible,  setOtpWindowVisible ] = useState(false)
+    const [ otpWindowVisible,  setOtpWindowVisible ] = useState(false);
+    const [ currency, setCurrency ] = useState(null);
+
 
     useEffect(() => {
+        setCurrency(allUserCurrencies);
         setTemplates(transferTemplates)
-    }, [transferTemplates]);
+    }, [transferTemplates, allUserCurrencies]);
 
     const closeTransferPanel = () => {
         setSelectedTemplate(undefined);
@@ -102,17 +106,17 @@ const Transfers = (props) => {
             <div style = {{height: 1000, marginLeft: 300}}>
                 
                 
-            <Widget>
-                <div style = {{display: 'flex', flexWrap:'wrap', width: '51%'}}>
-                <div style = {{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
-                    <p>შაბლონები</p>
-                    <Search onsearch = { searchTemplates }/>
-                </div>
-                {templates?.map(t => (<TransferTemplate key = { t.templateId } template = { t }  clicked = {()=> openTransferPanel(t) }/>)) }
-                </div>
-                
-            </Widget>
-            <div className = 'tr-services'>
+                <Widget>
+                    <div style = {{display: 'flex', flexWrap:'wrap', width: '51%'}}>
+                    <div style = {{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
+                        <p>შაბლონები</p>
+                        <Search onsearch = { searchTemplates }/>
+                    </div>
+                    {templates?.map(t => (<TransferTemplate key = { t.templateId } template = { t }  clicked = {()=> openTransferPanel(t) }/>)) }
+                    </div>
+
+                </Widget>
+                <div className = 'tr-services'>
                     <div className = 'tr-service' onClick = {() => {setTransferPanelVisible(true); setTransferType('BetweenAccounts')}}>
                          <img src = '../../Assets/Images/TransferImg/betweenOwnAccounts.png' alt = 'icon' />   
                     </div>
@@ -126,6 +130,8 @@ const Transfers = (props) => {
                          <img src = '../../Assets/Images/TransferImg/toBank.png' alt = 'icon' />   
                     </div>
                 </div>
+                    
+                  
             </div>
         </Layout>
     )

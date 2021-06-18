@@ -59,3 +59,90 @@
         }
     }
 }
+
+.conversion {
+    display: flex; 
+    justify-content: space-between;
+    position: relative;
+
+    .co-option {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        
+
+        .cu-sign {
+            height: 40px;
+            width: 40px;
+            min-width: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f1f1;
+            color: #918f8f;
+            font-weight: 700;
+            margin-right: 5px;
+        }
+    }
+
+    .cu-choosing {
+        width: 45%;
+        background-color: #FFFFFF;
+        box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.12);
+        border-radius: 7px;
+        position: absolute; 
+        top: 60px; 
+        padding: 10px;
+       
+        &.from {
+            left: -10px
+        }
+        &.to {
+            right: -10px;
+        }
+        .currency {
+            cursor: pointer;
+            &:hover {
+                border-left: 2px solid #94dd34;
+            }
+        }
+    }
+
+    .cu-switch {
+        font-family:' FiraGO BOOK';
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 200ms ease-in-out;
+        color: #fff;
+        margin: 0 auto;
+        background: #94dd34;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+  
+
+
+}
+
+.co-calculator {
+    display: flex;
+    flex-flow: column;
+
+    .co-amount-wrap {
+        display: flex;
+        margin: 20px 0;
+      
+
+        .co-amount {
+            margin-right: 20px;
+        }
+    }
+}

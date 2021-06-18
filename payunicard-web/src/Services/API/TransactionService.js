@@ -24,6 +24,7 @@ class Transaction {
     }
     
     
+    
 }
 
 export default new Transaction

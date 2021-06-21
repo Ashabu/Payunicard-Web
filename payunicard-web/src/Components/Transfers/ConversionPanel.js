@@ -5,7 +5,7 @@ import { formatNumber } from '../../Services/CommonFunctions';
 import { Currency } from '../../Services/API/APIS';
 
 const ConversionPanel = (props) => {
-    const { usercurrency } = props;
+    const { usercurrency, callBack } = props;
     const rateTimeOut = useRef();
 
 
@@ -16,45 +16,56 @@ const ConversionPanel = (props) => {
     const [ currencyRate, setCurrencyRate ] = useState(null);
     const [ amountFrom, setAmountFrom ] = useState('');
     const [ amountTo, setAmountTo ] = useState('');
-    const [ fromBaseAmount, setFromBaseAmount ] = useState(true);
+    const [ fromBaseAmount, setFromBaseAmount ] = useState(true); //
     const [ initialized, setInitialized ] = useState(null);
     
     useEffect(() => {
         if(fromBaseAmount === true && initialized === true) {
-            testCalculator(amountFrom);
+            currencyRateCalculator(amountFrom);
             return
         } else if(fromBaseAmount === false && initialized === true) {
-            testCalculator(amountTo);
+            currencyRateCalculator(amountTo);
             return
         }
-    }, [initialized])
+    }, [initialized]);
 
     useEffect(() => {
         let tempCur = usercurrency?.filter(el => el.key === 'GEL' || el.key ==='USD');
         setCurrencyFrom(tempCur[0]);
         setCurrencyTo(tempCur[1]);
-    }, [usercurrency])
+    }, [usercurrency]);
 
     useEffect(() => {
         if(currencyFrom !== null && currencyTo !== null) {
-            testCalculator();
+            currencyRateCalculator();
         }
 
-    },[currencyFrom, currencyFrom])
+    },[currencyFrom, currencyFrom]);
+
+    useEffect(() => {
+        if(amountFrom !== '')
+        callBack({
+            ccyto: currencyTo.key,
+            ccy: currencyFrom.key,
+            amount: amountFrom,
+        });
+
+    }, [amountFrom]);
+
     const currencySwitch = () => {
         setCurrencyFrom(currencyTo);
         setCurrencyTo(currencyFrom);
-    }
+    };
 
 
-    const testCalculator = (amount) => {
+    const currencyRateCalculator = (amount) => {
         setInitialized(false)
         let CurrencyData = {
             ccy: currencyFrom.key,
             buyCcy: currencyTo.key,
             fromBaseAmount: fromBaseAmount,
             amountFROM: amount || 1
-        }
+        };
 
         if(rateTimeOut.current) clearTimeout(rateTimeOut.current);
         rateTimeOut.current = setTimeout(() => {
@@ -66,8 +77,8 @@ const ConversionPanel = (props) => {
                     setCurrencyRate(realrate);
                     if(amountFrom === '' && amountTo === '') {
                         setAmountFrom('');
-                        setAmountTo();
-                        return
+                        setAmountTo('');
+                        return;
                     }
                     if(fromBaseAmount){
                         setAmountTo(ammount.toFixed(2));
@@ -77,7 +88,7 @@ const ConversionPanel = (props) => {
                     
                     
                 }
-                props.callBack(CurrencyData)
+                
             })
         }, 1000);
         

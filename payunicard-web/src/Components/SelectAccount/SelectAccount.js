@@ -48,6 +48,7 @@ const SelectAccount = (props) => {
         if(choseDisabled) {
             let i = UserAccounts.findIndex(acc => acc.accountNumber === choseDisabled );
             UserAccounts.forEach(acc => acc.choseDisabled = false);
+            if(UserAccounts[i])
             UserAccounts[i].choseDisabled = true;
             setUserAccounts([...UserAccounts]);
 

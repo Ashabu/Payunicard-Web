@@ -37,6 +37,7 @@ const Transfers = (props) => {
     const closeTransferPanel = () => {
         setSelectedTemplate(undefined);
         setTransferPanelVisible(false);
+        setTransferStep(0);
         
     } 
 
@@ -59,8 +60,10 @@ const Transfers = (props) => {
     }
 
     const startTransfer = (data) => {
-        if(transferType === 'BetweenAccounts') {
-            makeTransaction(data);
+        if(transferType === 'BetweenAccounts' || transferType === 'Conversion') {
+            debugger
+            makeTransfer(data);
+            
         } else {
             setTransferData(data);
             setOtpWindowVisible(true);

@@ -44,6 +44,7 @@ const SelectCurrency = (props) => {
         if(choseDisabled) {
             let i = userCurrencies.findIndex(cur => acc.key === choseDisabled );
             userCurrencies.forEach(cur => cur.choseDisabled = false);
+            if(userCurrencies[i])
             userCurrencies[i].choseDisabled = true;
             setUserCurrencies([...userCurrencies]);
         }

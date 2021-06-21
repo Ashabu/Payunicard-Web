@@ -15,7 +15,7 @@ const TransferPanel = (props) => {
     const { allUserCurrencies } = state;
 
 
-    const { tabvisible, closeTransferPanel, templateData, type, step } = props;
+    const { tabvisible, closeTransferPanel, templateData, type, step, onTransfer } = props;
 
 
     const [ accoutFrom, setAccountFrom ] = useState({});
@@ -25,15 +25,13 @@ const TransferPanel = (props) => {
     const [ transferAmount, setTransferAmount ] = useState('10');
     const [ transferCurrency, setTransferCurrency ] = useState({});
     const [ transferDescription, setTransferDescription ] = useState('სატესტო გადარიცხვა');
+    const [ conversionData, setConversionData ] = useState(null);
 
 
     //=================================================
     const [ currency, setCurrency ] = useState();
 
-    const getConversionData = (data) => {
-        console.log(data)
-    }
-
+    
 
     useEffect(() => {
         if(templateData !== undefined) {
@@ -42,11 +40,11 @@ const TransferPanel = (props) => {
             setTransferAmount(templateData.amount);
             setTransferDescription(templateData.description)
         }
-    }, [templateData])
+    }, [templateData]);
 
     useEffect(() => {
-        setCurrency(allUserCurrencies)
-    }, [allUserCurrencies])
+        setCurrency(allUserCurrencies);
+    }, [allUserCurrencies]);
 
     
     const selectAccountFrom = (account) => {
@@ -63,17 +61,35 @@ const TransferPanel = (props) => {
         console.log(transferCurrency)
     }
 
-    const getTransferData = () => {
-        let transferData = {
-            amount: transferAmount,
-            toAccountNumber: toAccountNumber || accoutTo.accountNumber,
-            fromAccountNumber: accoutFrom.accountNumber,
-            beneficiaryName: beneficiaryName,
-            nomination: transferDescription,
-            ccy: transferCurrency.key
 
+    const getConversionData = (data) => {
+        setConversionData(data);
+        console.log(data)
+    }
+
+
+    const getTransferData = () => {
+        let transferData = {};
+        if(conversionData) {
+            debugger
+            transferData = {
+                toAccountNumber: accoutTo.accountNumber,
+                fromAccountNumber: accoutFrom.accountNumber,
+                nomination: transferDescription,
+                ...conversionData
+            }
+        } else {
+            debugger
+            transferData = {
+                amount: transferAmount,
+                toAccountNumber: accoutTo.accountNumber || toAccountNumber ,
+                fromAccountNumber: accoutFrom.accountNumber,
+                beneficiaryName: beneficiaryName,
+                nomination: transferDescription,
+                ccy: transferCurrency.key
+            }
         }
-        props.onTransfer(transferData);
+        onTransfer(transferData);
     }
 
     let ToAcountNumber = (<Input className = 'Input' value = { toAccountNumber } onChange = {(e) => setToAccountNumber(e.target.value)} />);
@@ -82,7 +98,7 @@ const TransferPanel = (props) => {
         ToAcountNumber = (
             <Fragment>
                 <p>სად</p>
-                <SelectAccount account = { selectAccountTo } icon choseDisabled = { accoutFrom.accountNumber }/>
+                <SelectAccount account = { selectAccountTo } icon choseDisabled = {type === 'Conversion' ? null : accoutFrom.accountNumber }/>
             </Fragment>
         )
     }
@@ -113,25 +129,17 @@ const TransferPanel = (props) => {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     let TransferStep = null;
 
     if(step === 0) {
         TransferStep = (
             <div>
                 <p>საიდან</p>
-                <SelectAccount account = { selectAccountFrom } icon choseDisabled = {  accoutTo.accountNumber } current = { templateData?.forFromExternalAccountId || templateData?.forFromAccountId }/>
+                <SelectAccount 
+                    account = { selectAccountFrom } 
+                    icon 
+                    choseDisabled = { type === 'Conversion' ? null : accoutTo.accountNumber } 
+                    current = { templateData?.forFromExternalAccountId || templateData?.forFromAccountId }/>
                 { ToAcountNumber }
                 { BeneficiaryDetails }
                 { AmountDetails }

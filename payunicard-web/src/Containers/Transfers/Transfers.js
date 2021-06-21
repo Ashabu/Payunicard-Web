@@ -35,8 +35,8 @@ const Transfers = (props) => {
     }, [transferTemplates, allUserCurrencies]);
 
     const closeTransferPanel = () => {
-        setSelectedTemplate(undefined);
         setTransferPanelVisible(false);
+        setSelectedTemplate(undefined);
         setTransferStep(0);
         
     } 
@@ -61,7 +61,6 @@ const Transfers = (props) => {
 
     const startTransfer = (data) => {
         if(transferType === 'BetweenAccounts' || transferType === 'Conversion') {
-            debugger
             makeTransfer(data);
             
         } else {
@@ -73,7 +72,6 @@ const Transfers = (props) => {
     }
 
     const makeTransfer = (data) => {
-        debugger
         if(transferData) {
             data = {...transferData, otp: oneTimePasscode};
         }
@@ -100,12 +98,12 @@ const Transfers = (props) => {
             <Backdrop show = { transferPanelVisible } hide = { closeTransferPanel }/>
             <OTP submitAction = {()=> makeTransfer() } getOtpValue = { getOtpValue } otpVisible = { otpWindowVisible} closeOtpWindow = {() => setOtpWindowVisible(false)}/>
             <TransferPanel 
-            templateData = { selectedTemplate }
-            tabvisible = { transferPanelVisible }
-            step = { transferStep }
-            closeTransferPanel = { closeTransferPanel }
-            onTransfer = { startTransfer }
-            type = { transferType }/>
+                templateData = { selectedTemplate }
+                tabvisible = { transferPanelVisible }
+                step = { transferStep }
+                closeTransferPanel = { closeTransferPanel }
+                onTransfer = { startTransfer }
+                type = { transferType }/>
             <div style = {{height: 1000, marginLeft: 300}}>
                 
                 

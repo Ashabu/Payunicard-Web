@@ -97,9 +97,7 @@ const  Dashboard = () => {
                
                 <div style ={{maxWidth: 485, marginLeft: 150}}>
                     <UserVerificationstatus/>
-                    <div style={{width: 500, height: 600, border: '1px solid black'}}>
-                        <OTP/>
-                    </div>
+                    
                     <Button clicked = {()=> history.push('/payments')}>go to payments</Button>
                     <Button clicked = {()=> history.push('/transfers')}>go to transfers</Button>
 

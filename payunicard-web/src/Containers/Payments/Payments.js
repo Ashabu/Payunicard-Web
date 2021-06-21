@@ -3,9 +3,9 @@ import './payments.scss';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import { Context } from '../../Context/AppContext';
-import { Presentation, Transaction, Template, User } from '../../Services/API/APIS';
+import { Presentation, Transaction, Template, User, Otp } from '../../Services/API/APIS';
 import Layout from '../../Containers/Layout/Layout';
-import { Icon, Backdrop, Loader, Widget, Search, SidePanel } from './../../Components/UI/UiComponents';
+import { Icon, Backdrop, Loader, Widget, Search, SidePanel, OTP } from './../../Components/UI/UiComponents';
 import ComonFn from '../../Services/CommonFunctions';
 import PaymentCategory from './../../Components/Payments/PaymentCategory';
 import PaymentPanel from '../../Components/Payments/PaymentPanel';
@@ -52,6 +52,8 @@ const Payments = () => {
     
     //-----------------------------------
     const [ allvisible, setAllVisible ] = useState(false);
+    const [ otpWindowVisible, setOtpWindowVisible ] = useState(false);
+    const [ paymentType, setPaymentType ] = useState('');
 
 
 
@@ -100,7 +102,8 @@ const Payments = () => {
         Presentation.getPaymentServices(id).then(res => {
             if(res.data.ok) {
                 setServices(res.data.data.categories);
-                setPaymentPanelVisible(true)
+                setPaymentPanelVisible(true);
+                setPaymentType('Single');
             }
         })
     }
@@ -126,7 +129,10 @@ const Payments = () => {
 
             Presentation.getPaymentDetails(querryParams).then(res => {
                 if(res.data.ok) {
-                    if(fromSerach) setPaymentPanelVisible(true);
+                    if(fromSerach) {
+                        setPaymentPanelVisible(true);
+                        setPaymentType('Single')
+                    }
                     setMerchantData({...res.data.data, merchantName: merchant.name, merchantImgUrl: merchant.merchantServiceURL || merchant.imageUrl });
                     setPaymentStep(2)
                 }
@@ -163,18 +169,35 @@ const Payments = () => {
         setPaymentStep(0);
         setServices([]);
         setMerchantServices([]);
+        setPaymentType('')
     } 
 
-    const proceedPayment = (data) => {
-        setPaymentData(data);
-        
-        Transaction.startPaymentTransaction(data).then(res => {
-            if(res.data.ok) {
-                setPaymentData(prevState => { return{...prevState, longOpID: res.data.data.op_id }})
-                setPaymentStep(3);
-                
+    
+    const proceedPayment = (data, type) => {
+        if(type === 'Unicard') {
+            let unicardPayData = {
+                unicard: data.AccountId,
+                AccountId: null,
+                forFundsSPCode: 'Unicard',
+
             }
-        })
+            setOtpWindowVisible(true);
+            debugger
+            Otp.UnicardOtp({card: data.AccountId}).then(res => {
+                if(res.data.ok) {
+                    setPaymentData({...data, unicardOtpGuid: res.data.data.otpGuid, ...unicardPayData})
+                }
+            })
+            return;
+
+        } else {
+            setPaymentData(data);
+            makePayment(data)
+        }
+        
+        
+        
+        
 
     }
 
@@ -254,20 +277,83 @@ const Payments = () => {
         }
     }
 
+    const getOtpValue = (value) => {
+        if(paymentData.length > 1) {
+            let tempPaymentData = paymentData.map(el => {
+                el.unicardOtp = value;
+                return el
+            });
+            setPaymentData(tempPaymentData);
+        } else {
+            setPaymentData(prevState => { return {...prevState, unicardOtp: value}});
+        }
+        
+       
+    }
     
 
     const opentTemplateTab = (data) => {
         setMerchantData(data);
         setPaymentStep(2); 
         setPaymentPanelVisible(true);
+        setPaymentType('Single')
     }
     
+    const payAllBills = (data, type) => {
+        if(type === 'Unicard') {
+            setOtpWindowVisible(true);
+            Otp.UnicardOtp({card: data[0].AccountId}).then(res => {
+                debugger
+                if(res.data.ok) {
+                    let tempData = [...data].map(el => {
+                        el.unicard = el.AccountId;
+                        el.AccountId = null;
+                        el.forFundsSPCode = 'Unicard';
+                        el.unicardOtpGuid = res.data.data.otpGuid;
+    
+                        console.log('element',el)
+                    return el
+                })
+                    setPaymentData([...tempData])
+                }
+            })
+            return;
+            
+        
+        }
+        
+    }
+
+    const makePayment = (data) => {
+        Transaction.startPaymentTransaction(data).then(res => {
+            if(res.data.ok) {
+                if(otpWindowVisible) setOtpWindowVisible(false);
+                setPaymentData(prevState => { return{...prevState, longOpID: res.data.data.op_id }})
+                setPaymentStep(3);
+                
+            }
+        })
+    } 
+
+    const makeBatchPatment = (data) => {
+        Transaction.startPayBatchTransaction(data);
+    }
+
+    const submitAction = (type) => {
+        if(type === 'Batch') {
+            makeBatchPatment(paymentData);
+            return
+        } else {
+            makePayment(paymentData);
+            return;
+        }
+    }
    
 
     return (
         <Layout>
             <Backdrop show = { paymentPanelVisible || detailVisible || allvisible } hide = { handlePaymentPanelClose }/>
-
+            <OTP submitAction = {()=> submitAction(paymentType) } getOtpValue = { getOtpValue } otpVisible = { otpWindowVisible } closeOtpWindow = {() => setOtpWindowVisible(false)}/>
             {services && <PaymentPanel 
                 tabvisible = { paymentPanelVisible }
                 close = { handlePaymentPanelClose }
@@ -280,7 +366,7 @@ const Payments = () => {
                 proceedPayment = { proceedPayment }
                 saveTemplate = { saveUtilityTemplate }/>}
 
-             <PayAllPaymentPanel payallvisible = { allvisible } close = {() =>setAllVisible(false)}/>   
+             <PayAllPaymentPanel payallvisible = { allvisible } close = {() =>setAllVisible(false)} onPayAll = { payAllBills }/>   
 
             <SidePanel
                     visible = { detailVisible }
@@ -324,12 +410,12 @@ const Payments = () => {
                 <PaymentTemplate 
                     key = { payTemplate.payTempID } 
                     template = { payTemplate } 
-                    toggle = { toggleTemplateCheck }
+                    onToggle = { toggleTemplateCheck }
                     editName = { editUtilityTemplateName }
                     clicked = {opentTemplateTab}
                     />
                 ))}
-                <button onClick = {()=> setAllVisible(true)}>გადახდა</button>           
+                <button onClick = {()=> {setAllVisible(true); setPaymentType('Batch')}}>გადახდა</button>           
             </Widget>
             
             <Widget>

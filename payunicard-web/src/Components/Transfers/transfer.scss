@@ -146,3 +146,25 @@
         }
     }
 }
+
+.tr-success {
+    .success-header {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        border-bottom: 1px solid #cfcfcf;
+    }
+    .success-body {
+        border-bottom: 1px solid #cfcfcf;
+        .tr-deatils-row {
+            display: flex;
+            flex-flow: row;
+            justify-content: space-between;
+        }    
+    }
+    .success-footer {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
+}

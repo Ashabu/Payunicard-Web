@@ -4,6 +4,7 @@ import { Button, Input, SidePanel } from '../UI/UiComponents';
 import PropTypes from 'prop-types';
 import SelectAccount from './../SelectAccount/SelectAccount';
 import { Context } from '../../Context/AppContext';
+import { formatNumber } from '../../Services/CommonFunctions';
 import SelectCurrency from '../SelectCurrency/SelectCurrency';
 import ConversionPanel from './ConversionPanel';
 
@@ -54,6 +55,7 @@ const TransferPanel = (props) => {
 
     const selectAccountTo = (account) => {
         setAccountTo(account)
+        console.log(account)
     }
 
     const selectCurreny = (currency) => {
@@ -71,7 +73,6 @@ const TransferPanel = (props) => {
     const getTransferData = () => {
         let transferData = {};
         if(conversionData) {
-            debugger
             transferData = {
                 toAccountNumber: accoutTo.accountNumber,
                 fromAccountNumber: accoutFrom.accountNumber,
@@ -79,7 +80,6 @@ const TransferPanel = (props) => {
                 ...conversionData
             }
         } else {
-            debugger
             transferData = {
                 amount: transferAmount,
                 toAccountNumber: accoutTo.accountNumber || toAccountNumber ,
@@ -92,7 +92,11 @@ const TransferPanel = (props) => {
         onTransfer(transferData);
     }
 
-    let ToAcountNumber = (<Input className = 'Input' value = { toAccountNumber } onChange = {(e) => setToAccountNumber(e.target.value)} />);
+
+
+    let ToAcountNumber = (
+        <Input className = 'Input' value = { toAccountNumber } onChange = {(e) => setToAccountNumber(e.target.value)} />
+    );
 
     if(type === 'BetweenAccounts' || type === 'Conversion') {
         ToAcountNumber = (
@@ -103,6 +107,7 @@ const TransferPanel = (props) => {
         )
     }
     
+
     let BeneficiaryDetails = null;
 
     if(type === 'ToBank' || type === 'ToWallet') {
@@ -125,7 +130,53 @@ const TransferPanel = (props) => {
     )
     
     if(type === 'Conversion') {
-        AmountDetails = (<ConversionPanel usercurrency = { currency } callBack = { getConversionData }/> )
+        AmountDetails = (
+            <ConversionPanel usercurrency = { currency } callBack = { getConversionData }/>
+        )
+    }
+
+
+    let TransferDetails = null;
+    let BeneficiaryName = null;
+
+    let TransferAmount = (
+        <Fragment>
+            <div className = 'tr-deatils-row'>
+                <span>Amount:</span>
+                <span>{ formatNumber(transferAmount)} ₾</span>
+            </div>
+        </Fragment>
+    )
+
+    if(type === 'Conversion') {
+        
+        TransferDetails = (
+            <Fragment>
+                <div className = 'tr-deatils-row'>
+                    <span>Sold Amount::</span>
+                    <span>100.00 ₾</span>
+                </div>
+                <div className = 'tr-deatils-row'>
+                    <span>Bought Amount:</span>
+                    <span>28.67 $</span>
+                </div>
+                <div className = 'tr-deatils-row'>
+                    <span>Exchange Rate:</span>
+                    <span>1 $ = 3.487 ₾</span>
+                </div>
+            </Fragment>
+        )
+    }
+
+    if(type ==='ToBank' || type === 'ToWallet' ) {
+        BeneficiaryName = (
+            <Fragment>
+                <div className = 'tr-deatils-row'>
+                    <span>Recipient name:</span>
+                    <span>ავთანდილ შაბურიშვილი</span>
+                </div>
+            </Fragment>
+        )
     }
 
 
@@ -145,19 +196,49 @@ const TransferPanel = (props) => {
                 { AmountDetails }
                 <p>დანიშნულება</p>
                 <Input className = 'Input' value = { transferDescription} onChange = {(e) => setTransferDescription(e.target.value)}/> 
+                <Button buttonClass = 'unicard-btn green' clicked = { getTransferData }>გადახდა</Button>
             </div>      
         )
     } else {
-        TransferStep = (<div>გადარიცხვა წარმატებით დასრულა</div>)
+        TransferStep = (
+            <div className = 'tr-success'>
+                <div className = 'success-header'>
+                    <img src = '../../Assets/Images/alert_green.png' alt = 'icon' />
+                    <span>Transaction Successful</span>
+                </div>
+                <div className = 'success-body'>
+                    <div className = 'tr-deatils-row'>
+                        <span>From:</span>
+                        <span>{ accoutFrom.accountNumber }{ accoutFrom.mAskedCard }</span>
+                    </div>
+                    <div className = 'tr-deatils-row'>
+                        <span>To:</span>
+                        <span>{accoutTo.accountNumber || toAccountNumber}{ accoutTo.mAskedCard }</span>
+                    </div>
+                    { BeneficiaryName }
+
+                    { TransferDetails || TransferAmount }
+                </div>
+                <div className = 'success-footer'>
+                    <img src = '../../Assets/Images/save-template.svg' alt= 'icon' />
+                    <span>Save As Template</span>
+                </div>
+               
+                <Button buttonClass = 'unicard-btn green' clicked = { closeTransferPanel }>დახურვა</Button>
+
+            </div>
+        )
     }
 
+   
+    
 
     return (
         <SidePanel
             visible = { tabvisible }
             closePanel = { closeTransferPanel }>
         { TransferStep }    
-            <Button buttonClass = 'unicard-btn green' clicked = { getTransferData }>გადახდა</Button>
+            
 
            
         </SidePanel>

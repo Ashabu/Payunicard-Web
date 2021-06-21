@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {Fragment, useContext, useEffect, useState} from 'react';
 import PropTypes, { array } from 'prop-types';
 import { Context } from '../../Context/AppContext';
-import { Button ,SidePanel } from '../UI/UiComponents';
+import { Button ,SidePanel, OTP } from '../UI/UiComponents';
 import { Presentation, Transaction } from '../../Services/API/APIS';
 import SelectAccount from '../SelectAccount/SelectAccount';
 import PayAllTemplate from './PayAllTemplate';
@@ -23,7 +23,7 @@ const PayAllPaymentPanel = (props) => {
     
 
 
-    const [ test, setTest] = useState([]);
+    const [ paymentData, setpaymentData] = useState([]);
 
     useEffect(() => {
         setTemplates(paymentTemplates)
@@ -77,7 +77,7 @@ const PayAllPaymentPanel = (props) => {
             serviceId: curPayment.debtCode
         }
         
-        setTest(prevState => {return [...prevState, {...payParams}]})
+        setpaymentData(prevState => {return [...prevState, {...payParams}]})
        
 
         Presentation.getPaymentDetails(params).then(res => {
@@ -112,12 +112,10 @@ const PayAllPaymentPanel = (props) => {
     }
 
     const ckeckForUniPoints = (data) => {
-        data.every(el => el.canPayWithUniPoints === true)? setCanPayWithUnicard(1) : setCanPayWithUnicard(0);
+        data.every(el => el.canPayWithUniPoints === 1)? setCanPayWithUnicard(1) : setCanPayWithUnicard(0);
     }
 
-    const payAllBills = () => {
-        Transaction.startPayBatchTransaction(test)
-    }
+    
     
     
     let PayAllStep = null;
@@ -125,7 +123,7 @@ const PayAllPaymentPanel = (props) => {
     if(paymentStep === 0) {
         PayAllStep = (
             <div style = {{padding: 20, boxSizing: 'border-box'}}>
-                <SelectAccount account = { selectAccount } icon hasUnicard = { canPayWithUnicard }/>  
+                <SelectAccount account = { selectAccount } icon />  
                 <button onClick = {() => getPaymentCommision([...paymentTemplates], 2)}>კომისია</button> 
                 {templates?.map((t, i) =>(<PayAllTemplate key ={i} template = { t } editDebt = {(val)=> handleEditDebt(val,i)}/>))}
             </div>
@@ -138,7 +136,7 @@ const PayAllPaymentPanel = (props) => {
                     <SelectedAccount selected = { selectedAccount } icon = { true } />
                 </div>
               <PaymentDetails data = { templates } commisionAmmount = { commissionSum } debtAmmount = { amountSum }/>  
-              <button onClick = { payAllBills }>გადახდა</button>
+              <button onClick = {() => props.onPayAll(paymentData, 'Unicard') }>გადახდა</button>
             </div>
 
         )
@@ -147,6 +145,7 @@ const PayAllPaymentPanel = (props) => {
 
     return (
         <SidePanel visible = {props.payallvisible} closePanel = { props.close } >
+            
             {PayAllStep}
             
         </SidePanel>

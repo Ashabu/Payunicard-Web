@@ -9,7 +9,7 @@ import EditTemplate from './../EditTemlpate/EditTemplate';
 
 
 const PaymentTemplate = (props) => {
-    const { imageUrl, templName, abonentCode, payTempID, debt , checked, toggle , canPayWithUnipoints } = props.template;
+    const { imageUrl, templName, abonentCode, payTempID, debt , checked , canPayWithUnipoints } = props.template;
 
     const { state, setGlobalValue } = useContext(Context);
     const { paymentTemplates} = state;
@@ -21,7 +21,9 @@ const PaymentTemplate = (props) => {
         deleteTempl: false
     });
     
-
+    useEffect(() => {
+        console.log(props.onToggle)
+            }, [])
     const onEditTemplate = () => {
         setEditTemplateModal({visible: true, editTempl: true, deleteTempl: false});
         setTemplateOptions(false); 
@@ -81,7 +83,7 @@ const PaymentTemplate = (props) => {
             
             <div className = 'rightSide'>
                 {canPayWithUnipoints === 1? <img src = '../../Assets/Images/unicard-logo-sm.png' alt = '' />: null}
-                <RoundCheckmark checkType = 'checkbox' toggle = { props.toggle }  checked  = { checked } id = { payTempID } for = { payTempID }/>
+                <RoundCheckmark checkType = 'checkbox' toggle = {props.onToggle}  checked  = { checked } id = { payTempID } for = { payTempID }/>
                 <span>{ formatNumber(debt) } ₾</span>
                 <img src = '../../Assets/Images/three_dot.png' alt = 'icon' onClick = {() => setTemplateOptions(!templateOptions)}/>
             </div>

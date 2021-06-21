@@ -6,7 +6,7 @@ import { formatNumber } from '../../Services/CommonFunctions';
 
 
 const  PayAllTemplate =(props) => {
-    const { imageUrl, templName, abonentCode,  debt , payTempID, checked, toggle } = props.template;
+    const { imageUrl, templName, abonentCode,  debt , payTempID, checked } = props.template;
     const [ editAmmount, setEditAmmount ] = useState(false);
     const [ debtAmmount, setNewAmmount ] = useState(Math.abs(debt))
 
@@ -20,7 +20,7 @@ const  PayAllTemplate =(props) => {
     return (
         <div className = 'PayAllTemplate'>
             <div className = 'checkmark'>
-                <RoundCheckmark checkType = 'checkbox' toggle = { toggle }  checked  = { checked } id = { payTempID } for = { payTempID }/>
+                <RoundCheckmark checkType = 'checkbox' toggle = { props.onToggle }  checked  = { checked } id = { payTempID } for = { payTempID }/>
             </div>
             <div className = 'templImg' style={{width: 60}}>
                 <Icon iconUrl = {imageUrl}/>

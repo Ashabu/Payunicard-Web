@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import './roundCheckmark.scss';
 
 const  RoundCheckmark = (props) => {
-    
+
     return (
         <div className = 'rounded-checkbox'>
             <div className = 'round'>

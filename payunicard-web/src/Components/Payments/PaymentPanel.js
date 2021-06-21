@@ -27,7 +27,8 @@ const PaymentPanel = (props) => {
         if(data.templateData) {
             props.saveTemplate(data.templateData)
         } else {
-            props.proceedPayment(data.paymentData);
+            console.log('*****', data.type)
+            props.proceedPayment(data.paymentData, data.type);
             setSuccessInfo(data.info);
         }
         

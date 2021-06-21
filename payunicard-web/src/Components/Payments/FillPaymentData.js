@@ -44,7 +44,7 @@ const  FillPaymentData = (props) => {
     const [ totalPaymentAmount, setTotalPaymentAmount ] = useState(0);
 
 
-    const paymentData = { 
+    let paymentData = { 
         forMerchantCode: forMerchantCode,
         forMerchantServiceCode: forMerchantServiceCode,
         serviceId: debtCode,
@@ -56,6 +56,8 @@ const  FillPaymentData = (props) => {
         AccountId: selectedAccount.accountId,
         forOpClassCode: forOpClassCode || forPaySpCode,
    }
+
+
 
     const templateData = {
         merchantServiceID: merchantId,
@@ -210,7 +212,11 @@ const  FillPaymentData = (props) => {
                 <p style = {{marginRight: 10}}>მაქსიმალური თანხა: {maxAmount?.toFixed(2)}</p>
                 <p>მინიმალური თანხა: {minAmount?.toFixed(2)}</p>
             </div>
-             <Button clicked = {()=> props.getPaymentData({paymentData, info:{costumer, merchantImgUrl, merchantName }})}>გადახდა</Button>
+             <Button clicked = {()=> props.getPaymentData({ 
+                    paymentData, 
+                    info:{costumer, merchantImgUrl, merchantName }, 
+                    type: selectedAccount.type === 7? 'Unicard' : undefined})
+                }>გადახდა</Button>
         </div>
     )
 }

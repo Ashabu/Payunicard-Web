@@ -136,7 +136,7 @@ const PayAllPaymentPanel = (props) => {
                     <SelectedAccount selected = { selectedAccount } icon = { true } />
                 </div>
               <PaymentDetails data = { templates } commisionAmmount = { commissionSum } debtAmmount = { amountSum }/>  
-              <button onClick = {() => props.onPayAll(paymentData, 'Unicard') }>გადახდა</button>
+              <button onClick = {() => props.onPayAll(paymentData, selectedAccount.type === 7? 'Unicard' : undefined) }>გადახდა</button>
             </div>
 
         )

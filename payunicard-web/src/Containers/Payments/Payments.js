@@ -320,6 +320,9 @@ const Payments = () => {
             return;
             
         
+        } else {
+            setPaymentData(data);
+            makeBatchPatment(data);
         }
         
     }

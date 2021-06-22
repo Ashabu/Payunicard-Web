@@ -21,7 +21,7 @@ import PaymentDetails from '../../Components/Payments/PaymentDetails';
 
 const Payments = () => {
 
-    const { state } = useContext(Context);
+    const { state, setGlobalValue  } = useContext(Context);
     const { paymentServices , paymentTemplates } = state;
 
     const history = useHistory();
@@ -52,7 +52,6 @@ const Payments = () => {
     
     //-----------------------------------
     const [ allvisible, setAllVisible ] = useState(false);
-    const [ checkedTemplates, setCheckedTemplates ] = useState([]);
     const [ otpWindowVisible, setOtpWindowVisible ] = useState(false);
     const [ paymentType, setPaymentType ] = useState('');
 
@@ -80,21 +79,14 @@ const Payments = () => {
 
     useEffect(() => {
         setTemplates(paymentTemplates);
-        checkForPayAllTemplates(paymentTemplates);
         getPaymentStatements();
     }, [paymentTemplates])
 
-  
 
 
-    console.log(checkedTemplates)
 
-    const checkForPayAllTemplates = (data) => {
-        let tempTemplates = data?.filter(el => el.checked === true && el.debt > 0);
-        if(data.length > 0) {
-            setCheckedTemplates([...tempTemplates]);
-        }
-        
+    const filteredTemplates = (data) => {
+        return  data?.filter(el => el.checked === true && el.debt > 0);
     }
 
     const getPaymentStatements = () => {
@@ -219,7 +211,7 @@ const Payments = () => {
         let tempTemplates = templates;
         let i = tempTemplates.findIndex(t => t.payTempID == id);
         tempTemplates[i].checked = !tempTemplates[i].checked;
-        checkForPayAllTemplates(tempTemplates);
+        // checkForPayAllTemplates(tempTemplates);
         setTemplates([...tempTemplates]);
     }
 
@@ -338,8 +330,6 @@ const Payments = () => {
                 }
             })
             return;
-            
-        
         } else {
             setPaymentData(data);
             makeBatchPatment(data);
@@ -353,7 +343,6 @@ const Payments = () => {
                 if(otpWindowVisible) setOtpWindowVisible(false);
                 setPaymentData(prevState => { return{...prevState, longOpID: res.data.data.op_id }})
                 setPaymentStep(3);
-                
             }
         })
     } 
@@ -362,7 +351,6 @@ const Payments = () => {
         Transaction.startPayBatchTransaction(data);
     }
 
-   
    
 
     return (
@@ -382,7 +370,7 @@ const Payments = () => {
                 saveTemplate = { saveUtilityTemplate }/>}
 
              <PayAllPaymentPanel 
-                checkedTemplates = { checkedTemplates } 
+                checkedTemplates = { filteredTemplates(templates) } 
                 payallvisible = { allvisible } 
                 close = {() =>setAllVisible(false)} 
                 onPayAll = { payAllBills }/>   

@@ -18,7 +18,6 @@ const PayAllPaymentPanel = (props) => {
     const [ selectedAccount, setSelectedAccount] = useState({});
     const [ canPayWithUnicard, setCanPayWithUnicard ] = useState(null);
     const [ templates, setTemplates ] = useState([]);
-    const [ filteredTemplates, setFilteredTemplates ] = useState([]);
     const [ amountSum, setAmountSum ] = useState(0);
     const [ commissionSum, setCommissionSum ] = useState(0);
     const [ paymentStep, setPaymentStep] = useState(0);
@@ -132,14 +131,13 @@ const PayAllPaymentPanel = (props) => {
     }
     const ragaca = () => {
         let tempTemplates = templates.filter(t => t.checked === true);
-        setTemplates([...tempTemplates]);
+        
         getPaymentCommision([...tempTemplates], 2)
         
     }
     
-    const checkForCheckedTemplates = (data) => {
-        
-        
+    const filteredTemplates = (data) => {
+        return data.filter(el => el.checked === true);
     }
 
     console.log('Templates', templates)
@@ -173,7 +171,7 @@ const PayAllPaymentPanel = (props) => {
                         hasUnicard = { canPayWithUnicard }/>
                 </div>
                 <PaymentDetails 
-                    data = { templates } 
+                    data = { filteredTemplates(templates) } 
                     commisionAmmount = { commissionSum } 
                     debtAmmount = { amountSum }/>
 

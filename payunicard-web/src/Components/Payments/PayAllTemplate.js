@@ -30,9 +30,8 @@ const  PayAllTemplate =(props) => {
                 <span>{abonentCode}</span>
             </div>
             <div className = 'templAmount'>
-           
                 {!editAmmount? <span onClick ={()=> {setEditAmmount(true); setNewAmmount(Math.abs(debt)) }}>{ formatNumber(debtAmmount) } ₾</span> :
-               <input value = { debtAmmount } onChange = {(e)=> setNewAmmount(e.target.value)}  onBlur = {() => test(debtAmmount) } autoFocus = {true}/>}
+                <input value = { debtAmmount } onChange = {(e)=> setNewAmmount(e.target.value)}  onBlur = {() => test(debtAmmount) } autoFocus = {true}/>}
             </div>
             
         </div>

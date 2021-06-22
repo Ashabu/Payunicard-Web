@@ -35,7 +35,7 @@ const PaymentPanel = (props) => {
        
     }
 
-   
+    
 
 
     const handleBredCrump = (i) => {
@@ -68,6 +68,12 @@ const PaymentPanel = (props) => {
        
     }
 
+    const clearErrorMessages = () => {
+        let tempError = errorArray.shift();
+        let tempErrorArray = errorArray.filter(el => el !== tempError);
+        setErrorArray([...tempErrorArray]);
+    }
+
     return (
         <SidePanel
         
@@ -76,10 +82,13 @@ const PaymentPanel = (props) => {
             onStepBack = { handlePaymentStep }
             visible = { tabvisible }
             closePanel = { props.close }
-            bredClick = { handleBredCrump }>
-                <ErrorNotification errorMessages = {errorArray}/>
+            bredClick = { handleBredCrump }
+            errorContainer = { <ErrorNotification errorMessages = {errorArray} onClearError = { clearErrorMessages}/> }>
+                
+                
             {step === 0? 
                 <div>
+                    
                     {services.slice(1).map((merchant, index) => (<PaymentServices key = {index} services = {merchant} 
                     clicked ={() => {props.getServices({merchant}); setBredCrump(prevState => {return [...prevState, merchant.name]}) }}/>))}
                 </div>     
@@ -99,6 +108,9 @@ const PaymentPanel = (props) => {
                </div>
 
             }
+            <button onClick = {() => setErrorArray(prevState => {return [...prevState, 'Test Error']})}>add error</button>
+                <button onClick = {() => setErrorArray(prevState => {return [...prevState, 'Test Error 1']})}>add error1</button>
+                <button onClick = {() => setErrorArray(prevState => {return [...prevState, 'Test Error 2']})}>add error2</button>
         </SidePanel>
     );
 }

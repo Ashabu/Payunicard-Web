@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const  SidePanel = (props) => {
     
-    const { stepBack, onStepBack, visible, headerText, closePanel, children, bredcrump } = props;
+    const { errorContainer, stepBack, onStepBack, visible, headerText, closePanel, children, bredcrump } = props;
     let StepBack = null;
 
     if(stepBack) {
@@ -22,7 +22,9 @@ const  SidePanel = (props) => {
 
     return (
         <div className = { visible? 'sidePanel active' : 'sidePanel' }>
+            { errorContainer }
             <div className = 'header'>
+                
                 <div>
                     { StepBack }
                 </div>
@@ -34,7 +36,7 @@ const  SidePanel = (props) => {
                     <img src = '../../../Assets/Images/close-icon.svg' alt = 'icon' />
                 </div>
             </div>
-            <div>
+            <div className = 'body'>
                 { children }
             </div>
             

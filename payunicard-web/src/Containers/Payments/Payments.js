@@ -52,6 +52,7 @@ const Payments = () => {
     
     //-----------------------------------
     const [ allvisible, setAllVisible ] = useState(false);
+    const [ checkedTemplates, setCheckedTemplates ] = useState([]);
     const [ otpWindowVisible, setOtpWindowVisible ] = useState(false);
     const [ paymentType, setPaymentType ] = useState('');
 
@@ -65,9 +66,9 @@ const Payments = () => {
             template.checked = selectAllTemplates;
             return template;
         });
+        
         setTemplates(allTemplates);
     }, [selectAllTemplates])
-
 
     useEffect(() => {
         setUtilities(paymentServices);
@@ -79,8 +80,22 @@ const Payments = () => {
 
     useEffect(() => {
         setTemplates(paymentTemplates);
+        checkForPayAllTemplates(paymentTemplates);
         getPaymentStatements();
     }, [paymentTemplates])
+
+  
+
+
+    console.log(checkedTemplates)
+
+    const checkForPayAllTemplates = (data) => {
+        let tempTemplates = data?.filter(el => el.checked === true && el.debt > 0);
+        if(data.length > 0) {
+            setCheckedTemplates([...tempTemplates]);
+        }
+        
+    }
 
     const getPaymentStatements = () => {
         let data = {
@@ -96,7 +111,6 @@ const Payments = () => {
             console.log(error)
         })
     }
-
 
     const getServices = (id) =>{
         Presentation.getPaymentServices(id).then(res => {
@@ -171,7 +185,6 @@ const Payments = () => {
         setMerchantServices([]);
         setPaymentType('')
     } 
-
     
     const proceedPayment = (data, type) => {
         if(type === 'Unicard') {
@@ -194,10 +207,6 @@ const Payments = () => {
             setPaymentData(data);
             makePayment(data)
         }
-        
-        
-        
-        
 
     }
 
@@ -206,9 +215,11 @@ const Payments = () => {
     }
 
     const toggleTemplateCheck = (id) => {
+       
         let tempTemplates = templates;
-        let i = tempTemplates.findIndex(merchant => merchant.payTempID == id);
-        tempTemplates[i].checked = !tempTemplates[i].checked
+        let i = tempTemplates.findIndex(t => t.payTempID == id);
+        tempTemplates[i].checked = !tempTemplates[i].checked;
+        checkForPayAllTemplates(tempTemplates);
         setTemplates([...tempTemplates]);
     }
 
@@ -290,7 +301,16 @@ const Payments = () => {
         
        
     }
-    
+
+    const submitAction = (type) => {
+        if(type === 'Batch') {
+            makeBatchPatment(paymentData);
+            return
+        } else {
+            makePayment(paymentData);
+            return;
+        }
+    }
 
     const opentTemplateTab = (data) => {
         setMerchantData(data);
@@ -342,15 +362,7 @@ const Payments = () => {
         Transaction.startPayBatchTransaction(data);
     }
 
-    const submitAction = (type) => {
-        if(type === 'Batch') {
-            makeBatchPatment(paymentData);
-            return
-        } else {
-            makePayment(paymentData);
-            return;
-        }
-    }
+   
    
 
     return (
@@ -369,69 +381,76 @@ const Payments = () => {
                 proceedPayment = { proceedPayment }
                 saveTemplate = { saveUtilityTemplate }/>}
 
-             <PayAllPaymentPanel payallvisible = { allvisible } close = {() =>setAllVisible(false)} onPayAll = { payAllBills }/>   
+             <PayAllPaymentPanel 
+                checkedTemplates = { checkedTemplates } 
+                payallvisible = { allvisible } 
+                close = {() =>setAllVisible(false)} 
+                onPayAll = { payAllBills }/>   
 
             <SidePanel
-                    visible = { detailVisible }
-                    closePanel = {() => { setDetailVisible(false); history.goBack() }}>
-                        <TransactionDetailView transaction = { selectedTransaction }/>
-                    </SidePanel>    
+                visible = { detailVisible }
+                closePanel = {() => { setDetailVisible(false); history.goBack() }}>
+                    <TransactionDetailView transaction = { selectedTransaction }/>
+            </SidePanel>    
 
-        <div style = {{ marginLeft: 200}}>
-            <p>WELCOME TO PAYMENTS</p>
-            
-           
-            <Widget class = 'Utilities'>
-                <div className = 'UtilityHeader'>
-                    <span>კატეგორიები</span>
-                    <Search  onsearch = { searchInUtilities }/>
-                </div>
-               {searchUtilies.search? <Fragment >
-                   {isLoading? <Loader width = { 100 } heigh = { 100 }/> :
-                    searchUtilies.data?.map((merchant, index) =>(
-                        <SearchMerchants 
-                            key = { index }  
-                            merchants = { merchant } 
-                            clicked = {() => getMerchantServices({ merchant }, true)}/>))}
-                   
-                   </Fragment> :
-               <Fragment>
-                {utilities.map((service, index) => (
-                    <PaymentCategory key = { index } services = { service } clicked = {() => getServices(service.categoryID) }/>
-                ))}
-                </Fragment> }
-            </Widget>
-            <Widget>
-                <div>
-                    <p >გადახდის შაბლონები</p>
-                    <Search  onsearch = { searchTemplates }/>
-                    <p style = {{cursor: 'pointer'}} onClick = { checkAllTemplates }>ყველას მონიშვნა</p>
-                    
-                </div>
+            <div style = {{ marginLeft: 200}}>
+                <p>WELCOME TO PAYMENTS</p>
                 
-             {templates.map(payTemplate => (
-                <PaymentTemplate 
-                    key = { payTemplate.payTempID } 
-                    template = { payTemplate } 
-                    onToggle = { toggleTemplateCheck }
-                    editName = { editUtilityTemplateName }
-                    clicked = {opentTemplateTab}
-                    />
-                ))}
-                <button onClick = {()=> {setAllVisible(true); setPaymentType('Batch')}}>გადახდა</button>           
-            </Widget>
-            
-            <Widget>
-                <div>
-                    <p>ბოლო ტრანზაქციები</p>
-                </div>
-                {paymentStatements.map((transaction, index) => (
-                    <TransactionDetail key = { index } 
-                    transaction = { transaction }
-                    clicked = {() =>   {handleTransactionDetailView(transaction, setSelectedTransaction, navigate); setDetailVisible(true)}}/>
-                ))}
-            </Widget>
-        </div>
+                
+                <Widget class = 'Utilities'>
+                    <div className = 'UtilityHeader'>
+                        <span>კატეგორიები</span>
+                        <Search  onsearch = { searchInUtilities }/>
+                    </div>
+                   {searchUtilies.search? 
+                        <Fragment >
+                            {isLoading? <Loader width = { 100 } heigh = { 100 }/> :
+                             searchUtilies.data?.map((merchant, index) =>(
+                                 <SearchMerchants 
+                                     key = { index }  
+                                     merchants = { merchant } 
+                                     clicked = {() => getMerchantServices({ merchant }, true)}/>))}
+                       </Fragment> :
+                    <Fragment>
+                        {utilities.map((service, index) => (
+                            <PaymentCategory 
+                                key = { index } 
+                                services = { service } 
+                                clicked = {() => getServices(service.categoryID) }/>
+                        ))}
+                    </Fragment>}
+                </Widget>
+                <Widget>
+                    <div>
+                        <p >გადახდის შაბლონები</p>
+                        <Search  onsearch = { searchTemplates }/>
+                        <p style = {{cursor: 'pointer'}} onClick = { checkAllTemplates }>ყველას მონიშვნა</p>
+                        
+                    </div>
+                        
+                    {templates.map(payTemplate => (
+                        <PaymentTemplate 
+                            key = { payTemplate.payTempID } 
+                            template = { payTemplate } 
+                            onToggle = { toggleTemplateCheck }
+                            editName = { editUtilityTemplateName }
+                            clicked = {opentTemplateTab}
+                            />
+                        ))}
+                    <button onClick = {()=> {setAllVisible(true); setPaymentType('Batch')}}>გადახდა</button>           
+                </Widget>
+                    
+                <Widget>
+                    <div>
+                        <p>ბოლო ტრანზაქციები</p>
+                    </div>
+                    {paymentStatements.map((transaction, index) => (
+                        <TransactionDetail key = { index } 
+                        transaction = { transaction }
+                        clicked = {() =>   {handleTransactionDetailView(transaction, setSelectedTransaction, navigate); setDetailVisible(true)}}/>
+                    ))}
+                </Widget>
+            </div>
         </Layout>
     )
 }

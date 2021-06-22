@@ -6,6 +6,7 @@ import { Icon } from '../UI/UiComponents';
 const PaymentDetails = (props) =>{
     const { data, commisionAmmount, debtAmmount } = props;
     const totalDue = Number(commisionAmmount) + Number(debtAmmount);
+    console.log(data)
   
     return(
         <div>

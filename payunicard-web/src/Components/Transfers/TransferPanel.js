@@ -50,23 +50,19 @@ const TransferPanel = (props) => {
     
     const selectAccountFrom = (account) => {
         setAccountFrom(account);
-        console.log(account)
     }
 
     const selectAccountTo = (account) => {
         setAccountTo(account)
-        console.log(account)
     }
 
     const selectCurreny = (currency) => {
         setTransferCurrency(currency);
-        console.log(transferCurrency)
     }
 
 
     const getConversionData = (data) => {
         setConversionData(data);
-        console.log(data)
     }
 
 

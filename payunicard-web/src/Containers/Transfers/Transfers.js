@@ -77,7 +77,6 @@ const Transfers = (props) => {
         }
         
         Transaction.makeTransaction(transferType, data).then(res => {
-            console.log(res.data)
             if(res.data.ok) {
                 setOtpWindowVisible(false);
                 setTransferStep(1);

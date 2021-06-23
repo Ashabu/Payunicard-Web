@@ -43,7 +43,6 @@ const PayAllPaymentPanel = (props) => {
         let i = tempTemplates.findIndex(t => t.payTempID == id);
         tempTemplates[i].checked = !tempTemplates[i].checked;
         setTemplates([...tempTemplates]);
-        console.log(tempTemplates)
         
    }
 
@@ -140,7 +139,6 @@ const PayAllPaymentPanel = (props) => {
         return data.filter(el => el.checked === true);
     }
 
-    console.log('Templates', templates)
 
     let PayAllStep = null;
     

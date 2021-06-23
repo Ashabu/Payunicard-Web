@@ -43,6 +43,15 @@ const  FillPaymentData = (props) => {
     const [ paymentCommision, setPaymentCommision ] = useState(0);
     const [ totalPaymentAmount, setTotalPaymentAmount ] = useState(0);
 
+    useEffect(() => {
+        if(AbonentCode !== '')
+            checkCostumerDebt();
+        
+    }, [])
+
+    useEffect(() => {
+        getCostumerCommision();
+    }, [amount, selectedAccount.accountNumber]);
 
     let paymentData = { 
         forMerchantCode: forMerchantCode,
@@ -86,7 +95,7 @@ const  FillPaymentData = (props) => {
                 let tempDebt = tempDebtData?.filter(i => i.FieldCode === 'Debt' || i.FieldCode === "FineAmount" || i.FieldCode === "TotalDebt" || i.FieldCode === "Balance");
                 if (tempDebt.length) {
                     setDebt(tempDebt[0].Value);
-                    setAmount(tempDebt[0].Value)
+                    
                     setDebtCcy(tempDebt[0].CCY);
                     if (!debtCcy) {
                         setDebtCcy("₾");
@@ -140,15 +149,36 @@ const  FillPaymentData = (props) => {
         setSelectedAccount(account)
     }
 
-    useEffect(() => {
-        if(AbonentCode !== '')
-            checkCostumerDebt();
-        
-    }, [])
+    const checkPaymentData = () => {
+        let data = {
+            paymentData, 
+            info:{costumer, merchantImgUrl, merchantName }, 
+            type: selectedAccount.type === 7? 'Unicard' : undefined
+        };
 
-    useEffect(() => {
-        getCostumerCommision();
-    }, [amount, selectedAccount.accountNumber])
+        if (AbonentCode === '') {
+            data = {
+                error: `გთხოვთ შეავსოთ ველი`
+            }
+       
+        } else if (amount > maxAmount ) {
+            data = {
+                error: `მინიმალური თანხა უნდა იყოს ${maxAmount}`
+            }
+        } else  if(amount < minAmount ) {
+            data = {
+                error: `მინიმალური თანხა უნდა იყოს ${minAmount}`
+            }
+        } else if (amount === '') {
+            data = {
+                error: `გთხოვთ შეავსოთ ველი`
+            }
+        }
+
+        props.getPaymentData(data);
+    }
+
+   
 
     return (
         <div>
@@ -201,22 +231,18 @@ const  FillPaymentData = (props) => {
                     {paymentCommision !== null?<Fragment>
                         <div className = 'd-flex'>
                             <p>საკომისიო:</p>
-                            <p>{paymentCommision.toFixed(2)}</p>
+                            <p>{paymentCommision?.toFixed(2)}</p>
                         </div>
                     </Fragment> : null}
                 </div>
             </div>
             <hr/>
-            <p>{totalPaymentAmount.toFixed(2)}</p>
+            <p>{totalPaymentAmount?.toFixed(2)}</p>
             <div className = 'd-flex'>
                 <p style = {{marginRight: 10}}>მაქსიმალური თანხა: {maxAmount?.toFixed(2)}</p>
                 <p>მინიმალური თანხა: {minAmount?.toFixed(2)}</p>
             </div>
-             <Button clicked = {()=> props.getPaymentData({ 
-                    paymentData, 
-                    info:{costumer, merchantImgUrl, merchantName }, 
-                    type: selectedAccount.type === 7? 'Unicard' : undefined})
-                }>გადახდა</Button>
+             <Button clicked = { checkPaymentData }>გადახდა</Button>
         </div>
     )
 }

@@ -17,6 +17,7 @@ const PaymentPanel = (props) => {
     const [ errorArray, setErrorArray ] = useState([]);
     const [ templateName, setTemplateName ] = useState('')
 
+   
     useEffect(() => {
         if(services[0]) {
             setBredCrump([services[0]?.name]);
@@ -24,10 +25,13 @@ const PaymentPanel = (props) => {
     }, [services] )
 
     const paymentData = (data) => {
+        if(data.error){
+            setErrorArray(prevState => { return [...prevState, data.error] } )
+            return;
+        }
         if(data.templateData) {
             props.saveTemplate(data.templateData)
         } else {
-            console.log('*****', data.type)
             props.proceedPayment(data.paymentData, data.type);
             setSuccessInfo(data.info);
         }
@@ -67,13 +71,14 @@ const PaymentPanel = (props) => {
         props.onPaymentStep();
        
     }
-
-    const clearErrorMessages = () => {
-        let tempError = errorArray.shift();
-        let tempErrorArray = errorArray.filter(el => el !== tempError);
-        setErrorArray([...tempErrorArray]);
+//
+    const clearErrorMessages = (error) => {
+        console.log('error message', errorArray)
+        let tempErrorArray = errorArray.filter(el => el !== error);
+        console.log(tempErrorArray)
+       setErrorArray([...tempErrorArray]);
+        
     }
-
     return (
         <SidePanel
         
@@ -83,7 +88,7 @@ const PaymentPanel = (props) => {
             visible = { tabvisible }
             closePanel = { props.close }
             bredClick = { handleBredCrump }
-            errorContainer = { <ErrorNotification errorMessages = {errorArray} onClearError = { clearErrorMessages}/> }>
+            errorContainer = {  <ErrorNotification errorMessages = { [...errorArray] } onClearError = { clearErrorMessages }/>  }>
                 
                 
             {step === 0? 
@@ -108,9 +113,7 @@ const PaymentPanel = (props) => {
                </div>
 
             }
-            <button onClick = {() => setErrorArray(prevState => {return [...prevState, 'Test Error']})}>add error</button>
-                <button onClick = {() => setErrorArray(prevState => {return [...prevState, 'Test Error 1']})}>add error1</button>
-                <button onClick = {() => setErrorArray(prevState => {return [...prevState, 'Test Error 2']})}>add error2</button>
+            
         </SidePanel>
     );
 }

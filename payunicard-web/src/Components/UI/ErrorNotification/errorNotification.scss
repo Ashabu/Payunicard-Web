@@ -8,6 +8,8 @@
     align-items: center;
     font-family: 'FiraGO MEDIUM';
     font-size: 14px;
+  
+
     
     
     img {
@@ -17,20 +19,8 @@
       p {
         color: #fff;
       }
-
-      
-  }
-
-  
-  .notifyError {
-    width: 100%;
-    height: auto;  
-    position: absolute;
-    top: -80px;
-    z-index: 10;
     
-
-    &.show {
+      &.show {
         top: 0px;
         -webkit-animation: slide-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
          animation: slide-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
@@ -41,7 +31,11 @@
         -webkit-animation: slide-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
         animation: slide-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
       }
+      
   }
+
+  
+  
 
   @-webkit-keyframes slide-bottom {
     0% {

@@ -8,6 +8,7 @@
     height: 100%;
     transition: all 500ms linear;
     z-index: 101;
+    overflow: hidden;
 
     &.active {
         right: 0;

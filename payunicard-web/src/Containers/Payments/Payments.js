@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import { Context } from '../../Context/AppContext';
 import { Presentation, Transaction, Template, User, Otp } from '../../Services/API/APIS';
-import Layout from '../../Containers/Layout/Layout';
+
+import AuthorizedLayout from './../AuthLayout/AuthorizedLayout';
 import { Icon, Backdrop, Loader, Widget, Search, SidePanel, OTP } from './../../Components/UI/UiComponents';
 import ComonFn from '../../Services/CommonFunctions';
 import PaymentCategory from './../../Components/Payments/PaymentCategory';
@@ -354,7 +355,7 @@ const Payments = () => {
    
 
     return (
-        <Layout>
+        <AuthorizedLayout pageName = "ჩემი გადახდები">
             <Backdrop show = { paymentPanelVisible || detailVisible || allvisible } hide = { handlePaymentPanelClose }/>
             <OTP submitAction = {()=> submitAction(paymentType) } getOtpValue = { getOtpValue } otpVisible = { otpWindowVisible } closeOtpWindow = {() => setOtpWindowVisible(false)}/>
             {services && <PaymentPanel 
@@ -439,7 +440,7 @@ const Payments = () => {
                     ))}
                 </Widget>
             </div>
-        </Layout>
+        </AuthorizedLayout>
     )
 }
 

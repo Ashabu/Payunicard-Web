@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 const ErrorMessage = (props) => {
     let mounted = false;
     const { errorMessage, onHandleError } = props;
+    console.log('errorMessage', errorMessage)
 
     const [ errorClass, setErrorClass ] = useState('show');
 
@@ -18,19 +19,17 @@ const ErrorMessage = (props) => {
             setErrorClass('hide');
             console.log('<===error component mounted ===>',showErrorTimeOut.current)
             hideErrorTimeOut.current = setTimeout(() => {
+                console.log('hideErrorTimeOut', errorMessage)
                 onHandleError(errorMessage);
             }, 1000);
         }, 3000);
         if(mounted)
         return () => {
-        
             console.log('<===error component unmounted ===>')
-           
-     {
-        if (hideErrorTimeOut.current) clearTimeout(hideErrorTimeOut.current);
-        if (showErrorTimeOut.current) clearTimeout(showErrorTimeOut.current);
-        
-     }
+            {
+                if (hideErrorTimeOut.current) clearTimeout(hideErrorTimeOut.current);
+                if (showErrorTimeOut.current) clearTimeout(showErrorTimeOut.current);
+            }
             mounted = false
         }
     },[errorMessage])

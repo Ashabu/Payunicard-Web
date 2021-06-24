@@ -87,8 +87,10 @@ const PaymentPanel = (props) => {
        
     }
 //
+console.log('error message', errorArray)
+
     const clearErrorMessages = (error) => {
-        console.log('error message', errorArray)
+        
         let tempErrorArray = errorArray.filter(el => el !== error);
         console.log(tempErrorArray)
        setErrorArray([...tempErrorArray]);
@@ -128,7 +130,9 @@ const PaymentPanel = (props) => {
                </div>
 
             }
-            
+            <button onClick = {() => setErrorArray(prevState => { return [...prevState, 'test error 1']})}>test error 1</button>
+            <button onClick = {() => setErrorArray(prevState => { return [...prevState, 'test error 2']})}>test error 2</button>
+            <button onClick = {() => setErrorArray(prevState => { return [...prevState, 'test error 3']})}>test error 3</button>
         </SidePanel>
     );
 }

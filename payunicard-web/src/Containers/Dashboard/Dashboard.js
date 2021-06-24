@@ -5,7 +5,6 @@ import { Context } from '../../Context/AppContext';
 import './dashboard.scss';
 import { User } from '../../Services/API/APIS';
 import { Backdrop, Button, Select, SelectList, SidePanel, Widget } from '../../Components/UI/UiComponents';
-import Layout from '../../Containers/Layout/Layout';
 import TransactionDetail from '../../Components/TransactionDetails/TransactionDetail';
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
 import UserBalance from './../../Components/UserBalance/UserBalance';
@@ -14,6 +13,7 @@ import CurrencyRates from './../../Components/CurrencyRates/CurrencyRates';
 import UserVerificationstatus from '../../Components/UserVerificationStatus/UserVerificationStatus';
 import {handleTransactionDetailView } from '../../Providers/TransactionProvider';
 import OTP from '../../Components/UI/OTP/OTP';
+import AuthorizedLayout from './../AuthLayout/AuthorizedLayout';
 
 
 
@@ -85,7 +85,7 @@ const  Dashboard = () => {
         
         return (
           
-            <Layout >
+            <AuthorizedLayout pageName = "მთავარი გვერდი">
               <Backdrop show = {detailVisible} hide = {() => {history.goBack(); setDetailVisible(false)}}/>
 
                 <SidePanel
@@ -137,7 +137,7 @@ const  Dashboard = () => {
                     </Widget>
                 </div>
               
-            </Layout>
+            </AuthorizedLayout>
         );
     
 }

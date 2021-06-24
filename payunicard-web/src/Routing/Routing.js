@@ -11,6 +11,7 @@ import Transfers from './../Containers/Transfers/Transfers';
 import AuthService from './../Services/AuthService';
 import PrivateRoute from './privateRoute';
 import NotAuthRoute from './NotAuthRoute';
+import MyProducts from '../Containers/MyProducts/MyProducts';
 
 
 
@@ -59,6 +60,7 @@ const Routing = () => (
         <NotAuthRoute path = '/register' component = {UserRegistration}/>
         <PrivateRoute path = '/dashboard' component = {Dashboard}/>
         <PrivateRoute path = '/transactions' component = {Transaction}/>
+        <PrivateRoute path = '/myproducts' component = {MyProducts}/>
         <PrivateRoute path = '/payments' component = {Payments}/>
         <PrivateRoute path = '/transfers' component = {Transfers}/>
 

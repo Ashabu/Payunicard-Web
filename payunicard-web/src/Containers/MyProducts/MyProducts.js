@@ -6,7 +6,7 @@ const MyProducts = (props) => {
 
     return (
        <div>
-
+           <h1>MyProducts</h1>
        </div>     
     )
 }

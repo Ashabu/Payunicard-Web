@@ -156,24 +156,22 @@ const  FillPaymentData = (props) => {
             type: selectedAccount.type === 7? 'Unicard' : undefined
         };
 
-        if (AbonentCode === '') {
+        if (AbonentCode === '' || amount === '') {
             data = {
-                error: `გთხოვთ შეავსოთ ველი`
+                error: `required`
             }
        
-        } else if (amount > maxAmount ) {
+        }  else if (amount < minAmount ) {
             data = {
-                error: `მინიმალური თანხა უნდა იყოს ${maxAmount}`
+                error: `minAmount`,
+                min: minAmount
             }
-        } else  if(amount < minAmount ) {
+        } else  if(amount > maxAmount ) {
             data = {
-                error: `მინიმალური თანხა უნდა იყოს ${minAmount}`
+                error: `maxAmount`,
+                max: maxAmount
             }
-        } else if (amount === '') {
-            data = {
-                error: `გთხოვთ შეავსოთ ველი`
-            }
-        }
+        } 
 
         props.getPaymentData(data);
     }

@@ -238,7 +238,7 @@ export default {
           eng: 'My Products'
           },
         imgUrl: '../../Assets/Images/Navigation/myproducts-icon.svg' ,
-        pageUrl: '/Dashboard/AccountsCards',
+        pageUrl: '/MyProducts',
         activeClass: false,
         forMobile: true,
         key: 'AccountsCards',

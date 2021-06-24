@@ -26,7 +26,22 @@ const PaymentPanel = (props) => {
 
     const paymentData = (data) => {
         if(data.error){
-            setErrorArray(prevState => { return [...prevState, data.error] } )
+            let message = null;
+            switch (data.error) {
+                case 'required':
+                    message = 'შეავსეთ ველი'
+                    break;
+                case 'minAmount':
+                    message = `მინიმალური თანხა უნდა იყოს ${data.min}`
+                    break;
+                case 'maxAmount':
+                    message = `მაქსიმალური თანხა უნდა იყოს ${data.max}`
+                    break;    
+                default: message;
+                    break;
+            }
+
+            setErrorArray(prevState => { return [...prevState, message] } )
             return;
         }
         if(data.templateData) {

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import User from '../../Services/API/UserServices';
 import { setLogoByAccountType } from '../../Services/CommonFunctions';
 import { Backdrop, Calendar, Icon, Select, SelectList, Search, SidePanel, Button, Widget } from '../../Components/UI/UiComponents';
-import Layout from '../../Containers/Layout/Layout';
+import AuthorizedLayout from './../AuthLayout/AuthorizedLayout';
 import TransactionDetail from '../../Components/TransactionDetails/TransactionDetail';
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
 import {handleTransactionDetailView } from '../../Providers/TransactionProvider';
@@ -128,7 +128,7 @@ const Transaction = () => {
 
         return (
             
-                <Layout>
+                <AuthorizedLayout pageName = "ჩემი ტრანზაქციები">
 
                 <Backdrop show = { detailVisible } hide = {() => { history.goBack(); setDetailVisible(false) }}/>
                 <SidePanel
@@ -200,7 +200,7 @@ const Transaction = () => {
                     <Button buttonClass = 'loadmore' clicked = { handleLoadMoreTransactions }>მეტი</Button>        
                 </div>
             </div>
-            </Layout>
+            </AuthorizedLayout>
         );
 }
 

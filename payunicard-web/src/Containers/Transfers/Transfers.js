@@ -4,7 +4,7 @@ import { Context } from '../../Context/AppContext.js';
 import { formatNumber, } from '../../Services/CommonFunctions'; 
 import { Backdrop, OTP, Search, Widget } from '../../Components/UI/UiComponents';
 import { Otp, Transaction } from '../../Services/API/APIS';
-import Layout from '../../Containers/Layout/Layout';
+import AuthorizedLayout from './../AuthLayout/AuthorizedLayout';
 import PropTypes from 'prop-types';
 import TransferTemplate from './../../Components/Transfers/TransferTemplate';
 import TransferPanel from './../../Components/Transfers/TransferPanel';
@@ -93,7 +93,7 @@ const Transfers = (props) => {
 
 
     return (
-        <Layout>
+        <AuthorizedLayout pageName = "ჩემი გადარიცხვები">
             <Backdrop show = { transferPanelVisible } hide = { closeTransferPanel }/>
             <OTP submitAction = {()=> makeTransfer() } getOtpValue = { getOtpValue } otpVisible = { otpWindowVisible} closeOtpWindow = {() => setOtpWindowVisible(false)}/>
             <TransferPanel 
@@ -133,7 +133,7 @@ const Transfers = (props) => {
                     
                   
             </div>
-        </Layout>
+        </AuthorizedLayout>
     )
 }
 

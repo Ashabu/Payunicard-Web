@@ -12,6 +12,7 @@ const ErrorNotification = (props) => {
     
     
     const handleError = (error) => {
+        debugger
         onClearError(error);
         setShowError(false);
     }

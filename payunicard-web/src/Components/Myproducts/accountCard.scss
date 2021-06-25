@@ -1,6 +1,107 @@
-.AccountCard {
+.multicard {
     width: 240px;
     height: 104px;
     border-radius: 7px;
     border: 1px solid green;
+    box-sizing: border-box;
+    position: relative;
+    margin: 20px;
+
+    .AccountCard {
+        width: 240px;
+        height: 104px;
+        border-radius: 7px;
+        border: 1px solid green;
+        box-sizing: border-box;
+        position: relative;
+        top: 6px;
+        right: 6px;
+        
+
+    }
+
+    .click-icon {
+        position: absolute;
+        top: 36px;
+        right: 16px;
+    }
+
+    .ac-name {
+        font-family: 'FiraGO REGULAR';
+        color: #6B6B6B;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+
+        position: absolute;
+        top: 7px;
+        left: 14px;
+        
+    }
+
+    .ac-balance {
+        font-family: 'FiraGO MEDIUM';
+        color: #130D1E;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 29px;
+
+        position: absolute;
+        top: 31px;
+        left: 14px;
+    }
+
+    
+
+    .ac-currencies {
+        display: flex;
+        flex-flow: row;
+        position: absolute;
+        top: 62px;
+        left: 14px;
+        z-index: 300;
+
+        .ac-currency {
+            display: inline-block;
+            font-family: 'FiraGO REGULAR';
+            color: #6B6B6B;
+            font-weight: normal;
+            font-size: 12px;
+            line-height: 10px;
+            margin-right: 14px;
+
+            &:hover {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+            
+        }
+    }
+
+    .ac-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        left: 14px;
+        bottom: 8px;
+
+        span {
+            display: inline-block;
+            font-family: 'FiraGO REGULAR';
+            color: #6B6B6B;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 17px;
+            margin-right: 3px
+        }
+        
+    }
+
+    .ac-logo {
+        position: absolute;
+        right: 16px;
+        bottom: 12px;
+    }
+
 }

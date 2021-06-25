@@ -6,7 +6,7 @@ import OtpInput from './OtpInput';
 import { Otp } from '../../../Services/API/APIS';
 
 const OTP = (props) => {
-    const { otpVisible, closeOtpWindow, getOtpValue, submitAction } = props;
+    const { otpVisible, closeOtpWindow, getOtpValue, submitAction, errorText } = props;
     
     
 
@@ -23,7 +23,8 @@ const OTP = (props) => {
                     </span>
                 </div>
                 <div style = {{padding: 20}}>
-                        <OtpInput callBack = { getOtpValue }/>
+                        <OtpInput callBack = { getOtpValue } otpError = { errorText }/>
+                        {/* <span style = {{color: 'red'}}>{ errorText }</span> */}
                     <div className = 'otp-footer'>
                         <Button buttonClass = 'submit-button' clicked = { submitAction }>დადასტურება</Button>
                     </div>

@@ -11,19 +11,20 @@ const SelectAccount = (props) => {
     const { state } = useContext(Context);
     const { userAccounts } = state;
 
-    const { placeholder, current, choseDisabled, hasUnicard } = props;
+    const { placeholder, current, choseDisabled, hasUnicard, account } = props;
 
     const [ selectedAccount, setSelectedAccount] = useState(null);
     const [ UserAccounts, setUserAccounts ] = useState([]);
     const [ disabled, setDisabled ] = useState(false);
 
     const setAccount = (data) => {
-        props.account(data)
+        account(data)
     }
 
     const currentAccount = (id) => {
         let temUserAccounts = userAccounts;
         let currentAccount = temUserAccounts.filter(acc => acc.accountId == id);
+        account(currentAccount);
         setSelectedAccount(currentAccount[0]);
 
     }

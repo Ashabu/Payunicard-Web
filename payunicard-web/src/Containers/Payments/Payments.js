@@ -53,6 +53,8 @@ const Payments = () => {
     //-----------------------------------
     const [ allvisible, setAllVisible ] = useState(false);
     const [ otpWindowVisible, setOtpWindowVisible ] = useState(false);
+    const [ otpErrorText, setOtpErrorText ] = useState(null);
+    const [ errors, setErrors ] = useState([]);
     const [ paymentType, setPaymentType ] = useState('');
 
 
@@ -87,6 +89,66 @@ const Payments = () => {
 
     const filteredTemplates = (data) => {
         return  data?.filter(el => el.checked === true && el.debt > 0);
+    }
+    const checkAllTemplates = () => {
+        setSelectAllTemplates(!selectAllTemplates);
+    }
+
+    const toggleTemplateCheck = (id) => {
+       
+        let tempTemplates = templates;
+        let i = tempTemplates.findIndex(t => t.payTempID == id);
+        tempTemplates[i].checked = !tempTemplates[i].checked;
+        // checkForPayAllTemplates(tempTemplates);
+        setTemplates([...tempTemplates]);
+    }
+
+    const saveUtilityTemplate = (data) => {
+        //const { abonentCode, AccountId, Amount, forFundsSPCode, forMerchantCode, forMerchantServiceCode, forOpClassCode, forPaySPCode, longOpID, serviceId } = paymentData;
+        
+        let templateData = {}
+        if(data) {
+            templateData = data
+        } else {
+            const { longOpID } = paymentData;
+            templateData = {
+                longOpID,
+                templName: 'axali shabloni',
+            }
+        }
+        Template.addUtilityTemplate(templateData).then(res => {
+            if(res.data.ok) {
+                Template.getUtilityTemplates().then(res => {
+                    if(res.data.ok) {
+                        let paymentTemplates = res.data.data.templates;
+                        paymentTemplates.map(t => {
+                            t.checked = false;
+                            return t
+                        })
+                        setGlobalValue({paymentTemplates})
+                        
+                    }
+                })
+            }
+        })
+    }
+    
+    const editUtilityTemplateName = (data) => {
+        Template.editUtilityTemplate(data).then(res => {
+            console.log(res)
+        })
+    }
+
+    const searchTemplates = (value) => {
+        let paymentTemplats = paymentTemplates;
+        let filterKeys  = ['abonentCode', 'templName', 'merchServiceName'];
+        let searchInTemplates = search(paymentTemplats, filterKeys, value);
+        
+        if (value == "") {
+            setTemplates(paymentTemplates);
+        } else {
+            setTemplates([...searchInTemplates]);
+        }
     }
 
     const getPaymentStatements = () => {
@@ -179,86 +241,43 @@ const Payments = () => {
     } 
     
     const proceedPayment = (data, type) => {
-        if(type === 'Unicard') {
-            let unicardPayData = {
-                unicard: data.AccountId,
-                AccountId: null,
-                forFundsSPCode: 'Unicard',
-
-            }
-            setOtpWindowVisible(true);
-            debugger
-            Otp.UnicardOtp({card: data.AccountId}).then(res => {
-                if(res.data.ok) {
-                    setPaymentData({...data, unicardOtpGuid: res.data.data.otpGuid, ...unicardPayData})
-                }
-            })
+        //აქ მოდის გადახდისთვის დასარეგისტრეირებელი data და ტიპი. 
+        if(data.abonentCode === '') {
+            setErrors(prevState => { return [...prevState, 'გთხოვთ შეამოწმოთ აბონენტი']});
             return;
-
+        } else if(data.AccountId === undefined) {
+            setErrors(prevState => { return [...prevState, 'გთხოვთ აირჩიეთ ანგარიში']});
+            return;
+        } else if (data.amount === '') {
+            setErrors(prevState => { return [...prevState, 'გთხოვთ შეიყვანოთ თანხა']});
+            return;
+        } else if (data.amount < merchantData.minAmount) {
+            setErrors(prevState => { return [...prevState, `მინიმალური გადასახდელი თანხა ${merchantData.minAmount}`]});
+            return;
+        } else if (data.amount > merchantData.maxAmount) {
+            setErrors(prevState => { return [...prevState, `მაქსიმალური გადასახდელი თანხა ${merchantData.maxAmount}`]});
+            return;
         } else {
-            setPaymentData(data);
-            makePayment(data)
-        }
-
-    }
-
-    const checkAllTemplates = () => {
-        setSelectAllTemplates(!selectAllTemplates);
-    }
-
-    const toggleTemplateCheck = (id) => {
-       
-        let tempTemplates = templates;
-        let i = tempTemplates.findIndex(t => t.payTempID == id);
-        tempTemplates[i].checked = !tempTemplates[i].checked;
-        // checkForPayAllTemplates(tempTemplates);
-        setTemplates([...tempTemplates]);
-    }
-
-    const saveUtilityTemplate = (data) => {
-        //const { abonentCode, AccountId, Amount, forFundsSPCode, forMerchantCode, forMerchantServiceCode, forOpClassCode, forPaySPCode, longOpID, serviceId } = paymentData;
-        
-        let templateData = {}
-        if(data) {
-            templateData = data
-        } else {
-            const { longOpID } = paymentData;
-            templateData = {
-                longOpID,
-                templName: 'axali shabloni',
-            }
-        }
-        Template.addUtilityTemplate(templateData).then(res => {
-            if(res.data.ok) {
-                Template.getUtilityTemplates().then(res => {
+            if(type === 'Unicard') {
+                //აქ მოწმდება უნიქარდია თუ არა და შემდეგიძახება გადახდის რეგისტრაციის ფუნქცია.
+                let unicardPayData = {
+                    unicard: data.AccountId,
+                    AccountId: null,
+                    forFundsSPCode: 'UNICARD',
+    
+                }
+                setOtpWindowVisible(true);
+                Otp.UnicardOtp({card: data.AccountId}).then(res => {
                     if(res.data.ok) {
-                        let paymentTemplates = res.data.data.templates;
-                        paymentTemplates.map(t => {
-                            t.checked = false;
-                            return t
-                        })
-                        setGlobalValue({paymentTemplates})
-                        
+                        setPaymentData({...data, unicardOtpGuid: res.data.data.otpGuid, ...unicardPayData})
                     }
                 })
-            }
-        })
-    }
+                return;
     
-    const editUtilityTemplateName = (data) => {
-        Template.editUtilityTemplate(data).then(res => {
-            console.log(res)
-        })
-    }
-
-    const searchTemplates = (value) => {
-        let paymentTemplats = paymentTemplates;
-        let searchInTemplates = search(paymentTemplats, ['abonentCode', 'templName', 'merchServiceName'], value);
-        
-        if (value == "") {
-            setTemplates(paymentTemplates);
-        } else {
-            setTemplates([...searchInTemplates]);
+            } else {
+                setPaymentData(data);
+                makePayment(data)
+            }
         }
     }
 
@@ -294,6 +313,8 @@ const Payments = () => {
     }
 
     const submitAction = (type) => {
+        setOtpErrorText(null);
+        //აქ მოწმდება 1 ცალის გადახდაა თუ რამდენიმესი ერთად
         if(type === 'Batch') {
             makeBatchPatment(paymentData);
             return
@@ -314,15 +335,12 @@ const Payments = () => {
         if(type === 'Unicard') {
             setOtpWindowVisible(true);
             Otp.UnicardOtp({card: data[0].AccountId}).then(res => {
-                debugger
                 if(res.data.ok) {
                     let tempData = [...data].map(el => {
                         el.unicard = el.AccountId;
                         el.AccountId = null;
-                        el.forFundsSPCode = 'Unicard';
+                        el.forFundsSPCode = 'UNICARD';
                         el.unicardOtpGuid = res.data.data.otpGuid;
-    
-                        console.log('element',el)
                     return el
                 })
                     setPaymentData([...tempData])
@@ -342,20 +360,56 @@ const Payments = () => {
                 if(otpWindowVisible) setOtpWindowVisible(false);
                 setPaymentData(prevState => { return{...prevState, longOpID: res.data.data.op_id }})
                 setPaymentStep(3);
+            } else {
+                if(res.data.errors[0].code  === 117) {
+                    setOtpErrorText(res.data.errors[0].displayText)
+                } else {
+                    if(otpWindowVisible) setOtpWindowVisible(false);
+                    setErrors(prevState => { return[...prevState, res.data.errors[0].displayText]});
+                }
             }
-        })
+        }).catch(error => {
+            setErrors(prevState => { return [...prevState, error]});
+            console.log(error)
+        });
     } 
 
     const makeBatchPatment = (data) => {
-        Transaction.startPayBatchTransaction(data);
+        Transaction.startPayBatchTransaction(data).then(res => {
+            if(res.data.ok) {
+                if(otpWindowVisible) setOtpWindowVisible(false);
+                console.log(res.data)
+            } else {
+                if(res.data.errors[0].code  === 117) {
+                    setOtpErrorText(res.data.errors[0].displayText)
+                } else {
+                    if(otpWindowVisible) setOtpWindowVisible(false);
+                    setErrors(prevState => { return[...prevState, res.data.errors[0].displayText]});
+                    console.log('error', res.data.errors[0].displayText)
+                }
+            }
+        }).catch(error => {
+            console.log(error)
+        });
     }
-
+    const clearErrorMessages = (error) => {
+        let tempErrorArray = errors.filter(el => el !== error);
+        setErrors([...tempErrorArray]);
+        
+    }
+    console.log('merchantData' , merchantData)
    
 
     return (
         <AuthorizedLayout pageName = "ჩემი გადახდები">
             <Backdrop show = { paymentPanelVisible || detailVisible || allvisible } hide = { handlePaymentPanelClose }/>
-            <OTP submitAction = {()=> submitAction(paymentType) } getOtpValue = { getOtpValue } otpVisible = { otpWindowVisible } closeOtpWindow = {() => setOtpWindowVisible(false)}/>
+            <OTP
+                otpVisible = { otpWindowVisible } 
+                closeOtpWindow = {() => setOtpWindowVisible(false)}
+                getOtpValue = { getOtpValue } 
+                errorText = { otpErrorText }
+                submitAction = {()=> submitAction(paymentType) }/>
+                
             {services && <PaymentPanel 
                 tabvisible = { paymentPanelVisible }
                 close = { handlePaymentPanelClose }
@@ -366,13 +420,16 @@ const Payments = () => {
                 merchantdata = { merchantData } 
                 getServices = { getMerchantServices }
                 proceedPayment = { proceedPayment }
-                saveTemplate = { saveUtilityTemplate }/>}
+                saveTemplate = { saveUtilityTemplate }
+                onClearError = { clearErrorMessages }
+                error = { errors }/>}
 
              <PayAllPaymentPanel 
                 checkedTemplates = { filteredTemplates(templates) } 
                 payallvisible = { allvisible } 
                 close = {() =>setAllVisible(false)} 
-                onPayAll = { payAllBills }/>   
+                onPayAll = { payAllBills }
+                error = { errors }/>   
 
             <SidePanel
                 visible = { detailVisible }
@@ -421,7 +478,7 @@ const Payments = () => {
                             template = { payTemplate } 
                             onToggle = { toggleTemplateCheck }
                             editName = { editUtilityTemplateName }
-                            clicked = {opentTemplateTab}
+                            clicked = { opentTemplateTab }
                             />
                         ))}
                     <button onClick = {()=> {setAllVisible(true); setPaymentType('Batch')}}>გადახდა</button>           

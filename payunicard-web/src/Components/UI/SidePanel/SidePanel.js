@@ -1,11 +1,12 @@
 import React from 'react';
 import './sidePanel.scss';
 import PropTypes from 'prop-types';
+import ErrorNotification from './../ErrorNotification/ErrorNotification';
 
 
 const  SidePanel = (props) => {
     
-    const { errorContainer, stepBack, onStepBack, visible, headerText, closePanel, children, bredcrump } = props;
+    const { errorContainer, stepBack, onStepBack, visible, headerText, closePanel, children, bredcrump, errorMessage, onClearError } = props;
     let StepBack = null;
 
     if(stepBack) {
@@ -22,7 +23,7 @@ const  SidePanel = (props) => {
 
     return (
         <div className = { visible? 'sidePanel active' : 'sidePanel' }>
-            { errorContainer }
+            <ErrorNotification errorMessage = { errorMessage } handleClearError = { onClearError }/>
             <div className = 'header'>
                 
                 <div>

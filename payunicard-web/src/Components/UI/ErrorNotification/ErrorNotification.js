@@ -6,14 +6,13 @@ import PropTypes from 'prop-types';
 
 
 const ErrorNotification = (props) => {
-    const { errorMessages, onClearError } = props;
+    const { errorMessage, handleClearError } = props;
     const [ showError, setShowError ] = useState(true);
     
     
     
     const handleError = (error) => {
-        debugger
-        onClearError(error);
+        handleClearError(error);
         setShowError(false);
     }
 
@@ -21,7 +20,7 @@ const ErrorNotification = (props) => {
     return (
          
             <div>
-                { errorMessages.map((error, index) => (  <ErrorMesage key = { index } errorMessage = { error } onHandleError = { handleError }/>  ))} 
+                { errorMessage?.map((error, index) => (  <ErrorMesage key = { index } message = { error } onHandleError = { handleError }/>  ))} 
             </div>    
         
 

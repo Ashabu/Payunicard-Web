@@ -259,7 +259,7 @@ export default {
           eng: 'Bills'
           },
         imgUrl: '../../Assets/Images/Navigation/payments-icon.svg',
-        pageUrl: '/Dashboard/Payment',
+        pageUrl: '/Payments',
         activeClass: false,
         forMobile: true,
         key:'Payment',

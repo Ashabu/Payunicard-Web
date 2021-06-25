@@ -49,6 +49,9 @@ const TransferPanel = (props) => {
 
     
     const selectAccountFrom = (account) => {
+        if(Array.isArray(account)){
+            account = account[0];
+        }
         setAccountFrom(account);
     }
 

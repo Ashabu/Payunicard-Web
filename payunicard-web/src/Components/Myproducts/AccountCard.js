@@ -10,16 +10,18 @@ const AccountCard = (props) => {
     const [ availableBalance, setAvailableBalance ] = useState(availableInGEL);
     const [ balanceCcy, setBalanceCcy ] = useState('₾');
     
-    let AccountCurrencies = null;
-    if(type !== 7) {
-        AccountCurrencies = (
+
+    const AccountCurrencies = () => {
+        return (
             <div className = 'ac-currencies'>
                 {currencies?.map((cur, index) => (
-                    <span className = 'ac-currency' key = { index } onClick = {()=> changeAvailableBalance(cur.key)}>{ cur.value} { formatNumber(cur.balance) }</span>
+                    <span className = 'ac-currency' key = { index } onClick = {(event)=> changeAvailableBalance(event, cur.key)}>{ cur.value} { formatNumber(cur.balance) }</span>
                 ))}
             </div>
         )
-    };
+    }
+
+    
 
     let BalanceCcy = null;
     if( type === 7) {
@@ -29,7 +31,8 @@ const AccountCard = (props) => {
     };
 
 
-    const changeAvailableBalance = (ccy) => {
+    const changeAvailableBalance = (event, ccy) => {
+        event.stopPropagation();
         let obj = {
             BalanceCcy: '',
             AvailableBalance: null
@@ -83,7 +86,7 @@ const AccountCard = (props) => {
             <span className = 'ac-name'>{ accountTypeName } { mAskedCard }</span>
             <span className = 'ac-balance'> { formatNumber(availableBalance) } { BalanceCcy || balanceCcy }</span>
             <img className = 'click-icon' src = '../../Assets/Images/three_dot.png' alt= 'copy-icon'/>
-            { AccountCurrencies }
+            {type !== 7 && <AccountCurrencies />} 
             <div className = 'ac-number'>
                 <span> { accountNumber }</span>
                 <img src = '../../Assets/Images/copy-icon.png' alt= 'copy-icon'/>

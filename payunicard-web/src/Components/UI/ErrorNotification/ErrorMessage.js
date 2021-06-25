@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 
 const ErrorMessage = (props) => {
     let mounted = false;
-    const { errorMessage, onHandleError } = props;
-    console.log('errorMessage', errorMessage)
+    const { message, onHandleError } = props;
 
     const [ errorClass, setErrorClass ] = useState('show');
 
@@ -17,28 +16,25 @@ const ErrorMessage = (props) => {
         mounted = true
         showErrorTimeOut.current = setTimeout(() => {
             setErrorClass('hide');
-            console.log('<===error component mounted ===>',showErrorTimeOut.current)
             hideErrorTimeOut.current = setTimeout(() => {
-                console.log('hideErrorTimeOut', errorMessage)
-                onHandleError(errorMessage);
+                onHandleError(message);
             }, 1000);
         }, 3000);
         if(mounted)
         return () => {
-            console.log('<===error component unmounted ===>')
             {
                 if (hideErrorTimeOut.current) clearTimeout(hideErrorTimeOut.current);
                 if (showErrorTimeOut.current) clearTimeout(showErrorTimeOut.current);
             }
             mounted = false
         }
-    },[errorMessage])
+    },[message])
     
     return (
 
         <div className = { 'ErrorMessage ' + errorClass }>
             <img src = '../../../Assets/Images/alert_white.png' alt = 'icon' />
-            <p>{ errorMessage }</p>
+            <p>{ message }</p>
         </div>
     );
 }

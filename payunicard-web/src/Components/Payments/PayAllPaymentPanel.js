@@ -7,13 +7,14 @@ import SelectAccount from '../SelectAccount/SelectAccount';
 import PayAllTemplate from './PayAllTemplate';
 import PaymentDetails from './PaymentDetails';
 import SelectedAccount from './../HOC/SelectedAccount/SelectedAccount';
+import ErrorNotification from './../UI/ErrorNotification/ErrorNotification';
 
 
 
 const PayAllPaymentPanel = (props) => {
     // const { state } = useContext(Context);
     // const { paymentTemplates } = state;
-    const { payallvisible, close, checkedTemplates } = props;
+    const { payallvisible, close, checkedTemplates, error } = props;
 
     const [ selectedAccount, setSelectedAccount] = useState({});
     const [ canPayWithUnicard, setCanPayWithUnicard ] = useState(null);
@@ -21,6 +22,7 @@ const PayAllPaymentPanel = (props) => {
     const [ amountSum, setAmountSum ] = useState(0);
     const [ commissionSum, setCommissionSum ] = useState(0);
     const [ paymentStep, setPaymentStep] = useState(0);
+    const [ ErrorMessages, setErrorMessages ] = useState([]);
     
 
 
@@ -37,6 +39,11 @@ const PayAllPaymentPanel = (props) => {
        
 
     }, [templates])
+
+    useEffect(() => {
+        if(error)
+        setErrorMessages(prevState => { return [...prevState, error]})
+    }, [error])
 
    const toggleTemplates = (id) => {
         let tempTemplates = templates;
@@ -148,7 +155,7 @@ const PayAllPaymentPanel = (props) => {
                 <SelectAccount 
                     account = { selectAccount } 
                     icon 
-                    hasUnicard = { canPayWithUnicard }/>  
+                   />  
                 <button onClick = {ragaca}>კომისია</button> 
                 {payallvisible && templates?.map((t, i) => (
                     <PayAllTemplate 
@@ -177,11 +184,25 @@ const PayAllPaymentPanel = (props) => {
             </div>
 
         )
+    } else {
+        PayAllStep = (
+            <div>
+                <p>გადახდა წარმატებით შესრულდა</p>
+            </div>
+            )
     }
 
+    const clearErrorMessages = (error) => {
+       let tempErrorArray = ErrorMessages.filter(el => el !== error);
+       setErrorMessages([...tempErrorArray]);
+    };
 
     return (
-        <SidePanel  visible = { payallvisible } closePanel = { close } >
+        <SidePanel  
+            visible = { payallvisible } 
+            closePanel = { close } 
+            errorMessage = { [...ErrorMessages] }
+            onClearError = { clearErrorMessages }>
             {PayAllStep}
         </SidePanel>
     );

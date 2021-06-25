@@ -143,7 +143,6 @@ export const search = (data = [], keys = [], query) => {
             }
         });
     });
-    console.log('search result ==>', result)
     return result;
 }
 

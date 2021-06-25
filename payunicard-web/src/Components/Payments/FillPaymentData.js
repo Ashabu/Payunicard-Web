@@ -66,7 +66,7 @@ const  FillPaymentData = (props) => {
         forOpClassCode: forOpClassCode || forPaySpCode,
    }
 
-
+   
 
     const templateData = {
         merchantServiceID: merchantId,
@@ -146,7 +146,10 @@ const  FillPaymentData = (props) => {
     }
 
     const selectAccount = (account) => {
-        setSelectedAccount(account)
+        if(Array.isArray(account)){
+            account = account[0]
+        }
+        setSelectedAccount(account);
     }
 
     const checkPaymentData = () => {
@@ -155,27 +158,10 @@ const  FillPaymentData = (props) => {
             info:{costumer, merchantImgUrl, merchantName }, 
             type: selectedAccount.type === 7? 'Unicard' : undefined
         };
-
-        if (AbonentCode === '' || amount === '') {
-            data = {
-                error: `required`
-            }
-       
-        }  else if (amount < minAmount ) {
-            data = {
-                error: `minAmount`,
-                min: minAmount
-            }
-        } else  if(amount > maxAmount ) {
-            data = {
-                error: `maxAmount`,
-                max: maxAmount
-            }
-        } 
-
         props.getPaymentData(data);
     }
 
+    console.log(selectedAccount.accountId)
    
 
     return (

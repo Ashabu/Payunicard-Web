@@ -71,7 +71,8 @@ const Transaction = () => {
     
     const searchTransaction = (value) => {
         let transactions = userTransactions;
-        let filteredTransactions = search(transactions, ['merchantDescription', 'description'], value);
+        let filterKeys = ['merchantDescription', 'description']
+        let filteredTransactions = search(transactions, filterKeys, value);
         if (value === '') {
             setSearchInTransaction(transactions);
         } else {

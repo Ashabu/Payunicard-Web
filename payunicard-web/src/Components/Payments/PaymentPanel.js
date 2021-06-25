@@ -11,10 +11,10 @@ import PropTypes from 'prop-types';
 
 
 const PaymentPanel = (props) => {
-    const {tabvisible, services, merchantservices, merchantdata, step} = props;
+    const {tabvisible, services, merchantservices, merchantdata, step, error , onClearError} = props;
     const [ successInfo, setSuccessInfo ] = useState({});
     const [ bredCrump, setBredCrump ] = useState([]);
-    const [ errorArray, setErrorArray ] = useState([]);
+    const [ ErrorMessages, setErroMessages ] = useState([]);
     const [ templateName, setTemplateName ] = useState('')
 
    
@@ -24,26 +24,12 @@ const PaymentPanel = (props) => {
         }
     }, [services] )
 
-    const paymentData = (data) => {
-        if(data.error){
-            let message = null;
-            switch (data.error) {
-                case 'required':
-                    message = 'შეავსეთ ველი'
-                    break;
-                case 'minAmount':
-                    message = `მინიმალური თანხა უნდა იყოს ${data.min}`
-                    break;
-                case 'maxAmount':
-                    message = `მაქსიმალური თანხა უნდა იყოს ${data.max}`
-                    break;    
-                default: message;
-                    break;
-            }
+    useEffect(() => {
+        if(error.length)
+        setErroMessages(prevState => { return [...prevState, ...error]})
+    }, [error])
 
-            setErrorArray(prevState => { return [...prevState, message] } )
-            return;
-        }
+    const paymentData = (data) => {
         if(data.templateData) {
             props.saveTemplate(data.templateData)
         } else {
@@ -87,30 +73,22 @@ const PaymentPanel = (props) => {
        
     }
 //
-console.log('error message', errorArray)
 
-    const clearErrorMessages = (error) => {
-        
-        let tempErrorArray = errorArray.filter(el => el !== error);
-        console.log(tempErrorArray)
-       setErrorArray([...tempErrorArray]);
-        
-    }
+   
     return (
         <SidePanel
-        
             bredcrump = { bredCrump }
             stepBack 
             onStepBack = { handlePaymentStep }
             visible = { tabvisible }
             closePanel = { props.close }
             bredClick = { handleBredCrump }
-            errorContainer = {  <ErrorNotification errorMessages = { [...errorArray] } onClearError = { clearErrorMessages }/>  }>
+            errorMessage = { [...ErrorMessages] }
+            onClearError = { onClearError }>
                 
                 
             {step === 0? 
                 <div>
-                    
                     {services.slice(1).map((merchant, index) => (<PaymentServices key = {index} services = {merchant} 
                     clicked ={() => {props.getServices({merchant}); setBredCrump(prevState => {return [...prevState, merchant.name]}) }}/>))}
                 </div>     
@@ -130,9 +108,9 @@ console.log('error message', errorArray)
                </div>
 
             }
-            <button onClick = {() => setErrorArray(prevState => { return [...prevState, 'test error 1']})}>test error 1</button>
-            <button onClick = {() => setErrorArray(prevState => { return [...prevState, 'test error 2']})}>test error 2</button>
-            <button onClick = {() => setErrorArray(prevState => { return [...prevState, 'test error 3']})}>test error 3</button>
+            {/* <button onClick = {() => setErroMessages(prevState => { return [...prevState, 'test error 1']})}>test error 1</button>
+            <button onClick = {() => setErroMessages(prevState => { return [...prevState, 'test error 2']})}>test error 2</button>
+            <button onClick = {() => setErroMessages(prevState => { return [...prevState, 'test error 3']})}>test error 3</button> */}
         </SidePanel>
     );
 }

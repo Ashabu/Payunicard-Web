@@ -39,7 +39,7 @@ const  Layout = (props) =>  {
          User.GetUnicards().then(res => {
             if(res.data.ok) {
                 let tempUnicards = res.data.data.unicards;
-                userUnicards =  tempUnicards.map(uni => {
+                userUnicards =  [...tempUnicards].map(uni => {
                     let uCard = {
                         accountTypeName: "UniCard",
                         accountId: uni.card,
@@ -55,7 +55,6 @@ const  Layout = (props) =>  {
                     }
                     return uCard
                 })
-                
             }
         })
 
@@ -142,6 +141,7 @@ const  Layout = (props) =>  {
                 });
             })
 
+            console.log('res = >', userUnicards )
             setGlobalValue({ userAccounts:[ ...UserAccounts,...userUnicards], allUserCurrencies })
             
         })

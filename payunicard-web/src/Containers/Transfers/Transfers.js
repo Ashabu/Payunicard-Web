@@ -1,8 +1,9 @@
 import React, {useState, useEffect, useContext} from 'react';
 import './transfers.scss';
 import { Context } from '../../Context/AppContext.js';
-import { formatNumber, } from '../../Services/CommonFunctions'; 
+import { formatNumber, search } from '../../Services/CommonFunctions'; 
 import { Backdrop, OTP, Search, Widget } from '../../Components/UI/UiComponents';
+
 import { Otp, Transaction } from '../../Services/API/APIS';
 import AuthorizedLayout from './../AuthLayout/AuthorizedLayout';
 import PropTypes from 'prop-types';
@@ -48,10 +49,7 @@ const Transfers = (props) => {
 
     const searchTemplates = (value) => {
         let transTemplates = transferTemplates;
-
-        let searchInTemplates = [...transTemplates].filter(t => {
-            return t.templName?.toLowerCase().match(value.toLowerCase()); 
-        })
+        let searchInTemplates = search(transTemplates, ['templName'], value);
         if (value == "") {
             setTemplates(transferTemplates);
         } else {

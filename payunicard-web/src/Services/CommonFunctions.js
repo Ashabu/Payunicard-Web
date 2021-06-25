@@ -130,6 +130,21 @@ export const setLogoByAccountType = (type) => {
             } 
 
      
+export const search = (data = [], keys = [], query) => {
+    let result =[];
 
+    data.forEach(element => {
+        keys.forEach(key=> {
+            if(element[key]) {
+                if(element[key].toLowerCase().match(query.toLowerCase())) {
+                    result.push(element);
+                    return;
+                };
+            }
+        });
+    });
+    console.log('search result ==>', result)
+    return result;
+}
 
 

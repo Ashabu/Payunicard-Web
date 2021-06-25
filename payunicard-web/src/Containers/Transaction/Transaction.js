@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 import './transaction.scss';
 import PropTypes from 'prop-types';
 import User from '../../Services/API/UserServices';
-import { setLogoByAccountType } from '../../Services/CommonFunctions';
+import { setLogoByAccountType, search } from '../../Services/CommonFunctions';
 import { Backdrop, Calendar, Icon, Select, SelectList, Search, SidePanel, Button, Widget } from '../../Components/UI/UiComponents';
 import AuthorizedLayout from './../AuthLayout/AuthorizedLayout';
 import TransactionDetail from '../../Components/TransactionDetails/TransactionDetail';
@@ -71,13 +71,11 @@ const Transaction = () => {
     
     const searchTransaction = (value) => {
         let transactions = userTransactions;
-        let filteredTransactions = [...transactions].filter(tr => {
-            return tr.merchantDescription?.toLowerCase().match(value.toLowerCase()) || tr.description?.toLowerCase().match(value.toLowerCase()); 
-        })
+        let filteredTransactions = search(transactions, ['merchantDescription', 'description'], value);
         if (value === '') {
             setSearchInTransaction(transactions);
         } else {
-            setSearchInTransaction(filteredTransactions);
+            setSearchInTransaction([...filteredTransactions]);
         }
     }
 

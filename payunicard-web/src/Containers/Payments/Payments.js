@@ -3,17 +3,16 @@ import './payments.scss';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import { Context } from '../../Context/AppContext';
-import { Presentation, Transaction, Template, User, Otp } from '../../Services/API/APIS';
-
+import { Presentation, Transaction, Template, User, Otp  } from '../../Services/API/APIS';
 import AuthorizedLayout from './../AuthLayout/AuthorizedLayout';
 import { Icon, Backdrop, Loader, Widget, Search, SidePanel, OTP } from './../../Components/UI/UiComponents';
-import ComonFn from '../../Services/CommonFunctions';
+import { search } from '../../Services/CommonFunctions';
 import PaymentCategory from './../../Components/Payments/PaymentCategory';
 import PaymentPanel from '../../Components/Payments/PaymentPanel';
 import PaymentTemplate from './../../Components/Payments/PaymentTemplate';
 import SearchMerchants from './../../Components/Payments/SearchMerchants';
 import TransactionDetail from './../../Components/TransactionDetails/TransactionDetail';
-import {handleTransactionDetailView } from '../../Providers/TransactionProvider';
+import { handleTransactionDetailView } from '../../Providers/TransactionProvider';
 import TransactionDetailView from './../../Components/TransactionDetailView/TransactionDetailView';
 import PayAllPaymentPanel from '../../Components/Payments/PayAllPaymentPanel';
 import PaymentDetails from '../../Components/Payments/PaymentDetails';
@@ -254,13 +253,12 @@ const Payments = () => {
 
     const searchTemplates = (value) => {
         let paymentTemplats = paymentTemplates;
-        let searchInTemplates = [...paymentTemplats].filter(t => {
-            return t.abonentCode?.toLowerCase().match(value.toLowerCase()) || t.templName?.toLowerCase().match(value.toLowerCase()) || t.merchServiceName.toLowerCase().match(value.toLowerCase()) ; 
-        })
+        let searchInTemplates = search(paymentTemplats, ['abonentCode', 'templName', 'merchServiceName'], value);
+        
         if (value == "") {
             setTemplates(paymentTemplates);
         } else {
-            setTemplates(searchInTemplates);
+            setTemplates([...searchInTemplates]);
         }
     }
 
@@ -417,7 +415,7 @@ const Payments = () => {
                         
                     </div>
                         
-                    {templates.map(payTemplate => (
+                    {templates?.map(payTemplate => (
                         <PaymentTemplate 
                             key = { payTemplate.payTempID } 
                             template = { payTemplate } 

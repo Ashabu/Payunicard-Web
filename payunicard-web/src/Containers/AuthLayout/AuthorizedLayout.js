@@ -77,10 +77,10 @@ const  Layout = (props) =>  {
                           account.cardMask = mask;
                           account.cards.map((card, i) => {
                               if (i === 0) {
-                                  card.chosen = true;
+                                  card.current = true;
                               }
                               else {
-                                  card.chosen = false;
+                                  card.current = false;
                               }
                               return card;
                           })

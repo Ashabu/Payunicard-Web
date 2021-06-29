@@ -271,7 +271,7 @@ export default {
           eng: 'Transfers'
           },
         imgUrl: '../../Assets/Images/Navigation/transfers-icon.svg',
-        pageUrl: '/Dashboard/Transfer',
+        pageUrl: '/Transfers',
           activeClass: false,
           forMobile: true,
         key:'Transfer',

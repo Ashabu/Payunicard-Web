@@ -69,7 +69,7 @@ const Payments = () => {
         });
         
         setTemplates(allTemplates);
-    }, [selectAllTemplates])
+    }, [selectAllTemplates]);
 
     useEffect(() => {
         setUtilities(paymentServices);
@@ -82,7 +82,7 @@ const Payments = () => {
     useEffect(() => {
         setTemplates(paymentTemplates);
         getPaymentStatements();
-    }, [paymentTemplates])
+    }, [paymentTemplates]);
 
 
 
@@ -397,7 +397,6 @@ const Payments = () => {
         setErrors([...tempErrorArray]);
         
     }
-    console.log('merchantData' , merchantData)
    
 
     return (

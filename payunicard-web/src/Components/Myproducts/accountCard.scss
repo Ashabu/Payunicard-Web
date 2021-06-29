@@ -1,13 +1,95 @@
-.multicard {
-    width: 240px;
-    height: 104px;
-    border-radius: 7px;
-    border: 1px solid green;
-    box-sizing: border-box;
+$whiteColor : #FFFFFF;
+$unicardGreen: #94dd34;
+$unicardOrange: #F47321;
+
+
+
+
+
+.ac-container{
+    display: inline-flex;
+    flex-direction: column;
     position: relative;
     margin: 20px;
+    border-radius: 7px;
+    box-sizing: border-box;
+    
+    &.Wallet {
+        .triangle {
+            border: 1px solid #A5A5A4; 
+            background-color: #A5A5A4;        
+        }
+        .ac-card,.multicard, .ac-bullets {
+            border: 1px solid #A5A5A4; 
+        }
+        .ac-cardnumber {
+            color: #A5A5A4;
+        }
+        
+    }
 
-    .AccountCard {
+    &.Upera {
+        .triangle {
+            border: 1px solid #94dd34;
+            background-color: #94dd34;
+        }
+        .ac-card, .multicard,  .ac-bullets {
+            border: 1px solid #94dd34; 
+        }
+        .ac-cardnumber {
+            color: #94dd34;
+        }
+        
+    }
+
+    &.UniPlus {
+        .triangle{
+            border: 1px solid #F9BD15;
+            background-color: #F9BD15;
+        }
+        .ac-card, .multicard,  .ac-bullets {
+            border: 1px solid #F9BD15; 
+        }
+        .ac-cardnumber {
+            color: #F9BD15;
+        }
+    }
+
+    &.UniUltra {
+        .triangle {
+            border: 1px solid #F49121;
+            background-color: #F49121;
+        }
+        .ac-card, .multicard,  .ac-bullets {
+            border: 1px solid #F49121;
+        }
+        .ac-cardnumber {
+            color: #F49121;
+        }
+        
+    } 
+
+    .multicard {
+        width: 240px;
+        height: 104px;
+        border-radius: 7px;
+        box-sizing: border-box;
+        position: absolute;
+        overflow: hidden;
+    }
+
+    .triangle {
+        position: absolute;
+        top: -7px;
+        right: -14px;
+        width: 36px;
+        height: 24px;
+        transform: rotate(45deg);
+        box-sizing: border-box;
+
+    }
+
+    .ac-card {
         width: 240px;
         height: 104px;
         border-radius: 7px;
@@ -16,9 +98,11 @@
         position: relative;
         top: 6px;
         right: 6px;
-        
-
+        background-color: $whiteColor;
+        overflow: hidden;
     }
+
+    
 
     .click-icon {
         position: absolute;
@@ -26,13 +110,22 @@
         right: 16px;
     }
 
+    .ac-cardnumber {
+        position: absolute;
+        font-family: 'FiraGo MEDIUM';
+        font-size: 12px;
+        font-weight: 700;
+        top: 20px;
+        right: 15px;
+    }
+
+
     .ac-name {
         font-family: 'FiraGO REGULAR';
         color: #6B6B6B;
         font-weight: normal;
         font-size: 14px;
         line-height: 17px;
-
         position: absolute;
         top: 7px;
         left: 14px;
@@ -45,13 +138,11 @@
         font-weight: 500;
         font-size: 24px;
         line-height: 29px;
-
         position: absolute;
         top: 31px;
         left: 14px;
     }
 
-    
 
     .ac-currencies {
         display: flex;
@@ -104,4 +195,11 @@
         bottom: 12px;
     }
 
+    .ac-bullets {
+        width: 10px;
+        height: 10px;
+        border: 1px solid rgb(230, 230, 230);
+        border-radius: 50%;
+        margin: 5px;
+    }
 }

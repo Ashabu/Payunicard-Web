@@ -3,9 +3,6 @@ $unicardGreen: #94dd34;
 $unicardOrange: #F47321;
 
 
-
-
-
 .ac-container{
     display: inline-flex;
     flex-direction: column;
@@ -208,4 +205,17 @@ $unicardOrange: #F47321;
         }
     }
     
+}
+
+.ac-bankCards {
+    
+width: 140px;
+height: 100px;
+background: #FFFFFF;
+border: 1px solid #C1C2C2;
+box-sizing: border-box;
+border-radius: 7px;
+display: flex;
+    justify-content: center;
+    align-items: center;    
 }

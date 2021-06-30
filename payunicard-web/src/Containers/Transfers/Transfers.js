@@ -2,20 +2,27 @@ import React, {useState, useEffect, useContext} from 'react';
 import './transfers.scss';
 import { Context } from '../../Context/AppContext.js';
 import { formatNumber, search } from '../../Services/CommonFunctions'; 
-import { Backdrop, OTP, Search, Widget } from '../../Components/UI/UiComponents';
+import { Backdrop, OTP, Search, SidePanel, Widget } from '../../Components/UI/UiComponents';
 
-import { Otp, Transaction } from '../../Services/API/APIS';
+import { Otp, Transaction, User } from '../../Services/API/APIS';
+import { handleTransactionDetailView } from '../../Providers/TransactionProvider';
 import AuthorizedLayout from './../AuthLayout/AuthorizedLayout';
 import PropTypes from 'prop-types';
 import TransferTemplate from './../../Components/Transfers/TransferTemplate';
 import TransferPanel from './../../Components/Transfers/TransferPanel';
 import ConversionPanel from '../../Components/Transfers/ConversionPanel';
+import TransactionDetail from '../../Components/TransactionDetails/TransactionDetail';
+import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
 
 const Transfers = (props) => {
 
     const { state, setGlobalValue } = useContext(Context);
     const { transferTemplates, allUserCurrencies } = state;
     const {} = props;
+
+    const [ tramsferStatements, setTransferStatements ] = useState([]);
+    const [ detailVisible, setDetailVisible ] = useState(false);
+    const [ selectedTransaction, setSelectedTransaction ] = useState({});
 
     const [ templates, setTemplates ] = useState([]);
     const [ selectedTemplate, setSelectedTemplate ] = useState(undefined)
@@ -34,6 +41,26 @@ const Transfers = (props) => {
         setCurrency(allUserCurrencies);
         setTemplates(transferTemplates)
     }, [transferTemplates, allUserCurrencies]);
+
+    useEffect(() => {
+        getTransferStaements();
+    }, [tramsferStatements])
+
+    const getTransferStaements = () => {
+        let data = {
+            rowCount: 10,
+            opClass: 'P2B',
+            opExclude: true
+            
+        }
+        
+        User.GetUserAccountStatements(data).then(res => {
+            
+            if(res.data.ok){
+                setTransferStatements(res.data.data.statements)
+            }
+        }).catch (error => { console.log(error) });
+    }
 
     const closeTransferPanel = () => {
         setTransferPanelVisible(false);
@@ -92,7 +119,7 @@ const Transfers = (props) => {
 
     return (
         <AuthorizedLayout pageName = "ჩემი გადარიცხვები">
-            <Backdrop show = { transferPanelVisible } hide = { closeTransferPanel }/>
+            <Backdrop show = { transferPanelVisible || detailVisible } hide = { closeTransferPanel }/>
             <OTP submitAction = {()=> makeTransfer() } getOtpValue = { getOtpValue } otpVisible = { otpWindowVisible} closeOtpWindow = {() => setOtpWindowVisible(false)}/>
             <TransferPanel 
                 templateData = { selectedTemplate }
@@ -102,6 +129,12 @@ const Transfers = (props) => {
                 onTransfer = { startTransfer }
                 type = { transferType }/>
             <div style = {{height: 1000, marginLeft: 300}}>
+
+            <SidePanel
+                visible = { detailVisible }
+                closePanel = {() => { setDetailVisible(false); history.goBack() }}>
+                    <TransactionDetailView transaction = { selectedTransaction }/>
+            </SidePanel>    
                 
                 
                 <Widget>
@@ -128,7 +161,16 @@ const Transfers = (props) => {
                          <img src = '../../Assets/Images/TransferImg/toBank.png' alt = 'icon' />   
                     </div>
                 </div>
-                    
+                <Widget>
+                    <div>
+                        <p>ბოლო ტრანზაქციები</p>
+                    </div>
+                    {tramsferStatements.map((transaction, index) => (
+                        <TransactionDetail key = { index } 
+                            transaction = { transaction }
+                            clicked = {() =>   {handleTransactionDetailView(transaction, setSelectedTransaction, navigate); setDetailVisible(true)}}/>
+                        ))}
+                </Widget>   
                   
             </div>
         </AuthorizedLayout>

@@ -6,56 +6,59 @@ import AuthorizedLayout from './../AuthLayout/AuthorizedLayout';
 import UserBalance from './../../Components/UserBalance/UserBalance';
 import CurrencyRates from './../../Components/CurrencyRates/CurrencyRates';
 import AccountCard from './../../Components/Myproducts/AccountCard';
+import BankCard from '../../Components/MyProducts/BankCard';
 import { Icon, Backdrop, Loader, Widget, Search, SidePanel, OTP } from './../../Components/UI/UiComponents';
+import { User } from '../../Services/API/APIS';
 const MyProducts = (props) => {
     const {} = props
     const { state, setGlobalValue } = useContext(Context);
     const { userTransactions, userAccounts, userTotalBalance, currencyRates } = state;
 
     const [ UserAccounts, setUserAccounts ] = useState([]);
+    const [ userBankCards, setUserBankCards ] = useState([]);
 
     useEffect(() => {
         setUserAccounts(userAccounts);
     }, [userAccounts]);
 
+    useEffect(() => {
+        getUserBankCards();
+    }, []);
+
+
+    const getUserBankCards = () => {
+        User.GetUserBankCards().then(res => {
+            if(res.data.ok){
+                setUserBankCards(res.data.data.bankCards);
+            }
+        }).catch(error => { console.log(error) })
+    }
 
     const copyToClipboard = () => {
 
     };
-    4 === '4'
     const handleSwitchCard = (curIndex, account) => {
-        // let accIndex = UserAccounts.findIndex(a => a.accountNumber === account.accountNumber);
-        // let tempAccounts = UserAccounts;
-        // tempAccounts[accIndex]?.cards?.map((c, i) => {
-        //     c.current = false;
-        //     if(i === curIndex) {
-        //         c.current = true;
-        //     }
-        //     return c
-        // });
-        // setUserAccounts([...tempAccounts]);
-        let x = UserAccounts.filter(a => a.accountNumber === account.accountNumber);
-        x.map(acc => {
-            acc.cards.map((c,i) => {
-                c.current = false;
-                if(i === curIndex) {
-                    c.current = true;
-                    acc.mAskedCard = c.maskedCardNumber.slice(8, 16);
-                }
-                return c;
-            })
-            return acc;
-        })
+        let accIndex = UserAccounts.findIndex(a => a.accountNumber === account.accountNumber);
+        let tempUserAccounts = UserAccounts;
+        tempUserAccounts[accIndex]?.cards?.map((c, i) => {
+            c.current = false;
+            if(i === curIndex) {
+                c.current = true;
+                tempUserAccounts[accIndex].mAskedCard = c.maskedCardNumber.slice(8, 16);
+            }
+            return c
+        });
+        setUserAccounts([...tempUserAccounts]);
+    };
 
-        setUserAccounts([...UserAccounts, ...x])
-    }
+
 
 
     
 
     return (
         <AuthorizedLayout pageName = "ჩემი პროდუქტები">
-       <div style = {{marginLeft: 200, height: 1000, width: "100%"}}>
+       <div style = {{marginLeft: 200, height: 'auto', width: "100%"}}>
            <h1>MyProducts</h1>
            <UserBalance userBalance = { userTotalBalance } />
            <CurrencyRates currencyrates = { currencyRates }/>
@@ -69,6 +72,10 @@ const MyProducts = (props) => {
                 </div>
                 
 
+            </Widget>
+            <Widget>
+                <p>დამატებული ბარათები</p>
+                {userBankCards?.map((card, index) => (<BankCard key = { index } bankCard = { card }/>))}
             </Widget>
 
               

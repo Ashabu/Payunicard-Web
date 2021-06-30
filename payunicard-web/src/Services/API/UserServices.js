@@ -72,8 +72,19 @@ class User {
         return await axios.get(`${globalConfig.api_URL}/User/GetAccountBalanceByccy`);
     }
 
-    GetUnicards = () =>  {
-        return axios.get(`${globalConfig.api_URL}/Card/GetUnicards`);
+    GetUnicards = async () =>  {
+        return await axios.get(`${globalConfig.api_URL}/Card/GetUnicards`);
+    }
+
+    GetUserBankCards = async () => {
+        return await axios.get(`${globalConfig.api_URL}/User/GetUserBankCards`
+        // , 
+        // {
+        //     headers: {
+        //         "Authorization": `Bearer ${localStorage.getItem('access_token')}`
+        //     }
+        // }
+        );
     }
     
    

@@ -63,6 +63,7 @@ class AuthService {
     let requestInterceptor = axios.interceptors.request.use(
        (config) => {
         if (this.isAuthenticated() && !config.anonymous) {
+          console.log(this.isAuthenticated(), config.anonymous);
           //if refreshStarted wait
           if (this.refreshStarted && !config.skipRefresh) {
             return waitForRefresh(config).then( (config) => {

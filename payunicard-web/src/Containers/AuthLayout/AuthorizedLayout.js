@@ -14,14 +14,13 @@ import AuthorizedHeader from '../../Components/Navigation/AuthHeader/AuthorizedH
 const  Layout = (props) =>  {
 
     const { state, setGlobalValue } = useContext(Context)
-    const { currencyRates, userAccounts, paymentServices, paymentTemplates, userTransactions, transferTemplates,  
+    const { currencyRates, userAccounts, paymentServices, paymentTemplates, transferTemplates,  
         userDetails, userTotalBalance, activeLang, isUserAuthorized } = state;
 
 
 
     useEffect(() => {
         getUserAccounts();
-        getTransactions();
         getUserTotalBalance();
         getCurrencyRates();
         getPaymetnServices();
@@ -57,7 +56,6 @@ const  Layout = (props) =>  {
                 })
             }
         })
-
         let UserAccounts = [];
          User.GetUserAccounts().then(res => {
             if(res.data.ok) {
@@ -147,28 +145,7 @@ const  Layout = (props) =>  {
         })
     }
 
-    const  getTransactions = async () => {
-        if(userTransactions.length > 0 || !isUserAuthorized) return;
-        
-        let blockedtr= [];
-        let tr = [];
-        User.GetUserBlockedFunds().then(res=>{
-           if(res.data.ok){
-               blockedtr = res.data.data.funds;
-           }
-        }).catch(error => {
-           console.log(error)
-        })
-       
-        User.GetUserAccountStatements().then(res => {
-            if(res.data.ok) {
-                tr = res.data.data.statements
-                setGlobalValue({ userTransactions: [...blockedtr, ...tr] })
-            }
-        }).catch(error => {
-            console.log(error)
-        })
-    }
+    
 
     const getUserTotalBalance = () => {
         if(userTotalBalance.length > 0 ||  !isUserAuthorized) return;
@@ -228,7 +205,7 @@ const  Layout = (props) =>  {
             
                 <React.Fragment>
                     <AuthorizedHeader pageName = { props.pageName}/>
-                        <div style={{display: 'flex', overflow: 'hidden'}}>
+                        <div style={{display: 'flex'}}>
                             
                                 <NavigationPanel/>
                             

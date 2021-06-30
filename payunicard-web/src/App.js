@@ -35,10 +35,13 @@ const  App = () => {
   }, [])
 
 
-  
+  const [isInterceptorLoaded, setIsInterceptorLoaded] = useState(true)
 
   useEffect(() => {
+    setIsInterceptorLoaded(true)
     AuthInterceptorSubscription.current = AuthService.registerAuthInterceptor(logOut);
+
+    setIsInterceptorLoaded(false)
 
     return () => {
       AuthInterceptorSubscription.current.unsubscribe();
@@ -69,7 +72,7 @@ const  App = () => {
   }, [isUserAuthorized, isLoaded])
 
 
-
+if(isInterceptorLoaded) return null;
 
 
   

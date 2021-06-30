@@ -43,7 +43,8 @@ const  Dashboard = () => {
     useEffect(() => {
         getUserDetails();
         getUserProducts();
-    }, [])
+        getTransactions();
+    }, []);
    
    const navigate = (id) => {
        history.push(
@@ -54,6 +55,28 @@ const  Dashboard = () => {
        )
    }
 
+   const  getTransactions = async () => {
+    if(userTransactions.length > 0 ) return;
+    
+    let blockedtr= [];
+    let tr = [];
+    User.GetUserBlockedFunds().then(res=>{
+       if(res.data.ok){
+           blockedtr = res.data.data.funds;
+       }
+    }).catch(error => {
+       console.log(error)
+    })
+   
+    User.GetUserAccountStatements().then(res => {
+        if(res.data.ok) {
+            tr = res.data.data.statements
+            setGlobalValue({ userTransactions: [...blockedtr, ...tr] })
+        }
+    }).catch(error => {
+        console.log(error)
+    })
+}
 
 
     const getUserProducts= () => {

@@ -1,0 +1,64 @@
+.myProducts-wrap {
+    margin-left: 200px;
+    margin-top: 30px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: row ;
+    .ac-leftSide {
+        display: flex;
+        flex-flow: column;
+        width: 100%;
+        max-width: 547px;
+        box-sizing: border-box;
+        margin-right: 33px;
+    }
+    .ac-withCard {
+        .visa-master {
+            display: flex;
+            flex-flow: row;
+            align-items: center;
+            img {
+                &:first-child{
+                    margin-right: 24px;
+                }
+            }
+        }
+    }
+
+    .ac-fastPayment {
+        display: flex;
+        flex-flow: row;
+    
+
+        .partner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 50px;
+            margin-right: 25px;
+            background-color: #FFFFFF;
+            border-radius: 7px;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+            img {
+                display: block;
+                margin: auto;
+            }
+        }
+    }
+
+    .ac-rightside {
+        display: flex;
+        flex-flow: column;
+        width: 100%;
+        max-width: 360px;
+
+        .ac-activeCards {
+            display: 'flex';
+            flex-wrap: 'wrap';
+            padding: 9px;
+            box-sizing: border-box;
+        }
+    }
+}

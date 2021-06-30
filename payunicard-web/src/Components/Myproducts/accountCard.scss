@@ -7,7 +7,7 @@ $unicardOrange: #F47321;
     display: inline-flex;
     flex-direction: column;
     position: relative;
-    margin: 20px;
+    margin: 6px;
     border-radius: 7px;
     box-sizing: border-box;
     
@@ -107,6 +107,11 @@ $unicardOrange: #F47321;
         top: 36px;
         right: 16px;
     }
+    .blocked-icon {
+        position: absolute;
+        right: 16px;
+        bottom: 37px;
+    }
 
     .ac-cardnumber {
         position: absolute;
@@ -189,7 +194,7 @@ $unicardOrange: #F47321;
 
     .ac-logo {
         position: absolute;
-        right: 16px;
+        right: 10px;
         bottom: 12px;
     }
     .ac-bullets {
@@ -215,7 +220,72 @@ background: #FFFFFF;
 border: 1px solid #C1C2C2;
 box-sizing: border-box;
 border-radius: 7px;
+margin-right: 28px;
 display: flex;
-    justify-content: center;
-    align-items: center;    
+justify-content: center;
+align-items: center;    
+
+    .cards-body {
+        display: flex;
+        flex-flow: column;
+
+        img {
+            width: 24px;
+            height: 15px;
+            margin: auto auto 15px auto;
+        }
+        span {
+            font-family: 'FiraGO REGULAR';
+            color: #6B6B6B;
+            font-size: 14px;
+            line-height: 16px;
+        }
+    }
+}
+
+
+
+
+.ac-bankdetails {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 23px;
+
+    .detail-cur {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+
+        .cur-round {
+            display: inline-flex;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background:  #F4F4F4;
+            justify-content: center;
+            align-items: center;
+            font-family: 'FiraGO REGULAR';
+            font-size: 14px ;
+            font-weight: 400;
+            color: #6B6B6B;
+            margin-right: 15px;
+        }
+    }
+
+
+}
+
+.visa-master {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    img {
+        &:first-child{
+            margin-right: 24px;
+        }
+    }
 }

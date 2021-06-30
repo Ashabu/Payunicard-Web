@@ -128,7 +128,7 @@ const Transfers = (props) => {
                 closeTransferPanel = { closeTransferPanel }
                 onTransfer = { startTransfer }
                 type = { transferType }/>
-            <div style = {{height: 1000, marginLeft: 300}}>
+            <div style = {{height: 'auto', marginLeft: 300}}>
 
             <SidePanel
                 visible = { detailVisible }

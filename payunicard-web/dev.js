@@ -8,18 +8,18 @@
 
 // productionApi
 
-module.exports = {
-    "base_URL": "/",
-    "api_URL": "https://wapi.payunicard.ge",
-    "token_URL": "https://identity.payunicard.ge/connect/token",
-    "translate_Version": 1,
-};
-
-//preProductionApi
-
 // module.exports = {
 //     "base_URL": "/",
-//     "api_URL": "https://papi.payunicard.ge:60110",
-//     "token_URL": " https://pidentity.payunicard.ge:60140/connect/token",
+//     "api_URL": "https://wapi.payunicard.ge",
+//     "token_URL": "https://identity.payunicard.ge/connect/token",
 //     "translate_Version": 1,
 // };
+
+// preProductionApi
+
+module.exports = {
+    "base_URL": "/",
+    "api_URL": "https://papi.payunicard.ge:60110",
+    "token_URL": " https://pidentity.payunicard.ge:60140/connect/token",
+    "translate_Version": 1,
+};

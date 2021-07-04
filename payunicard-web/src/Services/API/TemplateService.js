@@ -23,7 +23,7 @@ class Template {
     }
     
     addTransferTemplate = async (data) => {
-        return await axios.post(`${globalConfig.api_URL}/Template/TransactionTemplateEdit`, data);
+        return await axios.post(`${globalConfig.api_URL}/Template/AddTransactionTemplate`, data);
     }
 
     editTransferTemplate = async (data) => {

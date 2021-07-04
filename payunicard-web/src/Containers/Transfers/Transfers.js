@@ -4,7 +4,7 @@ import { Context } from '../../Context/AppContext.js';
 import { formatNumber, search } from '../../Services/CommonFunctions'; 
 import { Backdrop, OTP, Search, SidePanel, Widget } from '../../Components/UI/UiComponents';
 
-import { Otp, Transaction, User } from '../../Services/API/APIS';
+import { Otp, Transaction, User, Template } from '../../Services/API/APIS';
 import { handleTransactionDetailView } from '../../Providers/TransactionProvider';
 import AuthorizedLayout from './../AuthLayout/AuthorizedLayout';
 import PropTypes from 'prop-types';
@@ -31,11 +31,13 @@ const Transfers = (props) => {
     const [ transferType, setTransferType ] = useState('');
     const [ transferData, setTransferData ] = useState(null);
     const [ oneTimePasscode, setOneTimePasscode ] = useState('');
+    const [ longOpId , setLongOpId ] = useState(null);
 
     //------------------------------------------------------------
     const [ otpWindowVisible,  setOtpWindowVisible ] = useState(false);
     const [ currency, setCurrency ] = useState(null);
 
+    
 
     useEffect(() => {
         setCurrency(allUserCurrencies);
@@ -44,7 +46,7 @@ const Transfers = (props) => {
 
     useEffect(() => {
         getTransferStaements();
-    }, [tramsferStatements])
+    }, [])
 
     const getTransferStaements = () => {
         let data = {
@@ -103,8 +105,10 @@ const Transfers = (props) => {
         
         Transaction.makeTransaction(transferType, data).then(res => {
             if(res.data.ok) {
+                setLongOpId(res.data.data.longOpId);
                 setOtpWindowVisible(false);
                 setTransferStep(1);
+                
             }
         })
     }
@@ -113,6 +117,15 @@ const Transfers = (props) => {
         setOneTimePasscode(value);
     }
 
+    const addTransferTemplate = () => {
+        let templData = {
+            longopId: longOpId,
+            templName: 'სატესტო შაბლონი'
+        }
+        Template.addTransferTemplate(templData).then(res => {
+            console.log(res.data);
+        })
+    }
 
 
 
@@ -127,7 +140,8 @@ const Transfers = (props) => {
                 step = { transferStep }
                 closeTransferPanel = { closeTransferPanel }
                 onTransfer = { startTransfer }
-                type = { transferType }/>
+                type = { transferType }
+                onSaveTemplate = { addTransferTemplate }/>
             <div style = {{height: 'auto', marginLeft: 300}}>
 
             <SidePanel

@@ -219,7 +219,7 @@ const TransferPanel = (props) => {
                     { TransferDetails || TransferAmount }
                 </div>
                 <div className = 'success-footer'>
-                    <img src = '../../Assets/Images/save-template.svg' alt= 'icon' />
+                    <img src = '../../Assets/Images/save-template.svg' alt= 'icon' onClick = { props.onSaveTemplate}/>
                     <span>Save As Template</span>
                 </div>
                

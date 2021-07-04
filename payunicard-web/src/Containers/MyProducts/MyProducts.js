@@ -12,6 +12,8 @@ import BlockedCard from '../../Components/Myproducts/BlockedCard';
 import BankDetail from './../../Components/Myproducts/BankDetail';
 import { Icon, Backdrop, Loader, Widget, Search, SidePanel, OTP } from './../../Components/UI/UiComponents';
 import { User } from '../../Services/API/APIS';
+import AccountDetailPanel from './../../Components/Myproducts/AccountDetailPanel';
+
 const MyProducts = (props) => {
     const {} = props
     const { state, setGlobalValue } = useContext(Context);
@@ -19,6 +21,7 @@ const MyProducts = (props) => {
 
     const [ UserAccounts, setUserAccounts ] = useState([]);
     const [ userBankCards, setUserBankCards ] = useState([]);
+    const [ detailsVisible, setDetailsvisible ] = useState(false);
 
     useEffect(() => {
         setUserAccounts(userAccounts);
@@ -28,6 +31,25 @@ const MyProducts = (props) => {
         getUserBankCards();
     }, []);
 
+    const ActiveCards = (accounts) => {
+        let tempAccounts = [...accounts];
+        let activeCards = [];
+        tempAccounts.forEach(acc => {
+            let cards = acc?.cards.filter(c => c.status === 1);
+            activeCards.push({...acc, cards});
+        });
+        return activeCards;
+    }
+
+    const BlockedCards = (accounts) => {
+        let tempAccounts = [...accounts].filter(acc => acc.status > 1 && acc.type !== 1 || (acc.cards && acc.cards?.some(c => c?.status == 2 || c?.status == 3)));
+        let inactiveCards = [];
+        tempAccounts.forEach(acc => {
+            let cards = acc.cards?.filter(c=> c.status == 2 || c.status == 3);
+            inactiveCards.push({...acc, cards});
+        });
+        return inactiveCards;
+    };
 
     const getUserBankCards = () => {
         User.GetUserBankCards().then(res => {
@@ -40,6 +62,7 @@ const MyProducts = (props) => {
     const copyToClipboard = () => {
 
     };
+
     const handleSwitchCard = (curIndex, account) => {
         let accIndex = UserAccounts.findIndex(a => a.accountNumber === account.accountNumber);
         let tempUserAccounts = UserAccounts;
@@ -57,13 +80,13 @@ const MyProducts = (props) => {
 
 
 
-    
 
     return (
         <AuthorizedLayout pageName = "ჩემი პროდუქტები">
            
        <div className = 'myProducts-wrap' >
-           
+        <Backdrop show = { detailsVisible } hide = {() => setDetailsvisible(false)}/> 
+        <AccountDetailPanel visible = { detailsVisible } />   
 
         <div className = 'ac-leftSide'>
             <UserBalance userBalance = { userTotalBalance } />
@@ -71,8 +94,8 @@ const MyProducts = (props) => {
             <Widget>
                 <p>აქტიური ანგარიშები და ბარათები</p>
                 <div className = 'ac-activeCards'>
-                    {UserAccounts.map((acc, index) => (
-                        <ActiveCard key = { index } account = { acc } onCopy = { copyToClipboard } onSwitch = { handleSwitchCard}/>
+                    {UserAccounts && ActiveCards(UserAccounts).map((acc, index) => (
+                        <ActiveCard key = { index } account = { acc } onCopy = { copyToClipboard } onSwitch = { handleSwitchCard} detailView = {() => setDetailsvisible(true)}/>
                     ))}
                 </div>
             </Widget>
@@ -88,11 +111,15 @@ const MyProducts = (props) => {
 
             <Widget>
                 <p>არააქტიური ბარათები</p>
-                <div style = {{display: 'flex', flexWrap: 'wrap'}}>
-                  {UserAccounts?.map((acc, index) => (
-                        <BlockedCard key = { index } account = { acc } />
-                    ))}
-                </div>
+               
+                  {UserAccounts && BlockedCards(UserAccounts)?.map((acc, index) => (
+                    <div style = {{display: 'flex', flexWrap: 'wrap'}} key = { index } >
+                      {acc.cards.map((c, index) => (
+                            <BlockedCard key = { index } account = { acc } card = { c }/>
+                      ))}
+                    </div>
+                  ))}
+                
             </Widget>
         </div>
 

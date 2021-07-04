@@ -91,7 +91,7 @@ const AccountCard = (props) => {
     
 
     const clickCard = () => {
-        console.log('clicked')  
+        props.detailView()
     }
 
     

@@ -6,7 +6,8 @@ import ClickableBulltes from '../HOC/ClickableBulltes';
 
 
 const ActiveCard = (props) => {
-    const { accountName, accountNumber, accountTypeName, cards, currencies, type, mAskedCard , customerPaketId } = props.account;
+    const { accountName, accountNumber, accountTypeName, cards, currencies, type, customerPaketId } = props.account;
+    const { maskedCardNumber } = props.card;
 
 
     const AccountCurrencies = () => {
@@ -52,7 +53,7 @@ const ActiveCard = (props) => {
         
             <div className = 'ac-card' onClick = { clickCard }>
                 {cards?.length > 0? <div className = 'triangle'></div> : null}
-                <span className = 'ac-name'>{ accountTypeName } { mAskedCard }</span>
+                <span className = 'ac-name'>{ accountTypeName } {  maskedCardNumber.slice(8, 16) }</span>
                 <span className = 'ac-balance'> 0.00 ₾</span>
                 <img className = 'blocked-icon' src = '../../Assets/Images/blocked-icon.png' alt = 'lock-icon' />
                     <AccountCurrencies /> 

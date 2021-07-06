@@ -14,6 +14,7 @@ import UserVerificationstatus from '../../Components/UserVerificationStatus/User
 import {handleTransactionDetailView } from '../../Providers/TransactionProvider';
 import OTP from '../../Components/UI/OTP/OTP';
 import AuthorizedLayout from './../AuthLayout/AuthorizedLayout';
+import Verification from './../Verification/Verification';
 
 
 
@@ -35,6 +36,8 @@ const  Dashboard = () => {
     const [selected, setSelected] = useState({}); 
 
     const [ userProducts, setUserProducts ] = useState([]);
+
+    const [ startVerification, setStartVerification ] = useState(true)
 
     useEffect(() => {
     
@@ -109,8 +112,8 @@ const  Dashboard = () => {
         return (
           
             <AuthorizedLayout pageName = "მთავარი გვერდი">
-              <Backdrop show = {detailVisible} hide = {() => {history.goBack(); setDetailVisible(false)}}/>
-
+              <Backdrop show = {detailVisible || startVerification} hide = {() => {history.goBack(); setDetailVisible(false)}}/>
+            <Verification visible = { startVerification}/>
                 <SidePanel
                     stepBack 
                     visible = {detailVisible}

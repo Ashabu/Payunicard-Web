@@ -22,6 +22,7 @@ const MyProducts = (props) => {
     const [ UserAccounts, setUserAccounts ] = useState([]);
     const [ userBankCards, setUserBankCards ] = useState([]);
     const [ detailsVisible, setDetailsvisible ] = useState(false);
+    const [ detailsAccount, setDetailsAccount ] = useState(null);
 
     useEffect(() => {
         setUserAccounts(userAccounts);
@@ -59,6 +60,11 @@ const MyProducts = (props) => {
         }).catch(error => { console.log(error) })
     }
 
+    const accountDetailView = (account) => {
+        setDetailsAccount(account);
+        setDetailsvisible(true)
+    }
+
     const copyToClipboard = () => {
 
     };
@@ -86,7 +92,7 @@ const MyProducts = (props) => {
            
        <div className = 'myProducts-wrap' >
         <Backdrop show = { detailsVisible } hide = {() => setDetailsvisible(false)}/> 
-        <AccountDetailPanel visible = { detailsVisible } />   
+        <AccountDetailPanel visible = { detailsVisible } account = { detailsAccount } />   
 
         <div className = 'ac-leftSide'>
             <UserBalance userBalance = { userTotalBalance } />
@@ -95,7 +101,7 @@ const MyProducts = (props) => {
                 <p>აქტიური ანგარიშები და ბარათები</p>
                 <div className = 'ac-activeCards'>
                     {UserAccounts && ActiveCards(UserAccounts).map((acc, index) => (
-                        <ActiveCard key = { index } account = { acc } onCopy = { copyToClipboard } onSwitch = { handleSwitchCard} detailView = {() => setDetailsvisible(true)}/>
+                        <ActiveCard key = { index } account = { acc } onCopy = { copyToClipboard } onSwitch = { handleSwitchCard} detailView = {() => accountDetailView(acc)}/>
                     ))}
                 </div>
             </Widget>

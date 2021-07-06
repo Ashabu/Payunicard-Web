@@ -153,7 +153,6 @@ $unicardOrange: #F47321;
         position: absolute;
         top: 62px;
         left: 14px;
-        z-index: 300;
 
         .ac-currency {
             display: inline-block;
@@ -288,4 +287,16 @@ align-items: center;
             margin-right: 24px;
         }
     }
+}
+
+
+
+.accountDetails {
+    width: 500px;
+    height: 216px;
+    border: 2px solid #f1f1f1;
+    border-radius: 7px;
+    margin: auto;
+    display: flex;
+    flex-flow: column;
 }

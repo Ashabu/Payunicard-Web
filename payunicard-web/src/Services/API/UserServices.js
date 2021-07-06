@@ -77,17 +77,31 @@ class User {
     }
 
     GetUserBankCards = async () => {
-        return await axios.get(`${globalConfig.api_URL}/User/GetUserBankCards`
-        // , 
-        // {
-        //     headers: {
-        //         "Authorization": `Bearer ${localStorage.getItem('access_token')}`
-        //     }
-        // }
-        );
+        return await axios.get(`${globalConfig.api_URL}/User/GetUserBankCards`);
+    }
+
+    GetCustomerEmploymentStatusTypes = async () => {
+        return await axios.get(`${globalConfig.api_URL}/User/GetCustomerEmploymentStatusTypes`);
     }
     
-   
+
+    GetCustomerWorkTypes = async () => {
+        return await axios.get(`${globalConfig.api_URL}/User/GetCustomerWorkTypes`);
+    }
+
+    GetCustomerExpectedTurnoverTypes = async () => {
+        return await axios.get(`${globalConfig.api_URL}/User/GetCustomerExpectedTurnoverTypes`);
+    }
+    
+    GetCountryList = async () => {
+        return await axios.get(`${globalConfig.api_URL}/GetCitizenshipCountries`);
+    }
+
+    GetCityList = async () => {
+        return await axios.get(`${globalConfig.api_URL}/GetCities`);
+    }
+
+    
 }
 
 export default new User();

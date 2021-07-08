@@ -3,7 +3,7 @@ import React, {Fragment, useState, useEffect, useContext } from 'react';
 import { useHistory } from "react-router";
 import { Context } from '../../Context/AppContext';
 import './dashboard.scss';
-import { User } from '../../Services/API/APIS';
+import { KYC, User } from '../../Services/API/APIS';
 import { Backdrop, Button, Select, SelectList, SidePanel, Widget } from '../../Components/UI/UiComponents';
 import TransactionDetail from '../../Components/TransactionDetails/TransactionDetail';
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
@@ -15,6 +15,7 @@ import {handleTransactionDetailView } from '../../Providers/TransactionProvider'
 import OTP from '../../Components/UI/OTP/OTP';
 import AuthorizedLayout from './../AuthLayout/AuthorizedLayout';
 import Verification from './../Verification/Verification';
+import KvalifikaFrame from './../../Components/Kvalifika/KvalifikaFrame';
 
 
 
@@ -37,7 +38,9 @@ const  Dashboard = () => {
 
     const [ userProducts, setUserProducts ] = useState([]);
 
-    const [ startVerification, setStartVerification ] = useState(true)
+    const [ startVerification, setStartVerification ] = useState(false);
+
+    const [ kycFrameUrl, setKycFrameUrl ] = useState('');
 
     useEffect(() => {
     
@@ -108,11 +111,38 @@ const  Dashboard = () => {
             console.log(error)
         })
     }
+
+
+    const startKycSession = () => {
+        KYC.StartKycSession().then(res => {
+            
+            console.log(res.data);
+            if(res.data.ok) {
+                document.body.style.overflow = 'hidden';
+                setKycFrameUrl(res.data.data.frameUrl);
+            }
+        }).catch(error => {console.log(error)})
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
         return (
           
             <AuthorizedLayout pageName = "მთავარი გვერდი">
               <Backdrop show = {detailVisible || startVerification} hide = {() => {history.goBack(); setDetailVisible(false)}}/>
+              <KvalifikaFrame frameUrl = {kycFrameUrl}/>
             <Verification visible = { startVerification}/>
                 <SidePanel
                     stepBack 
@@ -123,7 +153,7 @@ const  Dashboard = () => {
                
                 <div style ={{maxWidth: 485, marginLeft: 150}}>
                     <UserVerificationstatus/>
-                    
+                    <Button clicked = {startKycSession}>კვალიფიკა</Button>
                     <Button clicked = {()=> history.push('/payments')}>go to payments</Button>
                     <Button clicked = {()=> history.push('/transfers')}>go to transfers</Button>
 

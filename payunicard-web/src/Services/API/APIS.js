@@ -5,6 +5,7 @@ import UploadImage from './UploadImage';
 import Template from './TemplateService';
 import Transaction from './TransactionService';
 import Otp from './OtpServices';
+import KYC from './KvalifikaServices';
 
 
 
@@ -19,5 +20,6 @@ export {
     User,
     UploadImage,
     Template,
-    Transaction
+    Transaction,
+    KYC
 }

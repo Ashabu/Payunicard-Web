@@ -139,7 +139,6 @@ const  Layout = (props) =>  {
                 });
             })
 
-            console.log('res = >', userUnicards )
             setGlobalValue({ userAccounts:[ ...UserAccounts,...userUnicards], allUserCurrencies })
             
         })

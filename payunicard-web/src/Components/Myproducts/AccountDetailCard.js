@@ -23,7 +23,6 @@ const AccountDetailCard = (props) => {
 
     
 
-    console.log(props.account)
     return (
         <div className = 'accountDetails'>
             <span>{ props.account?.accountTypeName } { props.account?.mAskedCard }</span>

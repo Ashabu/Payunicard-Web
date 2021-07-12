@@ -3,15 +3,29 @@ import React, {useEffect} from 'react'
 const KvalifikaFrame = (props) => {
 
     console.log('frame url', props.frameUrl);
+    
 
 
     useEffect(() => {
-        window.addEventListener('message', async (event) => {
-            console.log(event);
-        })
+        props.onStartSession();
+        window.addEventListener('message',  frameEvents)
 
-        return () => window.removeEventListener();
+        return () => window.removeEventListener('message', frameEvents);
     }, [])
+
+    const frameEvents = (e) => {
+        if (e.data.finished == true) {
+            props.onCloseSession(e.data.sessionId);
+        }
+        if (e.data.isClose == true) {
+            props.onCloseSession(e.data.sessionId);
+        }
+        if (e.data.isLivenessFinished == true && e.data.isDocumentFinished == false) {
+            props.onCloseSession(e.data.sessionId);
+        }
+        console.log('frame events =======================================================>', e.data)
+    }
+
 
     return (
         props.frameUrl? 

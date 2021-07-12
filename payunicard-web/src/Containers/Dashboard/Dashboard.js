@@ -113,16 +113,7 @@ const  Dashboard = () => {
     }
 
 
-    const startKycSession = () => {
-        KYC.StartKycSession().then(res => {
-            
-            console.log(res.data);
-            if(res.data.ok) {
-                document.body.style.overflow = 'hidden';
-                setKycFrameUrl(res.data.data.frameUrl);
-            }
-        }).catch(error => {console.log(error)})
-    }
+    
 
 
 
@@ -142,7 +133,7 @@ const  Dashboard = () => {
           
             <AuthorizedLayout pageName = "მთავარი გვერდი">
               <Backdrop show = {detailVisible || startVerification} hide = {() => {history.goBack(); setDetailVisible(false)}}/>
-              <KvalifikaFrame frameUrl = {kycFrameUrl}/>
+              {/* <KvalifikaFrame frameUrl = {kycFrameUrl}/> */}
             <Verification visible = { startVerification}/>
                 <SidePanel
                     stepBack 
@@ -153,7 +144,8 @@ const  Dashboard = () => {
                
                 <div style ={{maxWidth: 485, marginLeft: 150}}>
                     <UserVerificationstatus/>
-                    <Button clicked = {startKycSession}>კვალიფიკა</Button>
+                    {/* <Button clicked = {startKycSession}>კვალიფიკა</Button> */}
+                    <Button clicked = {() => setStartVerification(true)}>ვერიფიკაცია</Button>
                     <Button clicked = {()=> history.push('/payments')}>go to payments</Button>
                     <Button clicked = {()=> history.push('/transfers')}>go to transfers</Button>
 

@@ -161,7 +161,6 @@ const  FillPaymentData = (props) => {
         props.getPaymentData(data);
     }
 
-    console.log(selectedAccount.accountId)
    
 
     return (

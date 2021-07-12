@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import './verification.scss';
-import { User } from '../../Services/API/APIS';
+import { KYC, User } from '../../Services/API/APIS';
 import PropTypes from 'prop-types';
 import { SidePanel, Input, Button,  Select, SelectList } from '../../Components/UI/UiComponents';
+import KvalifikaFrame from '../../Components/Kvalifika/KvalifikaFrame';
 
 
 
@@ -11,7 +12,7 @@ import { SidePanel, Input, Button,  Select, SelectList } from '../../Components/
 
 const Verification = (props) => {
 
-const [ verificationStep, setVerificationStep ] = useState(4);
+const [ verificationStep, setVerificationStep ] = useState(0);
 const [ countries, setCountries ] = useState([]);
 const [ cities, setCities ] = useState([]);
 const [ employmentStatusTypes, setEmploymentStatusTypes ] = useState([])
@@ -22,6 +23,7 @@ const [ selectedCity, setSelectedCity ] = useState(null);
 const [ selectedEmploymentStatus, setSelecteEmploymentStatus ] = useState(null);
 const [ selectedWorkTypes, setSelectedWorkTypes ] = useState(null);
 const [ selectedTurnover, setSelectedTurnover ] = useState(null);
+const [ kycFrameUrl, setKycFrameUrl ] = useState('');
 
 
 
@@ -68,6 +70,51 @@ const getExpextedTurnoverList = () => {
     }).catch(error => {console.log(error)});
 }
 
+const startKycSession = () => {
+    KYC.StartKycSession().then(res => {
+        console.log(res.data);
+        if(res.data.ok) {
+            if(res.data.data.skipKycSession === true) {
+                getKycData();
+            } else {
+                document.body.style.overflow = 'hidden';
+                setKycFrameUrl(res.data.data.frameUrl);
+            }
+            
+        }
+    }).catch(error => {console.log(error)})
+}
+
+const getKycData = (sessionId) => {
+    KYC.GetKycData(sessionId).then(res => {
+        console.log('get kyc data ===>', res.data)
+    }).catch(error => {console.log(error)});
+}
+
+const closeKycSession = (sessionId) => {
+    KYC.CloseKycSession(sessionId).then(res => {
+        console.log('kyc close session ===>', res.data)
+        if(res.data.ok){
+        const { birthDate, 
+            countryID, 
+            countryName, 
+            documentBackSide, 
+            documentFrontSide, 
+            documentNumber, 
+            documetType, 
+            firstName, 
+            lastName, 
+            nationality, 
+            personalNumber,
+            selfImages,
+            sex
+          } = res.data.data
+        } else {
+
+        }
+
+    }).catch(error => {console.log(error)});
+}
 
 
 
@@ -176,6 +223,17 @@ if(verificationStep === 0) {
         
     </div>
     )
+} else if (verificationStep === 5) {
+    VerficationStep = (
+    <div className = 'vf-wrap'>
+        <img src = '../../Assets/Images/loader.svg' alt ='icon' />
+            <KvalifikaFrame frameUrl = { kycFrameUrl } onStartSession = { startKycSession } onCloseSession = { closeKycSession }/>
+    </div>
+    )
+} else if (verificationStep > 5) {
+    VerficationStep = (
+        <span>........................</span>
+    )
 }
 
 
@@ -196,6 +254,7 @@ if(verificationStep === 0) {
 
 
     return (
+
         <SidePanel visible = {props.visible}>
             {VerficationStep}
             <Button clicked = {() => setVerificationStep(verificationStep + 1)}>შემდეგი</Button>         

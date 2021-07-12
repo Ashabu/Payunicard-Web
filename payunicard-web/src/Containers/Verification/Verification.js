@@ -1,6 +1,7 @@
 import React, {useState, useEffect, Fragment} from 'react';
 import './verification.scss';
 import { KYC, User } from '../../Services/API/APIS';
+import { getKycFullYear } from '../../Services/CommonFunctions';
 import PropTypes from 'prop-types';
 import { SidePanel, Input, Button,  Select, SelectList } from '../../Components/UI/UiComponents';
 import KvalifikaFrame from '../../Components/Kvalifika/KvalifikaFrame';
@@ -24,6 +25,9 @@ const [ selectedEmploymentStatus, setSelecteEmploymentStatus ] = useState(null);
 const [ selectedWorkTypes, setSelectedWorkTypes ] = useState(null);
 const [ selectedTurnover, setSelectedTurnover ] = useState(null);
 const [ kycFrameUrl, setKycFrameUrl ] = useState('');
+const [ kycData, setKycData ] = useState({
+    
+})
 
 
 
@@ -87,7 +91,29 @@ const startKycSession = () => {
 
 const getKycData = (sessionId) => {
     KYC.GetKycData(sessionId).then(res => {
-        console.log('get kyc data ===>', res.data)
+        console.log('get kyc data ===>', res.data.data.data[0])
+        if(res.data.ok) {
+            const { birthDate, 
+                countryID, 
+                countryName, 
+                documentBackSide, 
+                documentFrontSide, 
+                documentNumber, 
+                documetType, 
+                firstName, 
+                lastName, 
+                nationality, 
+                personalNumber,
+                selfImages,
+                sex
+              } = res.data.data.data[0];
+    
+              let qwerty = getKycFullYear(birthDate);
+
+              console.log(qwerty)
+              debugger
+              
+        }
     }).catch(error => {console.log(error)});
 }
 
@@ -108,7 +134,11 @@ const closeKycSession = (sessionId) => {
             personalNumber,
             selfImages,
             sex
-          } = res.data.data
+          } = res.data.data;
+          debugger
+
+          let qwerty = getFullYear(birthDate);
+          console.log(qwerty)
         } else {
 
         }

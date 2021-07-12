@@ -146,4 +146,14 @@ export const search = (data = [], keys = [], query) => {
     return result;
 }
 
+export const getKycFullYear = (year) => {
+    if(year){
+        let x = year.split('-');
+        let date = new Date();
+        date.setYear(x[x.length -1]);
+        return isNaN(date.getFullYear()) ?  '' : date.getFullYear().toString();
+    } else {
+        return ''
+    }
+}
 

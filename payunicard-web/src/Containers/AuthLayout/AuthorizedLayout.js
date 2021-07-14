@@ -210,7 +210,7 @@ const  Layout = (props) =>  {
                             
                             {props.children}
                         </div>
-                    <AuthorizedFooter/>
+                    {/* <AuthorizedFooter/> */}
                 </React.Fragment>
         );
 }

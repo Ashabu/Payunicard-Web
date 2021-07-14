@@ -4,7 +4,7 @@ import Calendar from './Calendar/Calendar';
 import ErrorNotification from './ErrorNotification/ErrorNotification';
 import Flags from './CountryFlags/Flag';
 import Icon from './Icon/Icon';
-import Input from './Input/Input';
+import AppInput from './AppInput/AppInput';
 import InputValidation from './InputValidation/Validation';
 import Modal from './Modal/Modal';
 import PasswordComplexity from './PasswordComplexity/PasswordComplexity';
@@ -26,7 +26,7 @@ export {
     ErrorNotification,
     Flags,
     Icon,
-    Input,
+    AppInput,
     InputValidation,
     Loader,
     Modal,

@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState, useContext} from 'react';
 import './transfer.scss';
-import { Button, Input, SidePanel } from '../UI/UiComponents';
+import { Button, AppInput, SidePanel } from '../UI/UiComponents';
 import PropTypes from 'prop-types';
 import SelectAccount from './../SelectAccount/SelectAccount';
 import { Context } from '../../Context/AppContext';
@@ -94,7 +94,7 @@ const TransferPanel = (props) => {
 
 
     let ToAcountNumber = (
-        <Input className = 'Input' value = { toAccountNumber } onChange = {(e) => setToAccountNumber(e.target.value)} />
+        <AppInput className = 'AppInput' value = { toAccountNumber } onChange = {(e) => setToAccountNumber(e.target.value)} />
     );
 
     if(type === 'BetweenAccounts' || type === 'Conversion') {
@@ -113,7 +113,7 @@ const TransferPanel = (props) => {
         BeneficiaryDetails = (
             <Fragment>
                 <p>მიმღების სახელი</p>
-                <Input className = 'Input' value = { beneficiaryName} onChange = {(e) => setBeneficiaryName(e.target.value)}/>
+                <AppInput className = 'AppInput' value = { beneficiaryName} onChange = {(e) => setBeneficiaryName(e.target.value)}/>
             </Fragment>
         )
     }
@@ -122,7 +122,7 @@ const TransferPanel = (props) => {
         <Fragment>
             <p>თანხის ოდენობა</p>
             <div style = {{display: 'flex'}}>
-                <Input className = 'Input' value = { transferAmount } onChange = {(e) => setTransferAmount(e.target.value)}/>
+                <AppInput className = 'AppInput' value = { transferAmount } onChange = {(e) => setTransferAmount(e.target.value)}/>
                 <SelectCurrency currency = { selectCurreny } />
             </div>  
         </Fragment>
@@ -194,7 +194,7 @@ const TransferPanel = (props) => {
                 { BeneficiaryDetails }
                 { AmountDetails }
                 <p>დანიშნულება</p>
-                <Input className = 'Input' value = { transferDescription} onChange = {(e) => setTransferDescription(e.target.value)}/> 
+                <AppInput className = 'AppInput' value = { transferDescription} onChange = {(e) => setTransferDescription(e.target.value)}/> 
                 <Button buttonClass = 'unicard-btn green' clicked = { getTransferData }>გადახდა</Button>
             </div>      
         )

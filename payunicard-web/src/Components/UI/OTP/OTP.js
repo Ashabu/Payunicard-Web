@@ -1,6 +1,6 @@
 import React, {Fragment,useState} from 'react';
 import './otp.scss';
-import {Input, Backdrop, Button } from '../UiComponents';
+import {AppInput, Backdrop, Button } from '../UiComponents';
 import PropTypes from 'prop-types';
 import OtpInput from './OtpInput';
 import { Otp } from '../../../Services/API/APIS';

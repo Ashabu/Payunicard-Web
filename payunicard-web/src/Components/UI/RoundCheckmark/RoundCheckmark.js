@@ -8,7 +8,7 @@ const  RoundCheckmark = (props) => {
             <div className = 'round'>
             
                 <input type = { props.checkType } onChange = {() => props.toggle(props.id)} checked = { props.checked } id = { props.id }/>
-                <label htmlFor = { props.for }> </label>
+                <label htmlFor = { props.for }>{props.labelTitle} </label>
             </div>
         </div>
     );

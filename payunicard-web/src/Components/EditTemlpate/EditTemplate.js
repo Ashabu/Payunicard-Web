@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './editTemplate.scss';
 import PropTypes from 'prop-types';
-import {Input, Button, Widget } from './../UI/UiComponents';
+import {AppInput, Button, Widget } from './../UI/UiComponents';
 
 const EditTemplate = (props) => {
     const { nameEdit, confirmEdit, close, removeTemplate } = props
@@ -11,7 +11,7 @@ const EditTemplate = (props) => {
         
         <Widget class = 'editTemplate'>
            <span> {nameEdit?'სახელის შეცვლა' : 'შაბლონის წაშლა'}</span>
-            {nameEdit? <Input className = 'editInput' value = { eiditName } onChange = {(e) => setEditName(e.target.value)}/> : null}
+            {nameEdit? <AppInput className = 'editInput' value = { eiditName } onChange = {(e) => setEditName(e.target.value)}/> : null}
             <div style= {{display: 'flex', placeContent: 'center space-between', width: '100%'}}>
                {nameEdit? 
                 <Button buttonClass = 'editButton green' clicked = {() => confirmEdit(eiditName) }>შენახვა</Button> : 

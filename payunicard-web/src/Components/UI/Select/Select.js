@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment} from 'react';
-import Input from '../Input/Input';
+import AppInput from '../AppInput/AppInput';
 import './select.scss';
 
 var isFocused = false; 
@@ -34,7 +34,7 @@ var isFocused = false;
 
     if(props.search) {
         searchInput = (
-            <Input value = {search} placeholder = 'Search' 
+            <AppInput value = {search} placeholder = 'Search' 
                 onChange ={(e)=> setSearch(e.target.value)} 
                 onFocus ={()=> { isFocused = true; }} 
                 onBlur={() => { isFocused = false; handleOnBlur(); }} />

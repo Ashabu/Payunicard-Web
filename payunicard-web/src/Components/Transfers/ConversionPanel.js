@@ -99,7 +99,6 @@ const ConversionPanel = (props) => {
 
 
 
-
     let ChoosingOptionFrom = null;
     if(choosingFrom) {
         ChoosingOptionFrom = (

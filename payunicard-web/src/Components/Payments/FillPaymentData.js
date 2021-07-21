@@ -61,9 +61,9 @@ const  FillPaymentData = (props) => {
         abonentCode: AbonentCode,
         forFundsSPCode: 'UniWallet',
         bankId: null,
-        forPaySPCode: forPaySPCode,
+        forPaySPCode: forPaySPCode || forPaySpCode,
         AccountId: selectedAccount.accountId,
-        forOpClassCode: forOpClassCode || forPaySpCode,
+        forOpClassCode: forOpClassCode ,
    }
 
    

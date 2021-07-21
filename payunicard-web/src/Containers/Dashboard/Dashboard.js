@@ -39,7 +39,7 @@ const  Dashboard = () => {
 
     const [ userProducts, setUserProducts ] = useState([]);
 
-    const [ startVerification, setStartVerification ] = useState(false);
+    const [ startVerification, setStartVerification ] = useState(true);
 
     const [ kycFrameUrl, setKycFrameUrl ] = useState('');
 

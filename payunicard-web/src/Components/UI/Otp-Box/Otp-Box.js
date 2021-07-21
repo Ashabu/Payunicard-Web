@@ -16,15 +16,25 @@ const OtpBox = (props) => {
         if (isNaN(element.value)) return;
         setOtp([...otp.map((v, i) => (i === index) ? element.value : v)]);
         if (element.nextSibling && element.value !== '') element.nextSibling.focus();
-    }
+    };
 
-    const handleFocusPrev = (event, index) => {
-        if(event.key === 'Backspace' || event.key === 'End') {
-            if (refs[index - 1] && otp[index] === '') {
+    const handleFocusInput= (event, index) => {
+        if(refs[index + 1] && event.key === 'ArrowRight' ) {
+            refs[index + 1].current?.focus();
+            return;
+        };
+        if(refs[index - 1]){
+            if(event.key === 'ArrowLeft') {
                 refs[index - 1].current?.focus();
             }
-        }
-    }
+            if(event.key === 'Backspace' || event.key === 'Delete') {
+                if (otp[index] === '') {
+                    refs[index - 1].current?.focus();
+                }
+            }
+            return;
+        };
+    };
 
     console.log('OTP ---- >', otp)
 
@@ -39,10 +49,10 @@ const OtpBox = (props) => {
                     type = 'numeric'
                     maxLength = '1'
                     onChange = {e => handleOnChange(e.target, index)}
-                    onKeyDown = {e => handleFocusPrev(e, index)}
+                    onKeyDown = {e => handleFocusInput(e, index)}
                 />))}
         </div>
     );
-}
+};
 
 export default OtpBox;

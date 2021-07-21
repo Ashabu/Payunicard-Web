@@ -5,6 +5,7 @@ import './select.scss';
 var isFocused = false; 
 
  const Select = (props) => {
+     const {data, listClass,  queryParam, hasSearch ,selected, selectClass} = props;
     
     const [visible, setVisible] = useState(false); 
     const [search, setSearch] = useState('');
@@ -24,17 +25,17 @@ var isFocused = false;
 
     let  selectData = [];
     if(search !== '') {
-        selectData = props.data.filter(el =>{return el.name.toLowerCase().includes(search.toLowerCase())})
+        selectData = data?.filter(el =>{return el[queryParam].toLowerCase().includes(search.toLowerCase())})
     } else {
-        selectData = props.data
+        selectData = data;
     }
 
     let  selectList = null;
     let searchInput = null;
 
-    if(props.search) {
+    if(hasSearch) {
         searchInput = (
-            <AppInput value = {search} placeholder = 'Search' 
+            <AppInput value = {search} labeltitle = 'Search' 
                 onChange ={(e)=> setSearch(e.target.value)} 
                 onFocus ={()=> { isFocused = true; }} 
                 onBlur={() => { isFocused = false; handleOnBlur(); }} />
@@ -43,18 +44,18 @@ var isFocused = false;
 
     if(visible) {
         selectList = (
-            <div className= {props.listClass || 'SelectList'}>
+            <div className= {listClass || 'SelectList'}>
                 
                 {searchInput}
-                {visible && selectData.map(el => {return props.display(el, setVisible)})}
+                {visible && selectData?.map(el => {return props.display(el, setVisible)})}
             </div>
         )
     }
     return (
         <div style = {{position: 'relative', width: '100%'}}>
-            <div  className ={ props.selectClass ||'Selected'} onClick = {() => setVisible(!visible)}   onBlur = {handleOnBlur }> 
+            <div  className ={ selectClass ||'Selected'} onClick = {() => setVisible(!visible)}   onBlur = {handleOnBlur }> 
             <img style = {{position: 'absolute', top: 20, right: 15,}} src = '../../../Assets/Images/arrow_down.png' alt = 'icon' />
-                 {props.selected}
+                 {selected}
             </div>
             {selectList}
         </div>

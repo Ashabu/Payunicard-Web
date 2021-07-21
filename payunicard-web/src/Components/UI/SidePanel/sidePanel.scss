@@ -44,6 +44,9 @@
     .body {
         margin-top: 80px;
         height: calc(100% - 80px);
+        display: flex;
+        flex-direction: column;
+        padding: 0 30px;
     }
 }
 

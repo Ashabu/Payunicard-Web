@@ -4,6 +4,7 @@ import { KYC, User } from '../../Services/API/APIS';
 import { getKycFullYear } from '../../Services/CommonFunctions';
 import PropTypes from 'prop-types';
 import { SidePanel, AppInput, Button,  RoundCheckmark, Select, SelectList } from '../../Components/UI/UiComponents';
+import SelectCountry from '../../Components/SelectCountry/SelectCountry';
 import KvalifikaFrame from '../../Components/Kvalifika/KvalifikaFrame';
 
 
@@ -15,6 +16,9 @@ const Verification = (props) => {
 
 const [ verificationStep, setVerificationStep ] = useState(0);
 const [ countries, setCountries ] = useState([]);
+const [ city, setCity ] = useState('');
+const [ address, setAddress ] = useState('');
+const [ postalCode, setPostalCode ] = useState('');
 const [ cities, setCities ] = useState([]);
 const [ employmentStatusTypes, setEmploymentStatusTypes ] = useState([])
 const [ workTypes, setWorkTypes ] = useState([]);
@@ -239,39 +243,35 @@ const finishCostumerRegistration = () => {
 
 
 
-
-
 let VerficationStep = null;
 
 if(verificationStep === 0) {
     VerficationStep = (
         <div className = 'vf-wrap'>
-            <img src = '../../Assets/Images/vf-poster.svg' alt = ''/>
-            <span>მესამე პირის წარმომადგენელი ხართ?</span>
-            <span>მინდობილობის საფუძველზე შესაძლებელია მესამე პირისთვის უნისაფულის გახსნა</span>
-            <Button clicked = {()=>setVerificationStep(1)}>არა</Button>
-            <Button>დიახ</Button>
+            <div className = 'vf-poster'>
+                <img src = '../../Assets/Images/vf-poster.svg' alt = 'poster'/>
+            
+            <div className = 'vf-infotext'>
+                <span>მესამე პირის წარმომადგენელი ხართ?</span>
+                <span>მინდობილობის საფუძველზე შესაძლებელია მესამე პირისთვის უნისაფულის გახსნა</span>
+            </div>
+            
+            
+            </div>
+            <div className = 'vf-buttons'>
+                <Button clicked = {()=>setVerificationStep(1)}>არა</Button>
+                <Button>დიახ</Button>
+            </div>
         </div>
     )
 } else if (verificationStep === 1) {
     VerficationStep = (
         <div className = 'vf-wrap'>
             <span>ჩაწერეთ იურიდიული მისამართი</span>
-            <Select
-                data = { countries } 
-                selected = { selectedCountry?.countryName }
-                display ={(element, setVisible) => (
-                    <SelectList 
-                        key={ element.countryID } 
-                        selected = { element } 
-                        list
-                        clicked={() => { setSelectedCountry(element); setVisible(false);}}>
-                            {element.countryName}
-                    </SelectList> 
-                )}/>
-            <AppInput value = '' labeltitle = 'ქალაქი/მუნიციპალიტეტი'/>
-            <AppInput value = '' labeltitle = 'მისამართი'/>
-            <AppInput value = '' labeltitle = 'საფოსტო ინდექსი'/>
+            <SelectCountry countries  = { countries } placeholder = 'აირჩიეთ ქვეყანა'/>
+            <AppInput style={{marginBottom: 20}} value = { city } onChange = {(e) => setCity(e.target.value)} labeltitle = 'ქალაქი/მუნიციპალიტეტი'/>
+            <AppInput style={{marginBottom: 20}} value = { address } onChange = {(e) => setAddress(e.target.value)} labeltitle = 'მისამართი'/>
+            <AppInput style={{marginBottom: 20}} value = { postalCode } onChange = {(e) => setPostalCode(e.target.value)} labeltitle = 'საფოსტო ინდექსი'/>
         </div>
     )
 } else if (verificationStep === 2) {
@@ -302,8 +302,8 @@ if(verificationStep === 0) {
                             {element.customerEmploymentType}
                     </SelectList> 
                 )}/>
-            <AppInput labeltitle = 'დამსაქმებელი'/>
-            <AppInput labeltitle = 'დაკავებული თანამდებობდა'/>    
+            <AppInput style={{marginBottom: 20}} labeltitle = 'დამსაქმებელი'/>
+            <AppInput style={{marginBottom: 20}} labeltitle = 'დაკავებული თანამდებობდა'/>    
         </div>
     )
 } else if (verificationStep === 3) {
@@ -459,7 +459,7 @@ if(verificationStep === 0) {
 
         <SidePanel visible = {props.visible}>
             {VerficationStep}
-            <Button clicked = {() => setVerificationStep(verificationStep + 1)}>შემდეგი</Button>         
+            {verificationStep !== 0 ? <Button buttonClass = 'buttonTest' clicked = {() => setVerificationStep(verificationStep + 1)}>შემდეგი</Button>: null}        
         </SidePanel>
     )
 }

@@ -1,0 +1,71 @@
+.vf-wrap {
+    height: 100%;
+    background: aqua;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    .vf-poster {
+        margin: auto;
+        img {
+            display: block;
+            margin: auto;
+        }
+    
+        .vf-infotext {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 60px;
+            span {
+                &:first-child {
+                    font-family: 'FiraGO MEDIUM';
+                    font-weight: normal;
+                    font-size: 24px;
+                    text-align: center;
+                    color: #130d1e;
+                    margin-bottom: 18px;
+                }
+                &:last-child {
+                    font-family: 'FiraGO BOOK';
+                    font-weight: normal;
+                    font-size: 14px;
+                    text-align: center;
+                    color: #6b6b6b;
+                }
+            }
+        }
+        
+    }  
+    .vf-buttons{
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+        button {
+            max-width: 155px;
+            width: 100%;
+            height: 54px;
+            border-radius: 7px;
+            background: #f1f1f1;
+            border: none;
+            margin-right: 10px;
+            font-family: 'FiraGO MEDIUM';
+        }
+    }   
+}
+
+
+
+.buttonTest {
+    min-height: 54px;
+    padding: 0 15px;
+    border-radius: 10px;
+    background: #94dd34;
+    border: none;
+    font-family: 'FiraGO MEDIUM';
+    font-weight: 500;
+    font-size: 14px;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 50px;
+}

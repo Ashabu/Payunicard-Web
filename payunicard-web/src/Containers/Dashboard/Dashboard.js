@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 import { Context } from '../../Context/AppContext';
 import './dashboard.scss';
 import { KYC, User } from '../../Services/API/APIS';
-import { Backdrop, Button, Select, SelectList, SidePanel, Widget } from '../../Components/UI/UiComponents';
+import { Backdrop, Button, AppInput, Select, SelectList, SidePanel, Widget } from '../../Components/UI/UiComponents';
 import TransactionDetail from '../../Components/TransactionDetails/TransactionDetail';
 import TransactionDetailView from '../../Components/TransactionDetailView/TransactionDetailView';
 import UserBalance from './../../Components/UserBalance/UserBalance';
@@ -133,8 +133,9 @@ const  Dashboard = () => {
         return (
           
             <AuthorizedLayout pageName = "მთავარი გვერდი">
+
+               
               <Backdrop show = {detailVisible || startVerification} hide = {() => {history.goBack(); setDetailVisible(false)}}/>
-              {/* <KvalifikaFrame frameUrl = {kycFrameUrl}/> */}
             <Verification visible = { startVerification}/>
                 <SidePanel
                     stepBack 
@@ -171,8 +172,8 @@ const  Dashboard = () => {
                     </div>
                    
                     <div>
-                    <UserProducts userproducts = { userProducts }/>
-</div>
+                        <UserProducts userproducts = { userProducts }/>
+                    </div>
                     <CurrencyRates currencyrates = { currencyRates }/>    
 
                     <Widget>

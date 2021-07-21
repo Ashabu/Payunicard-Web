@@ -5,7 +5,7 @@ import Codes from '../../Services/Data/CountryCodes';
 import Layout from '../Layout/Layout';
 import User from '../../Services/API/UserServices';
 import { Link } from 'react-router-dom';
-import { Backdrop, Button, Flags, Input, InputValidation, PasswordComplexity, Select, SelectList } from '../../Components/UI/UiComponents';
+import { Backdrop, Button, Flags, AppInput, InputValidation, PasswordComplexity, Select, SelectList } from '../../Components/UI/UiComponents';
 import Lang from '../../Services/SetLang';
 
 
@@ -90,37 +90,37 @@ const UserRegistration = props => {
                             )} 
                             />
                            
-                            < Input className = 'Input Input-bg' type = 'text' placeholder ='მობილურის ნომერი'
+                            < AppInput className = 'AppInput AppInput-bg' type = 'text' placeholder ='მობილურის ნომერი'
                                 onInput = {(e) => { const value = e.target.value; setRegistrationData(prevState => {return {...prevState, mobileNumber: value }}) }} 
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = 'მობილურის ნომერი'}/>
                         </div>      
-                        < Input className = 'Input Input-bg' type = 'text' placeholder = 'ელ-ფოსტა'  rule = {"email"}
+                        < AppInput className = 'AppInput AppInput-bg' type = 'text' placeholder = 'ელ-ფოსტა'  rule = {"email"}
                             onInput = {(e) => { const value = e.target.value; setRegistrationData(prevState => {return {...prevState, email: value }}) }} 
                             onFocus = {(e) => e.target.placeholder = ""}
                             onBlur = {(e) => e.target.placeholder = 'ელ-ფოსტა'}/>  
-                        < Input className = 'Input Input-bg' type = 'text' placeholder = 'სახელი' rule = {'required'}
+                        < AppInput className = 'AppInput AppInput-bg' type = 'text' placeholder = 'სახელი' rule = {'required'}
                             onInput = {(e) => { const value = e.target.value; setRegistrationData(prevState => {return {...prevState, userName: value }}) }} 
                             onFocus = {(e) => e.target.placeholder = ""}
                             onBlur = {(e) => e.target.placeholder = 'სახელი'}/>
-                        < Input className = 'Input Input-bg' type = 'text' placeholder ='გვარი ' rule = {'required'}
+                        < AppInput className = 'AppInput AppInput-bg' type = 'text' placeholder ='გვარი ' rule = {'required'}
                             onInput = {(e) => { const value = e.target.value; setRegistrationData(prevState => {return {...prevState, surname: value }}) }} 
                             onFocus = {(e) => e.target.placeholder = ""}
                             onBlur = {(e) => e.target.placeholder = 'გვარი'}/>    
-                        < Input className = 'Input Input-bg' type = 'text' placeholder ='დაბადების თარიღი' 
+                        < AppInput className = 'AppInput AppInput-bg' type = 'text' placeholder ='დაბადების თარიღი' 
                             onInput = {(e) => { const value = e.target.value; setRegistrationData(prevState => {return {...prevState, birthDate: value }}) }} 
                             onFocus = {(e) => e.target.placeholder = ""}
                             onBlur = {(e) => e.target.placeholder = 'დაბადების თარიღი'}/>    
-                        < Input className = 'Input Input-bg' type = 'text' placeholder = 'პირადი ნომერი' rule = {'required'}
+                        < AppInput className = 'AppInput AppInput-bg' type = 'text' placeholder = 'პირადი ნომერი' rule = {'required'}
                             onInput = {(e) => { const value = e.target.value; setRegistrationData(prevState => {return {...prevState, personalNumber: value }}) }} 
                             onFocus = {(e) => e.target.placeholder = ""}
                             onBlur = {(e) => e.target.placeholder = 'პირადი ნომერი'}/>
                         <div className = 'passwords'>   
-                            < Input className = 'Input' type = 'text' placeholder ='პაროლი' rule = {'required'}
+                            < AppInput className = 'AppInput' type = 'text' placeholder ='პაროლი' rule = {'required'}
                                 onInput = {(e) => { const value = e.target.value; setRegistrationData(prevState => {return {...prevState, password: value }}) }} 
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = 'პაროლი'}/>
-                            < Input className = 'Input'  type = 'text' placeholder ='გაიმეორეთ პაროლი' 
+                            < AppInput className = 'AppInput'  type = 'text' placeholder ='გაიმეორეთ პაროლი' 
                                 onInput = {(e) => { const value = e.target.value; setRegistrationData(prevState => {return {...prevState, repeatePassword: value }}) }} 
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = 'გაიმეორეთ პაროლი'}
@@ -129,7 +129,7 @@ const UserRegistration = props => {
                         </div>
                                     <PasswordComplexity 
                                        regPassword = { rd.password } />
-                        {/* < Input className = 'Input'  type = 'text'  
+                        {/* < AppInput className = 'AppInput'  type = 'text'  
                                 onInput = {(e)=> this.setState({otp: e.target.value})}
                                 onFocus = {(e) => e.target.placeholder = ""}
                                /> */}

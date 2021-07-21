@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react'
 import PropTypes from 'prop-types'
-import { Widget, Input } from '../UI/UiComponents';
+import { Widget, AppInput } from '../UI/UiComponents';
 import { formatNumber } from '../../Services/CommonFunctions';
 import { Currency } from '../../Services/API/APIS';
 
@@ -154,7 +154,7 @@ const ConversionPanel = (props) => {
                 <div className = 'co-amount-wrap'>
                     <div className = 'co-amount'>
                         <span>გასაყიდი</span>
-                        <Input className = 'Input' value = { amountFrom } 
+                        <AppInput className = 'AppInput' value = { amountFrom } 
                             onChange = {(e) => setAmountFrom(e.target.value) }
                             onInput = {()=> {setFromBaseAmount(true); setInitialized(true)}}
 
@@ -162,7 +162,7 @@ const ConversionPanel = (props) => {
                     </div>
                     <div className = 'co-amount'>
                         <span>მისაღები</span>
-                        <Input className = 'Input' value = { amountTo } 
+                        <AppInput className = 'AppInput' value = { amountTo } 
                             onChange = {(e) => setAmountTo(e.target.value) } 
                             onInput = {()=> {setFromBaseAmount(false); setInitialized(true)}} 
 

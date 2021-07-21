@@ -1,6 +1,6 @@
 import React, {useContext, useState, useRef, Fragment, useEffect} from 'react';
 import './payment.scss';
-import { Button, Input } from '../UI/UiComponents';
+import { Button, AppInput } from '../UI/UiComponents';
 import { formatCurrencySymbol } from '../../Services/CommonFunctions';
 import { Presentation, Transaction } from '../../Services/API/APIS';
 import PropTypes from 'prop-types';
@@ -181,7 +181,7 @@ const  FillPaymentData = (props) => {
                     <Button clicked = {()=> props.getPaymentData({templateData})}>გადახდა</Button>
                     </div>
                     <div style = {{display: 'flex', flexFlow: 'column'}}>
-                        <Input value = {AbonentCode} onInput = {(e) => setAbonentCode(e.target.value)} />
+                        <AppInput value = {AbonentCode} onInput = {(e) => setAbonentCode(e.target.value)} />
                         {AbonentCode !== ''? <Button clicked = { checkCostumerDebt }>შემომწმება</Button> : null}
                     </div>
                 </div>
@@ -208,7 +208,7 @@ const  FillPaymentData = (props) => {
                     {debt || costumer ?<Fragment>
                         <div className = 'al-it-center'>
                             <p>თანხის ოდენობა:</p>
-                            <Input value = {amount}  onChange = {(e) => {setAmount(e.target.value); }  }/>
+                            <AppInput value = {amount}  onChange = {(e) => {setAmount(e.target.value); }  }/>
                         </div>
                     </Fragment> : null}
                     {paymentCommision !== null?<Fragment>

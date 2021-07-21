@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext,  } from 'react';
 import { useHistory } from "react-router";
 import './login.scss';
 import { Context } from '../../Context/AppContext';
-import { Button, Input, Modal, InputValidation } from '../../Components/UI/UiComponents';
+import { Button, AppInput, Modal, InputValidation } from '../../Components/UI/UiComponents';
 import Layout from '../Layout/Layout';
 import Lang from '../../Services/SetLang';
 import User from '../../Services/API/UserServices';
@@ -114,7 +114,7 @@ useEffect(() => {
             
             <Layout>
                 <Modal show = {fpd.forgotPassword} headerText = 'დაგავიწყდათ პაროლი?' onCloseModal = {handleModalClose}>
-                    <Input className = 'Input Input-bg' type = 'text' placeholder = {Lang.tr('auth.username')} 
+                    <AppInput className = 'AppInput AppInput-bg' type = 'text' placeholder = {Lang.tr('auth.username')} 
                         value = {fpd.userName}
                         onInput = {(e)=> {const value = e.target.value; setForgotPasswordData(prevState => {return {...prevState, userName: value }} )}}
                         onFocus = {() => setErrorMessage('')}
@@ -122,7 +122,7 @@ useEffect(() => {
                         rule ={'required'}
                         groupid = 'resetPassword'/>
                     { fpd.isRegistered? 
-                    <Input  className = 'Input Input-bg' type = 'text' groupid = 'resetPassword' 
+                    <AppInput  className = 'AppInput AppInput-bg' type = 'text' groupid = 'resetPassword' 
                         value = {fpd.personalId} 
                         onInput = {(e) => {const value = e.target.value; setForgotPasswordData(prevState =>{return {...prevState, personalId: value}})}}  
                         rule = {'required'} /> :null }
@@ -137,21 +137,21 @@ useEffect(() => {
                             <span>მოგესალმებით</span>
                         </div>
                         <div className = 'Login-inputs'>
-                            <Input className = 'Input Input-bg' type = 'text' placeholder = {Lang.tr('auth.username')} 
+                            <AppInput className = 'AppInput AppInput-bg' type = 'text' placeholder = {Lang.tr('auth.username')} 
                                 value = {ld.userName}
                                 onInput = {(e)=> {const value = e.target.value; setLoginData(prevState => {return {...prevState, userName: value }})}}
                                 onFocus = {(e) =>e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = Lang.tr('auth.username')}
                                 rule = {"required"}
                                 groupid = 'login'/>
-                            <Input className = 'Input Input-bg' type = 'text' placeholder = {Lang.tr('auth.password')}
+                            <AppInput className = 'AppInput AppInput-bg' type = 'text' placeholder = {Lang.tr('auth.password')}
                                 value = {ld.password}
                                 onInput = {(e)=> {const value = e.target.value; setLoginData(prevState => {return {...prevState, password: value }})}}
                                 onFocus = {(e) => e.target.placeholder = ""}
                                 onBlur = {(e) => e.target.placeholder = Lang.tr('auth.password')}
                                 rule = {'required'}
                                 groupid = 'login'/>
-                            <Input className = 'Input Input-med' type = 'numeric' value = {oneTimePasscode} onInput = {(e) => setOneTimePasscode(e.target.value)}    groupid = 'login'/>        
+                            <AppInput className = 'AppInput AppInput-med' type = 'numeric' value = {oneTimePasscode} onInput = {(e) => setOneTimePasscode(e.target.value)}    groupid = 'login'/>        
                         </div>
                         <div className = 'LoginOptions'>
                             <label>

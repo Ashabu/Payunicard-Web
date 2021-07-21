@@ -101,6 +101,10 @@ class User {
         return await axios.get(`${globalConfig.api_URL}/GetCities`);
     }
 
+    FinishCostumerRegistration = async(data) => {
+        return await axios.post(`${globalConfig.api_URL}/User/FinishCustomerRegistration`, data);
+    }
+
     
 }
 

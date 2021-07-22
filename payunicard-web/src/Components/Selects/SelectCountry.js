@@ -20,6 +20,7 @@ const SelectCountry = (props) => {
 
     return (
         <Select
+        selectClass = 'Selected mb-20'
                 data = { countries } 
                 selected = { selectedCountry ? selectedCountry?.countryName : <div style={{padding: 10}}>{ placeholder }</div> }
                 hasSearch

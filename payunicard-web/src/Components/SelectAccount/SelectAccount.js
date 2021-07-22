@@ -3,7 +3,7 @@ import './selectAccount.scss';
 import { Context } from '../../Context/AppContext';
 import { Select } from '../UI/UiComponents';
 import PropTypes from 'prop-types';
-import SelectedAccount from './../HOC/SelectedAccount/SelectedAccount';
+import SelectedAccount from '../HOC/SelectedAccount/SelectedAccount';
 
 
 

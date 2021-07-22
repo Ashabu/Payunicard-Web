@@ -135,8 +135,8 @@ const  Dashboard = () => {
             <AuthorizedLayout pageName = "მთავარი გვერდი">
 
                
-              <Backdrop show = {detailVisible || startVerification} hide = {() => {history.goBack(); setDetailVisible(false)}}/>
-            <Verification visible = { startVerification}/>
+              <Backdrop show = {detailVisible || startVerification} hide = {() => {setDetailVisible(false)}}/>
+            <Verification visible = { startVerification} close = {() => setStartVerification(false)}/>
                 <SidePanel
                     stepBack 
                     visible = {detailVisible}

@@ -4,6 +4,12 @@
     
     .round {
         position: relative;
+        display: flex;
+        flex-direction: row;
+        span{
+            display: inline-block;
+            margin-left: 10px;
+        }
 
         label {
             background-color: #fff;

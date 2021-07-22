@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, memo } from 'react';
 import './otpBox.scss';
 
 const OtpBox = (props) => {
@@ -55,4 +55,4 @@ const OtpBox = (props) => {
     );
 };
 
-export default OtpBox;
+export default memo(OtpBox);

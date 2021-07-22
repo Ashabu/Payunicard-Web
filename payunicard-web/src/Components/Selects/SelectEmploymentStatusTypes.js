@@ -3,8 +3,14 @@ import PropTypes from 'prop-types';
 import { Select, SelectList } from '../UI/UiComponents';
 
 const SelectEmploymentStatusType = (props) => {
-    const { employmentStatusTypes, placeholder } = props;
+    const { employmentStatusTypes, placeholder, handleSelect } = props;
     const [ selected, setSelected ] = useState(null);
+
+    const onSelect = (data, callBack) => {
+        setSelected(data);
+        handleSelect(data);
+        callBack(false);
+    }
 
     return (
         <Select
@@ -17,7 +23,7 @@ const SelectEmploymentStatusType = (props) => {
                         selected = { element } 
                         list
                         listClassRow = 'selectLIst'
-                        clicked={() => { setSelected(element); setVisible(false)}}>
+                        clicked={() => onSelect(element, setVisible)}>
                             {element.employmentStatus}
                     </SelectList> 
                 )}/>

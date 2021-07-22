@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { Select, SelectList } from '../UI/UiComponents';
 
@@ -6,6 +6,12 @@ const SelectEmploymentStatus = (props) => {
     const { employmentStatus, placeholder } = props;
     const [ selected, setSelected ] = useState(null);
 
+    const onSelect = (data, callBack) => {
+        setSelected(data);
+        handleSelect(data);
+        callBack(false);
+    } 
+    
     return (
         <Select
         selectClass = 'Selected mb-20'
@@ -17,7 +23,7 @@ const SelectEmploymentStatus = (props) => {
                         selected = { element } 
                         list
                         listClassRow = 'selectLIst'
-                        clicked={() => { setSelected(element); setVisible(false)}}>
+                        clicked={() => {onSelect(element, setVisible)}}>
                             {element.employmentStatus}
                     </SelectList> 
                 )}/>

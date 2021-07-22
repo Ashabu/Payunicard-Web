@@ -14,27 +14,29 @@ import KvalifikaFrame from '../../Components/Kvalifika/KvalifikaFrame';
 
 const Verification = (props) => {
 
-const [ verificationStep, setVerificationStep ] = useState(6);
+const [ verificationStep, setVerificationStep ] = useState(0);
 const [ countries, setCountries ] = useState([]);
-const [ city, setCity ] = useState('');
-const [ address, setAddress ] = useState('');
-const [ postalCode, setPostalCode ] = useState('');
+const [ factCity, setFactCity ] = useState('');
+const [ factAddress, setFactAddress ] = useState('');
+const [ factPostalCode, setFactPostalCode ] = useState('');
 const [ cities, setCities ] = useState([]);
-const [ employmentStatusTypes, setEmploymentStatusTypes ] = useState([])
+const [ employmentStatusTypes, setEmploymentStatusTypes ] = useState([]);
 const [ workTypes, setWorkTypes ] = useState([]);
 const [ expectedTurnover, setExpectedTurnover ] = useState([]);
-const [ selectedCountry, setSelectedCountry ] = useState(null);
-// const [ selectedCity, setSelectedCity ] = useState(null);
-// const [ selectedEmploymentStatus, setSelecteEmploymentStatus ] = useState(null);
-// const [ selectedWorkTypes, setSelectedWorkTypes ] = useState(null);
-// const [ selectedTurnover, setSelectedTurnover ] = useState(null);
+const [ selectedCountryID, setSelectedCountryID ] = useState(null);
+const [ selectedCity, setSelectedCity ] = useState(null);
+const [ employmentStatusCode, setEmploymentStatusCode ] = useState(null);
+const [ employmentTypeCode, setEmploymentTypeCode ] = useState(null);
+const [ employer, setEmployer ] = useState('');
+const [ workPosition, setWorkPosition ] = useState('');
+const [ expectedTurnoverCode, setExpectedTurnoverCode ] = useState(null);
 const [ hasUtility, setHasUtility] = useState(false);
 const [ hasTransport, setHasTransport] = useState(false);
 const [ hasTelecomunication, setHasTelecomunication] = useState(false);
 const [ hasInternatiolalTransactions, setHasInternatiolalTransactions] = useState(false);
 const [ hasGambling, setHasGambling] = useState(false);
 const [ hasOther, setHasOther ] = useState(false);
-const [ othertransactionType, setOtherTransactionType ] = useState('');
+const [ otherDesctiption, setOtherDesctiption] = useState('');
 const [ kycFrameUrl, setKycFrameUrl ] = useState('');
 const [ kycData, setKycData ] = useState({
     customerSelfContent: 'Selfie',
@@ -102,7 +104,32 @@ const getExpextedTurnoverList = () => {
     User.GetCustomerExpectedTurnoverTypes().then(res => {
         setExpectedTurnover(res.data.data.types);
     }).catch(error => {console.log(error)});
-}
+};
+
+const selectCountry = (element) => {
+    setSelectedCountryID(element.countryID);
+};
+const selectCity = (element) => {
+    setSelectedCity(element.cityId);
+};
+const selectEmploymentStatus = (element) => {
+    setEmploymentStatusCode(element.employmentStatusCode);
+};
+const selectWorkType = (element) => {
+    setEmploymentTypeCode(element.customerEmploymentTypeCode);
+};
+
+const selectExpectedTurnover = (element) => {
+    setExpectedTurnoverCode(element.expectedTurnoverCode);
+};
+
+const selectSecondaryCitizenship = (element) => {
+    console.log('selectSecondaryCitizenship',element)
+};
+
+
+
+
 
 const startKycSession = () => {
     KYC.StartKycSession().then(res => {
@@ -210,6 +237,39 @@ const closeKycSession = (sessionId) => {
     }).catch(error => {console.log(error)});
 }
 
+const costumerRegistration = () => {
+    let data = { 
+    isResident: selectedCountryID == 79? true : false,
+    factCountryID: selectedCountryID, 
+    factCity, 
+    factCityID: 0,
+    factAddress, 
+    factPostalCode, 
+    legalCountryID: selectedCountryID, 
+    legalCity: factCity, 
+    legalCityID: 0, 
+    legalAddress: factAddress, 
+    legalPostalCode: factPostalCode, 
+    employmentStatusCode, 
+    employmentTypeCode, 
+    employer, 
+    workPosition, 
+    expectedTurnoverCode,
+    hasUtility, 
+    hasTransport, 
+    hasTelecomunication, 
+    hasInternatiolalTransactions,
+    hasGambling,  
+    hasOther,  
+    otherDesctiption: '',
+    termID: 1
+    }
+
+    User.CostumerRegistration(data).then(res => {
+        console.log(res.data)
+    }).catch(error => {console.log(error)});
+}
+
 const finishCostumerRegistration = () => {
 
     let data = {
@@ -276,35 +336,56 @@ if(verificationStep === 0) {
             <SelectCountry 
                 placeholder = 'აირჩიეთ ქვეყანა' 
                 countries  = { countries }  
-                handleSelect = {() =>{}}/>
-            <AppInput style={{marginBottom: 20}} value = { city } onChange = {(e) => setCity(e.target.value)} labeltitle = 'ქალაქი/მუნიციპალიტეტი'/>
-            <AppInput style={{marginBottom: 20}} value = { address } onChange = {(e) => setAddress(e.target.value)} labeltitle = 'მისამართი'/>
-            <AppInput style={{marginBottom: 20}} value = { postalCode } onChange = {(e) => setPostalCode(e.target.value)} labeltitle = 'საფოსტო ინდექსი'/>
+                handleSelect = {selectCountry}/>
+            <AppInput 
+                style={{marginBottom: 20}}
+                labeltitle = 'ქალაქი/მუნიციპალიტეტი' 
+                value = { factCity } 
+                onChange = {e => setFactCity(e.target.value)} />
+            <AppInput 
+                style={{marginBottom: 20}} 
+                labeltitle = 'მისამართი'
+                value = { factAddress } 
+                onChange = {e => setFactAddress(e.target.value)} />
+            <AppInput 
+                 labeltitle = 'საფოსტო ინდექსი'
+                style={{marginBottom: 20}} 
+                value = { factPostalCode } 
+                onChange = {e => setFactPostalCode(e.target.value)}/>
         </div>
     )
 } else if (verificationStep === 2) {
     VerficationStep = (
         <div className = 'vf-wrap'>
             <span className = 'step-title'>მიუთითეთ საქმიანობის სფერო</span>
-
             <SelectEmploymentStatusType
                 placeholder = 'აირჩიეთ დასაქმების სტატუსი' 
                 employmentStatusTypes = { employmentStatusTypes }  
-                handleSelect = {() =>{}}/>
+                handleSelect = {selectEmploymentStatus}/>
             <SelectWorkType 
                 placeholder = 'აირჩიეთ საქმიანობის სფერო' 
                 workTypes = { workTypes }  
-                handleSelect = {() =>{}}/>
-            <AppInput style={{marginBottom: 20}} labeltitle = 'დამსაქმებელი'/>
-            <AppInput style={{marginBottom: 20}} labeltitle = 'დაკავებული თანამდებობდა'/>    
+                handleSelect = {selectWorkType}/>
+            <AppInput 
+                style={{marginBottom: 20}} 
+                labeltitle = 'დამსაქმებელი' 
+                value = {employer}
+                onChange = {e => setEmployer(e.target.value)} />
+            <AppInput 
+                style={{marginBottom: 20}} 
+                labeltitle = 'დაკავებული თანამდებობდა' 
+                value = {workPosition}
+                onChange = {e => setWorkPosition(e.target.value)} />    
         </div>
     )
 } else if (verificationStep === 3) {
     VerficationStep = (
         <div className = 'vf-wrap'>
         <span className = 'step-title'>მონიშნეთ მოსალოდნელი ბრუნვა 1 წლის განმავლობაში</span> 
-        <SelectExpectedTurnover expectedTurnover = { expectedTurnover } placeholder = 'აირჩიეთ მოსალოდნელი ბრუნვა'/> 
-
+        <SelectExpectedTurnover 
+            placeholder = 'აირჩიეთ მოსალოდნელი ბრუნვა' 
+            expectedTurnover = { expectedTurnover }   
+            handleSelect = {selectExpectedTurnover}/> 
         <span className = 'step-title'>მონიშნეთ მოსალოდნელი ტრანზაქციების კატეგორიები</span>
         <RoundCheckmark
             style={{marginBottom: 10}}
@@ -341,7 +422,7 @@ if(verificationStep === 0) {
             labelTitle = 'სხვა' 
             toggle = {() =>{setHasOther(!hasOther)}}   
             checked = {hasOther} />
-        {hasOther? <AppInput  labeltitle = 'სხვა...' value = {othertransactionType} onChange = {e => setOtherTransactionType(e.target.value)}/> : null}    
+        {hasOther? <AppInput  labeltitle = 'სხვა...' value = {otherDesctiption} onChange = {e => setOtherDesctiption(e.target.value)}/> : null}    
     </div>
     )
 } else if (verificationStep === 4 ) {
@@ -411,7 +492,7 @@ if(verificationStep === 0) {
             placeholder = 'აირჩიეთ ქვეყანა' 
             countries  = { countries }
             current = {kycData.citizenshipCountryID}
-            handleSelect = {() =>{}}
+            handleSelect = {selectCountry}
             />    
         <div style = {{display: 'flex'}}>
          <RoundCheckmark 
@@ -425,7 +506,7 @@ if(verificationStep === 0) {
          <SelectCountry 
             placeholder = 'აირჩიეთ ქვეყანა' 
             countries  = { countries }  
-            handleSelect = {() =>{}} /> : null }
+            handleSelect = {selectSecondaryCitizenship} /> : null }
         </div>
     )
 } else if (verificationStep === 7) {

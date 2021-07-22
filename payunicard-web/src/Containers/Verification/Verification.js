@@ -14,7 +14,7 @@ import KvalifikaFrame from '../../Components/Kvalifika/KvalifikaFrame';
 
 const Verification = (props) => {
 
-const [ verificationStep, setVerificationStep ] = useState(0);
+const [ step, setStep ] = useState(4);
 const [ countries, setCountries ] = useState([]);
 const [ factCity, setFactCity ] = useState('');
 const [ factAddress, setFactAddress ] = useState('');
@@ -127,7 +127,9 @@ const selectSecondaryCitizenship = (element) => {
     console.log('selectSecondaryCitizenship',element)
 };
 
-
+const verificationFlow = () => {
+    setStep(step + 1)
+}
 
 
 
@@ -185,7 +187,7 @@ const getKycData = () => {
                     passportNumber: documentNumber
                 
             });
-            setVerificationStep(verificationStep + 1);
+            setStep(step + 1);
         }
     }).catch(error => {console.log(error)});
 }
@@ -229,7 +231,7 @@ const closeKycSession = (sessionId) => {
                 passportNumber: documentNumber
             
             });
-            setVerificationStep(verificationStep + 1);
+            setStep(step + 1);
         } else {
 
         }
@@ -310,7 +312,7 @@ const finishCostumerRegistration = () => {
 
 let VerficationStep = null;
 
-if(verificationStep === 0) {
+if(step === 0) {
     VerficationStep = (
         <div className = 'vf-wrap'>
             <div className = 'vf-poster'>
@@ -324,12 +326,12 @@ if(verificationStep === 0) {
             
             </div>
             <div className = 'vf-buttons'>
-                <Button clicked = {()=>setVerificationStep(1)}>არა</Button>
+                <Button clicked = {()=>setStep(1)}>არა</Button>
                 <Button>დიახ</Button>
             </div>
         </div>
     )
-} else if (verificationStep === 1) {
+} else if (step === 1) {
     VerficationStep = (
         <div className = 'vf-wrap'>
             <span className = 'step-title'>ჩაწერეთ იურიდიული მისამართი</span>
@@ -354,7 +356,7 @@ if(verificationStep === 0) {
                 onChange = {e => setFactPostalCode(e.target.value)}/>
         </div>
     )
-} else if (verificationStep === 2) {
+} else if (step === 2) {
     VerficationStep = (
         <div className = 'vf-wrap'>
             <span className = 'step-title'>მიუთითეთ საქმიანობის სფერო</span>
@@ -378,7 +380,7 @@ if(verificationStep === 0) {
                 onChange = {e => setWorkPosition(e.target.value)} />    
         </div>
     )
-} else if (verificationStep === 3) {
+} else if (step === 3) {
     VerficationStep = (
         <div className = 'vf-wrap'>
         <span className = 'step-title'>მონიშნეთ მოსალოდნელი ბრუნვა 1 წლის განმავლობაში</span> 
@@ -425,23 +427,23 @@ if(verificationStep === 0) {
         {hasOther? <AppInput  labeltitle = 'სხვა...' value = {otherDesctiption} onChange = {e => setOtherDesctiption(e.target.value)}/> : null}    
     </div>
     )
-} else if (verificationStep === 4 ) {
+} else if (step === 4 ) {
     VerficationStep = (
         <div className = 'vf-wrap'>
-            <span>გთხოვთ, მოემზადოთ ვიზუალური იდენტიფიკაციისთვის.</span>
+            <span className = ''>გთხოვთ, მოემზადოთ ვიზუალური იდენტიფიკაციისთვის.</span>
             <img src = '../../Assets/Images/login_img.svg' alt = ''/>
             <span>თქვენ დაგჭირდებათ ვებკამერა და პირადობის დამადასტურებელი დოკუმენტი (პასპორტი ან პირადობის მოწმობა).</span>
         
     </div>
     )
-} else if (verificationStep === 5) {
+} else if (step === 5) {
     VerficationStep = (
     <div className = 'vf-wrap'>
         <img src = '../../Assets/Images/loader.svg' alt ='icon' />
             <KvalifikaFrame frameUrl = { kycFrameUrl } onStartSession = { startKycSession } onCloseSession = { closeKycSession }/>
     </div>
     )
-} else if (verificationStep === 6) {
+} else if (step === 6) {
     VerficationStep = (
         <div className = 'vf-wrap'>
         <AppInput 
@@ -509,7 +511,7 @@ if(verificationStep === 0) {
             handleSelect = {selectSecondaryCitizenship} /> : null }
         </div>
     )
-} else if (verificationStep === 7) {
+} else if (step === 7) {
     VerficationStep = (
         <div className = 'vf-wrap'>
             <div >
@@ -559,7 +561,7 @@ if(verificationStep === 0) {
 
         <SidePanel visible = {props.visible} closePanel = {props.close}>
             {VerficationStep}
-            {verificationStep !== 0 ? <Button buttonClass = 'buttonTest' clicked = {() => setVerificationStep(verificationStep + 1)}>შემდეგი</Button>: null}        
+            {step !== 0 ? <Button buttonClass = 'buttonTest' clicked = {verificationFlow}>შემდეგი</Button>: null}        
         </SidePanel>
     )
 }

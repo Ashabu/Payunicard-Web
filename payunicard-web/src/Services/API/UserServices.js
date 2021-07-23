@@ -9,19 +9,19 @@ class User {
 
     UserLogin = async (data) => {
         const GRANT_TYPE = 'password',
-        SCOPE =  'Wallet_Api.Full offline_access',
-        CLIENT_ID = 'WalletApi',
-        CLIENT_SECRET = 'abcd123'
+            SCOPE = 'Wallet_Api.Full offline_access',
+            CLIENT_ID = 'WalletApi',
+            CLIENT_SECRET = 'abcd123'
 
         let loginData = new FormData();
-        loginData.append('grant_type',GRANT_TYPE);
+        loginData.append('grant_type', GRANT_TYPE);
         loginData.append('scope', SCOPE);
         loginData.append('client_id', CLIENT_ID);
         loginData.append('client_secret', CLIENT_SECRET);
         loginData.append('username', data.username);
-        loginData.append( 'password', data.password);
-        if(data.Otp)
-        loginData.append('Otp', data.Otp );
+        loginData.append('password', data.password);
+        if (data.Otp)
+            loginData.append('Otp', data.Otp);
 
         // let loginData = {
         //     grant_type: GRANT_TYPE,
@@ -59,20 +59,20 @@ class User {
     GetUserAccountStatements = async (data = {}, params = {}) => {
         return await axios.post(`${globalConfig.api_URL}/user/GetUserAccountsStatement`, data, { params });
     }
-    
+
     GetTransactionDetails = async (data) => {
         return await axios.post(`${globalConfig.api_URL}/User/GetTransactionDetails`, data);
     }
 
     GetUserBlockedFunds = async (data = {}) => {
-        return await axios.post(`${globalConfig.api_URL}/User/GetUserBlockedFunds`,data);
+        return await axios.post(`${globalConfig.api_URL}/User/GetUserBlockedFunds`, data);
     }
 
     GetUserAccounts = async () => {
         return await axios.get(`${globalConfig.api_URL}/User/GetAccountBalanceByccy`);
     }
 
-    GetUnicards = async () =>  {
+    GetUnicards = async () => {
         return await axios.get(`${globalConfig.api_URL}/Card/GetUnicards`);
     }
 
@@ -83,7 +83,7 @@ class User {
     GetCustomerEmploymentStatusTypes = async () => {
         return await axios.get(`${globalConfig.api_URL}/User/GetCustomerEmploymentStatusTypes`);
     }
-    
+
 
     GetCustomerWorkTypes = async () => {
         return await axios.get(`${globalConfig.api_URL}/User/GetCustomerWorkTypes`);
@@ -92,7 +92,7 @@ class User {
     GetCustomerExpectedTurnoverTypes = async () => {
         return await axios.get(`${globalConfig.api_URL}/User/GetCustomerExpectedTurnoverTypes`);
     }
-    
+
     GetCountryList = async () => {
         return await axios.get(`${globalConfig.api_URL}/GetCitizenshipCountries`);
     }
@@ -105,12 +105,11 @@ class User {
         return await axios.post(`${globalConfig.api_URL}/User/CustomerRegistration`, data);
     }
 
-    FinishCostumerRegistration = async(data) => {
+    FinishCostumerRegistration = async (data) => {
         return await axios.post(`${globalConfig.api_URL}/User/FinishCustomerRegistration`, data);
     }
 
-    
+
 }
 
 export default new User();
-    

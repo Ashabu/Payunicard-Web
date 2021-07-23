@@ -17,7 +17,8 @@ import AuthorizedLayout from './../AuthLayout/AuthorizedLayout';
 import Verification from './../Verification/Verification';
 import KvalifikaFrame from './../../Components/Kvalifika/KvalifikaFrame';
 import OtpBox from '../../Components/UI/Otp-Box/Otp-Box';
-
+import PropgreSteps from '../../Components/UI/ProgressSteps/PropgreSteps';
+PropgreSteps
 
 
 
@@ -147,6 +148,7 @@ const  Dashboard = () => {
                 <div style ={{maxWidth: 485, marginLeft: 150}}>
                     <UserVerificationstatus/>
                     <OtpBox count = {4}/>
+                    <PropgreSteps stepCount = { 9}/>
                     {/* <Button clicked = {startKycSession}>კვალიფიკა</Button> */}
                     <Button clicked = {() => setStartVerification(true)}>ვერიფიკაცია</Button>
                     <Button clicked = {()=> history.push('/payments')}>go to payments</Button>

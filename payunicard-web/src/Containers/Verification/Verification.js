@@ -14,6 +14,8 @@ import PropgreSteps from '../../Components/UI/ProgressSteps/PropgreSteps';
 
 
 const Verification = (props) => {
+    const stepBacks = [0, 4, 6, 8]
+
 
     const [step, setStep] = useState(0);
     const [countries, setCountries] = useState([]);
@@ -63,10 +65,9 @@ const Verification = (props) => {
     const [birthCity, setBirthCity] = useState('')
     const [hasSecondaryCitizenship, setHasSecondaryCitizenship] = useState(false);
     const [isAgreedTerms, setIsAgreedTerms] = useState(false);
-
     const [stepError, setStepError] = useState(false);
 
-
+    let headerText = 'იდენტიფიკაცია'
 
 
     useEffect(() => {
@@ -112,12 +113,16 @@ const Verification = (props) => {
     const selectCountry = (element) => {
         setSelectedCountryID(element.countryID);
     };
+
     const selectCity = (element) => {
         setSelectedCity(element.cityId);
     };
+
     const selectEmploymentStatus = (element) => {
+        console.log(element.employmentStatusCode)
         setEmploymentStatusCode(element.employmentStatusCode);
     };
+
     const selectWorkType = (element) => {
         setEmploymentTypeCode(element.customerEmploymentTypeCode);
     };
@@ -130,8 +135,13 @@ const Verification = (props) => {
         console.log('selectSecondaryCitizenship', element)
     };
 
-    const verificationFlow = () => {
+    const handleStepBack = () => {
 
+        setStep(step - 1);
+    }
+
+    const verificationFlow = () => {
+        headerText = 'დამატებითი მონაცემები'
         if (step === 3) {
             costumerRegistration();
             return;
@@ -143,8 +153,6 @@ const Verification = (props) => {
         if (step > 8) return;
         setStep(step + 1);
     }
-
-
 
     const startKycSession = () => {
         KYC.StartKycSession().then(res => {
@@ -283,6 +291,7 @@ const Verification = (props) => {
         User.CostumerRegistration(data).then(res => {
             if (stepError) setStepError(false);
             if (res.data.ok) {
+                headerText = 'დამატებითი მონაცემები'
                 setStep(step + 1);
             } else {
                 setStepError(true);
@@ -321,6 +330,7 @@ const Verification = (props) => {
         User.FinishCostumerRegistration(data).then(res => {
             if (stepError) setStepError(false);
             if (res.data.ok) {
+                headerText = 'იდენტიფიკაცია'
                 setStep(step + 1);
             } else {
                 setStepError(true);
@@ -338,20 +348,15 @@ const Verification = (props) => {
     if (step === 0) {
         VerficationStep = (
             <div className='vf-wrap'>
-                <div className='vf-poster'>
-                    <img src='../../Assets/Images/vf-poster.svg' alt='poster' />
+                <img src='../../Assets/Images/vf-poster.svg' alt='poster' />
 
-                    <div className='vf-infotext'>
-                        <span>მესამე პირის წარმომადგენელი ხართ?</span>
-                        <span>მინდობილობის საფუძველზე შესაძლებელია მესამე პირისთვის უნისაფულის გახსნა</span>
-                    </div>
-
-
+                <div className='vf-infotext'>
+                    <span>მესამე პირის წარმომადგენელი ხართ?</span>
+                    <span>მინდობილობის საფუძველზე შესაძლებელია მესამე პირისთვის უნისაფულის გახსნა</span>
                 </div>
-                <div className='vf-buttons'>
-                    <Button clicked={() => setStep(1)}>არა</Button>
-                    <Button>დიახ</Button>
-                </div>
+
+
+
             </div>
         )
     } else if (step === 1) {
@@ -387,20 +392,24 @@ const Verification = (props) => {
                     placeholder='აირჩიეთ დასაქმების სტატუსი'
                     employmentStatusTypes={employmentStatusTypes}
                     handleSelect={selectEmploymentStatus} />
-                <SelectWorkType
-                    placeholder='აირჩიეთ საქმიანობის სფერო'
-                    workTypes={workTypes}
-                    handleSelect={selectWorkType} />
-                <AppInput
-                    style={{ marginBottom: 20 }}
-                    labeltitle='დამსაქმებელი'
-                    value={employer}
-                    onChange={e => setEmployer(e.target.value)} />
-                <AppInput
-                    style={{ marginBottom: 20 }}
-                    labeltitle='დაკავებული თანამდებობდა'
-                    value={workPosition}
-                    onChange={e => setWorkPosition(e.target.value)} />
+                {employmentStatusCode === 'Employed' || employmentStatusCode === 'Student' ?
+                    <SelectWorkType
+                        placeholder='აირჩიეთ საქმიანობის სფერო'
+                        workTypes={workTypes}
+                        handleSelect={selectWorkType} /> : null}
+                {employmentStatusCode === 'Employed' || employmentStatusCode === 'Student' ?
+                    <Fragment>
+                        <AppInput
+                            style={{ marginBottom: 20 }}
+                            labeltitle='დამსაქმებელი'
+                            value={employer}
+                            onChange={e => setEmployer(e.target.value)} />
+                        <AppInput
+                            style={{ marginBottom: 20 }}
+                            labeltitle='დაკავებული თანამდებობდა'
+                            value={workPosition}
+                            onChange={e => setWorkPosition(e.target.value)} />
+                    </Fragment> : null}
             </div>
         )
     } else if (step === 3) {
@@ -589,12 +598,24 @@ const Verification = (props) => {
 
 
     return (
-
-        <SidePanel visible={props.visible} closePanel={props.close}>
-            {step !== 0 ? <PropgreSteps stepCount={9} activeStep={step} hasError={stepError} /> : null}
-            {VerficationStep}
-            {step !== 0 ? <Button buttonClass='buttonTest' clicked={verificationFlow}>შემდეგი</Button> : null}
-        </SidePanel>
+        <Fragment>
+            {step == 5 ? <KvalifikaFrame frameUrl={kycFrameUrl} onStartSession={startKycSession} onCloseSession={closeKycSession} /> : null}
+            <SidePanel
+                visible={props.visible}
+                closePanel={props.close}
+                headerText={headerText}
+                stepBack={stepBacks.includes(step) ? false : true}
+                onStepBack={handleStepBack}>
+                {step !== 0 ? <PropgreSteps stepCount={9} activeStep={step} hasError={stepError} /> : null}
+                {VerficationStep}
+                {step === 0 ?
+                    <div className='vf-buttons'>
+                        <Button clicked={() => setStep(1)}>არა</Button>
+                        <Button>დიახ</Button>
+                    </div> :
+                    <Button buttonClass='buttonTest' clicked={verificationFlow}>შემდეგი</Button>}
+            </SidePanel>
+        </Fragment>
     )
 }
 

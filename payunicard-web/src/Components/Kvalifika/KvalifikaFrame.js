@@ -1,14 +1,12 @@
-import React, {useEffect} from 'react'
+import React, { useEffect, memo } from 'react'
 
 const KvalifikaFrame = (props) => {
     const { onStartSession, onCloseSession, frameUrl } = props;
     console.log('frame url', frameUrl);
-    
-
 
     useEffect(() => {
         onStartSession();
-        window.addEventListener('message',  frameEvents)
+        window.addEventListener('message', frameEvents)
 
         return () => window.removeEventListener('message', frameEvents);
     }, [])
@@ -28,14 +26,14 @@ const KvalifikaFrame = (props) => {
 
 
     return (
-        frameUrl? 
-        <div style = {{width: '100%', height: '100%', position: 'absolute', top: 0}}>
-            <iframe src = { frameUrl } style = {{width: '100%', height: '100%', }} allow = 'camera *;' allowFullScreen = {true}  />
-        </div> : null
+        frameUrl ?
+            <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0 }}>
+                <iframe src={frameUrl} style={{ width: '100%', height: '100%', }} allow='camera *;' allowFullScreen={true} />
+            </div> : null
     )
 }
 
 
 
 
-export default KvalifikaFrame;
+export default memo(KvalifikaFrame);

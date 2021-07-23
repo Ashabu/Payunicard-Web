@@ -102,7 +102,7 @@ class User {
     }
 
     CostumerRegistration = async (data) => {
-        return await axios.post(`${globalConfig.api_URL}/User/CustomerRegistration`, data);
+        return await axios.post(`${globalConfig.api_URL}/User/Registration/CustomerRegistration`, data);
     }
 
     FinishCostumerRegistration = async (data) => {

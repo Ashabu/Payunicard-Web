@@ -10,7 +10,7 @@ const OtpBox = (props) => {
     const input2 = useRef();
     const input3 = useRef();
 
-    const refs = [ input0, input1, input2, input3 ];
+    const refs = [input0, input1, input2, input3];
 
     const handleOnChange = (element, index) => {
         if (isNaN(element.value)) return;
@@ -18,16 +18,16 @@ const OtpBox = (props) => {
         if (element.nextSibling && element.value !== '') element.nextSibling.focus();
     };
 
-    const handleFocusInput= (event, index) => {
-        if(refs[index + 1] && event.key === 'ArrowRight' ) {
+    const handleFocusInput = (event, index) => {
+        if (refs[index + 1] && event.key === 'ArrowRight') {
             refs[index + 1].current?.focus();
             return;
         };
-        if(refs[index - 1]){
-            if(event.key === 'ArrowLeft') {
+        if (refs[index - 1]) {
+            if (event.key === 'ArrowLeft') {
                 refs[index - 1].current?.focus();
             }
-            if(event.key === 'Backspace' || event.key === 'Delete') {
+            if (event.key === 'Backspace' || event.key === 'Delete') {
                 if (otp[index] === '') {
                     refs[index - 1].current?.focus();
                 }
@@ -42,14 +42,14 @@ const OtpBox = (props) => {
         <div className='Otp-Box'>
             {otp.map((element, index) => (
                 <input
-                    key = {index}
-                    className = 'otp-input'
-                    ref = {refs[index]}
-                    value = {element}
-                    type = 'numeric'
-                    maxLength = '1'
-                    onChange = {e => handleOnChange(e.target, index)}
-                    onKeyDown = {e => handleFocusInput(e, index)}
+                    key={index}
+                    className='otp-input'
+                    ref={refs[index]}
+                    value={element}
+                    type='numeric'
+                    maxLength='1'
+                    onChange={e => handleOnChange(e.target, index)}
+                    onKeyDown={e => handleFocusInput(e, index)}
                 />))}
         </div>
     );

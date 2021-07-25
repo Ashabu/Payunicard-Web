@@ -1,0 +1,54 @@
+.Steps {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    margin-top: 20px;
+
+    .step {
+        display: flex;
+        align-items: center;
+
+        .connect-line {
+            width: 15px;
+            border: 1px solid #C4C4C4;
+
+            &.active {
+                border: 1px solid #94dd34;
+            }
+            &.danger {
+                border: 1px solid #ff2d2d;
+            }
+        }
+
+        .circle {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            font-family: 'FiraGO REGULAR';
+            font-size: 18px;
+            color: #6B6B6B;
+            border: 1px solid #6B6B6B;
+            border-radius: 50%;
+
+            &.active {
+                background-color: #94dd34 ;
+                color: #FFFFFF;
+                font-weight: 700;
+            }
+
+            &.danger {
+                background-color: #ff2d2d ;
+                color: #FFFFFF;
+                font-weight: 700;
+               
+            }
+            
+
+        }
+    }
+
+    
+}

@@ -14,7 +14,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 function envKeys(env, argv) {
     if (!env) env = 'dev';
     let config = require('./' + env + '.js');
-    
+
     for (let prop in argv) {
         if (config[prop] === undefined) continue;
         config[prop] = argv[prop];
@@ -69,7 +69,7 @@ module.exports = (env, argv) => {
         },
         devServer: {
             contentBase: path.join(__dirname, bundleOutputDir),
-            historyApiFallback:  {
+            historyApiFallback: {
                 disableDotRule: true
             },
             port: 9000,

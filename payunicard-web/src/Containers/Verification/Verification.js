@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { SidePanel, AppInput, Button, RoundCheckmark, Select, SelectList } from '../../Components/UI/UiComponents';
 import { SelectCountry, SelectEmploymentStatus, SelectEmploymentStatusType, SelectWorkType, SelectExpectedTurnover } from '../../Components/Selects/index';
 import KvalifikaFrame from '../../Components/Kvalifika/KvalifikaFrame';
+import PropgreSteps from '../../Components/UI/ProgressSteps/PropgreSteps';
 
 
 
@@ -13,8 +14,10 @@ import KvalifikaFrame from '../../Components/Kvalifika/KvalifikaFrame';
 
 
 const Verification = (props) => {
+    const stepBacks = [0, 4, 6, 8]
 
-    const [verificationStep, setVerificationStep] = useState(4);
+
+    const [step, setStep] = useState(0);
     const [countries, setCountries] = useState([]);
     const [factCity, setFactCity] = useState('');
     const [factAddress, setFactAddress] = useState('');
@@ -36,7 +39,7 @@ const Verification = (props) => {
     const [hasInternatiolalTransactions, setHasInternatiolalTransactions] = useState(false);
     const [hasGambling, setHasGambling] = useState(false);
     const [hasOther, setHasOther] = useState(false);
-    const [otherDescription, setOtherDescription] = useState('');
+    const [otherDesctiption, setOtherDesctiption] = useState('');
     const [kycFrameUrl, setKycFrameUrl] = useState('');
     const [kycData, setKycData] = useState({
         customerSelfContent: 'Selfie',
@@ -58,12 +61,13 @@ const Verification = (props) => {
         citizenshipCountryID: null,
         sex: '',
         birthDate: '',
-        birthCity: '',
     })
-    const [hasSecondaryCitizenship, setHasSecondaryCitizenship] = useState(false)
+    const [birthCity, setBirthCity] = useState('')
+    const [hasSecondaryCitizenship, setHasSecondaryCitizenship] = useState(false);
+    const [isAgreedTerms, setIsAgreedTerms] = useState(false);
+    const [stepError, setStepError] = useState(false);
 
-
-
+    let headerText = 'იდენტიფიკაცია'
 
 
     useEffect(() => {
@@ -109,12 +113,16 @@ const Verification = (props) => {
     const selectCountry = (element) => {
         setSelectedCountryID(element.countryID);
     };
+
     const selectCity = (element) => {
         setSelectedCity(element.cityId);
     };
+
     const selectEmploymentStatus = (element) => {
+        console.log(element.employmentStatusCode)
         setEmploymentStatusCode(element.employmentStatusCode);
     };
+
     const selectWorkType = (element) => {
         setEmploymentTypeCode(element.customerEmploymentTypeCode);
     };
@@ -127,9 +135,24 @@ const Verification = (props) => {
         console.log('selectSecondaryCitizenship', element)
     };
 
+    const handleStepBack = () => {
 
+        setStep(step - 1);
+    }
 
-
+    const verificationFlow = () => {
+        headerText = 'დამატებითი მონაცემები'
+        if (step === 3) {
+            costumerRegistration();
+            return;
+        }
+        if (step === 7) {
+            finishCostumerRegistration();
+            return;
+        }
+        if (step > 8) return;
+        setStep(step + 1);
+    }
 
     const startKycSession = () => {
         KYC.StartKycSession().then(res => {
@@ -185,7 +208,7 @@ const Verification = (props) => {
                     passportNumber: documentNumber
 
                 });
-                setVerificationStep(verificationStep + 1);
+                setStep(step + 1);
             }
         }).catch(error => { console.log(error) });
     }
@@ -229,7 +252,7 @@ const Verification = (props) => {
                     passportNumber: documentNumber
 
                 });
-                setVerificationStep(verificationStep + 1);
+                setStep(step + 1);
             } else {
 
             }
@@ -257,20 +280,23 @@ const Verification = (props) => {
             expectedTurnoverCode,
             hasUtility,
             hasTransport,
-            hasTelecomunication: hasUtility,
+            hasTelecomunication,
             hasInternatiolalTransactions,
             hasGambling,
             hasOther,
+            otherDesctiption: '',
             termID: 1
         }
 
-        if(hasOther) {
-            data = {...data, otherDesctiption }
-        }
-
         User.CostumerRegistration(data).then(res => {
-            console.log(res.data)
-        }).catch(error => { console.log(error) });
+            if (stepError) setStepError(false);
+            if (res.data.ok) {
+                headerText = 'დამატებითი მონაცემები'
+                setStep(step + 1);
+            } else {
+                setStepError(true);
+            }
+        }).catch(error => { console.log(error); setStepError(true) });
     }
 
     const finishCostumerRegistration = () => {
@@ -292,7 +318,7 @@ const Verification = (props) => {
             birthCityId: 0,
             citizenshipCountryID: kycData.citizenshipCountryID,
             sex: kycData.sex === 'male' ? 1 : 0,
-            birthCity: kycData.birthCity,
+            birthCity,
         }
         if (kycData.documentType === 'ID') {
             data = { ...data, personalID: kycData.personalID };
@@ -302,8 +328,14 @@ const Verification = (props) => {
 
 
         User.FinishCostumerRegistration(data).then(res => {
-            console.log(res.data)
-        }).catch(error => { console.log(error) });
+            if (stepError) setStepError(false);
+            if (res.data.ok) {
+                headerText = 'იდენტიფიკაცია'
+                setStep(step + 1);
+            } else {
+                setStepError(true);
+            }
+        }).catch(error => { console.log(error); setStepError(true) });
     }
 
 
@@ -313,11 +345,15 @@ const Verification = (props) => {
 
     let VerficationStep = null;
 
-    if (verificationStep === 0) {
+    if (step === 0) {
         VerficationStep = (
             <div className='vf-wrap'>
-                <div className='vf-poster'>
-                    <img src='../../Assets/Images/vf-poster.svg' alt='poster' />
+                <img src='../../Assets/Images/vf-poster.svg' alt='poster' />
+
+                <div className='vf-infotext'>
+                    <span>მესამე პირის წარმომადგენელი ხართ?</span>
+                    <span>მინდობილობის საფუძველზე შესაძლებელია მესამე პირისთვის უნისაფულის გახსნა</span>
+                </div>
 
                     <div className='vf-infotext'>
                         <span>მესამე პირის წარმომადგენელი ხართ?</span>
@@ -325,14 +361,9 @@ const Verification = (props) => {
                     </div>
 
 
-                </div>
-                <div className='vf-buttons'>
-                    <Button clicked={() => setVerificationStep(1)}>არა</Button>
-                    <Button>დიახ</Button>
-                </div>
             </div>
         )
-    } else if (verificationStep === 1) {
+    } else if (step === 1) {
         VerficationStep = (
             <div className='vf-wrap'>
                 <span className='step-title'>ჩაწერეთ იურიდიული მისამართი</span>
@@ -357,7 +388,7 @@ const Verification = (props) => {
                     onChange={e => setFactPostalCode(e.target.value)} />
             </div>
         )
-    } else if (verificationStep === 2) {
+    } else if (step === 2) {
         VerficationStep = (
             <div className='vf-wrap'>
                 <span className='step-title'>მიუთითეთ საქმიანობის სფერო</span>
@@ -365,23 +396,27 @@ const Verification = (props) => {
                     placeholder='აირჩიეთ დასაქმების სტატუსი'
                     employmentStatusTypes={employmentStatusTypes}
                     handleSelect={selectEmploymentStatus} />
-                <SelectWorkType
-                    placeholder='აირჩიეთ საქმიანობის სფერო'
-                    workTypes={workTypes}
-                    handleSelect={selectWorkType} />
-                <AppInput
-                    style={{ marginBottom: 20 }}
-                    labeltitle='დამსაქმებელი'
-                    value={employer}
-                    onChange={e => setEmployer(e.target.value)} />
-                <AppInput
-                    style={{ marginBottom: 20 }}
-                    labeltitle='დაკავებული თანამდებობდა'
-                    value={workPosition}
-                    onChange={e => setWorkPosition(e.target.value)} />
+                {employmentStatusCode === 'Employed' || employmentStatusCode === 'Student' ?
+                    <SelectWorkType
+                        placeholder='აირჩიეთ საქმიანობის სფერო'
+                        workTypes={workTypes}
+                        handleSelect={selectWorkType} /> : null}
+                {employmentStatusCode === 'Employed' || employmentStatusCode === 'Student' ?
+                    <Fragment>
+                        <AppInput
+                            style={{ marginBottom: 20 }}
+                            labeltitle='დამსაქმებელი'
+                            value={employer}
+                            onChange={e => setEmployer(e.target.value)} />
+                        <AppInput
+                            style={{ marginBottom: 20 }}
+                            labeltitle='დაკავებული თანამდებობდა'
+                            value={workPosition}
+                            onChange={e => setWorkPosition(e.target.value)} />
+                    </Fragment> : null}
             </div>
         )
-    } else if (verificationStep === 3) {
+    } else if (step === 3) {
         VerficationStep = (
             <div className='vf-wrap'>
                 <span className='step-title'>მონიშნეთ მოსალოდნელი ბრუნვა 1 წლის განმავლობაში</span>
@@ -425,26 +460,26 @@ const Verification = (props) => {
                     labelTitle='სხვა'
                     toggle={() => { setHasOther(!hasOther) }}
                     checked={hasOther} />
-                {hasOther ? <AppInput labeltitle='სხვა...' value={otherDescription} onChange={e => setOtherDescription(e.target.value)} /> : null}
+                {hasOther ? <AppInput labeltitle='სხვა...' value={otherDesctiption} onChange={e => setOtherDesctiption(e.target.value)} /> : null}
             </div>
         )
-    } else if (verificationStep === 4) {
+    } else if (step === 4) {
         VerficationStep = (
             <div className='vf-wrap'>
-                <span>გთხოვთ, მოემზადოთ ვიზუალური იდენტიფიკაციისთვის.</span>
+                <span className='ident-title'>გთხოვთ, მოემზადოთ ვიზუალური იდენტიფიკაციისთვის.</span>
                 <img src='../../Assets/Images/login_img.svg' alt='' />
-                <span>თქვენ დაგჭირდებათ ვებკამერა და პირადობის დამადასტურებელი დოკუმენტი (პასპორტი ან პირადობის მოწმობა).</span>
+                <span className='ident-info'>თქვენ დაგჭირდებათ ვებკამერა და პირადობის დამადასტურებელი დოკუმენტი (პასპორტი ან პირადობის მოწმობა).</span>
 
             </div>
         )
-    } else if (verificationStep === 5) {
+    } else if (step === 5) {
         VerficationStep = (
             <div className='vf-wrap'>
                 <img src='../../Assets/Images/loader.svg' alt='icon' />
                 <KvalifikaFrame frameUrl={kycFrameUrl} onStartSession={startKycSession} onCloseSession={closeKycSession} />
             </div>
         )
-    } else if (verificationStep === 6) {
+    } else if (step === 6) {
         VerficationStep = (
             <div className='vf-wrap'>
                 <AppInput
@@ -475,8 +510,8 @@ const Verification = (props) => {
                         labeltitle='პასპორტის ნომერი' />}
                 <AppInput
                     style={{ marginBottom: 20 }}
-                    value={kycData.birthCity}
-                    onChange={(e) => setKycData(prevState => { return { ...prevState, birthCity: e.target.value } })}
+                    value={birthCity}
+                    onChange={(e) => setBirthCity(e.target.value)}
                     type='text'
                     labeltitle='ქალაქი/დასახლებული პუნქტი' />
                 <AppInput
@@ -492,7 +527,7 @@ const Verification = (props) => {
                     type='text'
                     labeltitle='სქესი' />
                 <SelectCountry
-                    placeholder='აირჩიეთ ქვეყანა'
+                    placeholder='აირჩიეთ მოქალაქეობა'
                     countries={countries}
                     current={kycData.citizenshipCountryID}
                     handleSelect={selectCountry}
@@ -512,63 +547,79 @@ const Verification = (props) => {
                         handleSelect={selectSecondaryCitizenship} /> : null}
             </div>
         )
-    } else if (verificationStep === 7) {
+    } else if (step === 7) {
         VerficationStep = (
             <div className='vf-wrap'>
-                <div >
-                    <span className='step-title'>გადაამოწმეთ პირადი ინფორმაცია</span>
-                    <span>დოკუმენტის ტიპი:</span>
+                <span className='step-title'>გადაამოწმეთ პირადი ინფორმაცია</span>
+                <div className='check-info'>
+                    <span className='info-head'>დოკუმენტის ტიპი:</span>
                     {kycData.documentType === 'ID' ?
                         <Fragment>
-                            <span>პირადობის მოწმობა</span>
-                            <span>პირადი ნომერი:</span>
-                            <span>{kycData.personalNumber}</span>
+                            <span className='info-cont'>პირადობის მოწმობა</span>
+                            <span className='info-head'>პირადი ნომერი:</span>
+                            <span className='info-cont'>{kycData.personalID}</span>
                         </Fragment> :
                         <Fragment>
-                            <span>პასპორტი</span>
-                            <span>პასპორტის ნომერი:</span>
-                            <span>{kycData.documentNumber}</span>
+                            <span className='info-cont'>პასპორტი</span>
+                            <span className='info-head'>პასპორტის ნომერი:</span>
+                            <span className='info-cont'>{kycData.passportNumber}</span>
                         </Fragment>
                     }
 
                     <span>სახელი, გვარი:</span>
-                    <span>{kycData.name} {kycData.surname}</span>
+                    <span className='info-cont'>{kycData.name} {kycData.surname}</span>
                     <span>დაბადების წელი:</span>
-                    <span>{kycData.birthDate}</span>
+                    <span className='info-cont'>{kycData.birthDate}</span>
                 </div>
-                <div>
-                    <img src={kycData.customerSelfContent} alt='photo' />
-                    <img src={kycData.documentBackSide} alt='photo' />
+                <span className='step-title'>ატვირთული დოკუმენტები</span>
+                <div className='uploaded-documents'>
+                    <img src={kycData.customerSelf} alt='photo' />
                     <img src={kycData.documentFrontSide} alt='photo' />
+                    {kycData.documentBackSide ? <img src={kycData.documentBackSide} alt='photo' /> : null}
                 </div>
-                <div>
+                <div className='agree-terms'>
                     <RoundCheckmark
-                        toggle={() => setHasSecondaryCitizenship(!hasSecondaryCitizenship)}
-                        checked={hasSecondaryCitizenship}
                         id='isAgree'
-                        for='isAgree' />
-                    <span>ვეთანხმები ფეიუნიქარდის მომსახურებით სარგებლობის პირობებს და ფეიუნიქარდის ვებგვერდით სარგებლობის პირობებს</span>
+                        for='isAgree'
+                        toggle={() => setIsAgreedTerms(!isAgreedTerms)}
+                        checked={isAgreedTerms}
+                    />
+                    <a href='' target='_blank'>ვეთანხმები ფეიუნიქარდის მომსახურებით სარგებლობის პირობებს და ფეიუნიქარდის ვებგვერდით სარგებლობის პირობებს</a>
                 </div>
-                <Button clicked={finishCostumerRegistration}>რეგისტრაცია</Button>
             </div>
+        )
+    } else if (step === 8) {
+        VerficationStep = (
+            <div className='vf-wrap'>
+                <span className='ident-title'>თქვენი მოთხოვნა მიღებულია და მუშავდება</span>
+                <img src='../../Assets/Images/success-girl.png' alt='img' />
+                <span className='ident-info'>თქვენი მოთხოვნის დაკმაყოფილების შემთხვევაში, მიიღებთ SMS შეტყობინებას არაუგვიანეს 3 სამუშაო დღისა.</span>
 
-
+            </div>
         )
     }
 
 
 
     return (
-
-        <SidePanel visible={props.visible} closePanel={props.close}>
-            {VerficationStep}
-            {verificationStep !== 0 ? <Button buttonClass='buttonTest' clicked={() => {
-                if(verificationStep === 3) {
-                    costumerRegistration();
-                }
-                setVerificationStep(verificationStep + 1)
-                }}>შემდეგი</Button> : null}
-        </SidePanel>
+        <Fragment>
+            {step == 5 ? <KvalifikaFrame frameUrl={kycFrameUrl} onStartSession={startKycSession} onCloseSession={closeKycSession} /> : null}
+            <SidePanel
+                visible={props.visible}
+                closePanel={props.close}
+                headerText={headerText}
+                stepBack={stepBacks.includes(step) ? false : true}
+                onStepBack={handleStepBack}>
+                {step !== 0 ? <PropgreSteps stepCount={9} activeStep={step} hasError={stepError} /> : null}
+                {VerficationStep}
+                {step === 0 ?
+                    <div className='vf-buttons'>
+                        <Button clicked={() => setStep(1)}>არა</Button>
+                        <Button>დიახ</Button>
+                    </div> :
+                    <Button buttonClass='buttonTest' clicked={verificationFlow}>შემდეგი</Button>}
+            </SidePanel>
+        </Fragment>
     )
 }
 

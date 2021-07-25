@@ -1,16 +1,16 @@
 .Otp-Box {
     display: flex;
     flex-flow: row;
-    width: 260px;
+    width: 280px;
     margin: auto;
     justify-content: space-between;
     
     input {
         width: 48px;
-        height: 64px;
+        height:48px;
         border-radius: 10px;
-        background-color: #f1f1f1;
-        border: none;
+        background-color: #f1f1f100;
+        border: 1px solid #b2b0b0cf;
         outline: none;
         font-size: 18px;
         text-align: center;

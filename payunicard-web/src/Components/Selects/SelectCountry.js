@@ -8,7 +8,7 @@ const SelectCountry = (props) => {
 
     const currentCountry = (id) => {
         let currencCountry = countries.filter(c => c.countryID === id);
-        setSelectedAccount(currencCountry[0]);
+        setSelected(currencCountry[0]);
     }; 
 
     useEffect(() => {

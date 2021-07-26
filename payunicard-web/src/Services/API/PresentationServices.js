@@ -31,6 +31,9 @@ class Presentation  {
         return await axios.post(`${globalConfig.api_URL}/Transaction/checkdept`, data);
     }
 
+    GetCardTypes = async () => {
+        return await axios.get(`${globalConfig.api_URL}/GetCardTypes`)
+    }
 }
 
 

@@ -17,6 +17,7 @@ import AuthorizedLayout from './../AuthLayout/AuthorizedLayout';
 import Verification from './../Verification/Verification';
 import OtpBox from '../../Components/UI/Otp-Box/Otp-Box';
 import PropgreSteps from '../../Components/UI/ProgressSteps/PropgreSteps';
+import OrderCard from '../OrderCard/OrderCard';
 
 
 
@@ -112,30 +113,14 @@ const Dashboard = () => {
         })
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     return (
 
         <AuthorizedLayout pageName="მთავარი გვერდი">
 
 
-            <Backdrop show={detailVisible || startVerification} hide={() => { setDetailVisible(false) }} />
+            <Backdrop show={detailVisible || startVerification || true} hide={() => { setDetailVisible(false) }} />
             <Verification visible={startVerification} close={() => setStartVerification(false)} />
+            <OrderCard/>
             <SidePanel
                 stepBack
                 visible={detailVisible}

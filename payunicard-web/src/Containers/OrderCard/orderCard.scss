@@ -29,3 +29,29 @@
     }
 }
 
+.ct-tab {
+    width: 210px;
+    height: 54px;
+    border-radius: 10px;
+    background: #F6F6F6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+
+    .ct-tab-option {
+        cursor: pointer;
+        height: 50px;
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.active {
+            background: #FFFFFF;
+            border-radius: 10px;
+        }
+    }
+    
+}
+

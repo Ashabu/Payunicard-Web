@@ -34,8 +34,40 @@ const Layout = (props) => {
     const GetPackages = () => {
         Presentation.getPackageTypes().then(res => {
             if (res.data.ok) {
-                setGlobalValue({ packages: res.data.data.packages })
+                let lang = 'en'
+                let packageCurrencies = res.data.data.packageCards
+                let packages = res.data.data.packages.slice(1);
+                let CurrencyTitle = {
+                    ka: [
+                        { v: 'GEL', value: '₾ /ლარი' },
+                        { v: 'USD', value: '$ /აშშ დოლრი' },
+                        { v: 'EUR', value: '€ /ევრო' },
+                        { v: 'GBP', value: '£ /გირვანქა სტერლინგი' },
+                        { v: 'TRY', value: '₺ /თურქული ლირა' },
+                        { v: 'RUB', value: '₽ /რუსული რუბლი' }
+                    ],
+                    en: [
+                        { v: 'GEL', value: '₾ /Georgian Lari' },
+                        { v: 'USD', value: '$ /US Dollar' },
+                        { v: 'EUR', value: '€ /Euro' },
+                        { v: 'GBP', value: '£ /British Pound Sterling' },
+                        { v: 'TRY', value: '₺ /Turkish Lyra' },
+                        { v: 'RUB', value: '₽ /Russian Ruble' }
+                    ]
+                }
+                let temp = [...packageCurrencies].map(element => {
+                    CurrencyTitle[lang].forEach(item => {
+                        if (element.ccy === item.v) {
+                            element.value = item.value
+                        }
+                    })
+                    return element
+                })
+                packageCurrencies = temp;
+                setGlobalValue({ packages, packageCurrencies });
             }
+
+
         })
     }
 

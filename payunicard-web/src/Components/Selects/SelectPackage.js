@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Select, SelectList } from '../UI/UiComponents';
+import { formatNumber } from '../../Services/CommonFunctions';
+import SelectedPackage from '../HOC/SelectedPackage';
 
 const SelectPackage = (props) => {
     const { packages, placeholder, handleSelect, anualPrice } = props;
@@ -20,42 +22,46 @@ const SelectPackage = (props) => {
 
     const packagePrice = (data) => {
         if (anualPrice) {
-            return data.priceAnnual + '₾'
+            return formatNumber(data.priceAnnual) + '₾'
         } else {
             if (data.paketTypeId === 2) {
-                return data.priceAnnual + '₾/წელიწადი'
+                return formatNumber(data.priceAnnual) + '₾/წელიწადი'
             } else {
-                return data.priceQuarterly + '₾/კვარტალი'
-            }
-        }
-    }
+                return formatNumber(data.priceQuarterly) + '₾/კვარტალი'
+            };
+        };
+    };
+
+
+
+
+
 
     return (
         <Select
             selectClass='Selected mb-20'
             data={packages}
-            selected={selected ? <div style={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between',
-                marginRight: 30
-            }}><span>{selected?.paketCode}</span><span>{packagePrice(selected)}</span></div> : <div style={{ padding: 10 }}>{placeholder}</div>}
+            selected={selected ?
+                <SelectedPackage
+                    selected={selected}
+                    anualPrice={anualPrice}
+                    price={packagePrice(selected)} />
+                :
+                <div>{placeholder}</div>}
             display={(element, setVisible) => (
-                element.paketTypeId !== 1 ?
-                    <SelectList
-
-                        key={element.paketTypeId}
-                        selected={element}
-                        list
-                        listClassRow={!anualPrice && element.paketTypeId === 2 ? 'selectLIst disabled' : 'selectLIst'}
-                        clicked={() => onSelect(element, setVisible)}>
-                        <div style={{
-                            display: 'flex',
-                            width: '100%',
-                            justifyContent: 'space-between',
-                            marginRight: 30
-                        }}><span>{element.paketCode}</span><span>{packagePrice(element)}</span></div>
-                    </SelectList> : null
+                <SelectList
+                    key={element.paketTypeId}
+                    selected={element}
+                    list
+                    listClassRow={!anualPrice && element.paketTypeId === 2 ? 'selectLIst disabled' : 'selectLIst'}
+                    clicked={() => onSelect(element, setVisible)}>
+                    <div style={{
+                        display: 'flex',
+                        width: '100%',
+                        justifyContent: 'space-between',
+                        marginRight: 30
+                    }}><span>{element.paketCode}</span><span>{packagePrice(element)}</span></div>
+                </SelectList>
             )} />
     )
 }

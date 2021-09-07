@@ -118,7 +118,7 @@ const Dashboard = () => {
         <AuthorizedLayout pageName="მთავარი გვერდი">
 
 
-            <Backdrop show={detailVisible || startVerification || true} hide={() => { setDetailVisible(false) }} />
+            <Backdrop show={detailVisible || startVerification || false} hide={() => { setDetailVisible(false) }} />
             <Verification visible={startVerification} close={() => setStartVerification(false)} />
             <OrderCard/>
             <SidePanel

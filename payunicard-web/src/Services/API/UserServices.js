@@ -36,6 +36,9 @@ class User {
         return await axios.post(globalConfig.token_URL, loginData)
     }
 
+
+  
+
     CheckUser = async (data) => {
         return await axios.post(`${globalConfig.api_URL}/User/CheckUser`, data);
     }

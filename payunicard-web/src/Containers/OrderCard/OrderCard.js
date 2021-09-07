@@ -14,7 +14,7 @@ const OrderCard = () => {
         
     }
     return (
-        <SidePanel visible = {true}>
+        <SidePanel visible = {false}>
             {OrderCardStep}
             <button onClick = {()=> setStep(step+1)}>შემდეგი</button>
         </SidePanel>

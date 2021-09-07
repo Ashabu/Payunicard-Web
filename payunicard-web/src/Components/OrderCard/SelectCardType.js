@@ -16,6 +16,7 @@ const SelectCardType = props => {
     const [tt, setTt] = useState(false);
     const [count, setCount] = useState(0);
     const [cardTypes, setCardTypes] = useState([]);
+    const [cardsChecked, setCardsChecked] = useState({ visa: false, mc: false })
 
     const GetCardTypes = () => {
         Presentation.GetCardTypes().then(res => {
@@ -35,6 +36,14 @@ const SelectCardType = props => {
         );
     };
 
+    const handleCardCheck = (id) => {
+        if (id === 1) {
+            setCardsChecked(prevState => { return { ...prevState, visa: !cardsChecked.visa } })
+        } else {
+            setCardsChecked(prevState => { return { ...prevState, mc: !cardsChecked.mc } })
+        }
+    }
+
     const OrderControl = () => {
         return (
             <div className='order-control'>
@@ -47,16 +56,19 @@ const SelectCardType = props => {
 
     return (
         cardTypes.map((card, index) => (
-            <div className='ct-wrap' 
-            key={index}>
+            <div className='ct-wrap'
+                key={index}>
                 <label htmlFor={'cardtype' + index}>
-                    <input type='checkbox' id={'cardtype' + index} onChange = {(e) => {console.log(e.target.checked)}}/>
+                    <input
+                        type='checkbox'
+                        id={'cardtype' + index}
+                        onChange={() => handleCardCheck(card.typeId)} checked={card.typeId === 1 ? cardsChecked.visa : cardsChecked.mc} />
                     <img style={{ width: 45 }} src={card.imageURL} alt='' />
                     <div>
                         <div>UNICard VISA ბარათი</div>
                         <PackageCurrencies />
                     </div>
-                    
+
                 </label>
                 <OrderControl />
             </div>
